@@ -8,6 +8,7 @@ import {
   Calculator,
   HeartPulse,
   PawPrint,
+  FileHeart,
 } from 'lucide-react';
 import {
   SidebarMenu,
@@ -40,6 +41,11 @@ const navItems = [
     href: '/gestational-age',
     icon: Baby,
     label: 'Gestational Age',
+  },
+  {
+    href: '/health-assessments',
+    icon: FileHeart,
+    label: 'Health Assessments',
   },
 ];
 
