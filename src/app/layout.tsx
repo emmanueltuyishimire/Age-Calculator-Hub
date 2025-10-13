@@ -4,9 +4,9 @@ import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Free Age Calculator – Dog, Cat, Biological & Retirement Age',
+  title: 'Age Calculators Hub – Online Age, Birthday, Biological & Pet Age Calculators',
   description:
-    'Instantly calculate anything age-related with our free online tools. Find your chronological age, dog age, cat age, biological age, retirement eligibility, and pregnancy due date all in one place.',
+    'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
   robots: {
     index: true,
     follow: true,
@@ -15,15 +15,15 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Free Age Calculator – Dog, Cat, Biological & Retirement Age',
-    description: 'Instantly calculate anything age-related with our free online tools. Find your chronological age, dog age, cat age, biological age, retirement eligibility, and pregnancy due date all in one place.',
+    title: 'Age Calculators Hub – Online Age, Birthday, Biological & Pet Age Calculators',
+    description: 'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
     type: 'website',
     url: 'https://innerpeacejournals.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free Age Calculator – Dog, Cat, Biological & Retirement Age',
-    description: 'Instantly calculate anything age-related with our free online tools. Find your chronological age, dog age, cat age, biological age, retirement eligibility, and pregnancy due date all in one place.',
+    title: 'Age Calculators Hub – Online Age, Birthday, Biological & Pet Age Calculators',
+    description: 'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
   },
 };
 

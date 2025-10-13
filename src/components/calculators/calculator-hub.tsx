@@ -10,9 +10,15 @@ export default function CalculatorHub() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-12">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">The Ultimate Free Age Calculator Hub</h1>
-        <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-          From your chronological age to your dog's age in human years, our free online tools have you covered. Instantly calculate your biological age, retirement date, or even your pregnancy due date. Fast, accurate, and easy to use—discover all our calculators below.
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Age Calculators Hub</h1>
+        <p className="text-md md:text-lg text-muted-foreground max-w-4xl mx-auto">
+          Welcome to Age Calculators Hub, your ultimate online destination for accurate and easy-to-use age calculators. Whether you want to determine your chronological age, track your biological or metabolic age, plan for retirement with our Social Security Retirement Age Calculator, or even discover your pet’s age in human years, we have the right tool for you.
+        </p>
+        <p className="text-md md:text-lg text-muted-foreground max-w-4xl mx-auto mt-4">
+          Explore our comprehensive collection of online age calculators, including birthday age calculators, age calculators by date of birth or year, gestational age calculators, and more. Our calculators are designed to provide real-time results in years, months, days, hours, minutes, and seconds, ensuring you get precise insights whenever you need them.
+        </p>
+         <p className="text-md md:text-lg text-muted-foreground max-w-4xl mx-auto mt-4">
+          Stay informed and plan ahead with our professional tips, FAQs, and examples integrated into every tool. With fast, reliable, and responsive calculators, Age Calculators Hub makes it simple to understand and track age for yourself, your family, or your furry friends. Start calculating now and see how age truly measures up!
         </p>
       </div>
 
