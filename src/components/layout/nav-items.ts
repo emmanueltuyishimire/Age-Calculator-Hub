@@ -20,7 +20,7 @@ import {
   Stethoscope,
   CalendarHeart,
   CalendarCheck,
-  ClipboardHeart,
+  ClipboardList,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -116,7 +116,7 @@ export const navItems: NavItem[] = [
   },
   {
     href: '/ovulation-calculator',
-    icon: ClipboardHeart,
+    icon: ClipboardList,
     label: 'Ovulation Calculator',
     category: 'Pregnancy Calculators',
     description: 'Predict your fertile window and ovulation day.'
