@@ -105,6 +105,8 @@ export default function PregnancyCalculatorPage() {
                     <Link href="/due-date-calculator" className="text-primary hover:underline">Due Date Calculator</Link>
                     <Link href="/ovulation-calculator" className="text-primary hover:underline">Ovulation Calculator</Link>
                     <Link href="/gestational-age" className="text-primary hover:underline">Gestational Age Calculator</Link>
+                    <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
+                    <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
                 </div>
             </div>
         </section>

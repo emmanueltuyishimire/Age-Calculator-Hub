@@ -117,9 +117,12 @@ export default function BirthdayAgeCalculatorPage() {
             <div>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <Link href="/age-calculator-by-date-of-birth" className="text-primary hover:underline">Age Calculator by Date of Birth</Link>
                     <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
                     <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
+                    <Link href="/dog-age" className="text-primary hover:underline">Dog Age Calculator</Link>
+                    <Link href="/cat-age-in-human-years" className="text-primary hover:underline">Cat Age Calculator</Link>
+                    <Link href="/pregnancy-calculators" className="text-primary hover:underline">Pregnancy Calculators</Link>
+                    <Link href="/retirement" className="text-primary hover:underline">Retirement Age Calculator</Link>
                 </div>
             </div>
         </section>

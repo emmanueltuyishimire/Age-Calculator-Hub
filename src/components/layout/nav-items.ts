@@ -114,6 +114,13 @@ export const navItems: NavItem[] = [
     description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
   },
   {
+    href: '/pregnancy-calculators',
+    icon: CalendarHeart,
+    label: 'Pregnancy Calculators',
+    category: 'Pregnancy Calculators',
+    description: 'A hub for all pregnancy-related calculators.'
+  },
+  {
     href: '/pregnancy-calculator',
     icon: CalendarHeart,
     label: 'Pregnancy Calculator',

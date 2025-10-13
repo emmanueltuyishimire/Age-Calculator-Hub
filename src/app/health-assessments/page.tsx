@@ -101,6 +101,7 @@ export default function HealthAssessmentsPage() {
                   <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
                   <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
                   <Link href="/retirement" className="text-primary hover:underline">Retirement Age Calculator</Link>
+                  <Link href="/pregnancy-calculators" className="text-primary hover:underline">Pregnancy Calculators</Link>
               </div>
           </div>
         </section>

@@ -115,7 +115,9 @@ export default function RetirementPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
                     <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
-                    <Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">Social Security Retirement Age Calculator</Link>
+                    <Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">Social Security Calculator</Link>
+                    <Link href="/dog-age" className="text-primary hover:underline">Dog Age Calculator</Link>
+                    <Link href="/cat-age-in-human-years" className="text-primary hover:underline">Cat Age Calculator</Link>
                 </div>
             </div>
         </section>
