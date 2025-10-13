@@ -6,7 +6,8 @@ import {
   PawPrint,
   FileHeart,
   type LucideIcon,
-  Home
+  Home,
+  Clock
 } from 'lucide-react';
 
 export type NavItem = {
@@ -36,6 +37,13 @@ export const navItems: NavItem[] = [
     label: 'Age Calculator',
     category: 'Human Age',
     description: 'Calculate your exact age from your date of birth.'
+  },
+  {
+    href: '/age-calculator-online',
+    icon: Clock,
+    label: 'Age Calculator Online',
+    category: 'Human Age',
+    description: 'A real-time online tool to calculate your age instantly.'
   },
   {
     href: '/biological-age',
