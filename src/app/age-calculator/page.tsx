@@ -149,7 +149,8 @@ export default function AgeCalculatorPage() {
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <Link href="/cat-age-in-human-years" className="text-primary hover:underline">Dog & Cat Age Calculator</Link>
+                        <Link href="/dog-age" className="text-primary hover:underline">Dog Age Calculator</Link>
+                        <Link href="/cat-age-in-human-years" className="text-primary hover:underline">Cat Age Calculator</Link>
                         <Link href="/biological-age" className="text-primary hover:underline">Chronological & Biological Age Calculator</Link>
                         <Link href="/retirement" className="text-primary hover:underline">Retirement Age Calculator</Link>
                         <Link href="/gestational-age" className="text-primary hover:underline">Gestational Age Calculator</Link>
