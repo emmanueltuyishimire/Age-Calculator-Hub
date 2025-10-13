@@ -39,9 +39,13 @@ interface Age {
 
 export default function AgeCalculator() {
   const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>();
-  const [ageAtDate, setAgeAtDate] = useState<Date | undefined>(new Date());
+  const [ageAtDate, setAgeAtDate] = useState<Date | undefined>();
   const [age, setAge] = useState<Age | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
+
+  useEffect(() => {
+    setAgeAtDate(new Date());
+  }, []);
 
   const calculateAge = () => {
     if (dateOfBirth && ageAtDate) {
