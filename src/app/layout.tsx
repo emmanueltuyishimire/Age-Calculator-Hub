@@ -27,6 +27,8 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
           rel="stylesheet"
         />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
+     crossOrigin="anonymous"></script>
       </head>
       <body className="font-body antialiased">
         <AppLayout>{children}</AppLayout>
