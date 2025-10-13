@@ -47,16 +47,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${ptSans.variable}`}>
       <head>
-        <Script
-          id="adsbygoogle-init"
-          strategy="beforeInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
-          crossOrigin="anonymous"
-        />
       </head>
       <body className="font-body antialiased">
         <AppLayout>{children}</AppLayout>
         <Toaster />
+        <Script
+          id="adsbygoogle-init"
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );
