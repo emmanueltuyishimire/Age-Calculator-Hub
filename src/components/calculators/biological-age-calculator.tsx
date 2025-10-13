@@ -15,6 +15,13 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
   Form,
   FormControl,
   FormField,
@@ -25,15 +32,15 @@ import {
 import { getBiologicalAge } from '@/app/biological-age/actions';
 import type { BiologicalAgeInput, BiologicalAgeOutput } from '@/ai/flows/biological-age-calculation';
 import { Loader2 } from 'lucide-react';
+import { Textarea } from '../ui/textarea';
 
 const formSchema = z.object({
-  bloodPressure: z.string().optional(),
-  cholesterolLevels: z.string().optional(),
-  restingHeartRate: z.coerce.number().optional(),
-  fastingBloodSugar: z.coerce.number().optional(),
-  waistCircumference: z.coerce.number().optional(),
-  hba1c: z.coerce.number().optional(),
-  hsCRP: z.coerce.number().optional(),
+  chronologicalAge: z.coerce.number().min(18, "Must be 18 or older").max(100, "Must be 100 or younger"),
+  gender: z.enum(['male', 'female', 'other']),
+  exerciseFrequency: z.string().min(1, "Please describe your exercise frequency."),
+  dietQuality: z.string().min(1, "Please describe your diet quality."),
+  sleepHours: z.coerce.number().min(0).max(24),
+  stressLevels: z.string().min(1, "Please describe your stress levels."),
 });
 
 export default function BiologicalAgeCalculator() {
@@ -42,6 +49,11 @@ export default function BiologicalAgeCalculator() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      chronologicalAge: 30,
+      gender: 'female',
+      sleepHours: 7,
+    },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -65,7 +77,7 @@ export default function BiologicalAgeCalculator() {
       <CardHeader>
         <CardTitle>Biological Age Calculator</CardTitle>
         <CardDescription>
-          Enter your biomarker data to estimate your biological age and get health insights. The more data you provide, the more accurate the result.
+          Enter your lifestyle details to estimate your biological age and get health insights.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -74,12 +86,12 @@ export default function BiologicalAgeCalculator() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="bloodPressure"
+                name="chronologicalAge"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Blood Pressure (e.g., 120/80)</FormLabel>
+                    <FormLabel>Your Current Age</FormLabel>
                     <FormControl>
-                      <Input placeholder="120/80" {...field} />
+                      <Input type="number" placeholder="e.g., 35" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -87,51 +99,34 @@ export default function BiologicalAgeCalculator() {
               />
               <FormField
                 control={form.control}
-                name="cholesterolLevels"
+                name="gender"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Cholesterol (e.g., LDL: 100, HDL: 50)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="LDL: 100, HDL: 50" {...field} />
-                    </FormControl>
+                    <FormLabel>Gender</FormLabel>
+                     <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your gender" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="male">Male</SelectItem>
+                        <SelectItem value="female">Female</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField
+                <FormField
                 control={form.control}
-                name="restingHeartRate"
+                name="sleepHours"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Resting Heart Rate (bpm)</FormLabel>
+                    <FormLabel>Average Hours of Sleep</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="60" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="fastingBloodSugar"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Fasting Blood Sugar (mg/dL)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="90" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="waistCircumference"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Waist Circumference (inches)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="32" {...field} />
+                      <Input type="number" placeholder="e.g., 8" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -139,12 +134,12 @@ export default function BiologicalAgeCalculator() {
               />
                <FormField
                 control={form.control}
-                name="hba1c"
+                name="exerciseFrequency"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>HbA1c (%)</FormLabel>
+                    <FormLabel>Exercise Frequency</FormLabel>
                     <FormControl>
-                      <Input type="number" step="0.1" placeholder="5.7" {...field} />
+                      <Textarea placeholder="e.g., 3-4 times a week, cardio and weights" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -152,12 +147,25 @@ export default function BiologicalAgeCalculator() {
               />
                <FormField
                 control={form.control}
-                name="hsCRP"
+                name="dietQuality"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>hs-CRP (mg/L)</FormLabel>
+                    <FormLabel>Diet Quality</FormLabel>
                     <FormControl>
-                      <Input type="number" step="0.1" placeholder="1.0" {...field} />
+                      <Textarea placeholder="e.g., Balanced diet with fruits and vegetables, occasional processed foods" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="stressLevels"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Daily Stress Levels</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="e.g., Moderate stress from work, manage with meditation" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -182,12 +190,6 @@ export default function BiologicalAgeCalculator() {
               <h3 className="text-lg font-medium">Insights:</h3>
               <p className="text-muted-foreground">{result.insights}</p>
             </div>
-            {result.missingBiomarkers && (
-                 <div>
-                    <h3 className="text-lg font-medium">For a More Accurate Result:</h3>
-                    <p className="text-muted-foreground">{result.missingBiomarkers}</p>
-                </div>
-            )}
           </div>
         )}
       </CardContent>
