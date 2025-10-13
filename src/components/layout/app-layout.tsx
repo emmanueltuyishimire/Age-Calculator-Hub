@@ -28,10 +28,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       </header>
       {children}
       <footer className="py-6 md:px-8 md:py-0 bg-background border-t">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
-            <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-               
-            </p>
+        <div className="container flex flex-col items-center justify-center gap-4 md:h-24 md:flex-row">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-6 text-center text-sm text-muted-foreground">
+               <Link href="/about" className="hover:text-primary">About Us</Link>
+               <Link href="/contact" className="hover:text-primary">Contact</Link>
+               <Link href="/privacy" className="hover:text-primary">Privacy Policy</Link>
+               <Link href="/terms" className="hover:text-primary">Terms of Service</Link>
+               <Link href="/disclaimer" className="hover:text-primary">Disclaimer</Link>
+            </div>
         </div>
       </footer>
     </div>

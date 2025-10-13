@@ -1,3 +1,4 @@
+
 import {
   Baby,
   Briefcase,
@@ -21,6 +22,11 @@ import {
   CalendarCheck,
   ClipboardList,
   ShieldCheck,
+  Info,
+  Mail,
+  Shield,
+  FileText,
+  AlertTriangle,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -135,6 +141,41 @@ export const navItems: NavItem[] = [
     category: 'Pregnancy Calculators',
     description: 'Calculates pregnancy gestational age from last menstrual period or due date.'
   },
+  {
+    href: '/about',
+    icon: Info,
+    label: 'About Us',
+    category: 'Company',
+    description: 'Learn more about Age Calculator Hub.'
+  },
+  {
+    href: '/contact',
+    icon: Mail,
+    label: 'Contact Us',
+    category: 'Company',
+    description: 'Get in touch with our team.'
+  },
+  {
+    href: '/privacy',
+    icon: Shield,
+    label: 'Privacy Policy',
+    category: 'Legal',
+    description: 'Read our privacy policy.'
+  },
+  {
+    href: '/terms',
+    icon: FileText,
+    label: 'Terms of Service',
+    category: 'Legal',
+    description: 'Read our terms of service.'
+  },
+  {
+    href: '/disclaimer',
+    icon: AlertTriangle,
+    label: 'Disclaimer',
+    category: 'Legal',
+    description: 'Read our disclaimer.'
+  },
 ];
 
 export const categorizedNavItems = (): NavCategory[] => {
@@ -154,6 +195,8 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Scientific & Health Age',
     'Pet Age',
     'Retirement & Social',
+    'Company',
+    'Legal',
   ];
 
   // Sort categories based on the defined order

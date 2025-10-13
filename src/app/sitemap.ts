@@ -1,3 +1,4 @@
+
 import { MetadataRoute } from 'next';
 import { navItems } from '@/components/layout/nav-items';
 
