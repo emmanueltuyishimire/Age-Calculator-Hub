@@ -10,21 +10,21 @@ import {
 } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
-    title: 'Age Calculator Online – Calculate Your Exact Age in Real Time',
-    description: 'Use our free age calculator online to instantly find your exact age in years, months, days, hours, minutes, and seconds. Watch it update live in real time.',
+    title: 'Age Calculator by Date of Birth - Find Your Age Instantly',
+    description: 'A free and easy tool to calculate age from a date of birth. Enter your birthday to get your precise age in years, months, and days, with real-time updates.',
     openGraph: {
-        title: 'Age Calculator Online – Calculate Your Exact Age in Real Time',
-        description: 'Use our free age calculator online to instantly find your exact age in years, months, days, hours, minutes, and seconds. Watch it update live in real time.',
+        title: 'Age Calculator by Date of Birth - Find Your Age Instantly',
+        description: 'A free and easy tool to calculate age from a date of birth. Enter your birthday to get your precise age in years, months, and days, with real-time updates.',
         type: 'website',
-        url: '/age-calculator-online',
+        url: '/age-calculator-by-date-of-birth',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Age Calculator Online – Calculate Your Exact Age in Real Time',
-        description: 'Use our free age calculator online to instantly find your exact age in years, months, days, hours, minutes, and seconds. Watch it update live in real time.',
+        title: 'Age Calculator by Date of Birth - Find Your Age Instantly',
+        description: 'A free and easy tool to calculate age from a date of birth. Enter your birthday to get your precise age in years, months, and days, with real-time updates.',
     },
     alternates: {
-        canonical: '/age-calculator-online',
+        canonical: '/age-calculator-by-date-of-birth',
     },
 };
 
@@ -54,7 +54,7 @@ const faqSchema = {
     }))
 };
 
-export default function AgeCalculatorOnlinePage() {
+export default function AgeCalculatorByDateOfBirthPage() {
   return (
     <div className="container mx-auto px-4 py-8">
        <script
@@ -64,9 +64,9 @@ export default function AgeCalculatorOnlinePage() {
       <div className="flex flex-col lg:flex-row gap-8">
         <main className="w-full">
             <div className="text-center mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Age Calculator Online – Calculate Your Age Instantly</h1>
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Age Calculator by Date of Birth</h1>
                 <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-                    Our free Age Calculator Online allows you to instantly find your exact age by date of birth. This real-time age calculator is simple to use and provides precise results in years, months, days, hours, minutes, and seconds, updating live before your eyes.
+                    Use our free age calculator to instantly find your exact age from your date of birth. This real-time tool provides precise results in years, months, days, hours, minutes, and seconds, updating live before your eyes.
                 </p>
             </div>
 
@@ -74,7 +74,7 @@ export default function AgeCalculatorOnlinePage() {
 
             <section className="mt-12 space-y-8 max-w-4xl mx-auto">
                 <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Online Age Calculator</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Age Calculator</h2>
                     <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
                         <li><strong>Enter Your Date of Birth:</strong> Use the calendar to select your birth date.</li>
                         <li><strong>Click “Calculate Age”:</strong> Press the button to see your age instantly.</li>
@@ -120,7 +120,7 @@ export default function AgeCalculatorOnlinePage() {
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                        <Link href="/age-calculator" className="text-primary hover:underline">Birthday Age Calculator</Link>
+                        <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
                         <Link href="/pet-age" className="text-primary hover:underline">Dog & Cat Age Calculator</Link>
                         <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
                         <Link href="/retirement-age" className="text-primary hover:underline">Retirement Age Calculator</Link>
