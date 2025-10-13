@@ -13,7 +13,9 @@ import {
   User,
   TestTube,
   Scale,
-  GitMerge
+  GitMerge,
+  Dog,
+  Cat
 } from 'lucide-react';
 
 export type NavItem = {
@@ -45,13 +47,6 @@ export const navItems: NavItem[] = [
     description: 'Calculates age from date of birth in years, months, and days.'
   },
   {
-    href: '/age-calculator-online',
-    icon: Clock,
-    label: 'Age Calculator Online',
-    category: 'Core Age Calculation',
-    description: 'Same as above with emphasis on online usage and instant results.'
-  },
-  {
     href: '/age-calculator-by-date-of-birth',
     icon: User,
     label: 'Age Calculator by Date of Birth',
@@ -66,32 +61,11 @@ export const navItems: NavItem[] = [
     description: 'Emphasize birthdays and countdown to next birthday.'
   },
   {
-    href: '/age-calculator-by-year',
-    icon: CalendarDays,
-    label: 'Age Calculator by Year',
-    category: 'Core Age Calculation',
-    description: 'Simple tool to compare age differences by birth year only.'
-  },
-  {
     href: '/biological-age',
     icon: HeartPulse,
     label: 'Biological Age Calculator',
     category: 'Scientific & Health Age',
     description: 'Estimates body’s biological age based on health/lifestyle inputs.'
-  },
-  {
-    href: '/chronological-age-calculator',
-    icon: TestTube,
-    label: 'Chronological Age Calculator',
-    category: 'Scientific & Health Age',
-    description: 'Calculates actual age in decimal form (used for research/education).'
-  },
-  {
-    href: '/metabolic-age-calculator',
-    icon: Scale,
-    label: 'Metabolic Age Calculator',
-    category: 'Scientific & Health Age',
-    description: 'Calculates metabolic age from weight, height, BMI, and activity level.'
   },
   {
     href: '/gestational-age',
@@ -108,11 +82,18 @@ export const navItems: NavItem[] = [
     description: 'Tools to assess health-related age factors like Menopause and Blood Pressure.'
   },
   {
-    href: '/pet-age',
-    icon: PawPrint,
-    label: 'Pet Age Calculator',
+    href: '/dog-age',
+    icon: Dog,
+    label: 'Dog Age Calculator',
     category: 'Pet Age',
-    description: 'Find out how old your pet is in human years.'
+    description: 'Find out how old your dog is in human years.'
+  },
+   {
+    href: '/cat-age',
+    icon: Cat,
+    label: 'Cat Age Calculator',
+    category: 'Pet Age',
+    description: 'Find out how old your cat is in human years.'
   },
   {
     href: '/retirement-age',
