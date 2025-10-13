@@ -159,7 +159,7 @@ export default function GestationalAgePage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
                   <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
-                  <Link href="/retirement-age" className="text-primary hover:underline">Retirement Age Calculator</Link>
+                  <Link href="/retirement" className="text-primary hover:underline">Retirement Age Calculator</Link>
               </div>
           </div>
       </section>
