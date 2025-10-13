@@ -1,8 +1,9 @@
+
 "use client";
 
 import React from 'react';
 import Link from 'next/link';
-import { Stethoscope } from 'lucide-react';
+import { Hourglass } from 'lucide-react';
 import { TopNav } from './top-nav';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
@@ -12,7 +13,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="container flex h-14 items-center px-4">
           <div className="mr-4 flex items-center">
             <Link href="/" className="mr-2 md:mr-6 flex items-center space-x-2">
-                <Stethoscope className="h-6 w-6" aria-hidden="true" />
+                <Hourglass className="h-6 w-6" aria-hidden="true" />
                 <span className="hidden font-bold sm:inline-block">Age Calculator Hub</span>
             </Link>
             <TopNav />
