@@ -7,6 +7,24 @@ export const metadata: Metadata = {
   title: 'Age Calculator Hub – Human, Pet, Retirement & Health Age Calculators',
   description:
     'Age Calculator Hub lets you calculate your exact age, biological age, pet age, retirement age, gestational age, and health age metrics easily. Free and online!',
+  robots: {
+    index: true,
+    follow: true,
+  },
+   alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Age Calculator Hub – Human, Pet, Retirement & Health Age Calculators',
+    description: 'A hub for various age-related calculators.',
+    type: 'website',
+    url: 'https://innerpeacejournals.com',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Age Calculator Hub – Human, Pet, Retirement & Health Age Calculators',
+    description: 'A hub for various age-related calculators.',
+  },
 };
 
 export default function RootLayout({
