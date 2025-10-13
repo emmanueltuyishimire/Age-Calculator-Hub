@@ -87,7 +87,7 @@ export const navItems: NavItem[] = [
     description: 'Find out how old your dog is in human years.'
   },
    {
-    href: '/cat-age',
+    href: '/cat-age-in-human-years',
     icon: Cat,
     label: 'Cat Age Calculator',
     category: 'Pet Age',
