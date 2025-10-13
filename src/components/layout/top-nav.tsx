@@ -7,6 +7,9 @@ import Link from 'next/link';
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
   SheetTrigger,
 } from "@/components/ui/sheet"
 import {
@@ -80,12 +83,16 @@ export function TopNav() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
+             <SheetHeader className="px-2 py-6">
+                <SheetTitle className="sr-only">Main Menu</SheetTitle>
+                <SheetDescription className="sr-only">Main navigation menu for Age Calculator Hub, including links to all calculators.</SheetDescription>
+                 <Link href="/" className="flex items-center space-x-2 mb-6" onClick={() => setIsOpen(false)}>
+                    <Calculator className="h-6 w-6" aria-hidden="true" />
+                    <span className="font-bold">Age Calculator Hub</span>
+                </Link>
+            </SheetHeader>
             <nav role="navigation" aria-label="Mobile menu">
-              <div className="px-2 py-6">
-              <Link href="/" className="flex items-center space-x-2 mb-6" onClick={() => setIsOpen(false)}>
-                <Calculator className="h-6 w-6" aria-hidden="true" />
-                <span className="font-bold">Age Calculator Hub</span>
-              </Link>
+              <div className="px-2">
               <div className="flex flex-col gap-1">
                 <Link
                     href="/"
