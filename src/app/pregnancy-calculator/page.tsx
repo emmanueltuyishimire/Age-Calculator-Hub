@@ -1,7 +1,6 @@
 
 import PregnancyCalculator from "@/components/calculators/pregnancy-calculator";
 import { type Metadata } from 'next';
-import Link from 'next/link';
 import {
   Accordion,
   AccordionContent,
@@ -98,16 +97,6 @@ export default function PregnancyCalculatorPage() {
                         </AccordionItem>
                     ))}
                 </Accordion>
-            </div>
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Pregnancy Tools</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Link href="/due-date-calculator" className="text-primary hover:underline">Due Date Calculator</Link>
-                    <Link href="/ovulation-calculator" className="text-primary hover:underline">Ovulation Calculator</Link>
-                    <Link href="/gestational-age" className="text-primary hover:underline">Gestational Age Calculator</Link>
-                    <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
-                    <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
-                </div>
             </div>
         </section>
       </main>

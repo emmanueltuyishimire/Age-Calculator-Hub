@@ -1,7 +1,6 @@
 
 import AgeCalculatorOnline from '@/components/calculators/age-calculator-online';
 import { type Metadata } from 'next';
-import Link from 'next/link';
 import {
   Accordion,
   AccordionContent,
@@ -115,18 +114,6 @@ export default function AgeCalculatorByDateOfBirthPage() {
                             </AccordionItem>
                         ))}
                     </Accordion>
-                </div>
-
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
-                        <Link href="/birthday-age-calculator" className="text-primary hover:underline">Birthday Age Calculator</Link>
-                        <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
-                        <Link href="/dog-age" className="text-primary hover:underline">Dog Age Calculator</Link>
-                        <Link href="/cat-age-in-human-years" className="text-primary hover:underline">Cat Age Calculator</Link>
-                        <Link href="/pregnancy-calculators" className="text-primary hover:underline">Pregnancy Calculators</Link>
-                    </div>
                 </div>
             </section>
         </main>
