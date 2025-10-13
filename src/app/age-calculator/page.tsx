@@ -99,7 +99,6 @@ export default function AgeCalculatorPage() {
                     Our age calculator allows you to calculate your exact age by date of birth, by year, or by birthday. This online age calculator is easy to use and provides instant results for anyone looking to track their age accurately. It's a useful tool for official documents, understanding age-related milestones, or simply celebrating another year of life.
                 </p>
             </div>
-            <div className="ad-slot border-dashed border-2 p-10 text-center my-6 min-h-[90px]"></div>
 
             <AgeCalculator />
 
@@ -149,7 +148,7 @@ export default function AgeCalculatorPage() {
 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <Link href="/cat-age-in-human-years" className="text-primary hover:underline">Dog & Cat Age Calculator</Link>
                         <Link href="/biological-age" className="text-primary hover:underline">Chronological & Biological Age Calculator</Link>
                         <Link href="/retirement" className="text-primary hover:underline">Retirement Age Calculator</Link>
@@ -160,10 +159,9 @@ export default function AgeCalculatorPage() {
             </section>
         </main>
         <aside className="w-full lg:w-1/3">
-             <div className="ad-slot border-dashed border-2 p-10 text-center sticky top-20 min-h-[250px]"></div>
+             <div className="ad-slot border-dashed border-2 p-10 text-center sticky top-20 min-h-[250px] hidden lg:block"></div>
         </aside>
       </div>
-       <div className="ad-slot border-dashed border-2 p-10 text-center my-6 min-h-[90px]"></div>
     </div>
   );
 }

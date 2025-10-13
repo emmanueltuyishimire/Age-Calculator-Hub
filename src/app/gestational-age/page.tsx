@@ -126,6 +126,7 @@ export default function GestationalAgePage() {
 
           <div>
             <h3 className="text-2xl md:text-3xl font-bold mb-4">Gestational Age Chart (Weeks to Months)</h3>
+            <div className="overflow-x-auto">
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -144,6 +145,7 @@ export default function GestationalAgePage() {
                     ))}
                 </TableBody>
             </Table>
+            </div>
           </div>
 
           <div>
@@ -160,7 +162,7 @@ export default function GestationalAgePage() {
 
           <div>
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <Link href="/due-date-calculator" className="text-primary hover:underline">Due Date Calculator</Link>
                   <Link href="/pregnancy-calculator" className="text-primary hover:underline">Pregnancy Calculator</Link>
                   <Link href="/ovulation-calculator" className="text-primary hover:underline">Ovulation Calculator</Link>

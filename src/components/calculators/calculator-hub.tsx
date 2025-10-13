@@ -11,7 +11,7 @@ export default function CalculatorHub() {
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Welcome to the Age Calculator Hub</h1>
-        <p className="text-md md:text-lg text-muted-foreground">Your one-stop destination for a variety of age-related calculators.</p>
+        <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">Your one-stop destination for a variety of age-related calculators.</p>
       </div>
 
       <div className="space-y-12">
@@ -22,12 +22,12 @@ export default function CalculatorHub() {
               {category.items.map((item) => (
                 <Link href={item.href} key={item.href} className="block hover:no-underline">
                   <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out">
-                    <CardHeader>
+                    <CardHeader className="p-4 sm:p-6">
                       <div className="flex items-center gap-4 mb-2">
                         <item.icon className="h-8 w-8 text-primary" />
-                        <CardTitle className="text-xl">{item.label}</CardTitle>
+                        <CardTitle className="text-lg sm:text-xl">{item.label}</CardTitle>
                       </div>
-                      <CardDescription>{item.description}</CardDescription>
+                      <CardDescription className="text-sm">{item.description}</CardDescription>
                     </CardHeader>
                   </Card>
                 </Link>

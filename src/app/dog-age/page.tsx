@@ -107,6 +107,7 @@ export default function DogAgePage() {
                 <p className="text-muted-foreground mb-4">
                     The old rule of "1 dog year equals 7 human years" is a myth. A dog's aging process depends heavily on their size and breed. Smaller dogs tend to live longer and age more slowly, while larger breeds age more rapidly, especially in their later years.
                 </p>
+                <div className="overflow-x-auto">
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -129,6 +130,7 @@ export default function DogAgePage() {
                         ))}
                     </TableBody>
                 </Table>
+                </div>
             </div>
 
             <div>
@@ -169,7 +171,7 @@ export default function DogAgePage() {
 
             <div>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <Link href="/cat-age-in-human-years" className="text-primary hover:underline">Cat Age Calculator</Link>
                     <Link href="/age-calculator" className="text-primary hover:underline">Human Age Calculator</Link>
                     <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>

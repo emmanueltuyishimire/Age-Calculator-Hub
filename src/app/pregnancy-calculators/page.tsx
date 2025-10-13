@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { categorizedNavItems, type NavItem } from '@/components/layout/nav-items';
+import { categorizedNavItems } from '@/components/layout/nav-items';
 
 export default function PregnancyCalculatorsHub() {
   const pregnancyNavItems = categorizedNavItems().find(cat => cat.name === 'Pregnancy Calculators')?.items || [];
@@ -21,12 +21,12 @@ export default function PregnancyCalculatorsHub() {
         {pregnancyNavItems.map((item) => (
           <Link href={item.href} key={item.href} className="block hover:no-underline">
             <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out">
-              <CardHeader>
+              <CardHeader className="p-4 sm:p-6">
                 <div className="flex items-center gap-4 mb-2">
                   <item.icon className="h-8 w-8 text-primary" />
-                  <CardTitle className="text-xl">{item.label}</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl">{item.label}</CardTitle>
                 </div>
-                <CardDescription>{item.description}</CardDescription>
+                <CardDescription className="text-sm">{item.description}</CardDescription>
               </CardHeader>
             </Card>
           </Link>

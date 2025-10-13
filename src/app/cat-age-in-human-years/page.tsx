@@ -106,6 +106,7 @@ export default function CatAgePage() {
                <p className="text-muted-foreground mb-4">
                   Cats age faster in their first two years, then approximately four human years per cat year after that. This chart gives a quick overview.
               </p>
+              <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                     <TableRow>
@@ -124,6 +125,7 @@ export default function CatAgePage() {
                     ))}
                 </TableBody>
             </Table>
+            </div>
           </div>
 
           <div>
@@ -164,7 +166,7 @@ export default function CatAgePage() {
 
           <div>
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <Link href="/dog-age" className="text-primary hover:underline">Dog Age Calculator</Link>
                   <Link href="/age-calculator" className="text-primary hover:underline">Human Age Calculator</Link>
                    <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
