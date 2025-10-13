@@ -10,14 +10,34 @@ import {
 } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
-    title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date',
-    description: 'Find your expected delivery date using our accurate Due Date Calculator. Enter your LMP, conception, or IVF date to estimate when your baby will arrive.',
+    title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date by LMP, Conception or IVF',
+    description: 'Use our free Due Date Calculator to estimate your baby\'s expected delivery date from LMP, conception date, or IVF transfer. Fast, reliable, and easy—get your estimated due date and pregnancy week instantly.',
+    openGraph: {
+        title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date',
+        description: 'Estimate your baby\'s due date by LMP, conception, or IVF. Find gestational age, trimester, and key milestones easily.',
+    },
+    alternates: {
+        canonical: '/due-date-calculator',
+    },
 };
 
 const faqs = [
-    { question: "How is the due date calculated?", answer: "The most common method is Naegele's rule, which adds 280 days (40 weeks) to the first day of your last menstrual period (LMP). Our calculator also allows calculations based on conception or IVF transfer date for more flexibility." },
-    { question: "How accurate is the estimated due date?", answer: "It's an estimate, not a guarantee. Only about 4% of babies are born on their exact due date. It provides a timeframe for when you can expect to go into labor." },
-    { question: "Can my due date change?", answer: "Yes, your healthcare provider may adjust your due date based on ultrasound measurements, especially in the first trimester. An early ultrasound is the most accurate way to date a pregnancy." },
+    {
+      question: "How accurate is the due date?",
+      answer: "The due date is an estimate. First-trimester ultrasound dating is typically the most accurate method for establishing an exact gestational age."
+    },
+    {
+      question: "Can I use this calculator if I had IVF?",
+      answer: "Yes. Choose the IVF option and enter the embryo transfer date and embryo stage (e.g., day 3 or day 5). The calculator will compute the estimated delivery date accordingly."
+    },
+    {
+      question: "What if my menstrual cycle is not 28 days?",
+      answer: "Enter your average cycle length to refine the due date estimate. A longer or shorter cycle shifts the estimated conception and due dates."
+    },
+    {
+      question: "Is this tool medical advice?",
+      answer: "No. This tool provides informational estimates only. Always consult your healthcare provider for medical decisions and accurate pregnancy dating."
+    }
 ];
 
 const faqSchema = {
@@ -43,7 +63,7 @@ export default function DueDateCalculatorPage() {
       <div className="text-center mb-8">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Due Date Calculator – Find Your Baby’s Estimated Delivery Date</h1>
         <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-          Find your expected delivery date with our accurate Due Date Calculator. Enter your last menstrual period (LMP), conception date, or IVF transfer date to estimate when your baby will arrive.
+            Use our Due Date Calculator to estimate when your baby is likely to arrive. Enter the first day of your last menstrual period (LMP), or — if known — your conception date or IVF transfer date, and the calculator will return an estimated delivery date, current pregnancy week, and trimester. This tool provides a reliable estimate used by many medical professionals, but remember: only an ultrasound can give the most accurate dating. Use the results to plan prenatal care, appointments, and milestones.
         </p>
       </div>
 
@@ -65,10 +85,22 @@ export default function DueDateCalculatorPage() {
               </p>
           </div>
            <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Average Pregnancy Duration Explained</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">What Your Due Date Means (Weeks, Trimesters & Milestones)</h2>
                <p className="text-muted-foreground">
                  While 40 weeks is the standard, a full-term pregnancy can range from 38 to 42 weeks. Factors like genetics, lifestyle, and first-time pregnancies can influence the length. Your due date is the midpoint of this range, so it’s normal for your baby to arrive a week or two before or after.
               </p>
+          </div>
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Tips for a Healthy Pregnancy</h2>
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                <li>Start prenatal care early and schedule your first appointment.</li>
+                <li>Take prenatal vitamins with folic acid.</li>
+                <li>Stay hydrated and maintain balanced nutrition.</li>
+                <li>Get regular, moderate exercise unless advised otherwise.</li>
+                <li>Avoid alcohol, smoking, and certain medications—consult your provider.</li>
+                <li>Monitor fetal movement in the third trimester and report changes.</li>
+                <li>Keep a copy of your due date and prenatal record for appointments.</li>
+            </ul>
           </div>
            <div>
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
