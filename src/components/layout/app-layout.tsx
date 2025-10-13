@@ -12,7 +12,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="mr-4 flex items-center">
             <a href="/" className="mr-6 flex items-center space-x-2">
                 <Stethoscope className="h-6 w-6" />
-                <span className="hidden font-bold sm:inline-block">AgeSage</span>
+                <span className="hidden font-bold sm:inline-block">Age Calculator Hub</span>
             </a>
             <TopNav />
           </div>
