@@ -10,19 +10,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center px-4">
-          <div className="mr-4 flex items-center">
-            <Link href="/" className="mr-2 md:mr-6 flex items-center space-x-2">
+        <div className="container flex h-14 items-center justify-between px-4">
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center space-x-2">
                 <Image src="/Age Calculators Hub logo.jpeg" alt="Age Calculator Hub Logo" width={24} height={24} className="h-6 w-6" />
                 <span className="hidden font-bold sm:inline-block">Age Calculator Hub</span>
             </Link>
-            <TopNav />
           </div>
           
-          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-            <div className="w-full flex-1 md:w-auto md:flex-none">
-                {/* Right side content can go here if needed */}
-            </div>
+          <div className="flex items-center space-x-2">
+            <TopNav />
           </div>
         </div>
       </header>
