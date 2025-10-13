@@ -32,7 +32,7 @@ export default function HealthAssessmentCalculator() {
 
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mx-auto">
       <Card>
         <CardHeader>
           <CardTitle>Blood Pressure Check Age</CardTitle>

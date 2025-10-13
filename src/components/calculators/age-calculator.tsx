@@ -55,7 +55,6 @@ export default function AgeCalculator() {
         return;
       }
       
-      // We use a dynamically updating "now" if the user has selected today's date for 'ageAtDate'
       const endOfCalculation = isCalculating ? new Date() : ageAtDate;
 
       const duration = intervalToDuration({
@@ -92,6 +91,10 @@ export default function AgeCalculator() {
   };
 
   const handleCalculate = () => {
+    if (!dateOfBirth) {
+        alert("Please enter your date of birth.");
+        return;
+    }
     setIsCalculating(true);
     calculateAge();
   };
@@ -113,7 +116,7 @@ export default function AgeCalculator() {
 
   return (
     <div className="space-y-6">
-      <Card className="max-w-2xl mx-auto">
+      <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Birthday Age Calculator</CardTitle>
           <CardDescription>
@@ -183,18 +186,18 @@ export default function AgeCalculator() {
           <Button onClick={handleCalculate} className="w-full">Calculate Your Age Now Online</Button>
 
           {age && (
-            <div className="p-6 bg-muted rounded-lg text-center space-y-4">
+            <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4">
               <div>
-                <h3 className="text-lg font-medium mb-2">Instant Age Calculation Online:</h3>
-                <div className="flex justify-center items-baseline flex-wrap gap-x-4 gap-y-2">
-                  <div><span className="text-3xl font-bold text-primary">{age.years}</span> <span className="text-lg text-muted-foreground">years</span></div>
-                  <div><span className="text-3xl font-bold text-primary">{age.months}</span> <span className="text-lg text-muted-foreground">months</span></div>
-                  <div><span className="text-3xl font-bold text-primary">{age.days}</span> <span className="text-lg text-muted-foreground">days</span></div>
+                <h3 className="text-md sm:text-lg font-medium mb-2">Instant Age Calculation Online:</h3>
+                <div className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2">
+                  <div><span className="text-2xl sm:text-3xl font-bold text-primary">{age.years}</span> <span className="text-md sm:text-lg text-muted-foreground">years</span></div>
+                  <div><span className="text-2xl sm:text-3xl font-bold text-primary">{age.months}</span> <span className="text-md sm:text-lg text-muted-foreground">months</span></div>
+                  <div><span className="text-2xl sm:text-3xl font-bold text-primary">{age.days}</span> <span className="text-md sm:text-lg text-muted-foreground">days</span></div>
                 </div>
               </div>
               <div>
-                 <h3 className="text-lg font-medium mb-2">Or alternatively:</h3>
-                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
+                 <h3 className="text-md sm:text-lg font-medium mb-2">Or alternatively:</h3>
+                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs sm:text-sm">
                     <p><span className='font-semibold'>{age.totalMonths}</span> months <span className='font-semibold'>{age.days}</span> days</p>
                     <p><span className='font-semibold'>{age.totalWeeks}</span> weeks <span className='font-semibold'>{age.days}</span> days</p>
                     <p><span className='font-semibold'>{age.totalDays.toLocaleString()}</span> days</p>

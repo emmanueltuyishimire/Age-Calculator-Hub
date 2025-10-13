@@ -8,9 +8,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center">
+        <div className="container flex h-14 items-center px-4">
           <div className="mr-4 flex items-center">
-            <a href="/" className="mr-6 flex items-center space-x-2">
+            <a href="/" className="mr-2 md:mr-6 flex items-center space-x-2">
                 <Stethoscope className="h-6 w-6" />
                 <span className="hidden font-bold sm:inline-block">Age Calculator Hub</span>
             </a>
@@ -24,7 +24,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </header>
-      <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+      <main className="flex-1">{children}</main>
     </div>
   );
 }

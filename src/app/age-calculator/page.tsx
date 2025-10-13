@@ -90,18 +90,18 @@ export default function AgeCalculatorPage() {
       <div className="flex flex-col lg:flex-row gap-8">
         <main className="w-full lg:w-2/3">
             <div className="text-center mb-8">
-                <h1 className="text-4xl font-bold tracking-tight mb-2">Age Calculator – Calculate Your Exact Age Online</h1>
-                <p className="text-lg text-muted-foreground">
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Age Calculator – Calculate Your Exact Age Online</h1>
+                <p className="text-md md:text-lg text-muted-foreground">
                     Our age calculator allows you to calculate your exact age by date of birth, by year, or by birthday. This online age calculator is easy to use and provides instant results for anyone looking to track their age accurately. It's a useful tool for official documents, understanding age-related milestones, or simply celebrating another year of life.
                 </p>
             </div>
-            <div className="ad-slot border-dashed border-2 p-10 text-center my-6"></div>
+            <div className="ad-slot border-dashed border-2 p-10 text-center my-6 min-h-[90px]"></div>
 
             <AgeCalculator />
 
             <section className="mt-12 space-y-8">
                 <div>
-                    <h2 className="text-3xl font-bold mb-4">How to Use the Age Calculator</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Age Calculator</h2>
                     <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
                         <li><strong>Enter Your Birth Date:</strong> Use the date picker to select your exact date of birth.</li>
                         <li><strong>Choose a Second Date (Optional):</strong> The "Age at the Date of" field defaults to today. You can change it to any other date to find the interval between two dates.</li>
@@ -111,28 +111,28 @@ export default function AgeCalculatorPage() {
                 </div>
 
                  <div>
-                    <h2 className="text-3xl font-bold mb-4">Real-Time Age Calculation</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Real-Time Age Calculation</h2>
                     <p className="text-muted-foreground">
                        This tool does more than just give a static number. The live timer automatically updates every second to give you a precise and ever-changing view of your age. This feature highlights the dynamic nature of time and provides unparalleled accuracy for those who need it.
                     </p>
                 </div>
 
                 <div>
-                    <h2 className="text-3xl font-bold mb-4">Age Calculation Formula</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Age Calculation Formula</h2>
                      <p className="text-muted-foreground">
                        The fundamental formula is simple: <strong>Age = Current Date - Date of Birth</strong>. However, our calculator's algorithm is more advanced. It correctly handles the varying number of days in months (e.g., 28, 30, or 31) and accurately accounts for leap years to ensure the final calculation of years, months, and days is correct.
                     </p>
                 </div>
 
                 <div>
-                    <h2 className="text-3xl font-bold mb-4">Why Accurate Age Calculation Matters</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Why Accurate Age Calculation Matters</h2>
                      <p className="text-muted-foreground">
                        While it might seem simple, having your exact age is crucial for a variety of official and legal purposes. This can include filling out applications for passports, visas, or school admissions, verifying eligibility for age-restricted products or benefits, and for legal contracts. Our tool provides the precision needed for these situations.
                     </p>
                 </div>
 
                 <div>
-                    <h2 className="text-3xl font-bold mb-4">FAQs About Age Calculation</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">FAQs About Age Calculation</h2>
                     <Accordion type="single" collapsible className="w-full">
                         {faqs.map((faq, index) => (
                              <AccordionItem value={`item-${index}`} key={index}>
@@ -144,8 +144,8 @@ export default function AgeCalculatorPage() {
                 </div>
 
                 <div>
-                    <h2 className="text-3xl font-bold mb-4">Related Tools</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         <Link href="/pet-age" className="text-primary hover:underline">Dog & Cat Age Calculator</Link>
                         <Link href="/biological-age" className="text-primary hover:underline">Chronological & Biological Age Calculator</Link>
                         <Link href="/retirement-age" className="text-primary hover:underline">Retirement Age Calculator</Link>
@@ -156,10 +156,10 @@ export default function AgeCalculatorPage() {
             </section>
         </main>
         <aside className="w-full lg:w-1/3">
-             <div className="ad-slot border-dashed border-2 p-10 text-center sticky top-20"></div>
+             <div className="ad-slot border-dashed border-2 p-10 text-center sticky top-20 min-h-[250px]"></div>
         </aside>
       </div>
-       <div className="ad-slot border-dashed border-2 p-10 text-center my-6"></div>
+       <div className="ad-slot border-dashed border-2 p-10 text-center my-6 min-h-[90px]"></div>
     </div>
   );
 }
