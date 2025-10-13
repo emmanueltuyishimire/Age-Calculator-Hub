@@ -20,6 +20,17 @@ import {
 export const metadata: Metadata = {
     title: 'Dog Age Calculator – Convert Dog Years to Human Years Instantly',
     description: 'Use our Dog Age Calculator to find your dog’s age in human years. Discover your dog’s life stage, breed-adjusted age, and care tips with our accurate canine-to-human age conversion tool.',
+    openGraph: {
+        title: 'Dog Age Calculator – Convert Dog Years to Human Years Instantly',
+        description: 'Use our Dog Age Calculator to find your dog’s age in human years. Discover your dog’s life stage, breed-adjusted age, and care tips with our accurate canine-to-human age conversion tool.',
+        type: 'website',
+        url: '/dog-age',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Dog Age Calculator – Convert Dog Years to Human Years Instantly',
+        description: 'Use our Dog Age Calculator to find your dog’s age in human years. Discover your dog’s life stage, breed-adjusted age, and care tips with our accurate canine-to-human age conversion tool.',
+    },
     alternates: {
         canonical: '/dog-age',
     },
@@ -36,32 +47,14 @@ const faqs = [
 const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Is the 1 dog year = 7 human years rule accurate?",
-          "acceptedAnswer": {
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Modern studies show that dog aging depends on breed and size. The old 7-year rule oversimplifies the process."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How long do dogs live?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Small breeds live 12–16 years, medium breeds 10–14, and large breeds 8–12 years on average."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I slow down my dog's aging?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Proper nutrition, regular vet checkups, and mental stimulation can help your dog live longer and healthier."
-          }
+            "text": faq.answer
         }
-    ]
+    }))
 };
 
 const ageChart = [

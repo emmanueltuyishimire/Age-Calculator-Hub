@@ -12,6 +12,20 @@ import {
 export const metadata: Metadata = {
     title: 'Pregnancy Calculator – Estimate How Far Along You Are by LMP',
     description: 'Use our free Pregnancy Calculator to estimate how many weeks pregnant you are and when your baby is due. Fast, accurate, and based on your last menstrual period (LMP).',
+    openGraph: {
+        title: 'Pregnancy Calculator – Estimate How Far Along You Are by LMP',
+        description: 'Use our free Pregnancy Calculator to estimate how many weeks pregnant you are and when your baby is due. Fast, accurate, and based on your last menstrual period (LMP).',
+        type: 'website',
+        url: '/pregnancy-calculator',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Pregnancy Calculator – Estimate How Far Along You Are by LMP',
+        description: 'Use our free Pregnancy Calculator to estimate how many weeks pregnant you are and when your baby is due. Fast, accurate, and based on your last menstrual period (LMP).',
+    },
+    alternates: {
+        canonical: '/pregnancy-calculator',
+    },
 };
 
 const faqs = [

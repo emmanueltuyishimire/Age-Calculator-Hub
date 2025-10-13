@@ -16,12 +16,16 @@ export const metadata: Metadata = {
         title: 'Age Calculator – Calculate Your Age by Date of Birth in Real Time',
         description: 'Free online age calculator to find your exact age in years, months, days, hours, minutes, and seconds. Calculate your age by date of birth instantly and watch it update in real time.',
         type: 'website',
+        url: '/age-calculator',
     },
     twitter: {
         card: 'summary_large_image',
         title: 'Age Calculator – Calculate Your Age by Date of Birth in Real Time',
         description: 'Free online age calculator to find your exact age in years, months, days, hours, minutes, and seconds. Calculate your age by date of birth instantly and watch it update in real time.',
-    }
+    },
+    alternates: {
+        canonical: '/age-calculator',
+    },
 };
 
 const faqs = [

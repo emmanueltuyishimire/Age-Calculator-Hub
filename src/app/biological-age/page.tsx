@@ -12,6 +12,20 @@ import Link from "next/link";
 export const metadata: Metadata = {
     title: 'Biological Age Calculator – Discover Your True Age Based on Health & Lifestyle',
     description: 'Use our Biological Age Calculator to estimate your body’s real age based on lifestyle, fitness, and health factors. Compare it with your chronological age and take control of your wellness today!',
+    openGraph: {
+        title: 'Biological Age Calculator – Discover Your True Age Based on Health & Lifestyle',
+        description: 'Use our Biological Age Calculator to estimate your body’s real age based on lifestyle, fitness, and health factors. Compare it with your chronological age and take control of your wellness today!',
+        type: 'website',
+        url: '/biological-age',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Biological Age Calculator – Discover Your True Age Based on Health & Lifestyle',
+        description: 'Use our Biological Age Calculator to estimate your body’s real age based on lifestyle, fitness, and health factors. Compare it with your chronological age and take control of your wellness today!',
+    },
+    alternates: {
+        canonical: '/biological-age',
+    },
 };
 
 const faqs = [
@@ -111,6 +125,7 @@ export default function BiologicalAgePage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
                   <Link href="/age-calculator-by-date-of-birth" className="text-primary hover:underline">Age Calculator by Date of Birth</Link>
+                   <Link href="/health-assessments" className="text-primary hover:underline">Health Assessment Tools</Link>
               </div>
           </div>
       </section>

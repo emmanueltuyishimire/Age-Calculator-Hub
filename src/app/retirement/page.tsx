@@ -12,6 +12,20 @@ import {
 export const metadata: Metadata = {
     title: 'Retirement Age Calculator – Find Your Full Retirement Age by Birth Year',
     description: 'Use our free Retirement Age Calculator to determine your full retirement age based on your birth year. Plan your Social Security, pension, and retirement timing easily.',
+    openGraph: {
+        title: 'Retirement Age Calculator – Find Your Full Retirement Age by Birth Year',
+        description: 'Use our free Retirement Age Calculator to determine your full retirement age based on your birth year. Plan your Social Security, pension, and retirement timing easily.',
+        type: 'website',
+        url: '/retirement',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Retirement Age Calculator – Find Your Full Retirement Age by Birth Year',
+        description: 'Use our free Retirement Age Calculator to determine your full retirement age based on your birth year. Plan your Social Security, pension, and retirement timing easily.',
+    },
+    alternates: {
+        canonical: '/retirement',
+    },
 };
 
 const faqs = [
@@ -100,6 +114,7 @@ export default function RetirementPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
                   <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
+                  <Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">Social Security Retirement Age Calculator</Link>
               </div>
           </div>
       </section>

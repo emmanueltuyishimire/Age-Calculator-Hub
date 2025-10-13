@@ -20,6 +20,20 @@ import {
 export const metadata: Metadata = {
     title: 'Cat Age Calculator – Convert Cat Years to Human Years Instantly',
     description: 'Find out your cat’s age in human years with our free Cat Age Calculator. Understand your cat’s life stage, health, and care needs using an accurate feline-to-human age conversion chart.',
+    openGraph: {
+        title: 'Cat Age Calculator – Convert Cat Years to Human Years Instantly',
+        description: 'Find out your cat’s age in human years with our free Cat Age Calculator. Understand your cat’s life stage, health, and care needs using an accurate feline-to-human age conversion chart.',
+        type: 'website',
+        url: '/cat-age-in-human-years',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Cat Age Calculator – Convert Cat Years to Human Years Instantly',
+        description: 'Find out your cat’s age in human years with our free Cat Age Calculator. Understand your cat’s life stage, health, and care needs using an accurate feline-to-human age conversion chart.',
+    },
+    alternates: {
+        canonical: '/cat-age-in-human-years',
+    },
 };
 
 const faqs = [

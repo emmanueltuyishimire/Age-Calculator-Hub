@@ -13,8 +13,15 @@ export const metadata: Metadata = {
     title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date by LMP, Conception or IVF',
     description: 'Use our free Due Date Calculator to estimate your baby\'s expected delivery date from LMP, conception date, or IVF transfer. Fast, reliable, and easy—get your estimated due date and pregnancy week instantly.',
     openGraph: {
-        title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date',
-        description: 'Estimate your baby\'s due date by LMP, conception, or IVF. Find gestational age, trimester, and key milestones easily.',
+        title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date by LMP, Conception or IVF',
+        description: 'Use our free Due Date Calculator to estimate your baby\'s expected delivery date from LMP, conception date, or IVF transfer. Fast, reliable, and easy—get your estimated due date and pregnancy week instantly.',
+        type: 'website',
+        url: '/due-date-calculator',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date by LMP, Conception or IVF',
+        description: 'Use our free Due Date Calculator to estimate your baby\'s expected delivery date from LMP, conception date, or IVF transfer. Fast, reliable, and easy—get your estimated due date and pregnancy week instantly.',
     },
     alternates: {
         canonical: '/due-date-calculator',

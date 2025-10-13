@@ -1,4 +1,3 @@
-
 import {
   Baby,
   Briefcase,
@@ -75,10 +74,10 @@ export const navItems: NavItem[] = [
   },
   {
     href: '/health-assessments',
-    icon: FileHeart,
+    icon: Stethoscope,
     label: 'Health Assessments',
     category: 'Scientific & Health Age',
-    description: 'Tools to assess health-related age factors like Menopause and Blood Pressure.'
+    description: 'Tools to assess various health-related age factors.'
   },
   {
     href: '/dog-age',
