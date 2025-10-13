@@ -13,14 +13,25 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
 
 interface RetirementInfo {
-  age: { years: number; months: number };
-  date: Date;
+  fullRetirement: {
+    age: { years: number; months: number };
+    date: Date;
+  };
+  earlyRetirement: {
+    age: number;
+    date: Date;
+  };
+  delayedRetirement: {
+    age: number;
+    date: Date;
+  };
 }
 
-// Based on SSA.gov data
-const getRetirementInfo = (birthYear: number): RetirementInfo['age'] => {
+const getRetirementAge = (birthYear: number): { years: number; months: number } => {
   if (birthYear <= 1937) return { years: 65, months: 0 };
   if (birthYear === 1938) return { years: 65, months: 2 };
   if (birthYear === 1939) return { years: 65, months: 4 };
@@ -38,14 +49,16 @@ const getRetirementInfo = (birthYear: number): RetirementInfo['age'] => {
 
 export default function RetirementAgeCalculator() {
   const [dob, setDob] = useState({ day: '', month: '', year: '' });
-  const [date, setDate] = useState<Date | undefined>();
   const [retirementInfo, setRetirementInfo] = useState<RetirementInfo | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
     const day = parseInt(dayStr, 10);
     const month = parseInt(monthStr, 10) - 1;
     const year = parseInt(yearStr, 10);
-    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1900 || year > new Date().getFullYear()) return null;
+    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+      return null;
+    }
     const date = new Date(year, month, day);
     if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
       return date;
@@ -55,33 +68,56 @@ export default function RetirementAgeCalculator() {
 
   const handleCalculate = () => {
     const selectedDate = parseDate(dob.day, dob.month, dob.year);
-    setDate(selectedDate || undefined);
 
-    if (selectedDate) {
-      const birthYear = selectedDate.getFullYear();
-      const retirementAge = getRetirementInfo(birthYear);
-      const retirementDate = addMonths(addYears(selectedDate, retirementAge.years), retirementAge.months);
-      setRetirementInfo({
-        age: retirementAge,
-        date: retirementDate,
-      });
-    } else {
+    if (!selectedDate) {
+      setError("Please enter a valid date of birth.");
       setRetirementInfo(null);
+      return;
     }
+    setError(null);
+
+    const birthYear = selectedDate.getFullYear();
+    const fullRetirementAge = getRetirementAge(birthYear);
+    
+    const fullRetirementDate = addMonths(addYears(selectedDate, fullRetirementAge.years), fullRetirementAge.months);
+    const earlyRetirementDate = addYears(selectedDate, 62);
+    const delayedRetirementDate = addYears(selectedDate, 70);
+
+    setRetirementInfo({
+      fullRetirement: {
+        age: fullRetirementAge,
+        date: fullRetirementDate,
+      },
+      earlyRetirement: {
+        age: 62,
+        date: earlyRetirementDate,
+      },
+      delayedRetirement: {
+        age: 70,
+        date: delayedRetirementDate,
+      },
+    });
   };
 
   return (
-    <Card className="max-w-md mx-auto">
+    <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Full Retirement Age</CardTitle>
+        <CardTitle>Calculate Your Retirement Age</CardTitle>
         <CardDescription>
           Enter your date of birth to find your full retirement age for social security benefits.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
+        {error && (
+            <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+            </Alert>
+        )}
         <div className="space-y-2">
             <Label>Date of Birth</Label>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
                 <Input placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
                 <Input placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
                 <Input placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
@@ -90,26 +126,37 @@ export default function RetirementAgeCalculator() {
         <Button onClick={handleCalculate} className="w-full">Calculate Retirement Age</Button>
 
         {retirementInfo && (
-          <div className="p-6 bg-muted rounded-lg text-center">
-            <h3 className="text-lg font-medium mb-2">Your full retirement age is:</h3>
-            <div className="flex justify-center items-baseline space-x-2">
-              <span className="text-4xl font-bold text-primary">{retirementInfo.age.years}</span>
-              <span className="text-xl text-muted-foreground">years</span>
-              {retirementInfo.age.months > 0 && (
-                <>
-                  <span className="text-4xl font-bold text-primary">{retirementInfo.age.months}</span>
-                  <span className="text-xl text-muted-foreground">months</span>
-                </>
-              )}
+          <div className="p-6 bg-muted rounded-lg space-y-6 animate-fade-in mt-4">
+            <div className="text-center">
+              <h3 className="text-lg font-medium text-muted-foreground">Your Full Retirement Age is:</h3>
+              <div className="flex justify-center items-baseline space-x-2">
+                <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirement.age.years}</span>
+                <span className="text-xl text-muted-foreground">years</span>
+                {retirementInfo.fullRetirement.age.months > 0 && (
+                  <>
+                    <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirement.age.months}</span>
+                    <span className="text-xl text-muted-foreground">months</span>
+                  </>
+                )}
+              </div>
+              <p className="mt-2 text-muted-foreground">
+                You can receive full benefits starting in <strong className="text-foreground">{format(retirementInfo.fullRetirement.date, 'MMMM yyyy')}</strong>.
+              </p>
             </div>
-            <p className="mt-4 text-muted-foreground">
-              You can receive full benefits starting in <strong className="text-foreground">{format(retirementInfo.date, 'MMMM yyyy')}</strong>.
-            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                <div className="p-4 border rounded-lg">
+                    <h4 className="font-semibold">Early Retirement</h4>
+                    <p className="text-sm text-muted-foreground">You can start receiving benefits at age 62, in <strong className="text-foreground">{format(retirementInfo.earlyRetirement.date, 'MMMM yyyy')}</strong>. Benefits may be reduced.</p>
+                </div>
+                <div className="p-4 border rounded-lg">
+                    <h4 className="font-semibold">Delayed Retirement</h4>
+                    <p className="text-sm text-muted-foreground">If you delay until age 70, your benefits will increase. You can receive this maximum benefit starting in <strong className="text-foreground">{format(retirementInfo.delayedRetirement.date, 'MMMM yyyy')}</strong>.</p>
+                </div>
+            </div>
           </div>
         )}
       </CardContent>
     </Card>
   );
 }
-
-    

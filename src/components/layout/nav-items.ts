@@ -94,7 +94,7 @@ export const navItems: NavItem[] = [
     description: 'Find out how old your cat is in human years.'
   },
   {
-    href: '/retirement-age',
+    href: '/retirement',
     icon: Briefcase,
     label: 'Retirement Age Calculator',
     category: 'Retirement & Social',
