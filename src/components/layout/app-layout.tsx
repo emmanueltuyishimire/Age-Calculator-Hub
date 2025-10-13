@@ -1,43 +1,30 @@
 "use client";
 
 import React from 'react';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from '@/components/ui/sidebar';
-import { SidebarNav } from './sidebar-nav';
 import { Stethoscope } from 'lucide-react';
+import { TopNav } from './top-nav';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader>
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Stethoscope className="h-5 w-5" />
+    <div className="min-h-screen flex flex-col">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-14 items-center">
+          <div className="mr-4 flex items-center">
+            <a href="/" className="mr-6 flex items-center space-x-2">
+                <Stethoscope className="h-6 w-6" />
+                <span className="hidden font-bold sm:inline-block">AgeSage</span>
+            </a>
+            <TopNav />
+          </div>
+          
+          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+            <div className="w-full flex-1 md:w-auto md:flex-none">
+                {/* Right side content can go here if needed */}
             </div>
-            <span className="text-lg font-semibold">AgeSage</span>
           </div>
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarNav />
-        </SidebarContent>
-      </Sidebar>
-      <SidebarInset>
-        <header className="flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur-sm md:justify-end">
-          <div className="flex items-center gap-2 md:hidden">
-            <Stethoscope className="h-6 w-6" />
-            <span className="text-lg font-semibold">AgeSage</span>
-          </div>
-          <SidebarTrigger />
-        </header>
-        <main className="p-4 sm:p-6 lg:p-8">{children}</main>
-      </SidebarInset>
-    </SidebarProvider>
+        </div>
+      </header>
+      <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+    </div>
   );
 }
