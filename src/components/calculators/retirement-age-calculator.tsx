@@ -116,11 +116,11 @@ export default function RetirementAgeCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-            <Label>Date of Birth</Label>
+            <Label htmlFor="dob-day-ret">Date of Birth</Label>
             <div className="flex flex-col sm:flex-row gap-2">
-                <Input placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
-                <Input placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
-                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
+                <Input id="dob-day-ret" placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
+                <Input id="dob-month-ret" placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
+                <Input id="dob-year-ret" placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
             </div>
         </div>
         <Button onClick={handleCalculate} className="w-full">Calculate Retirement Age</Button>

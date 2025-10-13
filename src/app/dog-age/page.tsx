@@ -83,6 +83,7 @@ export default function DogAgePage() {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
+      <main role="main">
         <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Dog Age Calculator – Convert Dog Years to Human Years Instantly</h1>
             <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -178,6 +179,7 @@ export default function DogAgePage() {
                 </div>
             </div>
         </section>
+      </main>
     </div>
   );
 }

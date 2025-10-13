@@ -53,6 +53,9 @@ export default function BiologicalAgeCalculator() {
       chronologicalAge: 30,
       gender: 'female',
       sleepHours: 7,
+      exerciseFrequency: '',
+      dietQuality: '',
+      stressLevels: '',
     },
   });
 
@@ -188,7 +191,7 @@ export default function BiologicalAgeCalculator() {
             )}
             <div>
               <h3 className="text-lg font-medium">Insights:</h3>
-              <p className="text-muted-foreground">{result.insights}</p>
+              <p className="text-muted-foreground whitespace-pre-wrap">{result.insights}</p>
             </div>
           </div>
         )}

@@ -56,6 +56,7 @@ export default function BirthdayAgeCalculatorPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <main role="main">
         <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Birthday Age Calculator – Find Your Exact Age Instantly</h1>
             <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -122,6 +123,7 @@ export default function BirthdayAgeCalculatorPage() {
                 </div>
             </div>
         </section>
+      </main>
     </div>
   );
 }

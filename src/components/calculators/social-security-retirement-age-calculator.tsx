@@ -97,10 +97,10 @@ export default function SocialSecurityRetirementAgeCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-            <Label htmlFor="birth-year">Your Birth Year</Label>
+            <Label htmlFor="birth-year-ss">Your Birth Year</Label>
             <div className="flex gap-2">
                 <Input 
-                    id="birth-year"
+                    id="birth-year-ss"
                     placeholder="e.g., 1980" 
                     value={birthYear} 
                     onChange={e => setBirthYear(e.target.value)} 

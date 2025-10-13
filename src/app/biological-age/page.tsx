@@ -55,80 +55,82 @@ export default function BiologicalAgePage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Biological Age Calculator – Find Your True Body Age</h1>
-        <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-          Discover your body's true biological age based on key health markers and lifestyle factors. This tool provides an estimate to help you understand your overall health.
-        </p>
-      </div>
-      <BiologicalAgeCalculator />
+      <main role="main">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Biological Age Calculator – Find Your True Body Age</h1>
+          <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            Discover your body's true biological age based on key health markers and lifestyle factors. This tool provides an estimate to help you understand your overall health.
+          </p>
+        </div>
+        <BiologicalAgeCalculator />
 
-      <section className="mt-12 space-y-8 max-w-4xl mx-auto">
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Biological Age Calculator</h2>
-              <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                  <li><strong>Enter Your Age and Health Details:</strong> Provide your chronological age and answer the questions about your lifestyle, including diet, exercise, sleep, and stress.</li>
-                  <li><strong>Calculate Your Biological Age:</strong> Click the button to have our AI analyze your information.</li>
-                  <li><strong>Compare Your Biological Age With Chronological Age:</strong> The result will show your estimated biological age, allowing you to see if it's higher or lower than your actual age.</li>
-              </ol>
-          </div>
+        <section className="mt-12 space-y-8 max-w-4xl mx-auto">
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Biological Age Calculator</h2>
+                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                    <li><strong>Enter Your Age and Health Details:</strong> Provide your chronological age and answer the questions about your lifestyle, including diet, exercise, sleep, and stress.</li>
+                    <li><strong>Calculate Your Biological Age:</strong> Click the button to have our AI analyze your information.</li>
+                    <li><strong>Compare Your Biological Age With Chronological Age:</strong> The result will show your estimated biological age, allowing you to see if it's higher or lower than your actual age.</li>
+                </ol>
+            </div>
 
-           <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Factors That Affect Your Biological Age</h2>
-               <p className="text-muted-foreground mb-4">
-                  Your biological age isn't just a number; it's a reflection of your overall health. Several key lifestyle factors play a significant role:
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  <li><strong>Diet:</strong> A balanced diet rich in nutrients can slow aging, while processed foods may accelerate it.</li>
-                  <li><strong>Exercise:</strong> Regular physical activity improves cardiovascular health and keeps your body young.</li>
-                  <li><strong>Sleep:</strong> Quality sleep is crucial for cellular repair and regeneration.</li>
-                  <li><strong>Stress:</strong> Chronic stress can lead to inflammation and speed up the aging process.</li>
-                  <li><strong>Genetics:</strong> Your genes play a role, but lifestyle choices can significantly influence their expression.</li>
-              </ul>
-          </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Factors That Affect Your Biological Age</h2>
+                <p className="text-muted-foreground mb-4">
+                    Your biological age isn't just a number; it's a reflection of your overall health. Several key lifestyle factors play a significant role:
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li><strong>Diet:</strong> A balanced diet rich in nutrients can slow aging, while processed foods may accelerate it.</li>
+                    <li><strong>Exercise:</strong> Regular physical activity improves cardiovascular health and keeps your body young.</li>
+                    <li><strong>Sleep:</strong> Quality sleep is crucial for cellular repair and regeneration.</li>
+                    <li><strong>Stress:</strong> Chronic stress can lead to inflammation and speed up the aging process.</li>
+                    <li><strong>Genetics:</strong> Your genes play a role, but lifestyle choices can significantly influence their expression.</li>
+                </ul>
+            </div>
 
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Benefits of Knowing Your Biological Age</h2>
-               <p className="text-muted-foreground">
-                 Understanding your biological age gives you the power to take control of your wellness. It serves as a practical indicator of your body's health, helping you see the real-time impact of your lifestyle choices. By tracking it, you can set measurable goals, make informed decisions, and work proactively to prevent age-related diseases, ultimately empowering you to live a longer, healthier life.
-              </p>
-          </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Benefits of Knowing Your Biological Age</h2>
+                <p className="text-muted-foreground">
+                  Understanding your biological age gives you the power to take control of your wellness. It serves as a practical indicator of your body's health, helping you see the real-time impact of your lifestyle choices. By tracking it, you can set measurable goals, make informed decisions, and work proactively to prevent age-related diseases, ultimately empowering you to live a longer, healthier life.
+                </p>
+            </div>
 
-           <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Tips to Lower Your Biological Age</h2>
-               <p className="text-muted-foreground mb-4">
-                  Ready to feel younger? Here are some actionable steps you can take to potentially lower your biological age:
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  <li><strong>Eat a Whole-Foods Diet:</strong> Focus on fruits, vegetables, lean proteins, and healthy fats.</li>
-                  <li><strong>Move Your Body Daily:</strong> Aim for at least 30 minutes of moderate exercise most days of the week.</li>
-                  <li><strong>Prioritize Sleep:</strong> Strive for 7-9 hours of quality, uninterrupted sleep per night.</li>
-                  <li><strong>Manage Stress:</strong> Incorporate mindfulness, meditation, or yoga into your routine.</li>
-                  <li><strong>Stay Socially Connected:</strong> Strong social ties are linked to better health and longevity.</li>
-              </ul>
-          </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Tips to Lower Your Biological Age</h2>
+                <p className="text-muted-foreground mb-4">
+                    Ready to feel younger? Here are some actionable steps you can take to potentially lower your biological age:
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li><strong>Eat a Whole-Foods Diet:</strong> Focus on fruits, vegetables, lean proteins, and healthy fats.</li>
+                    <li><strong>Move Your Body Daily:</strong> Aim for at least 30 minutes of moderate exercise most days of the week.</li>
+                    <li><strong>Prioritize Sleep:</strong> Strive for 7-9 hours of quality, uninterrupted sleep per night.</li>
+                    <li><strong>Manage Stress:</strong> Incorporate mindfulness, meditation, or yoga into your routine.</li>
+                    <li><strong>Stay Socially Connected:</strong> Strong social ties are linked to better health and longevity.</li>
+                </ul>
+            </div>
 
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">FAQs About Biological Age</h2>
-              <Accordion type="single" collapsible className="w-full">
-                  {faqs.map((faq, index) => (
-                       <AccordionItem value={`item-${index}`} key={index}>
-                          <AccordionTrigger>{faq.question}</AccordionTrigger>
-                          <AccordionContent>{faq.answer}</AccordionContent>
-                      </AccordionItem>
-                  ))}
-              </Accordion>
-          </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">FAQs About Biological Age</h2>
+                <Accordion type="single" collapsible className="w-full">
+                    {faqs.map((faq, index) => (
+                        <AccordionItem value={`item-${index}`} key={index}>
+                            <AccordionTrigger>{faq.question}</AccordionTrigger>
+                            <AccordionContent>{faq.answer}</AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            </div>
 
-           <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
-                  <Link href="/age-calculator-by-date-of-birth" className="text-primary hover:underline">Age Calculator by Date of Birth</Link>
-                   <Link href="/health-assessments" className="text-primary hover:underline">Health Assessment Tools</Link>
-              </div>
-          </div>
-      </section>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Tools</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
+                    <Link href="/age-calculator-by-date-of-birth" className="text-primary hover:underline">Age Calculator by Date of Birth</Link>
+                    <Link href="/health-assessments" className="text-primary hover:underline">Health Assessment Tools</Link>
+                </div>
+            </div>
+        </section>
+      </main>
     </div>
   );
 }

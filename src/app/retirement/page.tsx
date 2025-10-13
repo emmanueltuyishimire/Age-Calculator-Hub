@@ -67,57 +67,59 @@ export default function RetirementPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Retirement Age Calculator – Find Your Full Retirement Age by Birth Year</h1>
-        <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-          Use our free Retirement Age Calculator to determine when you can retire with full benefits. Enter your birth year to see your retirement age, early retirement options, and delayed benefit increases. Perfect for Social Security, pension, and retirement planning.
-        </p>
-      </div>
+      <main role="main">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Retirement Age Calculator – Find Your Full Retirement Age by Birth Year</h1>
+          <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            Use our free Retirement Age Calculator to determine when you can retire with full benefits. Enter your birth year to see your retirement age, early retirement options, and delayed benefit increases. Perfect for Social Security, pension, and retirement planning.
+          </p>
+        </div>
 
-      <RetirementAgeCalculator />
-      
-      <section className="mt-12 space-y-8 max-w-4xl mx-auto">
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Retirement Age Calculator</h2>
-              <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                  <li><strong>Enter Your Date of Birth:</strong> Provide your exact birth date to get the most accurate retirement age calculation.</li>
-                  <li><strong>Calculate Your Full Retirement Age:</strong> Click the button to see the age at which you are eligible for full Social Security benefits.</li>
-                  <li><strong>Review Your Options:</strong> The results will show your full retirement age, the date you become eligible, and how your benefits may be affected by retiring early or delaying.</li>
-              </ol>
-          </div>
+        <RetirementAgeCalculator />
+        
+        <section className="mt-12 space-y-8 max-w-4xl mx-auto">
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Retirement Age Calculator</h2>
+                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                    <li><strong>Enter Your Date of Birth:</strong> Provide your exact birth date to get the most accurate retirement age calculation.</li>
+                    <li><strong>Calculate Your Full Retirement Age:</strong> Click the button to see the age at which you are eligible for full Social Security benefits.</li>
+                    <li><strong>Review Your Options:</strong> The results will show your full retirement age, the date you become eligible, and how your benefits may be affected by retiring early or delaying.</li>
+                </ol>
+            </div>
 
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Retirement Planning Tips</h2>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  <li><strong>Start Saving Early:</strong> The sooner you begin, the more time your investments have to grow, thanks to the power of compound interest.</li>
-                  <li><strong>Consider Delaying Benefits:</strong> If you can wait, delaying your Social Security benefits past your full retirement age (up to age 70) will increase your monthly payment.</li>
-                  <li><strong>Diversify Your Investments:</strong> Spreading your investments across different asset classes can help manage risk and improve returns.</li>
-                  <li><strong>Pay Off High-Interest Debt:</strong> Entering retirement debt-free, especially from high-interest sources like credit cards, frees up your income for living expenses.</li>
-                  <li><strong>Create a Retirement Budget:</strong> Understand your expected expenses in retirement to ensure your savings will be sufficient.</li>
-              </ul>
-          </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Retirement Planning Tips</h2>
+                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li><strong>Start Saving Early:</strong> The sooner you begin, the more time your investments have to grow, thanks to the power of compound interest.</li>
+                    <li><strong>Consider Delaying Benefits:</strong> If you can wait, delaying your Social Security benefits past your full retirement age (up to age 70) will increase your monthly payment.</li>
+                    <li><strong>Diversify Your Investments:</strong> Spreading your investments across different asset classes can help manage risk and improve returns.</li>
+                    <li><strong>Pay Off High-Interest Debt:</strong> Entering retirement debt-free, especially from high-interest sources like credit cards, frees up your income for living expenses.</li>
+                    <li><strong>Create a Retirement Budget:</strong> Understand your expected expenses in retirement to ensure your savings will be sufficient.</li>
+                </ul>
+            </div>
 
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>
-              <Accordion type="single" collapsible className="w-full">
-                  {faqs.map((faq, index) => (
-                       <AccordionItem value={`item-${index}`} key={index}>
-                          <AccordionTrigger>{faq.question}</AccordionTrigger>
-                          <AccordionContent>{faq.answer}</AccordionContent>
-                      </AccordionItem>
-                  ))}
-              </Accordion>
-          </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>
+                <Accordion type="single" collapsible className="w-full">
+                    {faqs.map((faq, index) => (
+                        <AccordionItem value={`item-${index}`} key={index}>
+                            <AccordionTrigger>{faq.question}</AccordionTrigger>
+                            <AccordionContent>{faq.answer}</AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            </div>
 
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Calculators</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
-                  <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
-                  <Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">Social Security Retirement Age Calculator</Link>
-              </div>
-          </div>
-      </section>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Calculators</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
+                    <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
+                    <Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">Social Security Retirement Age Calculator</Link>
+                </div>
+            </div>
+        </section>
+      </main>
 
     </div>
   );

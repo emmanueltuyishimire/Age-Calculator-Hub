@@ -141,19 +141,19 @@ export default function AgeCalculator() {
         <CardContent className="space-y-4">
           <div className="flex flex-col space-y-4">
             <div className='space-y-2'>
-              <Label>Date of Birth</Label>
+              <Label htmlFor="dob-day">Date of Birth</Label>
               <div className="flex gap-2">
-                <Input placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
-                <Input placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
-                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
+                <Input id="dob-day" placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
+                <Input id="dob-month" placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
+                <Input id="dob-year" placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
               </div>
             </div>
             <div className='space-y-2'>
-              <Label>Age at the Date of</Label>
+              <Label htmlFor="ageAt-day">Age at the Date of</Label>
               <div className="flex gap-2">
-                <Input placeholder="DD" value={ageAt.day} onChange={e => setAgeAt({...ageAt, day: e.target.value})} aria-label="Current Day"/>
-                <Input placeholder="MM" value={ageAt.month} onChange={e => setAgeAt({...ageAt, month: e.target.value})} aria-label="Current Month"/>
-                <Input placeholder="YYYY" value={ageAt.year} onChange={e => setAgeAt({...ageAt, year: e.target.value})} aria-label="Current Year"/>
+                <Input id="ageAt-day" placeholder="DD" value={ageAt.day} onChange={e => setAgeAt({...ageAt, day: e.target.value})} aria-label="Current Day"/>
+                <Input id="ageAt-month" placeholder="MM" value={ageAt.month} onChange={e => setAgeAt({...ageAt, month: e.target.value})} aria-label="Current Month"/>
+                <Input id="ageAt-year" placeholder="YYYY" value={ageAt.year} onChange={e => setAgeAt({...ageAt, year: e.target.value})} aria-label="Current Year"/>
               </div>
             </div>
           </div>
@@ -188,5 +188,3 @@ export default function AgeCalculator() {
     </div>
   );
 }
-
-    

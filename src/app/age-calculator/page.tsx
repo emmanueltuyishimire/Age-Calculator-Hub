@@ -92,7 +92,7 @@ export default function AgeCalculatorPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="flex flex-col lg:flex-row gap-8">
-        <main className="w-full lg:w-2/3">
+        <main className="w-full lg:w-2/3" role="main">
             <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Age Calculator – Calculate Your Exact Age Online</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
@@ -159,7 +159,7 @@ export default function AgeCalculatorPage() {
             </section>
         </main>
         <aside className="w-full lg:w-1/3">
-             <div className="ad-slot border-dashed border-2 p-10 text-center sticky top-20 min-h-[250px] hidden lg:block"></div>
+             <div className="ad-slot border-dashed border-2 p-10 text-center sticky top-20 min-h-[250px] hidden lg:block" aria-label="Advertisement"></div>
         </aside>
       </div>
     </div>

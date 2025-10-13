@@ -173,19 +173,19 @@ export default function AgeCalculatorOnline() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className='space-y-2'>
-              <Label>Date of Birth</Label>
+              <Label htmlFor="dob-day-online">Date of Birth</Label>
               <div className="flex gap-2">
-                <Input placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
-                <Input placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
-                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
+                <Input id="dob-day-online" placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
+                <Input id="dob-month-online" placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
+                <Input id="dob-year-online" placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
               </div>
             </div>
             <div className='space-y-2'>
-              <Label>Current Date</Label>
+              <Label htmlFor="current-day-online">Current Date</Label>
               <div className="flex gap-2">
-                <Input placeholder="DD" value={current.day} onChange={e => setCurrent({...current, day: e.target.value})} aria-label="Current Day" />
-                <Input placeholder="MM" value={current.month} onChange={e => setCurrent({...current, month: e.target.value})} aria-label="Current Month" />
-                <Input placeholder="YYYY" value={current.year} onChange={e => setCurrent({...current, year: e.target.value})} aria-label="Current Year" />
+                <Input id="current-day-online" placeholder="DD" value={current.day} onChange={e => setCurrent({...current, day: e.target.value})} aria-label="Current Day" />
+                <Input id="current-month-online" placeholder="MM" value={current.month} onChange={e => setCurrent({...current, month: e.target.value})} aria-label="Current Month" />
+                <Input id="current-year-online" placeholder="YYYY" value={current.year} onChange={e => setCurrent({...current, year: e.target.value})} aria-label="Current Year" />
               </div>
             </div>
           </div>
@@ -230,5 +230,3 @@ export default function AgeCalculatorOnline() {
     </div>
   );
 }
-
-    

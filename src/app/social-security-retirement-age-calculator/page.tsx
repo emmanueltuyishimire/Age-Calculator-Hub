@@ -52,54 +52,56 @@ export default function SocialSecurityRetirementPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Social Security Retirement Age Calculator – Find Your Full Retirement Age (FRA)</h1>
-        <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-          Use our free Social Security Retirement Age Calculator to find out when you can claim full retirement benefits based on your birth year. Instantly see your Full Retirement Age (FRA) and explore options for early or delayed retirement benefits.
-        </p>
-      </div>
+      <main role="main">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Social Security Retirement Age Calculator – Find Your Full Retirement Age (FRA)</h1>
+          <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            Use our free Social Security Retirement Age Calculator to find out when you can claim full retirement benefits based on your birth year. Instantly see your Full Retirement Age (FRA) and explore options for early or delayed retirement benefits.
+          </p>
+        </div>
 
-      <SocialSecurityRetirementAgeCalculator />
-      
-      <section className="mt-12 space-y-8 max-w-4xl mx-auto">
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">How Social Security Retirement Age is Determined</h2>
-              <p className="text-muted-foreground">
-                The Full Retirement Age (FRA) depends on your birth year. For example, if you were born in 1960 or later, your FRA is 67. Starting benefits early (at age 62) reduces your payments, while delaying beyond your FRA increases them. For a detailed breakdown, you can view the <a href="https://www.ssa.gov/benefits/retirement/planner/ageincrease.html" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">official SSA Retirement Age Chart</a>.
-              </p>
-          </div>
+        <SocialSecurityRetirementAgeCalculator />
+        
+        <section className="mt-12 space-y-8 max-w-4xl mx-auto">
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">How Social Security Retirement Age is Determined</h2>
+                <p className="text-muted-foreground">
+                  The Full Retirement Age (FRA) depends on your birth year. For example, if you were born in 1960 or later, your FRA is 67. Starting benefits early (at age 62) reduces your payments, while delaying beyond your FRA increases them. For a detailed breakdown, you can view the <a href="https://www.ssa.gov/benefits/retirement/planner/ageincrease.html" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">official SSA Retirement Age Chart</a>.
+                </p>
+            </div>
 
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Smart Retirement Planning Tips</h2>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  <li><strong>Estimate Your Benefits:</strong> Use the official Social Security Administration (SSA) calculator to get a personalized estimate of your future benefits.</li>
-                  <li><strong>Consider Delaying:</strong> If you can afford to, delaying your benefits until age 70 will maximize your monthly payout.</li>
-                  <li><strong>Pay Off Debts:</strong> Entering retirement debt-free gives you more financial freedom. Focus on high-interest debts first.</li>
-                  <li><strong>Diversify Income Sources:</strong> Don't rely solely on Social Security. Build a portfolio with savings, 401(k)s, or IRAs.</li>
-              </ul>
-          </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Smart Retirement Planning Tips</h2>
+                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li><strong>Estimate Your Benefits:</strong> Use the official Social Security Administration (SSA) calculator to get a personalized estimate of your future benefits.</li>
+                    <li><strong>Consider Delaying:</strong> If you can afford to, delaying your benefits until age 70 will maximize your monthly payout.</li>
+                    <li><strong>Pay Off Debts:</strong> Entering retirement debt-free gives you more financial freedom. Focus on high-interest debts first.</li>
+                    <li><strong>Diversify Income Sources:</strong> Don't rely solely on Social Security. Build a portfolio with savings, 401(k)s, or IRAs.</li>
+                </ul>
+            </div>
 
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>
-              <Accordion type="single" collapsible className="w-full">
-                  {faqs.map((faq, index) => (
-                       <AccordionItem value={`item-${index}`} key={index}>
-                          <AccordionTrigger>{faq.question}</AccordionTrigger>
-                          <AccordionContent>{faq.answer}</AccordionContent>
-                      </AccordionItem>
-                  ))}
-              </Accordion>
-          </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>
+                <Accordion type="single" collapsible className="w-full">
+                    {faqs.map((faq, index) => (
+                        <AccordionItem value={`item-${index}`} key={index}>
+                            <AccordionTrigger>{faq.question}</AccordionTrigger>
+                            <AccordionContent>{faq.answer}</AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            </div>
 
-          <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Calculators</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <Link href="/retirement" className="text-primary hover:underline">Retirement Age Calculator</Link>
-                  <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
-                  <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
-              </div>
-          </div>
-      </section>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Related Calculators</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <Link href="/retirement" className="text-primary hover:underline">Retirement Age Calculator</Link>
+                    <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>
+                    <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>
+                </div>
+            </div>
+        </section>
+      </main>
 
     </div>
   );

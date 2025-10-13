@@ -9,7 +9,7 @@ export default function PregnancyCalculatorsHub() {
   const pregnancyNavItems = categorizedNavItems().find(cat => cat.name === 'Pregnancy Calculators')?.items || [];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <main className="container mx-auto px-4 py-8" role="main">
       <div className="text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Pregnancy Calculators Hub</h1>
         <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -23,7 +23,7 @@ export default function PregnancyCalculatorsHub() {
             <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out">
               <CardHeader className="p-4 sm:p-6">
                 <div className="flex items-center gap-4 mb-2">
-                  <item.icon className="h-8 w-8 text-primary" />
+                  <item.icon className="h-8 w-8 text-primary" aria-hidden="true" />
                   <CardTitle className="text-lg sm:text-xl">{item.label}</CardTitle>
                 </div>
                 <CardDescription className="text-sm">{item.description}</CardDescription>
@@ -32,6 +32,6 @@ export default function PregnancyCalculatorsHub() {
           </Link>
         ))}
       </div>
-    </div>
+    </main>
   );
 }
