@@ -10,8 +10,10 @@ export default function CalculatorHub() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-12">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Welcome to the Age Calculator Hub</h1>
-        <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">Your one-stop destination for a variety of age-related calculators.</p>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">The Ultimate Free Age Calculator Hub</h1>
+        <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
+          From your chronological age to your dog's age in human years, our free online tools have you covered. Instantly calculate your biological age, retirement date, or even your pregnancy due date. Fast, accurate, and easy to use—discover all our calculators below.
+        </p>
       </div>
 
       <div className="space-y-12">
