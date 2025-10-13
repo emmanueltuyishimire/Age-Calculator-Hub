@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation';
+import CalculatorHub from '@/components/calculators/calculator-hub';
 
 export default function Home() {
-  redirect('/age-calculator');
+  return <CalculatorHub />;
 }

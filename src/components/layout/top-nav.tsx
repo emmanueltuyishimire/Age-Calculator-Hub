@@ -16,11 +16,22 @@ export function TopNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = React.useState(false);
 
+  const mainNavItems = navItems.filter(item => item.label !== 'Home');
+
+
   return (
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-6 text-sm">
-        {navItems.map((item) => (
+        <Link
+            href="/"
+            className={`transition-colors hover:text-foreground/80 ${
+              pathname === '/' ? 'text-foreground' : 'text-foreground/60'
+            }`}
+          >
+            Home
+          </Link>
+        {mainNavItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
