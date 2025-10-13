@@ -21,6 +21,7 @@ import {
   CalendarHeart,
   CalendarCheck,
   ClipboardList,
+  ShieldCheck,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -99,6 +100,13 @@ export const navItems: NavItem[] = [
     label: 'Retirement Age Calculator',
     category: 'Retirement & Social',
     description: 'Estimates retirement eligibility based on birth year.'
+  },
+  {
+    href: '/social-security-retirement-age-calculator',
+    icon: ShieldCheck,
+    label: 'Social Security Retirement Age Calculator',
+    category: 'Retirement & Social',
+    description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
   },
   {
     href: '/pregnancy-calculator',
