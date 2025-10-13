@@ -95,7 +95,7 @@ export default function AgeCalculatorPage() {
                     Our age calculator allows you to calculate your exact age by date of birth, by year, or by birthday. This online age calculator is easy to use and provides instant results for anyone looking to track their age accurately. It's a useful tool for official documents, understanding age-related milestones, or simply celebrating another year of life.
                 </p>
             </div>
-            <div className="ad-slot border-dashed border-2 p-10 text-center my-6">Top Banner Ad</div>
+            <div className="ad-slot border-dashed border-2 p-10 text-center my-6"></div>
 
             <AgeCalculator />
 
@@ -156,10 +156,10 @@ export default function AgeCalculatorPage() {
             </section>
         </main>
         <aside className="w-full lg:w-1/3">
-             <div className="ad-slot border-dashed border-2 p-10 text-center sticky top-20">Right Sidebar Ad</div>
+             <div className="ad-slot border-dashed border-2 p-10 text-center sticky top-20"></div>
         </aside>
       </div>
-       <div className="ad-slot border-dashed border-2 p-10 text-center my-6">Bottom Ad</div>
+       <div className="ad-slot border-dashed border-2 p-10 text-center my-6"></div>
     </div>
   );
 }
