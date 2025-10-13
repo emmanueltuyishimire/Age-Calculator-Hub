@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { format, intervalToDuration, isFuture, isValid, addYears } from 'date-fns';
-import { Calendar as CalendarIcon, RefreshCcw, Gift } from 'lucide-react';
+import { RefreshCcw, Gift } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -11,14 +11,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
@@ -41,21 +35,37 @@ interface BirthdayCountdown {
 }
 
 export default function BirthdayAgeCalculator() {
+  const [dob, setDob] = useState({ day: '', month: '', year: '' });
   const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>();
   const [age, setAge] = useState<Age | undefined>();
   const [countdown, setCountdown] = useState<BirthdayCountdown | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const calculateAgeAndCountdown = () => {
-    if (!dateOfBirth) return;
+  const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
+    const day = parseInt(dayStr, 10);
+    const month = parseInt(monthStr, 10) - 1;
+    const year = parseInt(yearStr, 10);
+    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1000 || year > 3000) return null;
+    const date = new Date(year, month, day);
+    if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
+      return date;
+    }
+    return null;
+  };
 
-    if (!isValid(dateOfBirth)) {
+  const calculateAgeAndCountdown = () => {
+    const dobDate = parseDate(dob.day, dob.month, dob.year);
+    setDateOfBirth(dobDate || undefined);
+
+    if (!dobDate) return;
+
+    if (!isValid(dobDate)) {
       setError("The date of birth is not a valid date.");
       setIsCalculating(false);
       return;
     }
-     if (isFuture(dateOfBirth)) {
+     if (isFuture(dobDate)) {
       setError("Date of birth cannot be in the future.");
       setIsCalculating(false);
       setAge(undefined);
@@ -67,7 +77,7 @@ export default function BirthdayAgeCalculator() {
 
       // Calculate age
       const ageDuration = intervalToDuration({
-        start: dateOfBirth,
+        start: dobDate,
         end: now,
       });
       setAge({
@@ -80,7 +90,7 @@ export default function BirthdayAgeCalculator() {
       });
 
       // Calculate next birthday
-      let nextBirthday = new Date(now.getFullYear(), dateOfBirth.getMonth(), dateOfBirth.getDate());
+      let nextBirthday = new Date(now.getFullYear(), dobDate.getMonth(), dobDate.getDate());
       if (now > nextBirthday) {
           nextBirthday = addYears(nextBirthday, 1);
       }
@@ -99,7 +109,8 @@ export default function BirthdayAgeCalculator() {
   };
 
   const handleCalculate = () => {
-    if (!dateOfBirth) {
+    const dobDate = parseDate(dob.day, dob.month, dob.year);
+    if (!dobDate) {
         setError("Please enter your date of birth to calculate your age.");
         return;
     }
@@ -108,6 +119,7 @@ export default function BirthdayAgeCalculator() {
   };
 
   const handleReset = () => {
+      setDob({ day: '', month: '', year: '' });
       setDateOfBirth(undefined);
       setAge(undefined);
       setCountdown(undefined);
@@ -124,13 +136,13 @@ export default function BirthdayAgeCalculator() {
     }
     return () => clearInterval(interval);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCalculating, dateOfBirth]);
+  }, [isCalculating, dob]);
 
   useEffect(() => {
     setIsCalculating(false);
     setAge(undefined);
     setCountdown(undefined);
-  }, [dateOfBirth])
+  }, [dob])
 
 
   return (
@@ -150,32 +162,12 @@ export default function BirthdayAgeCalculator() {
 
           <div className="grid grid-cols-1 gap-4">
             <div className='space-y-2'>
-              <Label htmlFor='dob-popover' className="sr-only">Date of Birth</Label>
-              <Popover>
-                <PopoverTrigger asChild id="dob-popover">
-                  <Button
-                    variant={'outline'}
-                    className={cn(
-                      'w-full justify-start text-left font-normal',
-                      !dateOfBirth && 'text-muted-foreground'
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {dateOfBirth ? format(dateOfBirth, 'PPP') : <span>Pick a date</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={dateOfBirth}
-                    onSelect={setDateOfBirth}
-                    captionLayout="dropdown-buttons"
-                    fromYear={1900}
-                    toYear={new Date().getFullYear()}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+              <Label htmlFor='dob-day'>Date of Birth</Label>
+              <div className="flex gap-2">
+                <Input id="dob-day" placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
+                <Input placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
+                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
+              </div>
             </div>
           </div>
 
@@ -216,8 +208,8 @@ export default function BirthdayAgeCalculator() {
                     </div>
                     <div className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2 mt-2">
                         <div><span className="text-xl sm:text-2xl font-bold text-primary">{countdown.hours}</span> <span className="text-sm sm:text-base text-muted-foreground">hours</span></div>
-                        <div><span className="text-xl sm:text-2xl font-bold text-primary">{countdown.minutes}</span> <span className="text-sm sm:text-base text-muted-foreground">minutes</span></div>
-                        <div><span className="text-xl sm:text-2xl font-bold text-primary">{countdown.seconds}</span> <span className="text-sm sm:text-base text-muted-foreground">seconds</span></div>
+                        <div><span className="xl sm:text-2xl font-bold text-primary">{countdown.minutes}</span> <span className="text-sm sm:text-base text-muted-foreground">minutes</span></div>
+                        <div><span className="xl sm:text-2xl font-bold text-primary">{countdown.seconds}</span> <span className="text-sm sm:text-base text-muted-foreground">seconds</span></div>
                     </div>
                 </div>
             )}
@@ -226,3 +218,5 @@ export default function BirthdayAgeCalculator() {
     </div>
   );
 }
+
+    

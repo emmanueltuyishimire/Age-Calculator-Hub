@@ -1,8 +1,8 @@
+
 "use client";
 
 import { useState } from 'react';
-import { format, addYears, addMonths } from 'date-fns';
-import { Calendar as CalendarIcon } from 'lucide-react';
+import { format, addYears, addMonths, isValid } from 'date-fns';
 import {
   Card,
   CardContent,
@@ -10,14 +10,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface RetirementInfo {
   age: { years: number; months: number };
@@ -42,11 +37,26 @@ const getRetirementInfo = (birthYear: number): RetirementInfo['age'] => {
 };
 
 export default function RetirementAgeCalculator() {
+  const [dob, setDob] = useState({ day: '', month: '', year: '' });
   const [date, setDate] = useState<Date | undefined>();
   const [retirementInfo, setRetirementInfo] = useState<RetirementInfo | null>(null);
 
-  const handleDateSelect = (selectedDate: Date | undefined) => {
-    setDate(selectedDate);
+  const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
+    const day = parseInt(dayStr, 10);
+    const month = parseInt(monthStr, 10) - 1;
+    const year = parseInt(yearStr, 10);
+    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1900 || year > new Date().getFullYear()) return null;
+    const date = new Date(year, month, day);
+    if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
+      return date;
+    }
+    return null;
+  };
+
+  const handleCalculate = () => {
+    const selectedDate = parseDate(dob.day, dob.month, dob.year);
+    setDate(selectedDate || undefined);
+
     if (selectedDate) {
       const birthYear = selectedDate.getFullYear();
       const retirementAge = getRetirementInfo(birthYear);
@@ -69,31 +79,15 @@ export default function RetirementAgeCalculator() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant={'outline'}
-              className={cn(
-                'w-full justify-start text-left font-normal',
-                !date && 'text-muted-foreground'
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, 'PPP') : <span>Pick your date of birth</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={handleDateSelect}
-              captionLayout="dropdown-buttons"
-              fromYear={1920}
-              toYear={new Date().getFullYear()}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
+        <div className="space-y-2">
+            <Label>Date of Birth</Label>
+            <div className="flex gap-2">
+                <Input placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
+                <Input placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
+                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
+            </div>
+        </div>
+        <Button onClick={handleCalculate} className="w-full">Calculate Retirement Age</Button>
 
         {retirementInfo && (
           <div className="p-6 bg-muted rounded-lg text-center">
@@ -117,3 +111,5 @@ export default function RetirementAgeCalculator() {
     </Card>
   );
 }
+
+    
