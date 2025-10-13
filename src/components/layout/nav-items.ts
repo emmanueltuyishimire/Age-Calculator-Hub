@@ -1,3 +1,4 @@
+
 import {
   Baby,
   Briefcase,
@@ -15,7 +16,11 @@ import {
   Scale,
   GitMerge,
   Dog,
-  Cat
+  Cat,
+  Stethoscope,
+  CalendarHeart,
+  CalendarCheck,
+  ClipboardHeart,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -68,13 +73,6 @@ export const navItems: NavItem[] = [
     description: 'Estimates body’s biological age based on health/lifestyle inputs.'
   },
   {
-    href: '/gestational-age',
-    icon: Baby,
-    label: 'Gestational Age Calculator',
-    category: 'Scientific & Health Age',
-    description: 'Calculates pregnancy gestational age from last menstrual period or due date.'
-  },
-  {
     href: '/health-assessments',
     icon: FileHeart,
     label: 'Health Assessments',
@@ -102,6 +100,34 @@ export const navItems: NavItem[] = [
     category: 'Retirement & Social',
     description: 'Estimates retirement eligibility based on birth year.'
   },
+  {
+    href: '/pregnancy-calculator',
+    icon: CalendarHeart,
+    label: 'Pregnancy Calculator',
+    category: 'Pregnancy Calculators',
+    description: 'Estimate your pregnancy week, due date, and conception date.'
+  },
+  {
+    href: '/due-date-calculator',
+    icon: CalendarCheck,
+    label: 'Due Date Calculator',
+    category: 'Pregnancy Calculators',
+    description: 'Predict your baby\'s due date from LMP, conception, or IVF.'
+  },
+  {
+    href: '/ovulation-calculator',
+    icon: ClipboardHeart,
+    label: 'Ovulation Calculator',
+    category: 'Pregnancy Calculators',
+    description: 'Predict your fertile window and ovulation day.'
+  },
+  {
+    href: '/gestational-age',
+    icon: Baby,
+    label: 'Gestational Age Calculator',
+    category: 'Pregnancy Calculators',
+    description: 'Calculates pregnancy gestational age from last menstrual period or due date.'
+  },
 ];
 
 export const categorizedNavItems = (): NavCategory[] => {
@@ -113,7 +139,22 @@ export const categorizedNavItems = (): NavCategory[] => {
     }
     categories[item.category].push(item);
   });
-  return Object.keys(categories).map(key => ({
+  
+  // Define the desired order
+  const categoryOrder = [
+    'Core Age Calculation',
+    'Pregnancy Calculators',
+    'Scientific & Health Age',
+    'Pet Age',
+    'Retirement & Social',
+  ];
+
+  // Sort categories based on the defined order
+  const sortedCategories = Object.keys(categories).sort((a, b) => {
+    return categoryOrder.indexOf(a) - categoryOrder.indexOf(b);
+  });
+
+  return sortedCategories.map(key => ({
     name: key,
     items: categories[key],
   }));
