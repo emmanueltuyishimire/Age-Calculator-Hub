@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { format, intervalToDuration, differenceInSeconds, isFuture, isValid, addYears } from 'date-fns';
+import { format, intervalToDuration, isFuture, isValid, addYears } from 'date-fns';
 import { Calendar as CalendarIcon, RefreshCcw, Gift } from 'lucide-react';
 import {
   Card,
@@ -137,10 +137,7 @@ export default function BirthdayAgeCalculator() {
     <div className="space-y-6">
       <Card className="w-full max-w-2xl mx-auto shadow-lg">
         <CardHeader>
-          <CardTitle>Birthday Age Calculator</CardTitle>
-          <CardDescription>
-            Enter your date of birth to find out your exact age and count down to your next birthday.
-          </CardDescription>
+          <CardTitle>Enter Your Birthday</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {error && (
@@ -153,7 +150,7 @@ export default function BirthdayAgeCalculator() {
 
           <div className="grid grid-cols-1 gap-4">
             <div className='space-y-2'>
-              <Label htmlFor='dob-popover'>Date of Birth</Label>
+              <Label htmlFor='dob-popover' className="sr-only">Date of Birth</Label>
               <Popover>
                 <PopoverTrigger asChild id="dob-popover">
                   <Button
@@ -201,7 +198,7 @@ export default function BirthdayAgeCalculator() {
                  <div className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2 mt-2">
                   <div><span className="text-xl sm:text-2xl font-bold text-primary">{age.hours}</span> <span className="text-sm sm:text-base text-muted-foreground">hours</span></div>
                   <div><span className="text-xl sm:text-2xl font-bold text-primary">{age.minutes}</span> <span className="text-sm sm:text-base text-muted-foreground">minutes</span></div>
-                  <div><span className="text-xl smtext-2xl font-bold text-primary">{age.seconds}</span> <span className="text-sm sm:text-base text-muted-foreground">seconds</span></div>
+                  <div><span className="text-xl sm:text-2xl font-bold text-primary">{age.seconds}</span> <span className="text-sm sm:text-base text-muted-foreground">seconds</span></div>
                 </div>
               </div>
             </div>
