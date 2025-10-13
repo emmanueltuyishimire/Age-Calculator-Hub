@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { categorizedNavItems, type NavCategory } from '@/components/layout/nav-items';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function CalculatorHub() {
   const categories: NavCategory[] = categorizedNavItems();
@@ -22,28 +23,32 @@ export default function CalculatorHub() {
         </p>
       </div>
 
-      <div className="space-y-12">
+      <Tabs defaultValue={categories[0]?.name} className="w-full">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
+          {categories.map((category) => (
+            <TabsTrigger key={category.name} value={category.name}>{category.name}</TabsTrigger>
+          ))}
+        </TabsList>
         {categories.map((category) => (
-          <div key={category.name}>
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-6">{category.name}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.items.map((item) => (
-                <Link href={item.href} key={item.href} className="block hover:no-underline">
-                  <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out">
-                    <CardHeader className="p-4 sm:p-6">
-                      <div className="flex items-center gap-4 mb-2">
-                        <item.icon className="h-8 w-8 text-primary" />
-                        <CardTitle className="text-lg sm:text-xl">{item.label}</CardTitle>
-                      </div>
-                      <CardDescription className="text-sm">{item.description}</CardDescription>
-                    </CardHeader>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          </div>
+          <TabsContent key={category.name} value={category.name}>
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                {category.items.map((item) => (
+                  <Link href={item.href} key={item.href} className="block hover:no-underline">
+                    <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out">
+                      <CardHeader className="p-4 sm:p-6">
+                        <div className="flex items-center gap-4 mb-2">
+                          <item.icon className="h-8 w-8 text-primary" />
+                          <CardTitle className="text-lg sm:text-xl">{item.label}</CardTitle>
+                        </div>
+                        <CardDescription className="text-sm">{item.description}</CardDescription>
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+          </TabsContent>
         ))}
-      </div>
+      </Tabs>
     </div>
   );
 }
