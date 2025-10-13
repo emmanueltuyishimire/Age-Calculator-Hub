@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { format, intervalToDuration, differenceInSeconds, differenceInMinutes, differenceInHours, differenceInDays, differenceInWeeks, differenceInMonths } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import {
@@ -10,7 +10,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from '@/components/ui/card';
 import {
   Popover,
@@ -42,26 +41,30 @@ export default function AgeCalculator() {
   const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>();
   const [ageAtDate, setAgeAtDate] = useState<Date | undefined>(new Date());
   const [age, setAge] = useState<Age | undefined>();
+  const [isCalculating, setIsCalculating] = useState(false);
 
-  const handleCalculate = () => {
+  const calculateAge = () => {
     if (dateOfBirth && ageAtDate) {
       if (ageAtDate < dateOfBirth) {
         setAge(undefined);
-        // Maybe show a toast or error message
+        setIsCalculating(false);
         return;
       }
+      
+      // We use a dynamically updating "now" if the user has selected today's date for 'ageAtDate'
+      const endOfCalculation = isCalculating ? new Date() : ageAtDate;
 
       const duration = intervalToDuration({
         start: dateOfBirth,
-        end: ageAtDate,
+        end: endOfCalculation,
       });
 
-      const totalSeconds = differenceInSeconds(ageAtDate, dateOfBirth);
-      const totalMinutes = differenceInMinutes(ageAtDate, dateOfBirth);
-      const totalHours = differenceInHours(ageAtDate, dateOfBirth);
-      const totalDays = differenceInDays(ageAtDate, dateOfBirth);
-      const totalWeeks = differenceInWeeks(ageAtDate, dateOfBirth);
-      const totalMonths = differenceInMonths(ageAtDate, dateOfBirth);
+      const totalSeconds = differenceInSeconds(endOfCalculation, dateOfBirth);
+      const totalMinutes = differenceInMinutes(endOfCalculation, dateOfBirth);
+      const totalHours = differenceInHours(endOfCalculation, dateOfBirth);
+      const totalDays = differenceInDays(endOfCalculation, dateOfBirth);
+      const totalWeeks = differenceInWeeks(endOfCalculation, dateOfBirth);
+      const totalMonths = differenceInMonths(endOfCalculation, dateOfBirth);
 
       setAge({
         years: duration.years || 0,
@@ -80,8 +83,29 @@ export default function AgeCalculator() {
       });
     } else {
       setAge(undefined);
+      setIsCalculating(false);
     }
   };
+
+  const handleCalculate = () => {
+    setIsCalculating(true);
+    calculateAge();
+  };
+  
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isCalculating) {
+      interval = setInterval(() => {
+        calculateAge();
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isCalculating, dateOfBirth, ageAtDate]);
+
+  useEffect(() => {
+    setIsCalculating(false);
+  }, [dateOfBirth, ageAtDate])
+
 
   return (
     <div className="space-y-6">
