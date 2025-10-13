@@ -24,7 +24,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { Button } from '../ui/button';
-import { Menu, Stethoscope } from 'lucide-react';
+import { Menu, Calculator } from 'lucide-react';
 import { categorizedNavItems, type NavItem } from './nav-items';
 import { cn } from '@/lib/utils';
 
@@ -83,7 +83,7 @@ export function TopNav() {
             <nav role="navigation" aria-label="Mobile menu">
               <div className="px-2 py-6">
               <Link href="/" className="flex items-center space-x-2 mb-6" onClick={() => setIsOpen(false)}>
-                <Stethoscope className="h-6 w-6" aria-hidden="true" />
+                <Calculator className="h-6 w-6" aria-hidden="true" />
                 <span className="font-bold">Age Calculator Hub</span>
               </Link>
               <div className="flex flex-col gap-1">
