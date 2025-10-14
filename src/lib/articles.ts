@@ -9,6 +9,13 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: 'what-is-biological-age-and-how-to-improve-it',
+    title: 'The Ultimate Guide to Your Biological Age: Are You Younger or Older Than You Think?',
+    description: 'A comprehensive guide to understanding what biological age is, how it\'s measured, and the actionable steps you can take to lower it for a longer, healthier life.',
+    category: 'Health & Wellness',
+    publishedDate: '2024-10-18',
+  },
+  {
     slug: 'understanding-chronological-age',
     title: 'Understanding Chronological Age: More Than Just a Number',
     description: 'Dive deep into what chronological age really means and how it has been perceived throughout history. Learn the difference between chronological, biological, and social age.',
