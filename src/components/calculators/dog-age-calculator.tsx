@@ -121,8 +121,8 @@ export default function DogAgeCalculator() {
 
 
   return (
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader>
+      <Card className="w-full max-w-lg mx-auto shadow-lg">
+        <CardHeader className="text-center">
           <CardTitle>Dog's Age in Human Years</CardTitle>
           <CardDescription>Enter your dog's age and size to see how their age compares to yours.</CardDescription>
         </CardHeader>

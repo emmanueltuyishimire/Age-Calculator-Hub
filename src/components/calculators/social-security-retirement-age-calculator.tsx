@@ -81,8 +81,8 @@ export default function SocialSecurityRetirementAgeCalculator() {
   };
 
   return (
-    <Card className="max-w-xl mx-auto">
-      <CardHeader>
+    <Card className="w-full max-w-xl mx-auto shadow-lg">
+      <CardHeader className="text-center">
         <CardTitle>Calculate Your Full Retirement Age</CardTitle>
         <CardDescription>
           Enter your birth year to find your Social Security retirement details.

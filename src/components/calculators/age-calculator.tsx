@@ -169,10 +169,10 @@ export default function AgeCalculator() {
 
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg">
-      <CardHeader>
+      <CardHeader className="text-center">
         <CardTitle>Age Calculator</CardTitle>
         <CardDescription>
-          The Age Calculator can determine the age or interval between two dates. The calculated age will be displayed in years, months, days, hours, minutes, and seconds.
+          Calculate the age or interval between two dates, displayed in years, months, days, and updating live to the second.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

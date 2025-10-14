@@ -85,8 +85,8 @@ export default function PregnancyCalculator() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
+    <Card className="w-full max-w-lg mx-auto shadow-lg">
+      <CardHeader className="text-center">
         <CardTitle>Pregnancy Calculator</CardTitle>
         <CardDescription>
           Estimate your pregnancy timeline based on your LMP.

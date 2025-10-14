@@ -91,8 +91,8 @@ export default function OvulationCalculator() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
+    <Card className="w-full max-w-lg mx-auto shadow-lg">
+      <CardHeader className="text-center">
         <CardTitle>Ovulation Calculator</CardTitle>
         <CardDescription>
           Find your most fertile days to help you plan.

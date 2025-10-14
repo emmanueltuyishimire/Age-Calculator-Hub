@@ -71,9 +71,9 @@ export default function HealthAssessmentCalculator() {
 
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mx-auto">
-      <Card>
-        <CardHeader>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mx-auto">
+      <Card className="shadow-lg">
+        <CardHeader className="text-center">
           <CardTitle>Basal Metabolic Rate (BMR)</CardTitle>
           <CardDescription>
             Estimate the calories your body needs at rest.
@@ -122,8 +122,8 @@ export default function HealthAssessmentCalculator() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
+      <Card className="shadow-lg">
+        <CardHeader className="text-center">
           <CardTitle>Body Fat Percentage</CardTitle>
           <CardDescription>
             Estimate your body fat based on measurements.

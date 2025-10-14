@@ -147,8 +147,8 @@ export default function BirthdayAgeCalculator() {
 
   return (
     <div className="space-y-6">
-      <Card className="w-full max-w-2xl mx-auto shadow-lg">
-        <CardHeader>
+      <Card className="w-full max-w-lg mx-auto shadow-lg">
+        <CardHeader className="text-center">
           <CardTitle>Enter Your Birthday</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">

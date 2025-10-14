@@ -189,10 +189,10 @@ export default function CalculatorHub() {
   const categories = categorizedNavItems();
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Age Calculators Hub</h1>
-         <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
+    <div className="container mx-auto px-4 py-12">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Age Calculators Hub</h1>
+         <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Welcome to Age Calculators Hub, your ultimate online destination for accurate and easy-to-use age calculators.
         </p>
       </div>
@@ -200,15 +200,15 @@ export default function CalculatorHub() {
       {categories.map((category, index) => (
         <React.Fragment key={category.name}>
         <section className="mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">{category.name}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">{category.name}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {category.items.map((item) => (
-              <Link href={item.href} key={item.href} className="block hover:no-underline">
-                <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out">
+              <Link href={item.href} key={item.href} className="block hover:no-underline group">
+                <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary">
                   <CardHeader>
                     <div className="flex items-center gap-4 mb-2">
                         <item.icon className="h-8 w-8 text-primary" aria-hidden="true" />
-                        <CardTitle className="text-lg">{item.label}</CardTitle>
+                        <CardTitle className="text-xl">{item.label}</CardTitle>
                     </div>
                     <CardDescription>{item.description}</CardDescription>
                   </CardHeader>
@@ -220,21 +220,21 @@ export default function CalculatorHub() {
         </React.Fragment>
       ))}
 
-      <section className="mt-12 space-y-8 max-w-4xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">Your Comprehensive Age Calculation Resource</h2>
-        <p className="text-muted-foreground text-center">
+      <section className="mt-16 space-y-8 max-w-4xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Your Comprehensive Age Calculation Resource</h2>
+        <p className="text-muted-foreground text-center text-lg">
             Whether you want to determine your chronological age, track your biological or metabolic age, plan for retirement with our Social Security Retirement Age Calculator, or even discover your pet’s age in human years, we have the right tool for you.
         </p>
-         <p className="text-muted-foreground text-center">
+         <p className="text-muted-foreground text-center text-lg">
             Explore our comprehensive collection of online age calculators, including birthday age calculators, age calculators by date of birth or year, gestational age calculators, and more. Our calculators are designed to provide real-time results in years, months, days, hours, minutes, and seconds, ensuring you get precise insights whenever you need them.
         </p>
-         <p className="text-muted-foreground text-center">
+         <p className="text-muted-foreground text-center text-lg">
             Stay informed and plan ahead with our professional tips, FAQs, and examples integrated into every tool. With fast, reliable, and responsive calculators, Age Calculators Hub makes it simple to understand and track age for yourself, your family, or your furry friends. Start calculating now and see how age truly measures up!
         </p>
       </section>
 
-      <section className="mt-12 max-w-4xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
+      <section className="mt-16 max-w-4xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
         <Accordion type="single" collapsible className="w-full">
             {faqCategories.map((cat) => (
                 <AccordionItem value={cat.category} key={cat.category}>

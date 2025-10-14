@@ -96,74 +96,72 @@ export default function CatAgeCalculator() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-        <Card className="w-full max-w-md mx-auto">
-        <CardHeader>
-            <CardTitle>Enter Your Cat's Age</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-            <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <div className="flex gap-4">
+    <Card className="w-full max-w-md mx-auto shadow-lg">
+    <CardHeader className="text-center">
+        <CardTitle>Enter Your Cat's Age</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-4">
+        <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="flex gap-4">
+                <FormField
+                control={form.control}
+                name="catAgeYears"
+                render={({ field }) => (
+                    <FormItem className="w-1/2">
+                    <FormLabel>Years</FormLabel>
+                    <FormControl>
+                        <Input type="number" placeholder="e.g., 5" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                    </FormItem>
+                )}
+                />
                     <FormField
-                    control={form.control}
-                    name="catAgeYears"
-                    render={({ field }) => (
-                        <FormItem className="w-1/2">
-                        <FormLabel>Years</FormLabel>
-                        <FormControl>
-                            <Input type="number" placeholder="e.g., 5" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                    />
-                     <FormField
-                    control={form.control}
-                    name="catAgeMonths"
-                    render={({ field }) => (
-                        <FormItem className="w-1/2">
-                        <FormLabel>Months</FormLabel>
-                        <FormControl>
-                            <Input type="number" placeholder="e.g., 6" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                    />
-                </div>
-                <div className="flex flex-col sm:flex-row gap-2">
-                    <Button type="submit" className="w-full">
-                    Calculate
-                    </Button>
-                     <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto">
-                        <RefreshCcw className="mr-2 h-4 w-4" /> Reset
-                    </Button>
-                </div>
+                control={form.control}
+                name="catAgeMonths"
+                render={({ field }) => (
+                    <FormItem className="w-1/2">
+                    <FormLabel>Months</FormLabel>
+                    <FormControl>
+                        <Input type="number" placeholder="e.g., 6" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                    </FormItem>
+                )}
+                />
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+                <Button type="submit" className="w-full">
+                Calculate
+                </Button>
+                    <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto">
+                    <RefreshCcw className="mr-2 h-4 w-4" /> Reset
+                </Button>
+            </div>
 
-            </form>
-            </Form>
-            {result && (
-            <div className="p-6 bg-muted rounded-lg text-center mt-4 space-y-4">
-                <div>
-                    <h3 className="text-lg font-medium text-muted-foreground">Equivalent Human Age:</h3>
-                    <div className="flex justify-center items-baseline space-x-2">
-                        <span className="text-4xl font-bold text-primary">{result.humanAge}</span>
-                        <span className="text-xl text-muted-foreground">years</span>
-                    </div>
-                </div>
-                <div>
-                    <h3 className="text-lg font-medium text-muted-foreground">Life Stage:</h3>
-                    <p className="text-xl font-semibold text-primary">{result.lifeStage}</p>
-                </div>
-                <div>
-                    <h3 className="text-lg font-medium text-muted-foreground">Health Tip:</h3>
-                    <p className="text-sm text-foreground">{result.tip}</p>
+        </form>
+        </Form>
+        {result && (
+        <div className="p-6 bg-muted rounded-lg text-center mt-4 space-y-4">
+            <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Equivalent Human Age:</h3>
+                <div className="flex justify-center items-baseline space-x-2">
+                    <span className="text-4xl font-bold text-primary">{result.humanAge}</span>
+                    <span className="text-xl text-muted-foreground">years</span>
                 </div>
             </div>
-            )}
-        </CardContent>
-        </Card>
-    </div>
+            <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Life Stage:</h3>
+                <p className="text-xl font-semibold text-primary">{result.lifeStage}</p>
+            </div>
+            <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Health Tip:</h3>
+                <p className="text-sm text-foreground">{result.tip}</p>
+            </div>
+        </div>
+        )}
+    </CardContent>
+    </Card>
   );
 }

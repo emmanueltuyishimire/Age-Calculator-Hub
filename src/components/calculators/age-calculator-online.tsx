@@ -156,7 +156,7 @@ export default function AgeCalculatorOnline() {
   return (
     <div className="space-y-6">
       <Card className="w-full max-w-2xl mx-auto shadow-lg">
-        <CardHeader>
+        <CardHeader className="text-center">
           <CardTitle>Calculate Your Age</CardTitle>
           <CardDescription>
             Enter your date of birth to find out your exact age, updating in real-time.
