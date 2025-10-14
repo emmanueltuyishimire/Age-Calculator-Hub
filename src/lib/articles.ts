@@ -9,6 +9,13 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: 'your-complete-guide-to-age-calculators',
+    title: 'Your Complete Guide to the Age Calculator App',
+    description: 'Explore our all-in-one age calculator app. From chronological and biological age to pet age and retirement planning, find the perfect tool for every need in our comprehensive guide.',
+    category: 'Guides',
+    publishedDate: '2024-10-20',
+  },
+  {
     slug: 'what-is-biological-age-and-how-to-improve-it',
     title: 'The Ultimate Guide to Your Biological Age: Are You Younger or Older Than You Think?',
     description: 'A comprehensive guide to understanding what biological age is, how it\'s measured, and the actionable steps you can take to lower it for a longer, healthier life.',
@@ -56,12 +63,5 @@ export const articles: Article[] = [
     description: 'From the first positive test to the final countdown, understand the key milestones and developmental stages of your pregnancy journey.',
     category: 'Pregnancy',
     publishedDate: '2024-10-08',
-  },
-   {
-    slug: 'what-is-chronological-age',
-    title: 'What Is Chronological Age and Why Is It Important?',
-    description: 'Explore the definition of chronological age and its significance in medical, legal, and social contexts. Understand how this fundamental measure shapes our lives.',
-    category: 'Core Concepts',
-    publishedDate: '2024-10-05',
   },
 ];
