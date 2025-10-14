@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default function ArticlesHubPage() {
-
   const categories = [...new Set(articles.map(article => article.category))];
 
   return (
@@ -27,7 +26,7 @@ export default function ArticlesHubPage() {
       {categories.map(category => (
         <section key={category} className="mb-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">{category}</h2>
-            <ArticleList articleCount={articles.filter(a => a.category === category).length} />
+            <ArticleList category={category} />
         </section>
       ))}
       

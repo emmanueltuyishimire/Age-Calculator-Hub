@@ -4,14 +4,22 @@
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { articles } from '@/lib/articles';
-import { format, parseISO } from 'date-fns';
 
 type ArticleListProps = {
   articleCount?: number;
+  category?: string;
 };
 
-export default function ArticleList({ articleCount }: ArticleListProps) {
-  const articlesToDisplay = articleCount ? articles.slice(0, articleCount) : articles;
+export default function ArticleList({ articleCount, category }: ArticleListProps) {
+  let articlesToDisplay = articles;
+
+  if (category) {
+    articlesToDisplay = articles.filter(a => a.category === category);
+  }
+
+  if (articleCount) {
+    articlesToDisplay = articlesToDisplay.slice(0, articleCount);
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
