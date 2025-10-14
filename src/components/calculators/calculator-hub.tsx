@@ -205,9 +205,8 @@ export default function CalculatorHub() {
       </div>
 
       <div id="calculators">
-        {categories.map((category, index) => (
-          <React.Fragment key={category.name}>
-          <section className="mb-12">
+        {categories.map((category) => (
+          <section className="mb-12" key={category.name}>
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">{category.name}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {category.items.map((item) => (
@@ -225,7 +224,6 @@ export default function CalculatorHub() {
               ))}
             </div>
           </section>
-          </React.Fragment>
         ))}
       </div>
 

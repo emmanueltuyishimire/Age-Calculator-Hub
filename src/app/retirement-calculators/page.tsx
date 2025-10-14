@@ -4,6 +4,15 @@
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { categorizedNavItems } from '@/components/layout/nav-items';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Retirement & Social Security Calculators',
+    description: 'Plan for your future with confidence. Our retirement calculators help you determine your full retirement age based on Social Security guidelines, so you can make informed decisions about your financial future.',
+    alternates: {
+        canonical: '/retirement-calculators',
+    },
+};
 
 export default function RetirementCalculatorsHub() {
   const navItems = categorizedNavItems().find(cat => cat.name === 'Retirement & Social')?.items || [];

@@ -4,6 +4,17 @@
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { categorizedNavItems } from '@/components/layout/nav-items';
+import type { Metadata } from 'next';
+
+// Although this is a client component, we can export metadata from it.
+// Next.js will render this on the server.
+export const metadata: Metadata = {
+    title: 'Core Age Calculators - Chronological & Birthday Tools',
+    description: 'Explore our fundamental tools for calculating chronological age. Find your exact age in years, months, and days, or count down to your next birthday with our precise and easy-to-use calculators.',
+    alternates: {
+        canonical: '/core-age-calculators',
+    },
+};
 
 export default function CoreAgeCalculatorsHub() {
   const navItems = categorizedNavItems().find(cat => cat.name === 'Core Age Calculation')?.items || [];

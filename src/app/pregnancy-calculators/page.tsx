@@ -4,6 +4,15 @@
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { categorizedNavItems } from '@/components/layout/nav-items';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Pregnancy Calculators Hub - Due Date, Ovulation & More',
+    description: 'Explore our free pregnancy tools to calculate your due date, pregnancy progress, and ovulation window. Simple, fast, and accurate calculators to support every stage of your journey.',
+    alternates: {
+        canonical: '/pregnancy-calculators',
+    },
+};
 
 export default function PregnancyCalculatorsHub() {
   const pregnancyNavItems = categorizedNavItems().find(cat => cat.name === 'Pregnancy Calculators')?.items || [];

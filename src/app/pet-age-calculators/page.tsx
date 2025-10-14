@@ -4,6 +4,15 @@
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { categorizedNavItems } from '@/components/layout/nav-items';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Pet Age Calculators - Dog & Cat Age in Human Years',
+    description: 'Ever wonder how old your furry friend is in human years? Use our specialized calculators for dogs and cats to better understand their life stage, health, and care needs.',
+    alternates: {
+        canonical: '/pet-age-calculators',
+    },
+};
 
 export default function PetAgeCalculatorsHub() {
   const navItems = categorizedNavItems().find(cat => cat.name === 'Pet Age')?.items || [];
