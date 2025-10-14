@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { format, addYears, addMonths, isValid } from 'date-fns';
 import {
   Card,
@@ -53,6 +53,17 @@ export default function RetirementAgeCalculator() {
   const [retirementInfo, setRetirementInfo] = useState<RetirementInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    try {
+        const savedDob = localStorage.getItem('retirementAgeCalculatorDob');
+        if (savedDob) {
+            setDob(JSON.parse(savedDob));
+        }
+    } catch(e) {
+        // ignore
+    }
+  }, []);
+
   const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
     const day = parseInt(dayStr, 10);
     const month = parseInt(monthStr, 10) - 1;
@@ -76,6 +87,7 @@ export default function RetirementAgeCalculator() {
       return;
     }
     setError(null);
+    localStorage.setItem('retirementAgeCalculatorDob', JSON.stringify(dob));
 
     const birthYear = selectedDate.getFullYear();
     const fullRetirementAge = getRetirementAge(birthYear);
@@ -166,3 +178,5 @@ export default function RetirementAgeCalculator() {
     </Card>
   );
 }
+
+    

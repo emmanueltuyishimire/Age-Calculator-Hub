@@ -41,6 +41,17 @@ export default function BirthdayAgeCalculator() {
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    try {
+        const savedDob = localStorage.getItem('birthdayAgeCalculatorDob');
+        if (savedDob) {
+            setDob(JSON.parse(savedDob));
+        }
+    } catch(e) {
+        // ignore
+    }
+  }, []);
+
   const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
     const day = parseInt(dayStr, 10);
     const month = parseInt(monthStr, 10) - 1;
@@ -110,6 +121,7 @@ export default function BirthdayAgeCalculator() {
       return;
     }
     setError(null);
+    localStorage.setItem('birthdayAgeCalculatorDob', JSON.stringify(dob));
     setIsCalculating(true);
     calculateAgeAndCountdown();
   };
@@ -120,6 +132,7 @@ export default function BirthdayAgeCalculator() {
       setCountdown(undefined);
       setIsCalculating(false);
       setError(null);
+      localStorage.removeItem('birthdayAgeCalculatorDob');
   }
   
   useEffect(() => {
@@ -218,3 +231,5 @@ export default function BirthdayAgeCalculator() {
     </div>
   );
 }
+
+    

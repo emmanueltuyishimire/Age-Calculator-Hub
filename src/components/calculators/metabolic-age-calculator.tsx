@@ -262,3 +262,5 @@ export default function MetabolicAgeCalculator() {
     </Card>
   );
 }
+
+    
