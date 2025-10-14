@@ -17,18 +17,18 @@ import {
 } from "@/components/ui/table"
 
 export const metadata: Metadata = {
-    title: 'Dog Age Calculator – Convert Dog Years to Human Years Instantly',
-    description: 'Use our Dog Age Calculator to find your dog’s age in human years. Discover your dog’s life stage, breed-adjusted age, and care tips with our accurate canine-to-human age conversion tool.',
+    title: 'Dog Age Calculator for Mixed & Purebred Dogs – Dog Years to Human Years',
+    description: 'Use our free Dog Age Calculator for mixed breed and purebred dogs. Find your dog’s age in human years by size. Discover life stage and care tips with our accurate age conversion tool.',
     openGraph: {
-        title: 'Dog Age Calculator – Convert Dog Years to Human Years Instantly',
-        description: 'Use our Dog Age Calculator to find your dog’s age in human years. Discover your dog’s life stage, breed-adjusted age, and care tips with our accurate canine-to-human age conversion tool.',
+        title: 'Dog Age Calculator for Mixed & Purebred Dogs – Dog Years to Human Years',
+        description: 'Use our free Dog Age Calculator for mixed breed and purebred dogs. Find your dog’s age in human years by size. Discover life stage and care tips with our accurate age conversion tool.',
         type: 'website',
         url: '/dog-age',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Dog Age Calculator – Convert Dog Years to Human Years Instantly',
-        description: 'Use our Dog Age Calculator to find your dog’s age in human years. Discover your dog’s life stage, breed-adjusted age, and care tips with our accurate canine-to-human age conversion tool.',
+        title: 'Dog Age Calculator for Mixed & Purebred Dogs – Dog Years to Human Years',
+        description: 'Use our free Dog Age Calculator for mixed breed and purebred dogs. Find your dog’s age in human years by size. Discover life stage and care tips with our accurate age conversion tool.',
     },
     alternates: {
         canonical: '/dog-age',
@@ -36,11 +36,12 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-    { question: "Is the 1 dog year = 7 human years rule accurate?", answer: "No. That’s outdated. Modern research shows dog aging depends on breed and size." },
-    { question: "How long do dogs live?", answer: "On average, small dogs live 12–16 years, while large dogs live 8–12 years." },
-    { question: "Why do large dogs age faster?", answer: "Larger breeds experience faster cellular growth, which leads to quicker aging." },
-    { question: "Can I slow down my dog’s aging?", answer: "Regular exercise, a balanced diet, and vet care significantly improve lifespan and vitality." },
-    { question: "When is a dog considered old?", answer: "Generally at 7 years for large breeds, and 9+ years for smaller breeds." }
+    { question: "How do I calculate the age of my mixed-breed dog?", answer: "This calculator is perfect for mixed-breed dogs. The most important factor for determining a dog's age in human years is its size, not its breed. Simply choose the size category (Small, Medium, Large, or Giant) that best fits your mixed-breed dog to get an accurate estimate." },
+    { question: "Is the 1 dog year = 7 human years rule accurate?", answer: "No. That’s an outdated myth. Modern veterinary research shows dog aging is more complex and depends heavily on size and breed." },
+    { question: "How long do dogs live?", answer: "On average, small dogs live 12–16 years, while large dogs live 8–12 years. Mixed-breed dogs often have a longer lifespan than purebreds of a similar size." },
+    { question: "Why do large dogs age faster?", answer: "Larger breeds grow more rapidly from puppies to adults, which is believed to contribute to faster aging and a shorter overall lifespan." },
+    { question: "Can I slow down my dog’s aging?", answer: "While you can't stop time, you can significantly improve their healthspan and vitality with regular exercise, a balanced diet, and consistent vet care." },
+    { question: "When is a dog considered old?", answer: "Generally, large breeds are considered 'senior' around age 7, while smaller breeds enter their senior years around age 9 or 10." }
 ];
 
 const faqSchema = {
@@ -84,9 +85,9 @@ export default function DogAgePage() {
         />
       <main role="main">
         <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Dog Age Calculator – Convert Dog Years to Human Years Instantly</h1>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Dog Age Calculator (Works for Mixed Breeds)</h1>
             <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-                Ever wondered how old your dog really is in human years? Our Dog Age Calculator gives you an instant and accurate conversion based on the latest veterinary research. Simply enter your dog’s age and size to see their equivalent human age and life stage.
+                Ever wondered how old your dog is in human years? Our calculator works for purebred and mixed-breed dogs alike, giving you an instant and accurate conversion based on the latest veterinary research. Simply enter your dog’s age and, most importantly, their size to see their equivalent human age and life stage.
             </p>
         </div>
       
@@ -97,15 +98,15 @@ export default function DogAgePage() {
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Dog Age Calculator</h2>
                 <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
                     <li><strong>Enter Your Dog's Age:</strong> Input your dog's current age in years.</li>
-                    <li><strong>Select Dog Size:</strong> Choose from Small, Medium, Large, or Giant for a more accurate calculation.</li>
+                    <li><strong>Select Dog Size:</strong> This is the most important step for an accurate result, especially for a mixed-breed dog. Choose from Small, Medium, Large, or Giant.</li>
                     <li><strong>Click “Calculate”:</strong> Get an instant conversion to human years, along with your dog's life stage.</li>
                 </ol>
             </div>
 
             <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Dog Age to Human Years Chart (by Size & Breed)</h2>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Dog Age to Human Years Chart (by Size)</h2>
                 <p className="text-muted-foreground mb-4">
-                    The old rule of "1 dog year equals 7 human years" is a myth. A dog's aging process depends heavily on their size and breed. Smaller dogs tend to live longer and age more slowly, while larger breeds age more rapidly, especially in their later years.
+                    The old rule of "1 dog year equals 7 human years" is a myth. A dog's aging process depends heavily on their size. Smaller dogs tend to live longer and age more slowly, while larger breeds age more rapidly, especially in their later years.
                 </p>
                 <div className="overflow-x-auto">
                 <Table>
@@ -158,7 +159,7 @@ export default function DogAgePage() {
             </div>
 
             <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">FAQs About Dog Aging</h2>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions About Dog Aging</h2>
                 <Accordion type="single" collapsible className="w-full">
                     {faqs.map((faq, index) => (
                          <AccordionItem value={`item-${index}`} key={index}>
