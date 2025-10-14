@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface RetirementInfo {
   fullRetirement: {
@@ -126,35 +127,41 @@ export default function RetirementAgeCalculator() {
         <Button onClick={handleCalculate} className="w-full">Calculate Retirement Age</Button>
 
         {retirementInfo && (
-          <div className="p-6 bg-muted rounded-lg space-y-6 animate-fade-in mt-4">
-            <div className="text-center">
-              <h3 className="text-lg font-medium text-muted-foreground">Your Full Retirement Age is:</h3>
-              <div className="flex justify-center items-baseline space-x-2">
-                <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirement.age.years}</span>
-                <span className="text-xl text-muted-foreground">years</span>
-                {retirementInfo.fullRetirement.age.months > 0 && (
-                  <>
-                    <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirement.age.months}</span>
-                    <span className="text-xl text-muted-foreground">months</span>
-                  </>
-                )}
+          <>
+            <div className="p-6 bg-muted rounded-lg space-y-6 animate-fade-in mt-4">
+              <div className="text-center">
+                <h3 className="text-lg font-medium text-muted-foreground">Your Full Retirement Age is:</h3>
+                <div className="flex justify-center items-baseline space-x-2">
+                  <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirement.age.years}</span>
+                  <span className="text-xl text-muted-foreground">years</span>
+                  {retirementInfo.fullRetirement.age.months > 0 && (
+                    <>
+                      <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirement.age.months}</span>
+                      <span className="text-xl text-muted-foreground">months</span>
+                    </>
+                  )}
+                </div>
+                <p className="mt-2 text-muted-foreground">
+                  You can receive full benefits starting in <strong className="text-foreground">{format(retirementInfo.fullRetirement.date, 'MMMM yyyy')}</strong>.
+                </p>
               </div>
-              <p className="mt-2 text-muted-foreground">
-                You can receive full benefits starting in <strong className="text-foreground">{format(retirementInfo.fullRetirement.date, 'MMMM yyyy')}</strong>.
-              </p>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
-                <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold">Early Retirement</h4>
-                    <p className="text-sm text-muted-foreground">You can start receiving benefits at age 62, in <strong className="text-foreground">{format(retirementInfo.earlyRetirement.date, 'MMMM yyyy')}</strong>. Benefits may be reduced.</p>
-                </div>
-                <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold">Delayed Retirement</h4>
-                    <p className="text-sm text-muted-foreground">If you delay until age 70, your benefits will increase. You can receive this maximum benefit starting in <strong className="text-foreground">{format(retirementInfo.delayedRetirement.date, 'MMMM yyyy')}</strong>.</p>
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                  <div className="p-4 border rounded-lg">
+                      <h4 className="font-semibold">Early Retirement</h4>
+                      <p className="text-sm text-muted-foreground">You can start receiving benefits at age 62, in <strong className="text-foreground">{format(retirementInfo.earlyRetirement.date, 'MMMM yyyy')}</strong>. Benefits may be reduced.</p>
+                  </div>
+                  <div className="p-4 border rounded-lg">
+                      <h4 className="font-semibold">Delayed Retirement</h4>
+                      <p className="text-sm text-muted-foreground">If you delay until age 70, your benefits will increase. You can receive this maximum benefit starting in <strong className="text-foreground">{format(retirementInfo.delayedRetirement.date, 'MMMM yyyy')}</strong>.</p>
+                  </div>
+              </div>
             </div>
-          </div>
+            <SignUpPrompt
+              message="Want to Save Your Retirement Info?"
+              description="Create a free account to save your retirement age calculation and access financial planning tools."
+            />
+          </>
         )}
       </CardContent>
     </Card>

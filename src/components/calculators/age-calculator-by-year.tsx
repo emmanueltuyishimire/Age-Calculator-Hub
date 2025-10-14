@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { SignUpPrompt } from '../auth/signup-prompt';
 
 export default function AgeCalculatorByYear() {
   const [birthYear, setBirthYear] = useState('');
@@ -74,15 +75,18 @@ export default function AgeCalculatorByYear() {
         </div>
 
         {age !== null && (
-        <div className="p-6 bg-muted rounded-lg text-center space-y-2 animate-fade-in mt-4">
-            <div>
-            <h3 className="text-lg font-medium text-muted-foreground">Estimated Age in {new Date().getFullYear()}:</h3>
-            <div className="flex justify-center items-baseline space-x-2">
-                <span className="text-4xl font-bold text-primary">{age}</span>
-                <span className="text-xl text-muted-foreground">years old</span>
+          <>
+            <div className="p-6 bg-muted rounded-lg text-center space-y-2 animate-fade-in mt-4">
+                <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Estimated Age in {new Date().getFullYear()}:</h3>
+                <div className="flex justify-center items-baseline space-x-2">
+                    <span className="text-4xl font-bold text-primary">{age}</span>
+                    <span className="text-xl text-muted-foreground">years old</span>
+                </div>
+                </div>
             </div>
-            </div>
-        </div>
+            <SignUpPrompt />
+          </>
         )}
     </CardContent>
     </Card>

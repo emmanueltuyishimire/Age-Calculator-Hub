@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface DueDateInfo {
   dueDate: Date;
@@ -138,20 +139,26 @@ export default function DueDateCalculator() {
         <Button onClick={handleCalculate} className="w-full">Calculate Due Date</Button>
 
         {dueDateInfo && (
-          <div className="p-6 bg-muted rounded-lg space-y-4 animate-fade-in mt-4 text-center">
-            <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Estimated Due Date:</h3>
-              <p className="text-2xl font-bold text-primary">{format(dueDateInfo.dueDate, 'MMMM d, yyyy')}</p>
+          <>
+            <div className="p-6 bg-muted rounded-lg space-y-4 animate-fade-in mt-4 text-center">
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Estimated Due Date:</h3>
+                <p className="text-2xl font-bold text-primary">{format(dueDateInfo.dueDate, 'MMMM d, yyyy')}</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Gestational Age:</h3>
+                <p className="text-xl font-semibold text-primary">{dueDateInfo.gestationalAge}</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Current Trimester:</h3>
+                <p className="text-xl font-semibold text-primary">{dueDateInfo.trimester}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Gestational Age:</h3>
-              <p className="text-xl font-semibold text-primary">{dueDateInfo.gestationalAge}</p>
-            </div>
-             <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Current Trimester:</h3>
-              <p className="text-xl font-semibold text-primary">{dueDateInfo.trimester}</p>
-            </div>
-          </div>
+            <SignUpPrompt
+              message="Track Your Pregnancy?"
+              description="Create a free account to save your due date and track your pregnancy milestones."
+            />
+          </>
         )}
       </CardContent>
     </Card>

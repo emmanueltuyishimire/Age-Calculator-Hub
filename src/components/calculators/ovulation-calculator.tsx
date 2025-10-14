@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import { RefreshCcw } from 'lucide-react';
+import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface OvulationInfo {
   fertileWindow: { start: Date; end: Date };
@@ -126,30 +127,36 @@ export default function OvulationCalculator() {
         </div>
 
         {ovulationInfo && (
-          <div className="p-6 bg-muted rounded-lg space-y-4 animate-fade-in mt-4 text-center">
-            <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Estimated Fertile Window:</h3>
-              <p className="text-xl font-semibold text-primary">
-                {format(ovulationInfo.fertileWindow.start, 'MMM d')} - {format(ovulationInfo.fertileWindow.end, 'MMM d, yyyy')}
-              </p>
+          <>
+            <div className="p-6 bg-muted rounded-lg space-y-4 animate-fade-in mt-4 text-center">
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Estimated Fertile Window:</h3>
+                <p className="text-xl font-semibold text-primary">
+                  {format(ovulationInfo.fertileWindow.start, 'MMM d')} - {format(ovulationInfo.fertileWindow.end, 'MMM d, yyyy')}
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Estimated Ovulation Date:</h3>
+                <p className="text-xl font-semibold text-primary">{format(ovulationInfo.ovulationDate, 'MMMM d, yyyy')}</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Days Until Ovulation:</h3>
+                <p className="text-xl font-semibold text-primary">{ovulationInfo.daysUntilOvulation} days</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Next Period Prediction:</h3>
+                <p className="text-xl font-semibold text-primary">{format(ovulationInfo.nextPeriod, 'MMMM d, yyyy')}</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Current Cycle Day:</h3>
+                <p className="text-xl font-semibold text-primary">{ovulationInfo.currentCycleDay}</p>
+              </div>
             </div>
-             <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Estimated Ovulation Date:</h3>
-              <p className="text-xl font-semibold text-primary">{format(ovulationInfo.ovulationDate, 'MMMM d, yyyy')}</p>
-            </div>
-             <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Days Until Ovulation:</h3>
-              <p className="text-xl font-semibold text-primary">{ovulationInfo.daysUntilOvulation} days</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Next Period Prediction:</h3>
-              <p className="text-xl font-semibold text-primary">{format(ovulationInfo.nextPeriod, 'MMMM d, yyyy')}</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Current Cycle Day:</h3>
-              <p className="text-xl font-semibold text-primary">{ovulationInfo.currentCycleDay}</p>
-            </div>
-          </div>
+            <SignUpPrompt
+              message="Want to Track Your Cycle?"
+              description="Create a free account to save your cycle information and track your fertility over time."
+            />
+          </>
         )}
       </CardContent>
     </Card>

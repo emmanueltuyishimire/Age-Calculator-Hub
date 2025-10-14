@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface GestationalInfo {
   weeks: number;
@@ -130,31 +131,37 @@ export default function GestationalAgeCalculator() {
         <Button onClick={handleCalculate} className="w-full">Calculate Gestational Age</Button>
 
         {gestationalInfo && (
-          <div className="p-6 bg-muted rounded-lg text-center space-y-6 animate-fade-in mt-4">
-            <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Current Gestational Age:</h3>
-              <div className="flex justify-center items-baseline space-x-2">
-                <span className="text-4xl font-bold text-primary">{gestationalInfo.weeks}</span>
-                <span className="text-xl text-muted-foreground">weeks</span>
-                <span className="text-4xl font-bold text-primary">{gestationalInfo.days}</span>
-                <span className="text-xl text-muted-foreground">days</span>
+          <>
+            <div className="p-6 bg-muted rounded-lg text-center space-y-6 animate-fade-in mt-4">
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Current Gestational Age:</h3>
+                <div className="flex justify-center items-baseline space-x-2">
+                  <span className="text-4xl font-bold text-primary">{gestationalInfo.weeks}</span>
+                  <span className="text-xl text-muted-foreground">weeks</span>
+                  <span className="text-4xl font-bold text-primary">{gestationalInfo.days}</span>
+                  <span className="text-xl text-muted-foreground">days</span>
+                </div>
+              </div>
+              <div>
+                  <h3 className="text-lg font-medium text-muted-foreground">You are in:</h3>
+                  <p className="text-2xl font-semibold text-primary">Trimester {gestationalInfo.trimester}</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-muted-foreground">Estimated Due Date:</h3>
+                <p className="text-2xl font-semibold text-primary">
+                  {format(gestationalInfo.dueDate, 'MMMM d, yyyy')}
+                </p>
+              </div>
+              <div>
+                  <h3 className="text-lg font-medium text-muted-foreground">Fetal Development Highlight:</h3>
+                  <p className="text-md text-foreground">{gestationalInfo.developmentStage}</p>
               </div>
             </div>
-             <div>
-                <h3 className="text-lg font-medium text-muted-foreground">You are in:</h3>
-                <p className="text-2xl font-semibold text-primary">Trimester {gestationalInfo.trimester}</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-medium text-muted-foreground">Estimated Due Date:</h3>
-              <p className="text-2xl font-semibold text-primary">
-                {format(gestationalInfo.dueDate, 'MMMM d, yyyy')}
-              </p>
-            </div>
-             <div>
-                <h3 className="text-lg font-medium text-muted-foreground">Fetal Development Highlight:</h3>
-                <p className="text-md text-foreground">{gestationalInfo.developmentStage}</p>
-            </div>
-          </div>
+            <SignUpPrompt
+              message="Track Your Pregnancy?"
+              description="Create a free account to save your due date and track your pregnancy milestones."
+            />
+          </>
         )}
       </CardContent>
     </Card>

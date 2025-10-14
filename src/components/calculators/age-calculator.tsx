@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, RefreshCcw } from "lucide-react"
+import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface Age {
   years: number;
@@ -159,12 +160,11 @@ export default function AgeCalculator() {
     }
     return () => clearInterval(interval);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCalculating]);
+  }, [isCalculating, dob, ageAt]);
 
   useEffect(() => {
     setIsCalculating(false);
     setAge(undefined);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dob.day, dob.month, dob.year, ageAt.day, ageAt.month, ageAt.year])
 
   return (
@@ -210,6 +210,7 @@ export default function AgeCalculator() {
         </div>
 
         {age && (
+          <>
             <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 animate-fade-in">
               <div>
                 <h3 className="text-md sm:text-lg font-medium mb-2">Your Exact Age:</h3>
@@ -236,6 +237,8 @@ export default function AgeCalculator() {
                  </div>
               </div>
             </div>
+            <SignUpPrompt />
+          </>
           )}
       </CardContent>
     </Card>

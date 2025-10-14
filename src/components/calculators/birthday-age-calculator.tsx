@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface Age {
   years: number;
@@ -123,13 +124,14 @@ export default function BirthdayAgeCalculator() {
   }
   
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: NodeJS.Timeout | undefined;
     if (isCalculating) {
-      interval = setInterval(() => {
-        calculateAgeAndCountdown();
-      }, 1000);
+      calculateAgeAndCountdown(); // Initial calculation
+      interval = setInterval(calculateAgeAndCountdown, 1000);
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isCalculating, calculateAgeAndCountdown]);
 
   // Reset calculation when input changes
@@ -174,6 +176,7 @@ export default function BirthdayAgeCalculator() {
           </div>
 
           {isCalculating && age && (
+            <>
             <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 animate-fade-in">
               <div>
                 <h3 className="text-md sm:text-lg font-medium mb-2">Your Exact Age:</h3>
@@ -189,9 +192,8 @@ export default function BirthdayAgeCalculator() {
                 </div>
               </div>
             </div>
-          )}
 
-          {isCalculating && countdown && (
+            {countdown && (
                 <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 mt-4 animate-fade-in">
                     <div className="flex justify-center items-center gap-2">
                         <Gift className="h-6 w-6 text-primary" />
@@ -208,6 +210,9 @@ export default function BirthdayAgeCalculator() {
                     </div>
                 </div>
             )}
+            <SignUpPrompt />
+            </>
+          )}
         </CardContent>
       </Card>
     </div>

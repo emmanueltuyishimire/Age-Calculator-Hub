@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface RetirementInfo {
   fullRetirementAge: { years: number; months: number };
@@ -111,32 +112,38 @@ export default function SocialSecurityRetirementAgeCalculator() {
         </div>
 
         {retirementInfo && (
-          <div className="p-6 bg-muted rounded-lg space-y-6 animate-fade-in mt-4">
-            <div className="text-center">
-              <h3 className="text-lg font-medium text-muted-foreground">Your Full Retirement Age is:</h3>
-              <div className="flex justify-center items-baseline space-x-2">
-                <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirementAge.years}</span>
-                <span className="text-xl text-muted-foreground">years</span>
-                {retirementInfo.fullRetirementAge.months > 0 && (
-                  <>
-                    <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirementAge.months}</span>
-                    <span className="text-xl text-muted-foreground">months</span>
-                  </>
-                )}
+          <>
+            <div className="p-6 bg-muted rounded-lg space-y-6 animate-fade-in mt-4">
+              <div className="text-center">
+                <h3 className="text-lg font-medium text-muted-foreground">Your Full Retirement Age is:</h3>
+                <div className="flex justify-center items-baseline space-x-2">
+                  <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirementAge.years}</span>
+                  <span className="text-xl text-muted-foreground">years</span>
+                  {retirementInfo.fullRetirementAge.months > 0 && (
+                    <>
+                      <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirementAge.months}</span>
+                      <span className="text-xl text-muted-foreground">months</span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                  <div className="p-4 border rounded-lg">
+                      <h4 className="font-semibold">Early Retirement (Age 62)</h4>
+                      <p className="text-sm text-muted-foreground">You can start benefits at age 62, but they will be reduced by approximately <strong className="text-foreground">{retirementInfo.earlyBenefitReduction}%</strong>.</p>
+                  </div>
+                  <div className="p-4 border rounded-lg">
+                      <h4 className="font-semibold">Delayed Retirement (Age 70)</h4>
+                      <p className="text-sm text-muted-foreground">If you wait until age 70, your benefits will increase by about <strong className="text-foreground">{retirementInfo.delayedBenefitIncrease}%</strong> over your full retirement amount.</p>
+                  </div>
               </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
-                <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold">Early Retirement (Age 62)</h4>
-                    <p className="text-sm text-muted-foreground">You can start benefits at age 62, but they will be reduced by approximately <strong className="text-foreground">{retirementInfo.earlyBenefitReduction}%</strong>.</p>
-                </div>
-                <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold">Delayed Retirement (Age 70)</h4>
-                    <p className="text-sm text-muted-foreground">If you wait until age 70, your benefits will increase by about <strong className="text-foreground">{retirementInfo.delayedBenefitIncrease}%</strong> over your full retirement amount.</p>
-                </div>
-            </div>
-          </div>
+            <SignUpPrompt
+              message="Want to Save Your Retirement Info?"
+              description="Create a free account to save your retirement age calculation and access financial planning tools."
+            />
+          </>
         )}
       </CardContent>
     </Card>
