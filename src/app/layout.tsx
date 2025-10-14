@@ -5,6 +5,7 @@ import Script from 'next/script';
 import { AppLayout } from '@/components/layout/app-layout';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/layout/theme-provider';
+import { FirebaseClientProvider } from '@/firebase';
 import './globals.css';
 
 const ptSans = PT_Sans({
@@ -74,7 +75,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
         >
-          <AppLayout>{children}</AppLayout>
+          <FirebaseClientProvider>
+            <AppLayout>{children}</AppLayout>
+          </FirebaseClientProvider>
           <Toaster />
         </ThemeProvider>
       </body>

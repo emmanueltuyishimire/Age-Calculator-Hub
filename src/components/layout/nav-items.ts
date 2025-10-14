@@ -31,6 +31,7 @@ import {
   Newspaper,
   Calendar as CalendarIcon,
   Zap,
+  LogIn,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -61,6 +62,13 @@ export const navItems: NavItem[] = [
     label: 'Articles',
     category: 'Navigation',
     description: 'Read our latest articles.'
+  },
+  {
+    href: '/login',
+    icon: LogIn,
+    label: 'Login',
+    category: 'Navigation',
+    description: 'Login to your account.',
   },
   {
     href: '/age-calculator',
