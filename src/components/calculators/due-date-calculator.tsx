@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from 'react';
-import { format, addDays, subDays, isValid } from 'date-fns';
+import { format, addDays, subDays, isValid, differenceInDays } from 'date-fns';
 import {
   Card,
   CardContent,
@@ -156,9 +156,4 @@ export default function DueDateCalculator() {
       </CardContent>
     </Card>
   );
-}
-
-function differenceInDays(dateLeft: Date, dateRight: Date): number {
-    const diff = dateLeft.getTime() - dateRight.getTime();
-    return Math.floor(diff / (1000 * 60 * 60 * 24));
 }
