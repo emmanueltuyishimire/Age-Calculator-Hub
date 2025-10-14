@@ -10,7 +10,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { FaFacebook, FaWhatsapp, FaLinkedin, FaPinterest, FaXTwitter } from 'react-icons/fa6';
+import { FaFacebook, FaWhatsapp, FaLinkedin, FaPinterest, FaReddit, FaTumblr, FaTelegram } from 'react-icons/fa6';
+import { FaXTwitter } from 'react-icons/fa6';
 import { Input } from './ui/input';
 
 
@@ -72,6 +73,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, text, url }) => {
 
   const encodedUrl = encodeURIComponent(shareUrl);
   const encodedText = encodeURIComponent(text);
+  const encodedTitle = encodeURIComponent(title);
 
   return (
     <Popover>
@@ -83,7 +85,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, text, url }) => {
         <PopoverContent className="w-auto">
             <div className="space-y-4">
                 <p className="font-semibold text-center">Share this tool with your friends!</p>
-                <div className="flex justify-center gap-2">
+                <div className="flex justify-center flex-wrap gap-2">
                     <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
                         <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
                             <FaFacebook className="h-6 w-6" />
@@ -100,13 +102,33 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, text, url }) => {
                         </a>
                     </Button>
                      <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
-                        <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodeURIComponent(title)}&summary=${encodedText}`} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
+                        <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}&summary=${encodedText}`} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
                             <FaLinkedin className="h-6 w-6" />
                         </a>
                     </Button>
                      <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
                         <a href={`https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedText}`} target="_blank" rel="noopener noreferrer" aria-label="Pin on Pinterest">
                             <FaPinterest className="h-6 w-6" />
+                        </a>
+                    </Button>
+                    <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
+                        <a href={`https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Telegram">
+                            <FaTelegram className="h-6 w-6" />
+                        </a>
+                    </Button>
+                     <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
+                        <a href={`https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit">
+                            <FaReddit className="h-6 w-6" />
+                        </a>
+                    </Button>
+                     <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
+                        <a href={`https://www.tumblr.com/widgets/share/tool?posttype=link&title=${encodedTitle}&content=${encodedUrl}&caption=${encodedText}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Tumblr">
+                            <FaTumblr className="h-6 w-6" />
+                        </a>
+                    </Button>
+                     <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
+                        <a href={`mailto:?subject=${encodedTitle}&body=${encodedText}%20${encodedUrl}`} aria-label="Share by Email">
+                            <Mail className="h-6 w-6" />
                         </a>
                     </Button>
                 </div>
