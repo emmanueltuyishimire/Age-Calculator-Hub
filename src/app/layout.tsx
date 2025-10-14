@@ -65,15 +65,13 @@ export default function RootLayout({
             gtag('config', 'G-7XVG2YF7MY');
           `}
         </Script>
-        {/* 
-          IMPORTANT: Replace the placeholder ca-pub ID with your own Google AdSense Publisher ID 
-          for ads to work correctly.
-        */}
-        <script
+        {/* AdSense Auto Ads */}
+        <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
           crossOrigin="anonymous"
-        ></script>
+          strategy="afterInteractive"
+        />
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
         <ThemeProvider
