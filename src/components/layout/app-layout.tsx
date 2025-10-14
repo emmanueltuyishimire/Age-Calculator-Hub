@@ -20,14 +20,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center justify-between px-4">
-          <div className="flex items-center">
+          <div className="flex items-center mr-6">
             <Link href="/" className="flex items-center space-x-2">
                 <Image src="/logo.png" alt="Age Calculator Hub Logo" width={24} height={24} className="h-6 w-6" priority />
                 <span className="hidden font-bold sm:inline-block">Age Calculator Hub</span>
             </Link>
           </div>
           
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-1 items-center justify-end space-x-2">
             <TopNav />
             <ThemeToggle />
           </div>
