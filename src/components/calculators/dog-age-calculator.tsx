@@ -169,7 +169,7 @@ export default function DogAgeCalculator() {
                 <Button type="submit" className="w-full">
                   Calculate
                 </Button>
-                 <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto">
+                 <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
                     <RefreshCcw className="mr-2 h-4 w-4" /> Reset
                 </Button>
               </div>

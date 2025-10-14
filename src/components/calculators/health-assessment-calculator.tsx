@@ -81,9 +81,9 @@ export default function HealthAssessmentCalculator() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>Gender</Label>
+            <Label htmlFor="bmr-gender">Gender</Label>
             <Select value={bmrData.gender} onValueChange={(value) => setBmrData({...bmrData, gender: value})}>
-                <SelectTrigger><SelectValue/></SelectTrigger>
+                <SelectTrigger id="bmr-gender"><SelectValue/></SelectTrigger>
                 <SelectContent>
                     <SelectItem value="male">Male</SelectItem>
                     <SelectItem value="female">Female</SelectItem>
@@ -131,9 +131,9 @@ export default function HealthAssessmentCalculator() {
         </CardHeader>
         <CardContent className="space-y-4">
             <div className="space-y-2">
-                <Label>Gender</Label>
+                <Label htmlFor="bf-gender">Gender</Label>
                 <Select value={bodyFatData.gender} onValueChange={(value) => setBodyFatData({...bodyFatData, gender: value})}>
-                    <SelectTrigger><SelectValue/></SelectTrigger>
+                    <SelectTrigger id="bf-gender"><SelectValue/></SelectTrigger>
                     <SelectContent>
                         <SelectItem value="male">Male</SelectItem>
                         <SelectItem value="female">Female</SelectItem>

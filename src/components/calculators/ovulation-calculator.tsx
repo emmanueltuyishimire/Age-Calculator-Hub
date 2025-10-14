@@ -107,11 +107,11 @@ export default function OvulationCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-            <Label>First Day of Last Period</Label>
+            <Label htmlFor='lmp-day'>First Day of Last Period</Label>
              <div className="flex gap-2">
-                <Input placeholder="DD" value={lmp.day} onChange={e => setLmp({...lmp, day: e.target.value})} aria-label="LMP Day"/>
-                <Input placeholder="MM" value={lmp.month} onChange={e => setLmp({...lmp, month: e.target.value})} aria-label="LMP Month"/>
-                <Input placeholder="YYYY" value={lmp.year} onChange={e => setLmp({...lmp, year: e.target.value})} aria-label="LMP Year"/>
+                <Input id="lmp-day" placeholder="DD" value={lmp.day} onChange={e => setLmp({...lmp, day: e.target.value})} aria-label="LMP Day"/>
+                <Input id="lmp-month" placeholder="MM" value={lmp.month} onChange={e => setLmp({...lmp, month: e.target.value})} aria-label="LMP Month"/>
+                <Input id="lmp-year" placeholder="YYYY" value={lmp.year} onChange={e => setLmp({...lmp, year: e.target.value})} aria-label="LMP Year"/>
             </div>
         </div>
         <div className="space-y-2">
@@ -120,7 +120,7 @@ export default function OvulationCalculator() {
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <Button onClick={handleCalculate} className="w-full">Calculate Fertile Window</Button>
-          <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto">
+          <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
               <RefreshCcw className="mr-2 h-4 w-4" /> Reset
           </Button>
         </div>

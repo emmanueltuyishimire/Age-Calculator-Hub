@@ -120,11 +120,11 @@ export default function GestationalAgeCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-            <Label>Last Menstrual Period (LMP) Date</Label>
+            <Label htmlFor="lmp-day-gestational">Last Menstrual Period (LMP) Date</Label>
             <div className="flex gap-2">
-                <Input placeholder="DD" value={lmp.day} onChange={e => setLmp({...lmp, day: e.target.value})} aria-label="LMP Day"/>
-                <Input placeholder="MM" value={lmp.month} onChange={e => setLmp({...lmp, month: e.target.value})} aria-label="LMP Month"/>
-                <Input placeholder="YYYY" value={lmp.year} onChange={e => setLmp({...lmp, year: e.target.value})} aria-label="LMP Year"/>
+                <Input id="lmp-day-gestational" placeholder="DD" value={lmp.day} onChange={e => setLmp({...lmp, day: e.target.value})} aria-label="LMP Day"/>
+                <Input id="lmp-month-gestational" placeholder="MM" value={lmp.month} onChange={e => setLmp({...lmp, month: e.target.value})} aria-label="LMP Month"/>
+                <Input id="lmp-year-gestational" placeholder="YYYY" value={lmp.year} onChange={e => setLmp({...lmp, year: e.target.value})} aria-label="LMP Year"/>
             </div>
         </div>
         <Button onClick={handleCalculate} className="w-full">Calculate Gestational Age</Button>

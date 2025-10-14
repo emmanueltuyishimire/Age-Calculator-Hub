@@ -101,16 +101,16 @@ export default function PregnancyCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-            <Label>Last Menstrual Period (LMP)</Label>
+            <Label htmlFor="lmp-day-preg">Last Menstrual Period (LMP)</Label>
             <div className="flex gap-2">
-                <Input placeholder="DD" value={lmp.day} onChange={e => setLmp({...lmp, day: e.target.value})} aria-label="LMP Day"/>
-                <Input placeholder="MM" value={lmp.month} onChange={e => setLmp({...lmp, month: e.target.value})} aria-label="LMP Month"/>
-                <Input placeholder="YYYY" value={lmp.year} onChange={e => setLmp({...lmp, year: e.target.value})} aria-label="LMP Year"/>
+                <Input id="lmp-day-preg" placeholder="DD" value={lmp.day} onChange={e => setLmp({...lmp, day: e.target.value})} aria-label="LMP Day"/>
+                <Input id="lmp-month-preg" placeholder="MM" value={lmp.month} onChange={e => setLmp({...lmp, month: e.target.value})} aria-label="LMP Month"/>
+                <Input id="lmp-year-preg" placeholder="YYYY" value={lmp.year} onChange={e => setLmp({...lmp, year: e.target.value})} aria-label="LMP Year"/>
             </div>
         </div>
         <div className="space-y-2">
-            <Label htmlFor="cycle-length">Average Cycle Length (days)</Label>
-            <Input id="cycle-length" type="number" value={cycleLength} onChange={(e) => setCycleLength(e.target.value)} />
+            <Label htmlFor="cycle-length-preg">Average Cycle Length (days)</Label>
+            <Input id="cycle-length-preg" type="number" value={cycleLength} onChange={(e) => setCycleLength(e.target.value)} />
         </div>
         <Button onClick={handleCalculate} className="w-full">Calculate</Button>
 

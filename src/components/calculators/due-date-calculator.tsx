@@ -115,9 +115,9 @@ export default function DueDateCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-          <Label>Calculate from</Label>
+          <Label htmlFor="calc-method">Calculate from</Label>
           <Select value={calculationMethod} onValueChange={setCalculationMethod}>
-            <SelectTrigger>
+            <SelectTrigger id="calc-method">
               <SelectValue placeholder="Select method" />
             </SelectTrigger>
             <SelectContent>
@@ -128,11 +128,11 @@ export default function DueDateCalculator() {
           </Select>
         </div>
         <div className="space-y-2">
-          <Label>Date</Label>
+          <Label htmlFor="date-day">Date</Label>
            <div className="flex gap-2">
-                <Input placeholder="DD" value={inputDate.day} onChange={e => setInputDate({...inputDate, day: e.target.value})} aria-label="Day"/>
-                <Input placeholder="MM" value={inputDate.month} onChange={e => setInputDate({...inputDate, month: e.target.value})} aria-label="Month"/>
-                <Input placeholder="YYYY" value={inputDate.year} onChange={e => setInputDate({...inputDate, year: e.target.value})} aria-label="Year"/>
+                <Input id="date-day" placeholder="DD" value={inputDate.day} onChange={e => setInputDate({...inputDate, day: e.target.value})} aria-label="Day"/>
+                <Input id="date-month" placeholder="MM" value={inputDate.month} onChange={e => setInputDate({...inputDate, month: e.target.value})} aria-label="Month"/>
+                <Input id="date-year" placeholder="YYYY" value={inputDate.year} onChange={e => setInputDate({...inputDate, year: e.target.value})} aria-label="Year"/>
             </div>
         </div>
         <Button onClick={handleCalculate} className="w-full">Calculate Due Date</Button>

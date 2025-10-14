@@ -7,7 +7,6 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { categorizedNavItems } from '@/components/layout/nav-items';
 import { Button } from '../ui/button';
-import { CheckCircle2 } from 'lucide-react';
 
 const faqCategories = [
   {
@@ -265,7 +264,7 @@ export default function CalculatorHub() {
                     <AccordionContent>
                         <Accordion type="single" collapsible className="w-full pl-4">
                             {cat.faqs.map((faq, index) => (
-                                <AccordionItem value={`${cat.category}-faq-${index}`} key={index}>
+                                <AccordionItem value={`${cat.category}-faq-${index}`} key={`${cat.category}-faq-${index}`}>
                                     <AccordionTrigger>{faq.question}</AccordionTrigger>
                                     <AccordionContent>
                                         <p className="text-muted-foreground">{faq.answer}</p>

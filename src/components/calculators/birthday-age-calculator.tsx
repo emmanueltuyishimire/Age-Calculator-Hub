@@ -7,7 +7,6 @@ import { RefreshCcw, Gift } from 'lucide-react';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -161,15 +160,15 @@ export default function BirthdayAgeCalculator() {
               <Label htmlFor='dob-day'>Date of Birth</Label>
               <div className="flex gap-2">
                 <Input id="dob-day" placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
-                <Input placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
-                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
+                <Input id="dob-month" placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
+                <Input id="dob-year" placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2">
             <Button onClick={handleCalculate} className="w-full">Calculate Age & Birthday</Button>
-            <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto">
+            <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
           </div>

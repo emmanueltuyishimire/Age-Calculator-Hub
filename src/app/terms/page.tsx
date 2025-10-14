@@ -3,33 +3,26 @@
 
 import { type Metadata } from 'next';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 
-// export const metadata: Metadata = {
-//     title: 'Terms of Service – Age Calculator Hub',
-//     description: 'Read the Terms of Service for Age Calculator Hub. By using our website, you agree to these terms and conditions. Learn about acceptable use, disclaimers, and liability.',
-//     alternates: {
-//         canonical: '/terms',
-//     },
-// };
+export const metadata: Metadata = {
+    title: 'Terms of Service – Age Calculator Hub',
+    description: 'Read the Terms of Service for Age Calculator Hub. By using our website, you agree to these terms and conditions. Learn about acceptable use, disclaimers, and liability.',
+    alternates: {
+        canonical: '/terms',
+    },
+};
 
 export default function TermsPage() {
-  const [lastUpdated, setLastUpdated] = useState('');
-
-  useEffect(() => {
-    setLastUpdated(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
-  }, []);
+  const lastUpdated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Terms of Service</h1>
-          {lastUpdated && (
             <p className="text-md md:text-lg text-muted-foreground">
                 Last updated: {lastUpdated}
             </p>
-          )}
         </div>
 
         <section className="space-y-6 text-muted-foreground">
