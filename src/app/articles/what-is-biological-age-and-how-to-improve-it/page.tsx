@@ -5,6 +5,7 @@ import { articles } from '@/lib/articles';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const article = articles.find(a => a.slug === 'what-is-biological-age-and-how-to-improve-it');
 
@@ -39,6 +40,30 @@ const keyTakeaways = [
     "You can lower your biological age through targeted interventions, including a nutrient-dense diet, consistent exercise, and effective stress management.",
     "Knowing and improving your biological age is key to increasing your healthspan—the number of years you live in good health."
 ];
+
+const faqs = [
+    {
+        question: "What is the difference between healthspan and lifespan?",
+        answer: "Lifespan is the total number of years you live, while healthspan is the number of years you live in good health, free from chronic disease and disability. The goal of lowering biological age is to extend your healthspan, so your later years are as vibrant and active as possible."
+    },
+    {
+        question: "Can I really reverse my biological age?",
+        answer: "Yes, studies have shown that intensive lifestyle interventions can lead to a measurable reversal in biological age, sometimes in as little as 8 weeks. While you can't stop chronological aging, you have significant power to influence your biological aging process."
+    },
+    {
+        question: "How long does it take to see a change in biological age?",
+        answer: "Changes can be surprisingly fast. While long-term consistency is key, some studies have noted improvements in biological age markers within a few months of sustained lifestyle changes. Tracking your progress every 6-12 months can be very motivating."
+    },
+    {
+        question: "Are at-home biological age tests accurate?",
+        answer: "At-home epigenetic testing kits have become increasingly popular and can provide a good estimate of your biological age. However, their accuracy can vary. They are best used as a tool to track trends and motivate lifestyle changes rather than as a definitive medical diagnosis. For a comprehensive picture, always consult with a healthcare provider."
+    },
+    {
+        question: "Is my biological age determined more by genetics or lifestyle?",
+        answer: "While genetics play a role (estimated at around 20-30%), the scientific consensus is that lifestyle and environmental factors are the dominant drivers of your biological age. This is empowering news, as it means your daily choices have the biggest impact on how you age."
+    }
+];
+
 
 export default function BiologicalAgeArticlePage() {
   return (
@@ -180,6 +205,18 @@ export default function BiologicalAgeArticlePage() {
           <p>
             Ready to see where you stand? Use our <Link href="/biological-age"><strong>Biological Age Calculator</strong></Link> to get a personalized estimate and actionable tips. It's time to stop just counting the years and start making the years count.
           </p>
+
+          <div className="mt-12">
+            <h2 className="text-2xl font-bold text-foreground mb-4">Frequently Asked Questions</h2>
+             <Accordion type="single" collapsible className="w-full">
+                {faqs.map((faq, index) => (
+                    <AccordionItem value={`item-${index}`} key={index}>
+                        <AccordionTrigger>{faq.question}</AccordionTrigger>
+                        <AccordionContent>{faq.answer}</AccordionContent>
+                    </AccordionItem>
+                ))}
+            </Accordion>
+          </div>
         </article>
       </main>
     </div>
