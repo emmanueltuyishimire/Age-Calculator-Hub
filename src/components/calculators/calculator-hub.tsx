@@ -194,7 +194,7 @@ export default function CalculatorHub() {
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Age Calculators Hub</h1>
          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Welcome to Age Calculators Hub, your ultimate online destination for accurate and easy-to-use age calculators.
+            Welcome to Age Calculators Hub, your ultimate free online age calculators hub for accurate and easy-to-use tools.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Button size="lg" asChild>
