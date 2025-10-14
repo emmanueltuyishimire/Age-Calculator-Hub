@@ -55,7 +55,7 @@ export function TopNav() {
               {categories.map((category) => (
                  <NavigationMenuItem key={category.name}>
                     {category.href ? (
-                        <Link href={category.href} passHref legacyBehavior>
+                        <Link href={category.href} legacyBehavior passHref>
                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             {category.name}
                            </NavigationMenuLink>
