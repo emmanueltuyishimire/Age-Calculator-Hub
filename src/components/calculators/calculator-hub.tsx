@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { categorizedNavItems } from '@/components/layout/nav-items';
+import { Button } from '../ui/button';
 
 const faqCategories = [
   {
@@ -195,30 +196,40 @@ export default function CalculatorHub() {
          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Welcome to Age Calculators Hub, your ultimate online destination for accurate and easy-to-use age calculators.
         </p>
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <Button size="lg" asChild>
+            <Link href="#calculators">Explore Calculators</Link>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/login">Sign In</Link>
+          </Button>
+        </div>
       </div>
 
-      {categories.map((category, index) => (
-        <React.Fragment key={category.name}>
-        <section className="mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">{category.name}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {category.items.map((item) => (
-              <Link href={item.href} key={item.href} className="block hover:no-underline group">
-                <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary">
-                  <CardHeader>
-                    <div className="flex items-center gap-4 mb-2">
-                        <item.icon className="h-8 w-8 text-primary" aria-hidden="true" />
-                        <CardTitle className="text-xl">{item.label}</CardTitle>
-                    </div>
-                    <CardDescription>{item.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </section>
-        </React.Fragment>
-      ))}
+      <div id="calculators">
+        {categories.map((category, index) => (
+          <React.Fragment key={category.name}>
+          <section className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">{category.name}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {category.items.map((item) => (
+                <Link href={item.href} key={item.href} className="block hover:no-underline group">
+                  <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary">
+                    <CardHeader>
+                      <div className="flex items-center gap-4 mb-2">
+                          <item.icon className="h-8 w-8 text-primary" aria-hidden="true" />
+                          <CardTitle className="text-xl">{item.label}</CardTitle>
+                      </div>
+                      <CardDescription>{item.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </section>
+          </React.Fragment>
+        ))}
+      </div>
 
       <section className="mt-16 space-y-8 max-w-4xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Your Comprehensive Age Calculation Resource</h2>

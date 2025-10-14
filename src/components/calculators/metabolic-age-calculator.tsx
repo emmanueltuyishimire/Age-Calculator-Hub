@@ -254,7 +254,10 @@ export default function MetabolicAgeCalculator() {
                 </ResponsiveContainer>
               </div>
             </div>
-            <SignUpPrompt />
+            <SignUpPrompt 
+                message="Track Your Metabolic Health?"
+                description="Create a free account to save your metabolic age results and see how your fitness efforts pay off over time."
+            />
           </div>
         )}
       </CardContent>

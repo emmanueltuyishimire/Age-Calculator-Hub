@@ -302,7 +302,10 @@ export default function BiologicalAgeCalculator() {
               <h3 className="text-lg font-medium">Health Interpretation:</h3>
               <p className="text-muted-foreground whitespace-pre-wrap">{result.insights}</p>
             </div>
-            <SignUpPrompt />
+            <SignUpPrompt 
+                message="Want to Track Your Health Journey?"
+                description="Create a free account to save your biological age results and monitor your progress over time."
+            />
           </div>
         )}
       </CardContent>
