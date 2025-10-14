@@ -20,6 +20,26 @@ export const metadata: Metadata = {
     },
 };
 
+const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": article.description,
+    "datePublished": article.publishedDate,
+    "author": {
+        "@type": "Organization",
+        "name": "Age Calculator Hub"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Age Calculator Hub",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://age-calculator-hub.com/logo.png"
+        }
+    }
+};
+
 const faqs = [
     {
         question: "Is chronological age the most important measure of aging?",
@@ -42,6 +62,10 @@ const faqs = [
 export default function SampleArticlePage() {
   return (
     <div className="container mx-auto px-4 py-8">
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <main role="main" className="max-w-4xl mx-auto">
         <article className="prose dark:prose-invert lg:prose-xl max-w-none">
           <div className="text-center mb-12">
@@ -135,5 +159,3 @@ export default function SampleArticlePage() {
     </div>
   );
 }
-
-    

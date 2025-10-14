@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { categorizedNavItems } from '@/components/layout/nav-items';
 import { Button } from '../ui/button';
+import { Check } from 'lucide-react';
 
 export default function CalculatorHub() {
   const categories = categorizedNavItems();
@@ -14,7 +15,7 @@ export default function CalculatorHub() {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Age Calculators Hub</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Your Hub for All Age Calculators</h1>
          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Welcome to Age Calculator Hub, your ultimate free online destination for accurate and easy-to-use age-related tools.
         </p>
@@ -38,7 +39,7 @@ export default function CalculatorHub() {
                     <CardHeader>
                       <div className="flex items-center gap-4 mb-2">
                           <item.icon className="h-8 w-8 text-primary" aria-hidden="true" />
-                           <Link href={item.href} className="block hover:no-underline">
+                           <Link href={item.href} className="block hover:no-underline" aria-label={`Go to ${item.label} calculator`}>
                               <CardTitle className="text-xl group-hover:underline">{item.label}</CardTitle>
                           </Link>
                       </div>
@@ -52,16 +53,18 @@ export default function CalculatorHub() {
       </div>
 
       <section className="mt-16 space-y-8 max-w-4xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Your Comprehensive Age Calculation Resource</h2>
-        <p className="text-muted-foreground text-center text-lg">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">A Comprehensive Age Calculation Resource</h2>
+         <p className="text-muted-foreground text-center text-lg">
             Whether you want to determine your chronological age, track your biological or metabolic age, plan for retirement with our Social Security Retirement Age Calculator, or even discover your pet’s age in human years, we have the right tool for you.
         </p>
-         <p className="text-muted-foreground text-center text-lg">
-            Explore our comprehensive collection of online age calculators, including birthday age calculators, age calculators by date of birth or year, gestational age calculators, and more. Our calculators are designed to provide real-time results in years, months, days, hours, minutes, and seconds, ensuring you get precise insights whenever you need them.
-        </p>
-         <p className="text-muted-foreground text-center text-lg">
-            Stay informed and plan ahead with our professional tips, FAQs, and examples integrated into every tool. With fast, reliable, and responsive calculators, Age Calculator Hub makes it simple to understand and track age for yourself, your family, or your furry friends. Start calculating now and see how age truly measures up!
-        </p>
+        <div className="p-6 border rounded-lg">
+             <ul className="space-y-4">
+                <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Accurate & Reliable:</strong> Built on official formulas and scientific data for trustworthy results.</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Completely Free:</strong> No fees, no sign-ups. Just instant, accessible information for everyone.</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Private & Secure:</strong> All calculations are done in your browser. We never store your personal data.</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>User-Friendly:</strong> A clean, simple interface that works perfectly on any device.</span></li>
+            </ul>
+        </div>
       </section>
 
       <section className="mt-16">
