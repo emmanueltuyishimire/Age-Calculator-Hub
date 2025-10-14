@@ -40,10 +40,7 @@ export const metadata: Metadata = {
     description: 'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
   },
   icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
+    icon: '/favicon.png',
     apple: '/apple-touch-icon.png',
   },
 };
