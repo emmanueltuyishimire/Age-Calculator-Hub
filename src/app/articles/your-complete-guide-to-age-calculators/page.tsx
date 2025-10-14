@@ -14,7 +14,7 @@ if (!article) {
 }
 
 export const metadata: Metadata = {
-    title: 'Your Complete Guide to the Age Calculator App',
+    title: 'Your Complete Guide to Age Calculator Hub',
     description: article.description,
     alternates: {
         canonical: `/articles/${article.slug}`,
@@ -27,7 +27,7 @@ const faqs = [
         answer: "For calculating the time you've been alive, the <a href='/age-calculator' class='text-primary hover:underline'>Chronological Age Calculator</a> is the most accurate. For health insights, the <a href='/biological-age' class='text-primary hover:underline'>Biological Age Calculator</a> provides a valuable, science-backed estimate."
     },
     {
-        question: "Are the calculators on this app free to use?",
+        question: "Are the calculators on this site free to use?",
         answer: "Yes, every calculator on our platform is 100% free, with no sign-ups or hidden fees. Our mission is to provide accessible and reliable tools for everyone."
     },
     {
@@ -54,7 +54,7 @@ export default function AgeCalculatorAppArticle() {
           </div>
 
           <p className="lead">
-            Welcome to the ultimate hub for all things age-related. This Age Calculator App is more than just a single tool; it's a comprehensive suite of free, specialized online calculators designed to answer any question you might have about age, time, and life's milestones. Whether you need your exact age down to the second, are curious about your body's "true" biological age, planning for retirement, or even converting your pet's age to human years, you've come to the right place.
+            Welcome to the ultimate hub for all things age-related. Age Calculator Hub is more than just a single tool; it's a comprehensive suite of free, specialized online calculators designed to answer any question you might have about age, time, and life's milestones. Whether you need your exact age down to the second, are curious about your body's "true" biological age, planning for retirement, or even converting your pet's age to human years, you've come to the right place.
           </p>
 
           <div className="my-10 text-center">
@@ -65,12 +65,12 @@ export default function AgeCalculatorAppArticle() {
           </div>
           
           <p>
-            This guide will walk you through the different categories of calculators available on our app, explaining what they do, who they're for, and how they can provide valuable insights into your life and the lives of your loved ones.
+            This guide will walk you through the different categories of calculators available on our site, explaining what they do, who they're for, and how they can provide valuable insights into your life and the lives of your loved ones.
           </p>
 
           <h2 className="text-3xl font-bold">Core Age Calculators: The Foundation of Time</h2>
           <p>
-            This is the heart of our app, designed for one primary purpose: to tell you exactly how old you are with unerring precision. These tools are essential for everything from official paperwork to satisfying simple curiosity.
+            This is the heart of our site, designed for one primary purpose: to tell you exactly how old you are with unerring precision. These tools are essential for everything from official paperwork to satisfying simple curiosity.
           </p>
           <Card className="my-6">
             <CardHeader>
@@ -147,7 +147,7 @@ export default function AgeCalculatorAppArticle() {
 
           <Card className="my-12 bg-muted border-l-4 border-primary">
             <CardHeader>
-                <CardTitle>Why Use Our Age Calculator App?</CardTitle>
+                <CardTitle>Why Use Age Calculator Hub?</CardTitle>
                 <CardDescription>Our Commitment to You</CardDescription>
             </CardHeader>
             <CardContent>
@@ -161,7 +161,7 @@ export default function AgeCalculatorAppArticle() {
           </Card>
 
           <p>
-            Our mission is to be the single, most trustworthy destination for anyone needing to calculate age in any context. Explore the calculators, read our in-depth articles, and empower yourself with knowledge. Thank you for choosing the Age Calculator App!
+            Our mission is to be the single, most trustworthy destination for anyone needing to calculate age in any context. Explore the calculators, read our in-depth articles, and empower yourself with knowledge. Thank you for choosing Age Calculator Hub!
           </p>
 
             <h2 className="text-3xl font-bold text-center mt-12 mb-6">Frequently Asked Questions</h2>
@@ -180,3 +180,6 @@ export default function AgeCalculatorAppArticle() {
     </div>
   );
 }
+
+
+    

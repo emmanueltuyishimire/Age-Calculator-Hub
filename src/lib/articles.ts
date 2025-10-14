@@ -10,7 +10,7 @@ export type Article = {
 export const articles: Article[] = [
   {
     slug: 'your-complete-guide-to-age-calculators',
-    title: 'Your Complete Guide to the Age Calculator App',
+    title: 'Your Complete Guide to Age Calculator Hub',
     description: 'Explore our all-in-one age calculator app. From chronological and biological age to pet age and retirement planning, find the perfect tool for every need in our comprehensive guide.',
     category: 'Guides',
     publishedDate: '2024-10-20',
@@ -65,5 +65,7 @@ export const articles: Article[] = [
     publishedDate: '2024-10-08',
   },
 ];
+
+    
 
     
