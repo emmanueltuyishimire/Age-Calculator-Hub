@@ -16,7 +16,7 @@ const ptSans = PT_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Age Calculators Hub – Online Age, Birthday, Biological & Pet Age Calculators',
+    default: 'Age Calculator Hub – Online Age, Birthday, Biological & Pet Age Calculators',
     template: '%s – Age Calculator Hub',
   },
   description:
@@ -26,17 +26,17 @@ export const metadata: Metadata = {
     follow: true,
   },
    alternates: {
-    canonical: '/',
+    canonical: 'https://age-calculator-hub.com',
   },
   openGraph: {
-    title: 'Age Calculators Hub – Online Age, Birthday, Biological & Pet Age Calculators',
+    title: 'Age Calculator Hub – Online Age, Birthday, Biological & Pet Age Calculators',
     description: 'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
     type: 'website',
-    url: 'https://innerpeacejournals.com',
+    url: 'https://age-calculator-hub.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Age Calculators Hub – Online Age, Birthday, Biological & Pet Age Calculators',
+    title: 'Age Calculator Hub – Online Age, Birthday, Biological & Pet Age Calculators',
     description: 'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
   },
   icons: {

@@ -4,7 +4,7 @@ import { navItems } from '@/components/layout/nav-items';
 import { articles } from '@/lib/articles';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://innerpeacejournals.com';
+  const baseUrl = 'https://age-calculator-hub.com';
 
   // Calculator and hub pages
   const pages = navItems
@@ -47,5 +47,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...pages, ...staticPages, ...articlePages, articleHubPage];
 }
-
-    

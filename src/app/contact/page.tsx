@@ -28,8 +28,8 @@ export default function ContactPage() {
                 For all inquiries, please email us at:
             </p>
             <p>
-                <a href="mailto:norababysleep@gmail.com" className="text-primary text-lg font-semibold hover:underline">
-                    norababysleep@gmail.com
+                <a href="mailto:contact@agecalculatorhub.com" className="text-primary text-lg font-semibold hover:underline">
+                    contact@agecalculatorhub.com
                 </a>
             </p>
             <p>
