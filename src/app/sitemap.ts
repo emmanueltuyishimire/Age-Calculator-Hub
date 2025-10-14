@@ -22,7 +22,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { href: '/contact' },
     { href: '/privacy' },
     { href: '/terms' },
-    { href: '/disclaimer' }
+    { href: '/disclaimer' },
+    { href: '/faq' },
   ].map(page => ({
     url: `${baseUrl}${page.href}`,
     lastModified: new Date(),
