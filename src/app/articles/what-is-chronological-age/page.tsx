@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 const faqs = [
     {
         question: "What is the most accurate type of age calculator?",
-        answer: "For calculating the time you've been alive, the <a href='/chronological-age-calculator' class='text-primary hover:underline'>Chronological Age Calculator</a> is the most accurate. For health insights, the <a href='/biological-age' class='text-primary hover:underline'>Biological Age Calculator</a> provides a valuable, science-backed estimate."
+        answer: "For calculating the time you've been alive, the <a href='/age-calculator' class='text-primary hover:underline'>Chronological Age Calculator</a> is the most accurate. For health insights, the <a href='/biological-age' class='text-primary hover:underline'>Biological Age Calculator</a> provides a valuable, science-backed estimate."
     },
     {
         question: "Are the calculators on this app free to use?",

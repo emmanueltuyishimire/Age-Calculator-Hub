@@ -2,7 +2,7 @@
 import { type Metadata } from 'next';
 import Link from 'next/link';
 import { articles } from '@/lib/articles';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CheckCircle2 } from 'lucide-react';
@@ -126,7 +126,7 @@ export default function AgeByYearArticlePage() {
                     <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Medical and Health Contexts:</strong> Developmental milestones, vaccination schedules, and risk assessments for age-related diseases are all tied to a precise chronological age.</span></li>
                     <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Contracts and Agreements:</strong> Any legally binding contract where age is a condition (e.g., entering a contest, age-restricted purchases) requires an exact age.</span></li>
                 </ul>
-                 <p className="mt-4">For these scenarios, using a comprehensive tool like our <Link href="/chronological-age-calculator" className="text-primary hover:underline">Chronological Age Calculator</Link> is essential. It performs the complex calculation involving years, months, days, and even leap years to give you a guaranteed accurate result.</p>
+                 <p className="mt-4">For these scenarios, using a comprehensive tool like our <Link href="/age-calculator" className="text-primary hover:underline">Chronological Age Calculator</Link> is essential. It performs the complex calculation involving years, months, days, and even leap years to give you a guaranteed accurate result.</p>
             </CardContent>
           </Card>
 
