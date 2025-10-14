@@ -65,7 +65,7 @@ const faqCategories = [
         { question: "How can ovulation calculators help plan pregnancy?", answer: "They help identify your most fertile days, increasing the chances of conception." },
         { question: "Can I calculate ovulation for irregular cycles?", answer: "It's more challenging, but possible if you know your longest and shortest cycle lengths. Our calculator provides guidance on this." },
         { question: "How is TDEE related to metabolic age?", answer: "Total Daily Energy Expenditure (TDEE) is related but different. Metabolic age focuses on your BMR, while TDEE includes all calories you burn in a day." },
-        { question: "Can protein intake affect metabolic age?", answer: "Yes, higher protein intake can boost metabolism and potentially lower your metabolic age." },
+        { question: "Can protein intake affect metabolic age?", answer: "Yes, higher protein intake can boost your metabolism and potentially lower your metabolic age." },
         { question: "Is BMI related to biological age?", answer: "Yes, a healthy Body Mass Index (BMI) is often associated with a lower biological age." },
         { question: "How do I improve metabolic age results?", answer: "Increase muscle mass through strength training, eat a balanced diet, and stay hydrated." },
         { question: "Can lifestyle changes reduce biological age?", answer: "Yes, improvements in diet, exercise, sleep, and stress management can significantly lower your biological age." },
@@ -271,3 +271,5 @@ export default function CalculatorHub() {
     </div>
   );
 }
+
+    
