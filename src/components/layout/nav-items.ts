@@ -58,6 +58,13 @@ export const navItems: NavItem[] = [
     description: 'Calculates age from date of birth in years, months, and days.'
   },
   {
+    href: '/chronological-age-calculator',
+    icon: Clock,
+    label: 'Chronological Age Calculator',
+    category: 'Core Age Calculation',
+    description: 'Find your exact age in years, months, and days.'
+  },
+  {
     href: '/age-calculator-by-date-of-birth',
     icon: User,
     label: 'Age Calculator by Date of Birth',
