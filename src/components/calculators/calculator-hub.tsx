@@ -199,7 +199,7 @@ export default function CalculatorHub() {
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Button size="lg" asChild>
-            <Link href="#calculators">Get Started</Link>
+            <Link href="#calculators">Explore Calculators</Link>
           </Button>
         </div>
       </div>
@@ -245,37 +245,14 @@ export default function CalculatorHub() {
       <section className="mt-16">
         <Card className="bg-muted/50">
             <CardHeader className="text-center">
-                <CardTitle className="text-3xl">Get More From Your Results</CardTitle>
+                <CardTitle className="text-3xl">I don't know where to start</CardTitle>
                 <CardDescription className="max-w-2xl mx-auto">
-                    Create a free account to unlock powerful features. Save your calculations, track your progress over time, and see how your health and life milestones evolve.
+                   Let us guide you through our suite of tools and show you how to get the most out of them.
                 </CardDescription>
             </CardHeader>
             <CardContent className="text-center">
-                <div className="grid sm:grid-cols-3 gap-6 mb-8 text-left">
-                     <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                        <div>
-                            <h3 className="font-semibold">Save Results</h3>
-                            <p className="text-sm text-muted-foreground">Keep a history of your important calculations like biological age or pet age.</p>
-                        </div>
-                    </div>
-                     <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                        <div>
-                            <h3 className="font-semibold">Track Progress</h3>
-                            <p className="text-sm text-muted-foreground">Monitor how your lifestyle changes affect your health markers over time.</p>
-                        </div>
-                    </div>
-                     <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                        <div>
-                            <h3 className="font-semibold">Personalized Insights</h3>
-                            <p className="text-sm text-muted-foreground">Gain deeper insights as you build a long-term profile of your data.</p>
-                        </div>
-                    </div>
-                </div>
                 <Button size="lg" asChild>
-                    <Link href="/login">Sign Up for Free</Link>
+                    <Link href="/articles/your-complete-guide-to-age-calculators">Your Complete Guide to the Age Calculator App</Link>
                 </Button>
             </CardContent>
         </Card>
