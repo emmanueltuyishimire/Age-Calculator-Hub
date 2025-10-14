@@ -50,6 +50,14 @@ export function TopNav() {
           >
             Home
           </Link>
+          <Link
+            href="/articles"
+            className={`transition-colors hover:text-foreground/80 ${
+              pathname === '/articles' ? 'text-foreground' : 'text-foreground/60'
+            }`}
+          >
+            Articles
+          </Link>
           <NavigationMenu>
             <NavigationMenuList>
               {categories.map((category) => (
@@ -104,28 +112,22 @@ export function TopNav() {
                   >
                     Home
                 </Link>
+                <Link
+                    href="/articles"
+                    onClick={() => setIsOpen(false)}
+                    className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
+                      pathname === '/articles' ? 'bg-muted' : 'hover:bg-muted/50'
+                    }`}
+                  >
+                    Articles
+                </Link>
                 <Accordion type="single" collapsible className="w-full">
                   {categories.map((category) => (
                     <AccordionItem value={category.name} key={category.name}>
-                       <AccordionTrigger className="text-base font-semibold py-2" asChild>
-                          <h4>
-                            {category.href ? (
-                              <Link
-                                href={category.href}
-                                onClick={(e) => {
-                                  e.stopPropagation(); // Prevents Accordion from toggling
-                                  setIsOpen(false);
-                                }}
-                                className="flex flex-1 items-center justify-between"
-                              >
-                                {category.name}
-                              </Link>
-                            ) : (
-                              <span className="flex flex-1 items-center justify-between">
-                                {category.name}
-                              </span>
-                            )}
-                          </h4>
+                       <AccordionTrigger className="text-base font-semibold py-2">
+                          <span className="flex flex-1 items-center justify-between">
+                            {category.name}
+                          </span>
                         </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex flex-col gap-1 pl-4">

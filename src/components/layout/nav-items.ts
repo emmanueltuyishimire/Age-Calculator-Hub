@@ -28,6 +28,7 @@ import {
   FileText,
   AlertTriangle,
   LayoutGrid,
+  Newspaper,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -51,6 +52,13 @@ export const navItems: NavItem[] = [
     label: 'Home',
     category: 'Navigation',
     description: 'Return to the main hub.'
+  },
+  {
+    href: '/articles',
+    icon: Newspaper,
+    label: 'Articles',
+    category: 'Navigation',
+    description: 'Read our latest articles.'
   },
   {
     href: '/age-calculator',
