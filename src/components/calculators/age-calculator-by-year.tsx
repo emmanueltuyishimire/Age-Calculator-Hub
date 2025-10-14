@@ -60,7 +60,7 @@ export default function AgeCalculatorByYear() {
             <div className="flex gap-2">
                 <Input 
                     id="birth-year"
-                    placeholder="e.g., 1990" 
+                    placeholder="YYYY" 
                     value={birthYear} 
                     onChange={e => setBirthYear(e.target.value)} 
                     aria-label="Year of Birth"
@@ -72,7 +72,7 @@ export default function AgeCalculatorByYear() {
         <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
             <RefreshCcw className="mr-2 h-4 w-4" /> Reset
         </Button>
-        <ShareButton title="Age Calculator by Year" text="Check out this quick age calculator by year of birth!" />
+        <ShareButton title="Age Calculator by Year" text="Check out this quick age calculator by year of birth!" url="/age-calculator-by-year" />
         </div>
 
         {age !== null && (

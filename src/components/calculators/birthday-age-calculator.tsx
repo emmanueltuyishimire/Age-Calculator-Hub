@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { format, intervalToDuration, isFuture, isValid, addYears } from 'date-fns';
 import { RefreshCcw, Gift } from 'lucide-react';
 import {
@@ -40,6 +40,9 @@ export default function BirthdayAgeCalculator() {
   const [countdown, setCountdown] = useState<BirthdayCountdown | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const monthRef = useRef<HTMLInputElement>(null);
+  const yearRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     try {
@@ -153,6 +156,11 @@ export default function BirthdayAgeCalculator() {
     setCountdown(undefined);
   }, [dob]);
 
+  const handleDobChange = (field: 'day' | 'month' | 'year', value: string) => {
+    setDob(prev => ({...prev, [field]: value}));
+    if (field === 'day' && value.length === 2) monthRef.current?.focus();
+    if (field === 'month' && value.length === 2) yearRef.current?.focus();
+  };
 
   return (
     <div className="space-y-6">
@@ -173,9 +181,9 @@ export default function BirthdayAgeCalculator() {
             <div className='space-y-2'>
               <Label htmlFor='dob-day'>Date of Birth</Label>
               <div className="flex gap-2">
-                <Input id="dob-day" placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
-                <Input id="dob-month" placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
-                <Input id="dob-year" placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
+                <Input id="dob-day" placeholder="DD" value={dob.day} onChange={e => handleDobChange('day', e.target.value)} maxLength={2} aria-label="Day of Birth"/>
+                <Input ref={monthRef} id="dob-month" placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
+                <Input ref={yearRef} id="dob-year" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
               </div>
             </div>
           </div>
@@ -185,7 +193,7 @@ export default function BirthdayAgeCalculator() {
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
-            <ShareButton title="Birthday Age Calculator" text="Check out this fun birthday and age calculator!" />
+            <ShareButton title="Birthday Age Calculator" text="Check out this fun birthday and age calculator!" url="/birthday-age-calculator" />
           </div>
 
           {isCalculating && age && (

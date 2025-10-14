@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { intervalToDuration, differenceInSeconds, differenceInMinutes, differenceInHours, differenceInDays, differenceInWeeks, differenceInMonths, isValid, isFuture } from 'date-fns';
 import {
   Card,
@@ -38,6 +38,12 @@ export default function AgeCalculator() {
   const [age, setAge] = useState<Age | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const dobMonthRef = useRef<HTMLInputElement>(null);
+  const dobYearRef = useRef<HTMLInputElement>(null);
+  const ageAtMonthRef = useRef<HTMLInputElement>(null);
+  const ageAtYearRef = useRef<HTMLInputElement>(null);
+
 
   useEffect(() => {
     const now = new Date();
@@ -166,6 +172,18 @@ export default function AgeCalculator() {
     setAge(undefined);
   }, [dob.day, dob.month, dob.year, ageAt.day, ageAt.month, ageAt.year])
 
+  const handleDobChange = (field: 'day' | 'month' | 'year', value: string) => {
+    setDob(prev => ({...prev, [field]: value}));
+    if (field === 'day' && value.length === 2) dobMonthRef.current?.focus();
+    if (field === 'month' && value.length === 2) dobYearRef.current?.focus();
+  };
+
+  const handleAgeAtChange = (field: 'day' | 'month' | 'year', value: string) => {
+    setAgeAt(prev => ({...prev, [field]: value}));
+    if (field === 'day' && value.length === 2) ageAtMonthRef.current?.focus();
+    if (field === 'month' && value.length === 2) ageAtYearRef.current?.focus();
+  };
+
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg animate-fade-in">
       <CardHeader className="text-center">
@@ -186,17 +204,17 @@ export default function AgeCalculator() {
           <div className='space-y-2'>
             <Label htmlFor="dob-day-main">Date of Birth</Label>
             <div className="flex gap-2">
-              <Input id="dob-day-main" placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
-              <Input id="dob-month-main" placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
-              <Input id="dob-year-main" placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
+              <Input id="dob-day-main" placeholder="DD" value={dob.day} onChange={e => handleDobChange('day', e.target.value)} maxLength={2} aria-label="Day of Birth"/>
+              <Input ref={dobMonthRef} id="dob-month-main" placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
+              <Input ref={dobYearRef} id="dob-year-main" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
             </div>
           </div>
           <div className='space-y-2'>
             <Label htmlFor="ageAt-day-main">Age at the Date of</Label>
             <div className="flex gap-2">
-              <Input id="ageAt-day-main" placeholder="DD" value={ageAt.day} onChange={e => setAgeAt({...ageAt, day: e.target.value})} aria-label="Current Day"/>
-              <Input id="ageAt-month-main" placeholder="MM" value={ageAt.month} onChange={e => setAgeAt({...ageAt, month: e.target.value})} aria-label="Current Month"/>
-              <Input id="ageAt-year-main" placeholder="YYYY" value={ageAt.year} onChange={e => setAgeAt({...ageAt, year: e.target.value})} aria-label="Current Year"/>
+              <Input id="ageAt-day-main" placeholder="DD" value={ageAt.day} onChange={e => handleAgeAtChange('day', e.target.value)} maxLength={2} aria-label="Current Day"/>
+              <Input ref={ageAtMonthRef} id="ageAt-month-main" placeholder="MM" value={ageAt.month} onChange={e => handleAgeAtChange('month', e.target.value)} maxLength={2} aria-label="Current Month"/>
+              <Input ref={ageAtYearRef} id="ageAt-year-main" placeholder="YYYY" value={ageAt.year} onChange={e => handleAgeAtChange('year', e.target.value)} maxLength={4} aria-label="Current Year"/>
             </div>
           </div>
         </div>
@@ -206,7 +224,7 @@ export default function AgeCalculator() {
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
-            <ShareButton title="Online Age Calculator" text="Find out your exact age in real-time with this cool age calculator!" />
+            <ShareButton title="Online Age Calculator" text="Find out your exact age in real-time with this cool age calculator!" url="/age-calculator" />
         </div>
 
         {age && (

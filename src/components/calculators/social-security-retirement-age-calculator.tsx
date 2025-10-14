@@ -102,13 +102,13 @@ export default function SocialSecurityRetirementAgeCalculator() {
             <div className="flex gap-2">
                 <Input 
                     id="birth-year-ss"
-                    placeholder="e.g., 1980" 
+                    placeholder="YYYY" 
                     value={birthYear} 
                     onChange={e => setBirthYear(e.target.value)} 
                     aria-label="Year of Birth"
                 />
                 <Button onClick={handleCalculate} className="w-full sm:w-auto">Calculate</Button>
-                 <ShareButton title="Social Security Retirement Calculator" text="Find out your full retirement age for Social Security!" />
+                 <ShareButton title="Social Security Retirement Calculator" text="Find out your full retirement age for Social Security!" url="/social-security-retirement-age-calculator" />
             </div>
         </div>
 
