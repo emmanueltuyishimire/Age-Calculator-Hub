@@ -53,7 +53,13 @@ export function TopNav() {
             <NavigationMenuList>
               {categories.map((category) => (
                  <NavigationMenuItem key={category.name}>
-                  <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
+                    {category.href ? (
+                        <Link href={category.href} legacyBehavior passHref>
+                            <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
+                        </Link>
+                    ) : (
+                        <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
+                    )}
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                       {category.items.map((item) => (
@@ -106,9 +112,23 @@ export function TopNav() {
                 <Accordion type="single" collapsible className="w-full">
                   {categories.map((category) => (
                     <AccordionItem value={category.name} key={category.name}>
-                      <AccordionTrigger className="text-base font-semibold py-2">
-                        {category.name}
-                      </AccordionTrigger>
+                       <AccordionTrigger className="text-base font-semibold py-2" asChild>
+                          <h4>
+                            {category.href ? (
+                              <Link
+                                href={category.href}
+                                onClick={() => setIsOpen(false)}
+                                className="flex flex-1 items-center justify-between"
+                              >
+                                {category.name}
+                              </Link>
+                            ) : (
+                              <span className="flex flex-1 items-center justify-between">
+                                {category.name}
+                              </span>
+                            )}
+                          </h4>
+                        </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex flex-col gap-1 pl-4">
                           {category.items.map((item) => (

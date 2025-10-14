@@ -40,6 +40,7 @@ export type NavItem = {
 export type NavCategory = {
   name: string;
   items: NavItem[];
+  href?: string;
 };
 
 export const navItems: NavItem[] = [
@@ -192,6 +193,15 @@ export const navItems: NavItem[] = [
   },
 ];
 
+const categoryHubs: Record<string, string> = {
+  'Core Age Calculation': '/core-age-calculators',
+  'Pregnancy Calculators': '/pregnancy-calculators',
+  'Scientific & Health Age': '/health-assessments',
+  'Pet Age': '/pet-age-calculators',
+  'Retirement & Social': '/retirement-calculators',
+};
+
+
 export const categorizedNavItems = (): NavCategory[] => {
   const categories: { [key: string]: NavItem[] } = {};
   navItems.forEach(item => {
@@ -221,5 +231,6 @@ export const categorizedNavItems = (): NavCategory[] => {
   return sortedCategories.map(key => ({
     name: key,
     items: categories[key],
+    href: categoryHubs[key],
   }));
 };
