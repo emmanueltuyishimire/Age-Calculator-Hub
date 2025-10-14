@@ -1,6 +1,4 @@
-# Allow all crawlers to access all content
 User-agent: *
-Disallow:
+Allow: /
 
-# Point crawlers to the sitemap
-Sitemap: https://innerpeacejournals.com/sitemap.xml
+Sitemap: https://age-calculator-hub.com/sitemap.xml

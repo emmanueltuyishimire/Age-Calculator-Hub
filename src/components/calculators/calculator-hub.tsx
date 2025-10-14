@@ -209,17 +209,17 @@ export default function CalculatorHub() {
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">{category.name}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {category.items.map((item) => (
-                <Link href={item.href} key={item.href} className="block hover:no-underline group">
-                  <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary">
+                <Card key={item.href} className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out hover:border-primary group">
                     <CardHeader>
                       <div className="flex items-center gap-4 mb-2">
                           <item.icon className="h-8 w-8 text-primary" aria-hidden="true" />
-                          <CardTitle className="text-xl">{item.label}</CardTitle>
+                          <Link href={item.href} className="block hover:no-underline">
+                              <CardTitle className="text-xl group-hover:underline">{item.label}</CardTitle>
+                          </Link>
                       </div>
                       <CardDescription>{item.description}</CardDescription>
                     </CardHeader>
-                  </Card>
-                </Link>
+                </Card>
               ))}
             </div>
           </section>
