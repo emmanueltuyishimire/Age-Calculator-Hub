@@ -6,32 +6,34 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { notFound } from 'next/navigation';
 
 const article = articles.find(a => a.slug === 'what-is-biological-age-and-how-to-improve-it');
 
-if (!article) {
-  return null;
+export function generateMetadata(): Metadata {
+    if (!article) {
+        return {};
+    }
+    return {
+        title: article.title,
+        description: article.description,
+        alternates: {
+            canonical: `/articles/${article.slug}`,
+        },
+        openGraph: {
+            title: article.title,
+            description: article.description,
+            type: 'article',
+            publishedTime: article.publishedDate,
+            url: `/articles/${article.slug}`,
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: article.title,
+            description: article.description,
+        },
+    };
 }
-
-export const metadata: Metadata = {
-    title: article.title,
-    description: article.description,
-    alternates: {
-        canonical: `/articles/${article.slug}`,
-    },
-    openGraph: {
-        title: article.title,
-        description: article.description,
-        type: 'article',
-        publishedTime: article.publishedDate,
-        url: `/articles/${article.slug}`,
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: article.title,
-        description: article.description,
-    },
-};
 
 const keyTakeaways = [
     "Biological age is a measure of your body's health and functional decline, which can be different from your chronological age.",
@@ -66,6 +68,10 @@ const faqs = [
 
 
 export default function BiologicalAgeArticlePage() {
+  if (!article) {
+    notFound();
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">
@@ -222,3 +228,5 @@ export default function BiologicalAgeArticlePage() {
     </div>
   );
 }
+
+    

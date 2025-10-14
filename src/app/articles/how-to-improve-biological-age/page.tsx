@@ -6,20 +6,22 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Check, Zap, Apple, Bed, Brain, Users } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { notFound } from 'next/navigation';
 
 const article = articles.find(a => a.slug === 'how-to-improve-biological-age');
 
-if (!article) {
-  return null;
-}
-
-export const metadata: Metadata = {
+export function generateMetadata(): Metadata {
+  if (!article) {
+    return {};
+  }
+  return {
     title: article.title,
     description: article.description,
     alternates: {
         canonical: `/articles/${article.slug}`,
     },
-};
+  };
+}
 
 const tips = [
     { 
@@ -69,6 +71,10 @@ const faqs = [
 ];
 
 export default function ImproveBiologicalAgeArticle() {
+  if (!article) {
+    notFound();
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">
@@ -147,3 +153,5 @@ export default function ImproveBiologicalAgeArticle() {
     </div>
   );
 }
+
+    

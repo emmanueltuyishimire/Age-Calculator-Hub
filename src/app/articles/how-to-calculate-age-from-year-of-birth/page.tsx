@@ -6,20 +6,22 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CheckCircle2 } from 'lucide-react';
+import { notFound } from 'next/navigation';
 
 const article = articles.find(a => a.slug === 'how-to-calculate-age-from-year-of-birth');
 
-if (!article) {
-  return null;
-}
-
-export const metadata: Metadata = {
+export function generateMetadata(): Metadata {
+  if (!article) {
+    return {};
+  }
+  return {
     title: article.title,
     description: article.description,
     alternates: {
         canonical: `/articles/${article.slug}`,
     },
-};
+  };
+}
 
 const faqs = [
     {
@@ -45,6 +47,10 @@ const faqs = [
 ];
 
 export default function AgeByYearArticlePage() {
+  if (!article) {
+    notFound();
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">
@@ -205,3 +211,5 @@ export default function AgeByYearArticlePage() {
     </div>
   );
 }
+
+    

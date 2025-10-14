@@ -5,40 +5,22 @@ import { articles } from '@/lib/articles';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { notFound } from 'next/navigation';
 
 const article = articles.find(a => a.slug === 'understanding-chronological-age');
 
-if (!article) {
-  return null;
-}
-
-export const metadata: Metadata = {
+export function generateMetadata(): Metadata {
+  if (!article) {
+    return {};
+  }
+  return {
     title: article.title,
     description: article.description,
     alternates: {
         canonical: `/articles/${article.slug}`,
     },
-};
-
-const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": article.title,
-    "description": article.description,
-    "datePublished": article.publishedDate,
-    "author": {
-        "@type": "Organization",
-        "name": "Age Calculator Hub"
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "Age Calculator Hub",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://age-calculator-hub.com/logo.png"
-        }
-    }
-};
+  };
+}
 
 const faqs = [
     {
@@ -60,6 +42,30 @@ const faqs = [
 ];
 
 export default function SampleArticlePage() {
+  if (!article) {
+    notFound();
+  }
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": article.description,
+    "datePublished": article.publishedDate,
+    "author": {
+        "@type": "Organization",
+        "name": "Age Calculator Hub"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Age Calculator Hub",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://age-calculator-hub.com/logo.png"
+        }
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <script
@@ -159,3 +165,5 @@ export default function SampleArticlePage() {
     </div>
   );
 }
+
+    
