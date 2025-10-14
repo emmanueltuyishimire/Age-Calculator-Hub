@@ -197,12 +197,6 @@ export default function CalculatorHub() {
         </p>
       </div>
 
-       <div className="my-8 text-center" role="advertisement" aria-label="Advertisement">
-            <div className="ad-slot border-dashed border-2 p-10 text-center h-[100px] sm:h-[120px] md:h-[150px] flex items-center justify-center">
-                <span className="text-muted-foreground">Advertisement</span>
-            </div>
-        </div>
-
       {categories.map((category, index) => (
         <React.Fragment key={category.name}>
         <section className="mb-12">
@@ -223,13 +217,6 @@ export default function CalculatorHub() {
             ))}
           </div>
         </section>
-        {index === Math.floor(categories.length / 2) - 1 && (
-             <div className="my-8 text-center" role="advertisement" aria-label="Advertisement">
-                <div className="ad-slot border-dashed border-2 p-10 text-center h-[100px] sm:h-[120px] md:h-[150px] flex items-center justify-center">
-                    <span className="text-muted-foreground">Advertisement</span>
-                </div>
-            </div>
-        )}
         </React.Fragment>
       ))}
 
@@ -271,5 +258,3 @@ export default function CalculatorHub() {
     </div>
   );
 }
-
-    
