@@ -102,7 +102,7 @@ export default function SampleArticlePage() {
                     <li><strong>Legal Milestones:</strong> It determines our rights and responsibilities. The right to drive (e.g., 16), vote (e.g., 18), or purchase alcohol (e.g., 21) are all tied to reaching a specific chronological age.</li>
                     <li><strong>Educational Systems:</strong> School entry and grade placement are organized almost entirely by chronological age, creating cohorts of peers.</li>
                     <li><strong>Medical Benchmarks:</strong> Doctors use chronological age as a baseline for developmental milestones in children (e.g., walking, talking) and for recommending critical health screenings (like mammograms or colonoscopies) in adults.</li>
-                    <li><strong>Social Security & Pensions:</strong> Eligibility for retirement benefits is universally tied to reaching a specific chronological age. You can <Link href="/retirement" className="text-primary hover:underline">find your full retirement age here</Link>.</li>
+                    <li><strong>Social Security & Pensions:</strong> Eligibility for retirement benefits is universally tied to reaching a specific chronological age. You can <Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">find your full retirement age here</Link>.</li>
                   </ul>
                </CardContent>
            </Card>

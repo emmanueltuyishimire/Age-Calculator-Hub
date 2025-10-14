@@ -35,7 +35,7 @@ const decades = [
     },
     { 
         title: "In Your 50s: The 'Catch-Up' Decade", 
-        content: "You're in the final stretch. The IRS allows for 'catch-up' contributions, letting you save even more in your 401(k) and IRA accounts once you turn 50. Take full advantage of these. Start to create a detailed retirement budget. Use our <a href='/retirement' class='text-primary hover:underline font-semibold'>Retirement Age Calculator</a> to understand your Social Security benefits, which are a key part of your retirement income puzzle." 
+        content: "You're in the final stretch. The IRS allows for 'catch-up' contributions, letting you save even more in your 401(k) and IRA accounts once you turn 50. Take full advantage of these. Start to create a detailed retirement budget. Use our <a href='/social-security-retirement-age-calculator' class='text-primary hover:underline font-semibold'>Retirement Age Calculator</a> to understand your Social Security benefits, which are a key part of your retirement income puzzle." 
     },
     { 
         title: "In Your 60s: The Transition to Decumulation", 
@@ -80,7 +80,7 @@ export default function RetirementPlanningArticle() {
           </p>
           
           <div className="my-10 text-center">
-            <Link href="/retirement">
+            <Link href="/retirement-calculators">
                 <Button size="lg" className="text-lg">Find Your Full Retirement Age</Button>
             </Link>
             <p className="text-sm text-muted-foreground mt-2">The first step in any retirement plan is knowing your target.</p>
