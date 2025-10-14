@@ -4,13 +4,16 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Share2, Copy, X as TwitterX, Mail } from 'lucide-react';
+import { Share2, Copy, Mail } from 'lucide-react';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { FaFacebook, FaWhatsapp, FaLinkedin } from 'react-icons/fa';
+import { FaFacebook, FaWhatsapp, FaLinkedin } from 'react-icons/fa6';
+import { FaXTwitter } from 'react-icons/fa6';
+import { Input } from './ui/input';
+
 
 interface ShareButtonProps {
   title: string;
@@ -89,7 +92,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, text, url }) => {
                     </Button>
                     <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
                          <a href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter">
-                            <TwitterX className="h-6 w-6" />
+                            <FaXTwitter className="h-6 w-6" />
                         </a>
                     </Button>
                     <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
@@ -121,4 +124,3 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, text, url }) => {
 };
 
 export default ShareButton;
-
