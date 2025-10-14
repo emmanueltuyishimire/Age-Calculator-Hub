@@ -64,13 +64,12 @@ export default function RootLayout({
             gtag('config', 'G-7XVG2YF7MY');
           `}
         </Script>
-        {/* AdSense Auto Ads */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
+        {/* AdSense Auto Ads - Use a standard script tag to avoid Next.js added attributes */}
+        <script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811" 
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
         <ThemeProvider
