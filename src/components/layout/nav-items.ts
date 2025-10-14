@@ -275,5 +275,3 @@ export const categorizedNavItems = (): NavCategory[] => {
     };
   });
 };
-
-    
