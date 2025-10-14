@@ -8,6 +8,8 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Age Calculator by Date of Birth - Find Your Age Instantly',
@@ -73,37 +75,48 @@ export default function AgeCalculatorByDateOfBirthPage() {
             <AgeCalculatorOnline />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Age Calculator</h2>
-                    <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                        <li><strong>Enter Your Date of Birth:</strong> Use the calendar to select your birth date.</li>
-                        <li><strong>Click “Calculate Age”:</strong> Press the button to see your age instantly.</li>
-                        <li><strong>See Your Exact Age Update Live:</strong> Watch as the calculator shows your age increasing every second in real time.</li>
-                    </ol>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>How to Use the Age Calculator by Date of Birth</CardTitle></CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Enter Your Date of Birth:</strong> Use the calendar input fields (DD, MM, YYYY) to enter the exact day, month, and year you were born.</li>
+                            <li><strong>Set the "Current Date" (Optional):</strong> The calculator automatically uses today's date. You can change this to any other date to calculate the age at a specific past or future moment.</li>
+                            <li><strong>Click “Calculate Age”:</strong> Press the button to see your age computed instantly.</li>
+                            <li><strong>See Your Exact Age Update Live:</strong> Watch as the calculator shows your age increasing every second in real time, broken down into years, months, days, hours, minutes, and seconds.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
 
-                 <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Real-Time Age Display</h2>
-                    <p className="text-muted-foreground">
-                       This tool does more than just give a static number. The live timer automatically updates every second to give you a precise and ever-changing view of your age. This feature highlights the dynamic nature of time and provides unparalleled accuracy for those who need it.
-                    </p>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>The Importance of a Real-Time Age Display</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">
+                           This tool does more than just give a static number. The live timer automatically updates every second to give you a precise and ever-changing view of your age. This feature highlights the dynamic nature of time and provides unparalleled accuracy for those who need it for official purposes or just for fun. It's a constant reminder of the preciousness of each moment.
+                        </p>
+                    </CardContent>
+                </Card>
 
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Age Calculation Formula Explained</h2>
-                     <p className="text-muted-foreground">
-                       The fundamental formula is simple: <strong>Age = Current Date - Date of Birth</strong>. However, our calculator's algorithm is more advanced. It correctly handles the varying number of days in months (e.g., 28, 30, or 31) and accurately accounts for leap years to ensure the final calculation of years, months, and days is correct.
-                    </p>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>Age Calculation Formula Explained</CardTitle></CardHeader>
+                    <CardContent>
+                         <p className="text-muted-foreground">
+                           The fundamental formula is simple: <strong>Age = Current Date - Date of Birth</strong>. However, our calculator's algorithm is more advanced. It correctly handles the varying number of days in months (e.g., 28, 30, or 31) and accurately accounts for leap years to ensure the final calculation of years, months, and days is correct. This method ensures that the result is not just an estimate but a precise reflection of the time that has passed since birth.
+                        </p>
+                    </CardContent>
+                </Card>
 
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Expert Tips</h2>
-                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                        <li>Use this tool to verify your age for official forms, IDs, or applications where precise age is required.</li>
-                        <li>Check your eligibility for age-restricted programs, jobs, or benefits quickly and accurately.</li>
-                        <li>Monitor age milestones in exact time for birthdays, anniversaries, or other important life events.</li>
-                    </ul>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>Expert Tips & Use Cases</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Official Documents:</strong> Use this tool to verify your age for official forms, IDs, or applications where precise age is required.</li>
+                            <li><strong>Benefit Eligibility:</strong> Quickly and accurately check your eligibility for age-restricted programs, jobs, or government benefits like Social Security.</li>
+                            <li><strong>Milestone Tracking:</strong> Monitor age milestones in exact time for birthdays, anniversaries, or other important life events. Find out the exact moment you turn 10,000 days old!</li>
+                            <li><strong>Historical Curiosity:</strong> Calculate the age of a historical figure at a specific point in time by setting both the date of birth and the "current date".</li>
+                            <li><strong>Fun Facts:</strong> Impress your friends by telling them your age in total seconds or minutes.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>

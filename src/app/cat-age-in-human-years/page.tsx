@@ -16,6 +16,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import RelatedCalculators from "@/components/layout/related-calculators";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 
 export const metadata: Metadata = {
     title: 'Cat Age Calculator – Convert Cat Years to Human Years Instantly',
@@ -37,11 +39,12 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-    { question: "How accurate is the cat age to human years formula?", answer: "It’s an approximation based on feline development research. Cats mature rapidly in the first two years, then slower after that." },
-    { question: "Do indoor cats live longer?", answer: "Yes, indoor cats typically live 13–17 years, while outdoor cats average 7–10 years." },
-    { question: "What’s the oldest recorded cat age?", answer: "Creme Puff from Texas lived to be 38 years old!" },
-    { question: "How can I tell if my cat is aging well?", answer: "Look for signs like consistent weight, bright eyes, good appetite, and regular activity." },
-    { question: "How often should older cats see a vet?", answer: "Mature or senior cats should visit the vet twice a year for health monitoring." }
+    { question: "How accurate is the cat age to human years formula?", answer: "It’s a widely accepted veterinary approximation based on feline development milestones. Cats mature very rapidly in their first two years, and then their aging process slows down. This calculator uses that non-linear scale for a more accurate result than the old 'multiply by 7' myth." },
+    { question: "Do indoor cats live longer than outdoor cats?", answer: "Yes, significantly. Indoor cats are protected from predators, accidents, and diseases spread by other animals. An indoor cat's average lifespan is 13–17 years, while an outdoor cat's is often only 2–5 years." },
+    { question: "What’s the oldest recorded cat age?", answer: "A cat named Creme Puff from Austin, Texas, lived to be 38 years and 3 days old! This is, of course, highly exceptional." },
+    { question: "How can I tell if my cat is aging well?", answer: "Look for signs of good health like a consistent weight, a healthy appetite, bright and clear eyes, a clean coat, and regular activity levels. Any sudden changes in behavior, appetite, or litter box habits warrant a vet visit." },
+    { question: "How often should older cats see a vet?", answer: "Once a cat reaches the 'Senior' stage (around 11 years old), it's recommended to schedule veterinary checkups twice a year. This helps in early detection of common age-related issues." },
+    { question: "Does this calculator work for all cat breeds?", answer: "Yes. Unlike dogs, where size dramatically affects lifespan and aging, the aging curve is much more consistent across different cat breeds. This calculator is suitable for any breed of domestic cat." }
 ];
 
 const faqSchema = {
@@ -58,21 +61,24 @@ const faqSchema = {
 };
 
 const ageChart = [
-    { catAge: "1", humanAge: "15", lifeStage: "Kitten" },
-    { catAge: "2", humanAge: "24", lifeStage: "Junior" },
-    { catAge: "3-6", humanAge: "28–40", lifeStage: "Prime" },
-    { catAge: "7-10", humanAge: "44–56", lifeStage: "Mature" },
-    { catAge: "11-14", humanAge: "60–72", lifeStage: "Senior" },
-    { catAge: "15+", humanAge: "76+", lifeStage: "Geriatric" },
+    { catAge: "6 Months", humanAge: "10", lifeStage: "Kitten" },
+    { catAge: "1 Year", humanAge: "15", lifeStage: "Junior" },
+    { catAge: "2 Years", humanAge: "24", lifeStage: "Junior" },
+    { catAge: "5 Years", humanAge: "36", lifeStage: "Prime" },
+    { catAge: "7 Years", humanAge: "44", lifeStage: "Mature" },
+    { catAge: "10 Years", humanAge: "56", lifeStage: "Mature" },
+    { catAge: "14 Years", humanAge: "72", lifeStage: "Senior" },
+    { catAge: "18 Years", humanAge: "88", lifeStage: "Geriatric" },
+    { catAge: "20 Years", humanAge: "96", lifeStage: "Geriatric" },
 ];
 
 const lifeStages = [
-    { stage: "Kitten (0–1 year)", description: "Playful, growing rapidly. Needs kitten-specific food and vaccinations." },
-    { stage: "Junior (1–2 years)", description: "Developing adult behavior. High energy, ideal time for spaying/neutering." },
-    { stage: "Prime (3–6 years)", description: "Healthy and active. Maintain balanced diet and annual checkups." },
-    { stage: "Mature (7–10 years)", description: "May slow down; monitor diet and weight. Regular vet visits recommended." },
-    { stage: "Senior (11–14 years)", description: "Monitor for arthritis, dental, or kidney issues. Soft food may help." },
-    { stage: "Geriatric (15+ years)", description: "Extra comfort and care needed. More frequent vet visits and cozy environment." },
+    { stage: "Kitten (0–1 year / 0-15 human years)", description: "A period of rapid growth and high energy. Play is essential for their development. They need kitten-specific food that's high in calories and protein, and they must complete their initial vaccination series." },
+    { stage: "Junior (1–2 years / 15-24 human years)", description: "Your cat has reached full size and is learning about life. Their personality is still developing. This is the ideal time for spaying or neutering if it hasn't been done." },
+    { stage: "Prime (3–6 years / 28-40 human years)", description: "This is your cat's adulthood. They are typically at their peak of health and activity. Focus on maintaining a balanced diet, regular play, and annual wellness checkups." },
+    { stage: "Mature (7–10 years / 44-56 human years)", description: "Your cat may start to slow down. It's a good time to monitor their diet to prevent weight gain. Keep an eye on their mobility and dental health." },
+    { stage: "Senior (11–14 years / 60-72 human years)", description: "Your cat is now a senior citizen. Be watchful for signs of common aging issues like arthritis, kidney disease, or thyroid problems. Softer, more palatable food may be beneficial. Increase vet visits to twice a year." },
+    { stage: "Geriatric (15+ years / 76+ human years)", description: "These are the golden years. Your geriatric cat needs extra comfort, warmth, and care. Ensure their environment is safe and easily accessible (e.g., ramps to favorite spots, low-entry litter boxes)." },
 ];
 
 export default function CatAgePage() {
@@ -94,32 +100,42 @@ export default function CatAgePage() {
             <CatAgeCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Cat Age Calculator</h2>
-                    <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                        <li><strong>Enter Your Cat's Age:</strong> Input your cat's age in years. For kittens under a year, you can also add months.</li>
-                        <li><strong>Click “Calculate”:</strong> Get an instant conversion to human years.</li>
-                        <li><strong>View Life Stage and Tips:</strong> See your cat's current life stage and a helpful tip for their care.</li>
-                    </ol>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>How to Use the Cat Age Calculator</CardTitle></CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Enter Your Cat's Age:</strong> Input your cat's age in years. For kittens under a year, you can also add months for better precision.</li>
+                            <li><strong>Click “Calculate”:</strong> Get an instant, accurate conversion to the equivalent human years.</li>
+                            <li><strong>View Life Stage and Tips:</strong> The tool will display your cat's current life stage (e.g., Kitten, Senior) and provide a helpful, age-appropriate care tip.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader><CardTitle>The Modern Science of Cat Aging</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">The old myth of "one cat year equals seven human years" is inaccurate because cats age much more rapidly in their early life. According to guidelines from the American Association of Feline Practitioners (AAFP), a cat's first year is equivalent to about 15 human years. Their second year adds another 9 years, making a 2-year-old cat about 24 in human years. After that, each subsequent cat year is roughly equal to four human years. Our calculator uses this scientifically-backed model.</p>
+                        <p className="text-muted-foreground mt-2">Learn more in our <Link href="/articles/the-science-behind-pet-age-calculators" className="text-primary hover:underline">article on pet aging science</Link>.</p>
+                    </CardContent>
+                </Card>
 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Cat Age to Human Years Chart</h2>
                     <p className="text-muted-foreground mb-4">
-                        Cats age faster in their first two years, then approximately four human years per cat year after that. This chart gives a quick overview.
+                        This chart gives a quick overview of how cat years translate to human years, highlighting the different life stages.
                     </p>
                     <div className="overflow-x-auto">
                     <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Cat Age (Years)</TableHead>
+                            <TableHead>Cat Age</TableHead>
                             <TableHead>Human Age Equivalent</TableHead>
                             <TableHead>Life Stage</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {ageChart.map((row) => (
-                            <TableRow key={row.lifeStage}>
+                            <TableRow key={row.catAge}>
                                 <TableCell className="font-medium">{row.catAge}</TableCell>
                                 <TableCell>{row.humanAge}</TableCell>
                                 <TableCell>{row.lifeStage}</TableCell>
@@ -131,7 +147,8 @@ export default function CatAgePage() {
                 </div>
 
                 <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Cat Life Stages</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Your Cat's Life Stage</h2>
+                     <p className="text-muted-foreground mb-4">Knowing your cat's life stage helps you provide the best possible care. Each stage has unique health, nutrition, and enrichment needs.</p>
                     <Accordion type="single" collapsible className="w-full">
                         {lifeStages.map((item, index) => (
                             <AccordionItem value={`item-${index}`} key={index}>
@@ -142,17 +159,19 @@ export default function CatAgePage() {
                     </Accordion>
                 </div>
 
-                <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Tips for Keeping Your Cat Healthy</h2>
-                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                    <li>Provide fresh water daily and quality food appropriate for their life stage.</li>
-                    <li>Keep your cat indoors or supervise outdoor time to protect them from dangers.</li>
-                    <li>Brush your cat’s coat regularly to prevent matting and reduce hairballs.</li>
-                    <li>Ensure annual vet checkups and keep vaccinations up to date.</li>
-                    <li>Encourage playtime and exercise to maintain a healthy weight.</li>
-                    <li>Keep the litter box clean and in a quiet, accessible location.</li>
-                </ul>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>Tips for a Long & Healthy Feline Life</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Quality Nutrition:</strong> Provide high-quality food appropriate for their life stage (kitten, adult, senior) to support their energy and health needs.</li>
+                            <li><strong>Keep Indoors:</strong> Keeping your cat indoors is the single most effective way to extend their lifespan by protecting them from cars, predators, and infectious diseases.</li>
+                            <li><strong>Regular Vet Visits:</strong> Annual checkups for adult cats and bi-annual visits for seniors are crucial for preventative care and early disease detection.</li>
+                            <li><strong>Mental & Physical Enrichment:</strong> Keep your cat engaged with puzzle toys, scratching posts, and regular playtime to maintain a healthy weight and sharp mind.</li>
+                            <li><strong>Dental Health:</strong> Dental disease is common in cats. Regular dental checkups and at-home care (like brushing or dental treats) are important.</li>
+                            <li><strong>Clean Litter Box:</strong> A clean litter box is essential for your cat's comfort and can help you monitor for any urinary health issues.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">FAQs About Cat Aging</h2>

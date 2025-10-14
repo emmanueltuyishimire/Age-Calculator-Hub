@@ -8,6 +8,8 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Age Calculator by Year - Quick Age Estimate from Birth Year',
@@ -30,9 +32,11 @@ export const metadata: Metadata = {
 
 const faqs = [
     { question: "How does the age by year calculator work?", answer: "It uses a simple formula: Current Year - Birth Year. This provides the age a person will be on their birthday in the current year." },
-    { question: "Is this calculator accurate?", answer: "It provides a good estimate, but it can be off by one year because it does not account for the month and day of birth. For exact age, use our full Date of Birth Age Calculator." },
+    { question: "Is this calculator accurate?", answer: "It provides a good estimate, but it can be off by one year because it does not account for the month and day of birth. For exact age, use our full <a href='/age-calculator-by-date-of-birth' class='text-primary hover:underline'>Date of Birth Age Calculator</a>." },
     { question: "When should I use this calculator?", answer: "This tool is perfect for situations where you only need a quick, approximate age and don't have the full date of birth available." },
     { question: "Is this tool free to use?", answer: "Yes, this is a completely free online tool for anyone to use." },
+    { question: "Can I use this for historical figures?", answer: "Yes, this is a great tool for quickly estimating the age of a historical figure during a specific event, as long as you know their birth year." },
+    { question: "Does this calculator tell me if someone is a specific age yet?", answer: "No. It calculates the age they will be at some point during the current calendar year. Their actual current age could be one year less if their birthday hasn't occurred yet." },
 ];
 
 const faqSchema = {
@@ -67,28 +71,48 @@ export default function AgeCalculatorByYearPage() {
             <AgeCalculatorByYear />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use This Calculator</h2>
-                    <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                        <li><strong>Enter the Year of Birth:</strong> Type the 4-digit birth year into the input field.</li>
-                        <li><strong>Click “Calculate Age”:</strong> Press the button to see the estimated age instantly.</li>
-                        <li><strong>View the Result:</strong> The calculator will show the approximate age for the current year.</li>
-                    </ol>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>How to Use This Calculator</CardTitle></CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Enter the Year of Birth:</strong> Type the 4-digit birth year into the input field.</li>
+                            <li><strong>Click “Calculate Age”:</strong> Press the button to see the estimated age instantly.</li>
+                            <li><strong>View the Result:</strong> The calculator will show the approximate age for the current year. This is the age the person will be on their birthday in this calendar year.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
 
-                 <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">The Formula Explained</h2>
-                     <p className="text-muted-foreground">
-                       This calculator uses the simplest formula for determining age: <strong>Age ≈ Current Year - Birth Year</strong>. This gives you the age a person will be on their birthday during the current year. For example, in 2024, someone born in 1990 is considered 34 years old for the purpose of this calculation, even if their birthday hasn't occurred yet.
-                    </p>
-                </div>
+                 <Card>
+                    <CardHeader><CardTitle>The Formula Explained: Simple and Fast</CardTitle></CardHeader>
+                    <CardContent>
+                         <p className="text-muted-foreground">
+                           This calculator uses the simplest formula for determining age: <strong>Age ≈ Current Year - Birth Year</strong>. This gives you the age a person will turn on their birthday during the current year. For example, in 2024, someone born in 1990 is considered 34 years old for the purpose of this calculation, even if their birthday hasn't occurred yet. This is often called "calendar age" or "nominal age".
+                        </p>
+                    </CardContent>
+                </Card>
 
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">When to Use an Age by Year Calculator</h2>
-                    <p className="text-muted-foreground">
-                        This tool is ideal for casual use where precision is not critical. It's helpful for quickly estimating someone's age group, for historical research when only a birth year is known, or for any situation where a ballpark figure is sufficient.
-                    </p>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>When to Use an Age by Year Calculator</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground mb-4">
+                            This tool is ideal for casual use where precision is not critical. It's helpful for:
+                        </p>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li>Quickly estimating someone's age group in a conversation.</li>
+                            <li>Demographic or historical research when only a birth year is known.</li>
+                            <li>Any situation where a ballpark figure is sufficient and you don't have the full date of birth.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                
+                <Card>
+                    <CardHeader><CardTitle>Understanding the Limitation: The One-Year Margin</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">
+                            The main limitation of this method is that it doesn't account for the month and day of birth. Therefore, the result can be off by one year. If a person's birthday has not yet passed in the current year, their actual age will be one year less than the number shown. For 100% accuracy, you must use the full date of birth with our main <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>.
+                        </p>
+                    </CardContent>
+                </Card>
 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>
@@ -96,7 +120,9 @@ export default function AgeCalculatorByYearPage() {
                         {faqs.map((faq, index) => (
                              <AccordionItem value={`item-${index}`} key={index}>
                                 <AccordionTrigger>{faq.question}</AccordionTrigger>
-                                <AccordionContent>{faq.answer}</AccordionContent>
+                                <AccordionContent>
+                                    <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                                </AccordionContent>
                             </AccordionItem>
                         ))}
                     </Accordion>

@@ -8,6 +8,8 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
+import Link from 'next/link';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 export const metadata: Metadata = {
     title: 'Chronological Age Calculator – Find Your Exact Age by Date',
@@ -31,19 +33,27 @@ export const metadata: Metadata = {
 const faqs = [
     {
         question: "What is chronological age?",
-        answer: "Chronological age is the measure of time that has passed from a person's date of birth to a given date. It's the most common way of expressing age."
+        answer: "Chronological age is the most common measure of age, representing the exact amount of time that has passed from your date of birth to the present moment. It's expressed in years, months, and days."
     },
     {
         question: "How is chronological age calculated?",
-        answer: "It is calculated by subtracting the date of birth from the current date (or another specified date). The result is typically shown in years, months, and days, accounting for leap years."
+        answer: "It is calculated by subtracting the date of birth from the current date (or another specified date). A precise calculation must account for the different number of days in months and for leap years, which our calculator does automatically."
     },
     {
         question: "Is this calculator free?",
         answer: "Yes, this chronological age calculator is a completely free online tool."
     },
     {
-        question: "How does this differ from biological age?",
-        answer: "Chronological age is a measure of time, while biological age is a measure of how well your body is functioning and can be influenced by lifestyle factors."
+        question: "How does chronological age differ from biological age?",
+        answer: "Chronological age is a fixed measure of time. <a href='/biological-age' class='text-primary hover:underline'>Biological age</a>, in contrast, is a measure of how well your body is functioning and can be influenced by lifestyle, genetics, and health factors."
+    },
+    {
+        question: "Why is knowing my chronological age important?",
+        answer: "It's essential for legal and official purposes, including applying for a driver's license, passport, or social security benefits, as well as for school enrollment and employment eligibility."
+    },
+    {
+        question: "Can I calculate my age on a future date?",
+        answer: "Yes. In the 'Age at the Date of' field, you can enter any future date to see how old you will be at that specific time."
     }
 ];
 
@@ -79,20 +89,41 @@ export default function ChronologicalAgeCalculatorPage() {
             <AgeCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Chronological Age</h2>
-                    <p className="text-muted-foreground">
-                       Chronological age is the most straightforward and universally accepted measure of age. It represents the exact amount of time you have been alive. This calculator provides a precise measurement, breaking down your age into years, months, and days, and even updating in real-time to the second.
-                    </p>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>Understanding Chronological Age</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">
+                           Chronological age is the most straightforward and universally accepted measure of age. It represents the exact amount of time you have been alive since the moment you were born. This is the age that appears on your legal documents and is used to determine eligibility for societal rights and privileges, such as voting, driving, and retirement.
+                        </p>
+                        <p className="text-muted-foreground mt-2">
+                            Unlike <Link href="/biological-age" className="text-primary hover:underline">biological age</Link>, which reflects your body's health, chronological age is a simple, objective measure of time. Our calculator provides a precise measurement, breaking down your age into years, months, and days, and can even update in real-time to the second. For a deeper dive, read our <Link href="/articles/understanding-chronological-age" className="text-primary hover:underline">article on chronological age</Link>.
+                        </p>
+                    </CardContent>
+                </Card>
+
+                 <Card>
+                    <CardHeader><CardTitle>How Our Calculator Works</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">
+                           Our tool uses a precise algorithm to give you an accurate result. Here’s a quick guide:
+                        </p>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-4">
+                            <li>Enter your full <strong>Date of Birth</strong>.</li>
+                            <li>The <strong>Age at the Date of</strong> field is set to today by default, but you can change it to any date.</li>
+                            <li>Click "Calculate" to see the exact time interval between the two dates, presented as your chronological age.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
 
                 <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">FAQs About Chronological Age</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
                     <Accordion type="single" collapsible className="w-full">
                         {faqs.map((faq, index) => (
                              <AccordionItem value={`item-${index}`} key={index}>
                                 <AccordionTrigger>{faq.question}</AccordionTrigger>
-                                <AccordionContent>{faq.answer}</AccordionContent>
+                                <AccordionContent>
+                                    <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                                </AccordionContent>
                             </AccordionItem>
                         ))}
                     </Accordion>

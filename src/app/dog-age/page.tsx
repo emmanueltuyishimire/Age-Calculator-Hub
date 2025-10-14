@@ -16,6 +16,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import RelatedCalculators from "@/components/layout/related-calculators";
+import Link from 'next/link';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {
     title: 'Dog Age Calculator for Mixed & Purebred Dogs – Dog Years to Human Years',
@@ -38,11 +40,11 @@ export const metadata: Metadata = {
 
 const faqs = [
     { question: "How do I calculate the age of my mixed-breed dog?", answer: "This calculator is perfect for mixed-breed dogs. The most important factor for determining a dog's age in human years is its size, not its breed. Simply choose the size category (Small, Medium, Large, or Giant) that best fits your mixed-breed dog to get an accurate estimate." },
-    { question: "Is the 1 dog year = 7 human years rule accurate?", answer: "No. That’s an outdated myth. Modern veterinary research shows dog aging is more complex and depends heavily on size and breed." },
-    { question: "How long do dogs live?", answer: "On average, small dogs live 12–16 years, while large dogs live 8–12 years. Mixed-breed dogs often have a longer lifespan than purebreds of a similar size." },
-    { question: "Why do large dogs age faster?", answer: "Larger breeds grow more rapidly from puppies to adults, which is believed to contribute to faster aging and a shorter overall lifespan." },
-    { question: "Can I slow down my dog’s aging?", answer: "While you can't stop time, you can significantly improve their healthspan and vitality with regular exercise, a balanced diet, and consistent vet care." },
-    { question: "When is a dog considered old?", answer: "Generally, large breeds are considered 'senior' around age 7, while smaller breeds enter their senior years around age 9 or 10." }
+    { question: "Is the '1 dog year = 7 human years' rule accurate?", answer: "No, that’s an outdated myth. Modern veterinary research shows that dog aging is non-linear—they age very quickly in their first two years, and then the rate slows. Furthermore, aging varies dramatically by size." },
+    { question: "How long do dogs live?", answer: "On average, small dogs live 12–16 years, while giant breeds may only live 6–9 years. Mixed-breed dogs often have a slightly longer lifespan than purebreds of a similar size due to genetic diversity (hybrid vigor)." },
+    { question: "Why do large dogs age faster?", answer: "The leading theory is that the rapid growth of large breeds from puppy to adult puts significant strain on their bodies, leading to faster cellular aging and a higher incidence of age-related diseases like cancer and arthritis." },
+    { question: "Can I slow down my dog’s aging?", answer: "While you can't stop time, you can significantly improve their healthspan and vitality with regular exercise, a balanced diet, maintaining a healthy weight, and consistent veterinary care. These factors are even more important than genetics." },
+    { question: "When is a dog considered old?", answer: "Generally, giant breeds are considered 'senior' around age 6-7, large breeds around 7-8, medium breeds at 8-9, and small breeds enter their senior years around age 9 or 10. Knowing this helps you adjust their care accordingly." }
 ];
 
 const faqSchema = {
@@ -59,22 +61,22 @@ const faqSchema = {
 };
 
 const ageChart = [
-    { age: "1", small: "15", medium: "15", large: "14", giant: "14" },
+    { age: "1", small: "15", medium: "15", large: "14", giant: "12" },
     { age: "2", small: "24", medium: "24", large: "22", giant: "20" },
-    { age: "3", small: "28", medium: "28", large: "31", giant: "28" },
-    { age: "5", small: "36", medium: "42", large: "45", giant: "49" },
-    { age: "7", small: "44", medium: "50", large: "56", giant: "66" },
-    { age: "10", small: "56", medium: "60", large: "66", giant: "80" },
-    { age: "12", small: "64", medium: "69", large: "77", giant: "90" },
-    { age: "15", small: "76", medium: "83", large: "93", giant: "110" },
+    { age: "3", small: "28", medium: "29", large: "30", giant: "28" },
+    { age: "5", small: "36", medium: "39", large: "45", giant: "45" },
+    { age: "7", small: "44", medium: "49", large: "56", giant: "62" },
+    { age: "10", small: "56", medium: "60", large: "75", giant: "88" },
+    { age: "12", small: "64", medium: "69", large: "86", giant: "105" },
+    { age: "15", small: "76", medium: "83", large: "105", giant: "130" },
 ];
 
 const lifeStages = [
-    { stage: "Puppy (0–1 year)", description: "This is a phase of rapid growth and learning. Focus on high-quality nutrition, completing vaccinations, and starting basic training and socialization." },
-    { stage: "Young Adult (1–4 years)", description: "Your dog is energetic and in its physical prime. Regular exercise, consistent training reinforcement, and yearly vet check-ups are key during this stage." },
-    { stage: "Mature (5–8 years)", description: "Energy levels may start to even out. It's important to monitor weight and watch for early signs of common issues like joint or dental problems." },
-    { stage: "Senior (9–12 years)", description: "Mobility, eyesight, or hearing may decline. Prioritize comfort, switch to twice-yearly vet visits, and adapt exercise to be more gentle." },
-    { stage: "Geriatric (13+ years)", description: "Older dogs need extra care. Ensure they have a warm, comfortable resting place, easy access to food and water, and a diet formulated for their needs." },
+    { stage: "Puppy (0–1 year)", description: "This is a phase of rapid growth, learning, and socialization. Focus on high-quality puppy food, completing vaccinations, starting basic training, and positive exposure to new sights and sounds." },
+    { stage: "Young Adult (1–4 years)", description: "Your dog is energetic, has reached physical maturity, and is in its prime. Regular exercise, consistent training reinforcement, and yearly vet check-ups are key during this stage." },
+    { stage: "Mature (5–8 years)", description: "Energy levels may start to even out, and your dog is a full adult. It's important to monitor their weight to prevent obesity and watch for early signs of common issues like joint or dental problems." },
+    { stage: "Senior (9–12 years)", description: "Mobility, eyesight, or hearing may begin to decline. Prioritize their comfort, switch to twice-yearly vet visits for senior wellness checks, and adapt exercise to be more gentle (like swimming or shorter walks)." },
+    { stage: "Geriatric (13+ years)", description: "Older dogs need extra care and attention. Ensure they have a warm, comfortable resting place, easy access to food and water, and a diet formulated for their specific senior needs. Cherish this special time." },
 ];
 
 export default function DogAgePage() {
@@ -96,19 +98,30 @@ export default function DogAgePage() {
             <DogAgeCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Dog Age Calculator</h2>
-                    <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                        <li><strong>Enter Your Dog's Age:</strong> Input your dog's current age in years.</li>
-                        <li><strong>Select Dog Size:</strong> This is the most important step for an accurate result, especially for a mixed-breed dog. Choose from Small, Medium, Large, or Giant.</li>
-                        <li><strong>Click “Calculate”:</strong> Get an instant conversion to human years, along with your dog's life stage.</li>
-                    </ol>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>How to Use the Dog Age Calculator</CardTitle></CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Enter Your Dog's Age:</strong> Input your dog's current age in years.</li>
+                            <li><strong>Select Dog Size:</strong> This is the most important step for an accurate result. Since aging speed is tied to size, choose the category that best fits your dog, whether they are a purebred or a mixed-breed.</li>
+                            <li><strong>Click “Calculate”:</strong> Get an instant conversion to human years, along with your dog's current life stage and a relevant care tip.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader><CardTitle>Why Size is the Key Factor in Dog Aging</CardTitle></CardHeader>
+                    <CardContent>
+                         <p className="text-muted-foreground mb-4">
+                        The old rule of "1 dog year equals 7 human years" is a myth. A dog's aging process depends heavily on their size. Smaller dogs tend to mature faster in their first year but live longer overall, while giant breeds mature slower but have much shorter lifespans. This is why our calculator asks for size—it's the single best predictor of a dog's "human age." Learn more in our <Link href="/articles/the-science-behind-pet-age-calculators" className="text-primary hover:underline">article on pet aging</Link>.
+                    </p>
+                    </CardContent>
+                </Card>
 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Dog Age to Human Years Chart (by Size)</h2>
                     <p className="text-muted-foreground mb-4">
-                        The old rule of "1 dog year equals 7 human years" is a myth. A dog's aging process depends heavily on their size. Smaller dogs tend to live longer and age more slowly, while larger breeds age more rapidly, especially in their later years.
+                        This chart gives a general idea of how different size categories of dogs age over time. Notice how the gap widens as the dogs get older.
                     </p>
                     <div className="overflow-x-auto">
                     <Table>
@@ -138,6 +151,7 @@ export default function DogAgePage() {
 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Your Dog’s Life Stage</h2>
+                    <p className="text-muted-foreground mb-4">Knowing your dog's life stage helps you provide age-appropriate care, from nutrition and exercise to veterinary checkups.</p>
                     <Accordion type="single" collapsible className="w-full">
                         {lifeStages.map((item, index) => (
                             <AccordionItem value={`item-${index}`} key={index}>
@@ -148,17 +162,18 @@ export default function DogAgePage() {
                     </Accordion>
                 </div>
 
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Dog Care Tips by Age Group</h2>
-                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                        <li>Feed high-quality protein suited to your dog's age and breed to support their energy and health needs.</li>
-                        <li>Mental stimulation is key. Use puzzle toys, play scent games, and enjoy short, engaging walks to keep their mind sharp.</li>
-                        <li>Maintain good dental care with regular brushing or dental chews to prevent long-term health issues.</li>
-                        <li>Schedule annual vet visits for young and mature dogs, and increase to twice a year for seniors.</li>
-                        <li>Provide appropriate exercise. Avoid overexertion for older dogs, focusing on gentle, consistent movement.</li>
-                        <li>Create a safe environment for aging dogs by ensuring floors aren't slippery and stairs are manageable.</li>
-                    </ul>
-                </div>
+                <Card>
+                    <CardHeader><CardTitle>Proactive Dog Care Tips by Age Group</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Nutrition:</strong> Feed high-quality food suited to your dog's age and size to support their energy needs and maintain a healthy weight.</li>
+                            <li><strong>Mental Stimulation:</strong> Keep their mind sharp at any age with puzzle toys, scent games, and short, engaging training sessions.</li>
+                            <li><strong>Dental Health:</strong> Maintain good dental care with regular brushing or vet-approved dental chews to prevent painful and costly health issues down the line.</li>
+                            <li><strong>Vet Visits:</strong> Schedule annual vet visits for young and mature dogs, and increase to twice a year for seniors to catch age-related problems early.</li>
+                            <li><strong>Appropriate Exercise:</strong> Avoid overexertion, especially for puppies and senior dogs. Focus on gentle, consistent movement for older dogs to maintain mobility.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions About Dog Aging</h2>
