@@ -18,13 +18,13 @@ export const metadata: Metadata = {
     follow: true,
   },
    alternates: {
-    canonical: 'https://age-calculator-hub.com',
+    canonical: 'https://innerpeacejournals.com',
   },
   openGraph: {
     title: 'Age Calculator Hub – Online Age, Birthday, Biological & Pet Age Calculators',
     description: 'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
     type: 'website',
-    url: 'https://age-calculator-hub.com',
+    url: 'https://innerpeacejournals.com',
   },
   twitter: {
     card: 'summary_large_image',

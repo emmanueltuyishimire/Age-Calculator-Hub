@@ -4,7 +4,7 @@ import { navItems } from '@/components/layout/nav-items';
 import { articles } from '@/lib/articles';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://age-calculator-hub.com';
+  const baseUrl = 'https://innerpeacejournals.com';
 
   // Find the last modification date from the most recent article
   const lastModified = articles.reduce((latest, article) => {

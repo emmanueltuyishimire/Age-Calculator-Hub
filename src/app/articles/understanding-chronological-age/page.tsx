@@ -61,7 +61,7 @@ export default function SampleArticlePage() {
         "name": "Age Calculator Hub",
         "logo": {
             "@type": "ImageObject",
-            "url": "https://age-calculator-hub.com/logo.png"
+            "url": "https://innerpeacejournals.com/logo.png"
         }
     }
   };
@@ -165,5 +165,3 @@ export default function SampleArticlePage() {
     </div>
   );
 }
-
-    

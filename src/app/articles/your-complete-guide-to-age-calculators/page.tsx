@@ -18,14 +18,14 @@ export function generateMetadata(): Metadata {
     title: 'Your Complete Guide to Age Calculator Hub',
     description: article.description,
     alternates: {
-        canonical: `/articles/${article.slug}`,
+        canonical: `https://innerpeacejournals.com/articles/${article.slug}`,
     },
     openGraph: {
         title: article.title,
         description: article.description,
         type: 'article',
         publishedTime: article.publishedDate,
-        url: `https://age-calculator-hub.com/articles/${article.slug}`,
+        url: `https://innerpeacejournals.com/articles/${article.slug}`,
     },
   };
 }
@@ -70,7 +70,7 @@ export default function AgeCalculatorAppArticle() {
         "name": "Age Calculator Hub",
         "logo": {
             "@type": "ImageObject",
-            "url": "https://age-calculator-hub.com/logo.png"
+            "url": "https://innerpeacejournals.com/logo.png"
         }
     }
 };
@@ -218,5 +218,3 @@ export default function AgeCalculatorAppArticle() {
     </div>
   );
 }
-
-    
