@@ -29,6 +29,7 @@ import {
   AlertTriangle,
   LayoutGrid,
   Newspaper,
+  Calendar as CalendarIcon,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -80,6 +81,13 @@ export const navItems: NavItem[] = [
     label: 'Age Calculator by Date of Birth',
     category: 'Core Age Calculation',
     description: 'Input birth date → get exact age today.'
+  },
+    {
+    href: '/age-calculator-by-year',
+    icon: CalendarIcon,
+    label: 'Age Calculator by Year',
+    category: 'Core Age Calculation',
+    description: 'Get a quick age estimate from just the birth year.'
   },
   {
     href: '/birthday-age-calculator',
@@ -242,17 +250,22 @@ export const categorizedNavItems = (): NavCategory[] => {
 
   return sortedCategories.map(key => {
     const hubHref = categoryHubs[key];
-    const categoryItems = categories[key];
+    let categoryItems = categories[key];
 
     // Add a link to the hub page as the first item if it exists
     if (hubHref) {
-      categoryItems.unshift({
+      const hubItem: NavItem = {
         href: hubHref,
         icon: LayoutGrid,
         label: `All ${key}`,
         category: key,
         description: `View all ${key.toLowerCase()} tools.`
-      });
+      };
+      
+      // Check if hub item already exists
+      if (!categoryItems.some(item => item.href === hubHref)) {
+        categoryItems = [hubItem, ...categoryItems];
+      }
     }
 
     return {

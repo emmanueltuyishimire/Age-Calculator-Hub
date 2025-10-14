@@ -22,6 +22,13 @@ export const articles: Article[] = [
     category: 'Core Concepts',
     publishedDate: '2024-10-15',
   },
+   {
+    slug: 'how-to-calculate-age-from-year-of-birth',
+    title: 'How to Calculate Age From Year of Birth: The Simple Formula and Its Limits',
+    description: 'Learn the quick and easy way to calculate age using just the year of birth. We explain the formula, when it’s useful, and why a full date of birth provides a more accurate result.',
+    category: 'Core Concepts',
+    publishedDate: '2024-10-16',
+  },
   {
     slug: 'how-to-improve-biological-age',
     title: '5 Actionable Tips to Lower Your Biological Age',
