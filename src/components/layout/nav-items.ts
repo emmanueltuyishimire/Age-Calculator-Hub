@@ -27,6 +27,7 @@ import {
   Shield,
   FileText,
   AlertTriangle,
+  LayoutGrid,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -124,7 +125,7 @@ export const navItems: NavItem[] = [
   {
     href: '/pregnancy-calculators',
     icon: CalendarHeart,
-    label: 'Pregnancy Calculators',
+    label: 'Pregnancy Calculators Hub',
     category: 'Pregnancy Calculators',
     description: 'A hub for all pregnancy-related calculators.'
   },
@@ -209,7 +210,10 @@ export const categorizedNavItems = (): NavCategory[] => {
     if (!categories[item.category]) {
       categories[item.category] = [];
     }
-    categories[item.category].push(item);
+    // Avoid adding the hub page itself to its own dropdown list
+    if (item.href !== categoryHubs[item.category]) {
+        categories[item.category].push(item);
+    }
   });
   
   // Define the desired order
@@ -228,9 +232,25 @@ export const categorizedNavItems = (): NavCategory[] => {
     return categoryOrder.indexOf(a) - categoryOrder.indexOf(b);
   });
 
-  return sortedCategories.map(key => ({
-    name: key,
-    items: categories[key],
-    href: categoryHubs[key],
-  }));
+  return sortedCategories.map(key => {
+    const hubHref = categoryHubs[key];
+    const categoryItems = categories[key];
+
+    // Add a link to the hub page as the first item if it exists
+    if (hubHref) {
+      categoryItems.unshift({
+        href: hubHref,
+        icon: LayoutGrid,
+        label: `All ${key}`,
+        category: key,
+        description: `View all ${key.toLowerCase()} tools.`
+      });
+    }
+
+    return {
+      name: key,
+      items: categoryItems,
+      href: hubHref,
+    };
+  });
 };
