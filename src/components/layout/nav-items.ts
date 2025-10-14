@@ -62,6 +62,13 @@ export const navItems: NavItem[] = [
     category: 'Navigation',
     description: 'Read our latest articles.'
   },
+   {
+    href: '/core-age-calculators',
+    icon: Calculator,
+    label: 'Core Age Calculators',
+    category: 'Core Age Calculation',
+    description: 'Calculate your chronological age, time until birthday, and more.'
+  },
   {
     href: '/age-calculator',
     icon: Calculator,
@@ -283,3 +290,5 @@ export const categorizedNavItems = (): NavCategory[] => {
     };
   });
 };
+
+    

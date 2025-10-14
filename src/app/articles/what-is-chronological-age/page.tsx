@@ -1,3 +1,4 @@
+
 import { type Metadata } from 'next';
 import Link from 'next/link';
 import { articles } from '@/lib/articles';
@@ -179,3 +180,5 @@ export default function AgeCalculatorAppArticle() {
     </div>
   );
 }
+
+    

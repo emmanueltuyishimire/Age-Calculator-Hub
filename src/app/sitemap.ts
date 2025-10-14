@@ -37,6 +37,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'weekly',
     priority: 0.7,
   }));
+  
+  const articleHubPage = {
+    url: `${baseUrl}/articles`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  };
 
-  return [...pages, ...staticPages, ...articlePages];
+  return [...pages, ...staticPages, ...articlePages, articleHubPage];
 }
+
+    
