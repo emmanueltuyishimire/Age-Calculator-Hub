@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import ShareButton from '../share-button';
 
 interface GestationalInfo {
   weeks: number;
@@ -127,7 +128,10 @@ export default function GestationalAgeCalculator() {
                 <Input id="lmp-year-gestational" placeholder="YYYY" value={lmp.year} onChange={e => setLmp({...lmp, year: e.target.value})} aria-label="LMP Year"/>
             </div>
         </div>
-        <Button onClick={handleCalculate} className="w-full">Calculate Gestational Age</Button>
+        <div className="flex gap-2">
+            <Button onClick={handleCalculate} className="w-full">Calculate Gestational Age</Button>
+            <ShareButton title="Gestational Age Calculator" text="Find out how many weeks pregnant you are!" />
+        </div>
 
         {gestationalInfo && (
           

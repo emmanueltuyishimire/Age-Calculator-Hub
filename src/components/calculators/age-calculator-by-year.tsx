@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import ShareButton from '../share-button';
 
 export default function AgeCalculatorByYear() {
   const [birthYear, setBirthYear] = useState('');
@@ -71,6 +72,7 @@ export default function AgeCalculatorByYear() {
         <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
             <RefreshCcw className="mr-2 h-4 w-4" /> Reset
         </Button>
+        <ShareButton title="Age Calculator by Year" text="Check out this quick age calculator by year of birth!" />
         </div>
 
         {age !== null && (

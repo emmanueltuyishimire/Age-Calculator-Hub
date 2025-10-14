@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import ShareButton from '../share-button';
 
 interface RetirementInfo {
   fullRetirementAge: { years: number; months: number };
@@ -107,6 +108,7 @@ export default function SocialSecurityRetirementAgeCalculator() {
                     aria-label="Year of Birth"
                 />
                 <Button onClick={handleCalculate} className="w-full sm:w-auto">Calculate</Button>
+                 <ShareButton title="Social Security Retirement Calculator" text="Find out your full retirement age for Social Security!" />
             </div>
         </div>
 

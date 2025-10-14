@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import ShareButton from '../share-button';
 
 interface DueDateInfo {
   dueDate: Date;
@@ -135,7 +136,10 @@ export default function DueDateCalculator() {
                 <Input id="date-year" placeholder="YYYY" value={inputDate.year} onChange={e => setInputDate({...inputDate, year: e.target.value})} aria-label="Year"/>
             </div>
         </div>
-        <Button onClick={handleCalculate} className="w-full">Calculate Due Date</Button>
+        <div className="flex gap-2">
+            <Button onClick={handleCalculate} className="w-full">Calculate Due Date</Button>
+            <ShareButton title="Pregnancy Due Date Calculator" text="Estimate your baby's due date with this easy calculator!" />
+        </div>
 
         {dueDateInfo && (
           

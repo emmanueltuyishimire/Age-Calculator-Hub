@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import { RefreshCcw } from 'lucide-react';
+import ShareButton from '../share-button';
 
 interface OvulationInfo {
   fertileWindow: { start: Date; end: Date };
@@ -123,6 +124,7 @@ export default function OvulationCalculator() {
           <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
               <RefreshCcw className="mr-2 h-4 w-4" /> Reset
           </Button>
+          <ShareButton title="Ovulation Calculator" text="Find your most fertile days with this Ovulation Calculator!" />
         </div>
 
         {ovulationInfo && (

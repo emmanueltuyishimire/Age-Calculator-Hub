@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, RefreshCcw } from "lucide-react"
+import ShareButton from '../share-button';
 
 interface Age {
   years: number;
@@ -205,6 +206,7 @@ export default function AgeCalculator() {
             <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
+            <ShareButton title="Online Age Calculator" text="Find out your exact age in real-time with this cool age calculator!" />
         </div>
 
         {age && (

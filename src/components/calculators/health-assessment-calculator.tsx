@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import ShareButton from "../share-button";
 
 export default function HealthAssessmentCalculator() {
   const [bmrData, setBmrData] = useState({ age: '', gender: 'male', height: '', weight: '' });
@@ -111,9 +112,12 @@ export default function HealthAssessmentCalculator() {
               onChange={(e) => setBmrData({...bmrData, height: e.target.value})} placeholder="e.g., 175"
             />
           </div>
-          <Button onClick={handleBmrCalculation} className="w-full">
-            Calculate BMR
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={handleBmrCalculation} className="w-full">
+                Calculate BMR
+            </Button>
+            <ShareButton title="BMR Calculator" text="Find out your Basal Metabolic Rate (BMR) with this health calculator!" url="/health-assessments" />
+          </div>
           {bmrResult && (
             <div className="p-4 bg-muted rounded-lg text-center">
               <p>{bmrResult}</p>
@@ -158,9 +162,12 @@ export default function HealthAssessmentCalculator() {
                     <Input id="bf-hip" type="number" value={bodyFatData.hip} onChange={(e) => setBodyFatData({...bodyFatData, hip: e.target.value})} placeholder="e.g., 100"/>
                 </div>
             )}
-          <Button onClick={handleBodyFatCalculation} className="w-full">
-            Calculate Body Fat
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={handleBodyFatCalculation} className="w-full">
+                Calculate Body Fat
+            </Button>
+            <ShareButton title="Body Fat Calculator" text="Estimate your body fat percentage with this health assessment tool!" url="/health-assessments" />
+          </div>
           {bodyFatResult && (
             <div className="p-4 bg-muted rounded-lg text-center">
               <p>{bodyFatResult}</p>

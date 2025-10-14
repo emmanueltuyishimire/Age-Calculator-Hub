@@ -30,6 +30,7 @@ import {
 } from '@/components/ui/select';
 import { RefreshCcw } from 'lucide-react';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
+import ShareButton from '../share-button';
 
 const formSchema = z.object({
   age: z.coerce.number().min(15, "Must be 15 or older").max(80, "Must be 80 or younger"),
@@ -216,6 +217,7 @@ export default function MetabolicAgeCalculator() {
                 <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
                     <RefreshCcw className="mr-2 h-4 w-4" /> Reset
                 </Button>
+                <ShareButton title="Metabolic Age Calculator" text="Find out your metabolic age with this cool calculator!" />
             </div>
           </form>
         </Form>

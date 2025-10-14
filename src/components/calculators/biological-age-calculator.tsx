@@ -33,6 +33,7 @@ import { getBiologicalAge } from '@/app/biological-age/actions';
 import type { BiologicalAgeInput, BiologicalAgeOutput } from '@/ai/flows/biological-age-calculation';
 import { Loader2 } from 'lucide-react';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
+import ShareButton from '../share-button';
 
 const formSchema = z.object({
   chronologicalAge: z.coerce.number().min(18, "Must be 18 or older").max(100, "Must be 100 or younger"),
@@ -252,9 +253,12 @@ export default function BiologicalAgeCalculator() {
                 )}
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? <Loader2 className="animate-spin" /> : 'Calculate Biological Age'}
-            </Button>
+            <div className="flex gap-2">
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? <Loader2 className="animate-spin" /> : 'Calculate Biological Age'}
+                </Button>
+                <ShareButton title="Biological Age Calculator" text="Find out your body's true age with this Biological Age Calculator!" />
+            </div>
           </form>
         </Form>
 

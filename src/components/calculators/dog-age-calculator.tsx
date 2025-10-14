@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { RefreshCcw } from 'lucide-react';
+import ShareButton from '../share-button';
 
 const formSchema = z.object({
   dogAge: z.coerce.number().min(0, "Age must be 0 or more").max(30, "Age seems too high!"),
@@ -172,6 +173,7 @@ export default function DogAgeCalculator() {
                  <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
                     <RefreshCcw className="mr-2 h-4 w-4" /> Reset
                 </Button>
+                <ShareButton title="Dog Age Calculator" text="Find out your dog's age in human years with this cool calculator!" />
               </div>
             </form>
           </Form>

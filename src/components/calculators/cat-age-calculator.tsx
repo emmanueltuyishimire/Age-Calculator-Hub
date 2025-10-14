@@ -22,6 +22,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { RefreshCcw } from 'lucide-react';
+import ShareButton from '../share-button';
 
 const formSchema = z.object({
   catAgeYears: z.coerce.number().min(0, "Years must be 0 or more").max(30, "Age seems too high!"),
@@ -137,6 +138,7 @@ export default function CatAgeCalculator() {
                     <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
                     <RefreshCcw className="mr-2 h-4 w-4" /> Reset
                 </Button>
+                <ShareButton title="Cat Age Calculator" text="Find out how old your cat is in human years!" />
             </div>
 
         </form>

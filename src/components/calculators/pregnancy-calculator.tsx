@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import ShareButton from '../share-button';
 
 interface PregnancyInfo {
   gestationalAge: string;
@@ -112,7 +113,10 @@ export default function PregnancyCalculator() {
             <Label htmlFor="cycle-length-preg">Average Cycle Length (days)</Label>
             <Input id="cycle-length-preg" type="number" value={cycleLength} onChange={(e) => setCycleLength(e.target.value)} />
         </div>
-        <Button onClick={handleCalculate} className="w-full">Calculate</Button>
+        <div className="flex gap-2">
+            <Button onClick={handleCalculate} className="w-full">Calculate</Button>
+            <ShareButton title="Pregnancy Calculator" text="Find out your estimated due date with this pregnancy calculator!" />
+        </div>
 
         {pregnancyInfo && (
           

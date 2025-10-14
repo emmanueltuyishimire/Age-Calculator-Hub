@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import ShareButton from '../share-button';
 
 interface RetirementInfo {
   fullRetirement: {
@@ -123,7 +124,10 @@ export default function RetirementAgeCalculator() {
                 <Input id="dob-year-ret" placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
             </div>
         </div>
-        <Button onClick={handleCalculate} className="w-full">Calculate Retirement Age</Button>
+        <div className="flex gap-2">
+            <Button onClick={handleCalculate} className="w-full">Calculate Retirement Age</Button>
+            <ShareButton title="Retirement Age Calculator" text="Find out your full retirement age with this Social Security calculator!" />
+        </div>
 
         {retirementInfo && (
           
