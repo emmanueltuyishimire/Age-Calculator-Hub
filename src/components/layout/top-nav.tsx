@@ -46,6 +46,7 @@ export function TopNav() {
       <nav className="hidden md:flex items-center gap-6 text-sm" aria-label="Main navigation">
         <Link
             href="/"
+            aria-label="Go to Homepage"
             className={`transition-colors hover:text-foreground/80 ${
               pathname === '/' ? 'text-foreground' : 'text-foreground/60'
             }`}
@@ -54,6 +55,7 @@ export function TopNav() {
           </Link>
           <Link
             href="/articles"
+            aria-label="View all articles"
             className={`transition-colors hover:text-foreground/80 ${
               pathname === '/articles' ? 'text-foreground' : 'text-foreground/60'
             }`}
@@ -63,7 +65,7 @@ export function TopNav() {
           <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger>Calculators</NavigationMenuTrigger>
+                    <NavigationMenuTrigger aria-label="Open calculators menu">Calculators</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                         {mainCategories.map((category) => (
@@ -71,6 +73,7 @@ export function TopNav() {
                                 key={category.name}
                                 title={category.name}
                                 href={category.href}
+                                aria-label={`View all ${category.name} calculators`}
                                 >
                                 {category.items[0]?.description}
                             </ListItem>
@@ -106,6 +109,7 @@ export function TopNav() {
                 <Link
                     href="/"
                     onClick={() => setIsOpen(false)}
+                    aria-label="Go to Homepage"
                     className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
                       pathname === '/' ? 'bg-muted' : 'hover:bg-muted/50'
                     }`}
@@ -115,13 +119,14 @@ export function TopNav() {
                 <Link
                     href="/articles"
                     onClick={() => setIsOpen(false)}
+                    aria-label="View all articles"
                     className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
                       pathname === '/articles' ? 'bg-muted' : 'hover:bg-muted/50'
                     }`}
                   >
                     Articles
                 </Link>
-                <Accordion type="single" collapsible className="w-full">
+                <Accordion type="single" collapsible className="w-full" aria-label="Calculator Categories">
                   {categories.map((category) => (
                     <AccordionItem value={category.name} key={category.name}>
                        <AccordionTrigger className="text-base font-semibold py-2">
@@ -136,6 +141,7 @@ export function TopNav() {
                                 key={item.href}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
+                                aria-label={`Go to ${item.label}`}
                                 className={`-mx-3 block rounded-lg px-3 py-2 text-base leading-7 ${
                                   pathname === item.href ? 'bg-muted text-primary' : 'hover:bg-muted/50'
                                 }`}
