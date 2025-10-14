@@ -1,0 +1,228 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the AgeSage application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "description": "Date of birth of the user.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "dateOfBirth"
+      ]
+    },
+    "BiologicalAgeResult": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "BiologicalAgeResult",
+      "type": "object",
+      "description": "Represents the result of a biological age calculation.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the biological age result."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User. (Relationship: User 1:N BiologicalAgeResult)"
+        },
+        "calculatedAge": {
+          "type": "number",
+          "description": "The calculated biological age."
+        },
+        "calculationDate": {
+          "type": "string",
+          "description": "The date when the biological age was calculated.",
+          "format": "date-time"
+        },
+        "biomarkers": {
+          "type": "string",
+          "description": "Biomarkers used in biological age calculation. "
+        },
+        "reasoning": {
+          "type": "string",
+          "description": "Reasoning for the biological age calculation if using AI."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "calculatedAge",
+        "calculationDate"
+      ]
+    },
+    "Pet": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Pet",
+      "type": "object",
+      "description": "Represents a pet for which age can be calculated.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the pet."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User. (Relationship: User 1:N Pet)"
+        },
+        "petType": {
+          "type": "string",
+          "description": "Type of pet (e.g., dog, cat)."
+        },
+        "breed": {
+          "type": "string",
+          "description": "Breed of the pet."
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "description": "Date of birth of the pet.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "petType",
+        "dateOfBirth"
+      ]
+    },
+    "RetirementCalculation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "RetirementCalculation",
+      "type": "object",
+      "description": "Represents the result of a retirement age calculation.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the retirement calculation."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User. (Relationship: User 1:N RetirementCalculation)"
+        },
+        "birthDate": {
+          "type": "string",
+          "description": "The user's birth date.",
+          "format": "date-time"
+        },
+        "retirementAge": {
+          "type": "number",
+          "description": "The calculated retirement age."
+        },
+        "socialSecurityEligibilityAge": {
+          "type": "number",
+          "description": "The calculated social security eligibility age."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "birthDate",
+        "retirementAge",
+        "socialSecurityEligibilityAge"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/biologicalAgeResults/{biologicalAgeResultId}",
+        "definition": {
+          "entityName": "BiologicalAgeResult",
+          "schema": {
+            "$ref": "#/backend/entities/BiologicalAgeResult"
+          },
+          "description": "Stores biological age calculation results for a specific user.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "biologicalAgeResultId",
+              "description": "The unique identifier for the biological age result."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/pets/{petId}",
+        "definition": {
+          "entityName": "Pet",
+          "schema": {
+            "$ref": "#/backend/entities/Pet"
+          },
+          "description": "Stores pet information for a specific user.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "petId",
+              "description": "The unique identifier for the pet."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/retirementCalculations/{retirementCalculationId}",
+        "definition": {
+          "entityName": "RetirementCalculation",
+          "schema": {
+            "$ref": "#/backend/entities/RetirementCalculation"
+          },
+          "description": "Stores retirement calculation results for a specific user.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "retirementCalculationId",
+              "description": "The unique identifier for the retirement calculation."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to ensure security, scalability, and ease of debugging, adhering to the principles of Authorization Independence, Clarity of Intent, DBAC, and QAPs. User-owned data is stored in hierarchical paths under the `/users/{userId}` collection, making ownership clear and simplifying security rules. Specifically, `BiologicalAgeResult`, `Pet`, and `RetirementCalculation` are stored as subcollections under each user. This allows for simple, path-based security rules. No denormalization is needed as access to this data is based on user ID.\n\nThis design supports QAPs by segregating data based on ownership. List operations are secure because the rules can easily verify that the authenticated user is the owner of the data being requested."
+  }
+}
