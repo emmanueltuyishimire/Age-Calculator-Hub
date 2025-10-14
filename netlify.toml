@@ -1,0 +1,10 @@
+[build]
+  command = "next build"
+  publish = ".next"
+
+[build.environment]
+  # Use a recent Long-Term Support (LTS) version of Node.js
+  NODE_VERSION = "20"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
