@@ -202,7 +202,7 @@ export default function AgeCalculator() {
 
         <div className="flex flex-col sm:flex-row gap-2">
             <Button onClick={handleCalculate} className="w-full">Calculate Your Age Now Online</Button>
-            <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto">
+            <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
         </div>

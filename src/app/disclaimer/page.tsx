@@ -1,6 +1,7 @@
 
 "use client";
 
+import { useState, useEffect } from 'react';
 import { type Metadata } from 'next';
 import Link from 'next/link';
 
@@ -13,7 +14,12 @@ export const metadata: Metadata = {
 };
 
 export default function DisclaimerPage() {
-    const lastUpdated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const [lastUpdated, setLastUpdated] = useState('');
+    
+    useEffect(() => {
+        setLastUpdated(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+    }, []);
+
 
   return (
     <div className="container mx-auto px-4 py-8">
