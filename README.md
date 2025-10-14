@@ -8,6 +8,7 @@ Welcome to the Age Calculator Hub, a full-featured web application built with Ne
   - **Core Age Tools**: Chronological age, birthday countdowns, and age by year.
   - **Health & Scientific**: AI-powered Biological Age, Metabolic Age, and general health assessments.
   - **Pet Age**: Dog and Cat age converters based on modern veterinary science.
+  
   - **Pregnancy & Fertility**: Due date, ovulation, gestational age, and pregnancy trackers.
   - **Financial Planning**: Social Security full retirement age calculator.
 - **⚡ Blazing Fast Performance**: Built with Next.js App Router, Server Components, and optimized images for a top-tier user experience.
@@ -46,7 +47,7 @@ The Biological Age Calculator uses the Google Gemini API to provide AI-powered i
 
 1.  **Get a Free API Key**: Visit [Google AI Studio](https://aistudio.google.com/app/apikey) to generate a free Gemini API key.
 2.  **Create an Environment File**: In the root of your project, create a file named `.env`.
-3.  **Add Your Key**: Add the following line to your `.env` file, replacing `"YOUR_API_KEY_HERE"` with your actual key:
+3.  **Add Your Key**: Add your API key to the `.env` file in the following format:
     ```
     GEMINI_API_KEY="YOUR_API_KEY_HERE"
     ```
@@ -59,10 +60,10 @@ The site is set up to display ads via Google AdSense. To enable this and start e
 
 1.  **Update Your Publisher ID**:
     - Open the file `src/app/layout.tsx`.
-    - Find the AdSense script tag and replace the placeholder `ca-pub-3042243846300811` with **your own Google AdSense Publisher ID**.
+    - Find the AdSense script tag and replace the placeholder with **your own Google AdSense Publisher ID**.
 
 2.  **Authorize Your Site**:
     - Open the `public/ads.txt` file.
-    - Replace `pub-0000000000000000` with **your own Google AdSense Publisher ID**. This file is crucial for advertisers to verify that your site is authorized to sell ad inventory.
+    - Replace the placeholder with **your own Google AdSense Publisher ID**. This file is crucial for advertisers to verify that your site is authorized to sell ad inventory.
 
 Once these steps are completed, AdSense will be correctly configured for your site.
