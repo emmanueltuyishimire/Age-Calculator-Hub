@@ -119,9 +119,9 @@ export default function OvulationCalculator() {
           <Label htmlFor="cycle-length">Average Cycle Length (days)</Label>
           <Input id="cycle-length" type="number" value={cycleLength} onChange={(e) => setCycleLength(e.target.value)} />
         </div>
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
           <Button onClick={handleCalculate} className="w-full">Calculate Fertile Window</Button>
-          <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
+          <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
               <RefreshCcw className="mr-2 h-4 w-4" /> Reset
           </Button>
           <ShareButton title="Ovulation Calculator" text="Find your most fertile days with this Ovulation Calculator!" />

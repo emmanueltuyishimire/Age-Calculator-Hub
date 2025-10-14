@@ -67,9 +67,9 @@ export default function AgeCalculatorByYear() {
                 />
             </div>
         </div>
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
         <Button onClick={handleCalculate} className="w-full">Calculate Age</Button>
-        <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
+        <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
             <RefreshCcw className="mr-2 h-4 w-4" /> Reset
         </Button>
         <ShareButton title="Age Calculator by Year" text="Check out this quick age calculator by year of birth!" />

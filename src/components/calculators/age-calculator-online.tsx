@@ -172,7 +172,7 @@ export default function AgeCalculatorOnline() {
             </Alert>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className='space-y-2'>
               <Label htmlFor="dob-day-online">Date of Birth</Label>
               <div className="flex gap-2">
@@ -191,9 +191,9 @@ export default function AgeCalculatorOnline() {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col md:flex-row gap-2">
             <Button onClick={handleCalculate} className="w-full">Calculate Age</Button>
-            <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
+            <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
             <ShareButton title="Age Calculator by Date of Birth" text="Find out your exact age with this online calculator!" />

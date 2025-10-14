@@ -131,11 +131,11 @@ export default function CatAgeCalculator() {
                 )}
                 />
             </div>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col md:flex-row gap-2">
                 <Button type="submit" className="w-full">
                 Calculate
                 </Button>
-                    <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
+                    <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                     <RefreshCcw className="mr-2 h-4 w-4" /> Reset
                 </Button>
                 <ShareButton title="Cat Age Calculator" text="Find out how old your cat is in human years!" />

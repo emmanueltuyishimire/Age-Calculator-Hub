@@ -31,6 +31,7 @@ import { Button } from '../ui/button';
 import { Menu, Calculator } from 'lucide-react';
 import { categorizedNavItems, type NavItem } from './nav-items';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export function TopNav() {
   const pathname = usePathname();
@@ -38,8 +39,6 @@ export function TopNav() {
 
   const categories = categorizedNavItems();
   const mainCategories = categories.filter(cat => cat.name !== 'Company' && cat.name !== 'Legal');
-  const companyAndLegal = categories.filter(cat => cat.name === 'Company' || cat.name === 'Legal');
-
 
   return (
     <>
@@ -97,7 +96,7 @@ export function TopNav() {
                 <SheetTitle className="sr-only">Main Menu</SheetTitle>
                 <SheetDescription className="sr-only">Main navigation menu for Age Calculator Hub, including links to all calculators.</SheetDescription>
                  <Link href="/" className="flex items-center space-x-2 mb-6" onClick={() => setIsOpen(false)}>
-                    <Calculator className="h-6 w-6" aria-hidden="true" />
+                    <Image src="/logo.png" alt="Age Calculator Hub Logo" width={24} height={24} className="h-6 w-6" priority />
                     <span className="font-bold">Age Calculator Hub</span>
                 </Link>
             </SheetHeader>
