@@ -10,8 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { FaFacebook, FaWhatsapp, FaLinkedin } from 'react-icons/fa6';
-import { FaXTwitter } from 'react-icons/fa6';
+import { FaFacebook, FaWhatsapp, FaLinkedin, FaPinterest, FaXTwitter } from 'react-icons/fa6';
 import { Input } from './ui/input';
 
 
@@ -96,7 +95,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, text, url }) => {
                         </a>
                     </Button>
                     <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
-                         <a href={`https://wa.me/?text=${encodedText}%20${encodedUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
+                         <a href={`https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">
                             <FaWhatsapp className="h-6 w-6" />
                         </a>
                     </Button>
@@ -106,8 +105,8 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, text, url }) => {
                         </a>
                     </Button>
                      <Button asChild variant="outline" size="icon" className="rounded-full h-12 w-12">
-                        <a href={`mailto:?subject=${encodeURIComponent(title)}&body=${encodedText}%20${encodedUrl}`} aria-label="Share via Email">
-                            <Mail className="h-6 w-6" />
+                        <a href={`https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedText}`} target="_blank" rel="noopener noreferrer" aria-label="Pin on Pinterest">
+                            <FaPinterest className="h-6 w-6" />
                         </a>
                     </Button>
                 </div>
