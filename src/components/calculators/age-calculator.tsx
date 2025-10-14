@@ -168,7 +168,7 @@ export default function AgeCalculator() {
   }, [dob.day, dob.month, dob.year, ageAt.day, ageAt.month, ageAt.year])
 
   return (
-    <Card className="w-full max-w-2xl mx-auto shadow-lg">
+    <Card className="w-full max-w-2xl mx-auto shadow-lg animate-fade-in">
       <CardHeader className="text-center">
         <CardTitle>Age Calculator</CardTitle>
         <CardDescription>

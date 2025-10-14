@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import RelatedCalculators from "@/components/layout/related-calculators";
 
 export const metadata: Metadata = {
     title: 'Cat Age Calculator – Convert Cat Years to Human Years Instantly',
@@ -81,90 +82,93 @@ export default function CatAgePage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <main role="main">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Cat Age Calculator – Convert Cat Years to Human Years Instantly</h1>
-          <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-              Wondering how old your cat is in human years? Our Cat Age Calculator helps you understand your feline friend’s life stage by converting cat years into human years instantly. Whether you have a playful kitten or a senior cat, this simple tool helps you plan their care, diet, and vet visits better.
-          </p>
-        </div>
-        
-        <CatAgeCalculator />
-
-        <section className="mt-12 space-y-8 max-w-4xl mx-auto">
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Cat Age Calculator</h2>
-                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                    <li><strong>Enter Your Cat's Age:</strong> Input your cat's age in years. For kittens under a year, you can also add months.</li>
-                    <li><strong>Click “Calculate”:</strong> Get an instant conversion to human years.</li>
-                    <li><strong>View Life Stage and Tips:</strong> See your cat's current life stage and a helpful tip for their care.</li>
-                </ol>
+      <div className="max-w-4xl mx-auto">
+        <main role="main">
+            <div className="text-center mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Cat Age Calculator – Convert Cat Years to Human Years Instantly</h1>
+            <p className="text-md md:text-lg text-muted-foreground">
+                Wondering how old your cat is in human years? Our Cat Age Calculator helps you understand your feline friend’s life stage by converting cat years into human years instantly. Whether you have a playful kitten or a senior cat, this simple tool helps you plan their care, diet, and vet visits better.
+            </p>
             </div>
+            
+            <CatAgeCalculator />
 
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Cat Age to Human Years Chart</h2>
-                <p className="text-muted-foreground mb-4">
-                    Cats age faster in their first two years, then approximately four human years per cat year after that. This chart gives a quick overview.
-                </p>
-                <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                      <TableRow>
-                          <TableHead>Cat Age (Years)</TableHead>
-                          <TableHead>Human Age Equivalent</TableHead>
-                          <TableHead>Life Stage</TableHead>
-                      </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                      {ageChart.map((row) => (
-                          <TableRow key={row.lifeStage}>
-                              <TableCell className="font-medium">{row.catAge}</TableCell>
-                              <TableCell>{row.humanAge}</TableCell>
-                              <TableCell>{row.lifeStage}</TableCell>
-                          </TableRow>
-                      ))}
-                  </TableBody>
-              </Table>
-              </div>
-            </div>
+            <section className="mt-12 space-y-8 animate-fade-in">
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Cat Age Calculator</h2>
+                    <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                        <li><strong>Enter Your Cat's Age:</strong> Input your cat's age in years. For kittens under a year, you can also add months.</li>
+                        <li><strong>Click “Calculate”:</strong> Get an instant conversion to human years.</li>
+                        <li><strong>View Life Stage and Tips:</strong> See your cat's current life stage and a helpful tip for their care.</li>
+                    </ol>
+                </div>
 
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Cat Life Stages</h2>
-                <Accordion type="single" collapsible className="w-full">
-                    {lifeStages.map((item, index) => (
-                        <AccordionItem value={`item-${index}`} key={index}>
-                            <AccordionTrigger>{item.stage}</AccordionTrigger>
-                            <AccordionContent>{item.description}</AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
-            </div>
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Cat Age to Human Years Chart</h2>
+                    <p className="text-muted-foreground mb-4">
+                        Cats age faster in their first two years, then approximately four human years per cat year after that. This chart gives a quick overview.
+                    </p>
+                    <div className="overflow-x-auto">
+                    <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Cat Age (Years)</TableHead>
+                            <TableHead>Human Age Equivalent</TableHead>
+                            <TableHead>Life Stage</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {ageChart.map((row) => (
+                            <TableRow key={row.lifeStage}>
+                                <TableCell className="font-medium">{row.catAge}</TableCell>
+                                <TableCell>{row.humanAge}</TableCell>
+                                <TableCell>{row.lifeStage}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                </div>
+                </div>
 
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Tips for Keeping Your Cat Healthy</h2>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  <li>Provide fresh water daily and quality food appropriate for their life stage.</li>
-                  <li>Keep your cat indoors or supervise outdoor time to protect them from dangers.</li>
-                  <li>Brush your cat’s coat regularly to prevent matting and reduce hairballs.</li>
-                  <li>Ensure annual vet checkups and keep vaccinations up to date.</li>
-                  <li>Encourage playtime and exercise to maintain a healthy weight.</li>
-                  <li>Keep the litter box clean and in a quiet, accessible location.</li>
-              </ul>
-            </div>
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Cat Life Stages</h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        {lifeStages.map((item, index) => (
+                            <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{item.stage}</AccordionTrigger>
+                                <AccordionContent>{item.description}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
 
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">FAQs About Cat Aging</h2>
-                <Accordion type="single" collapsible className="w-full">
-                    {faqs.map((faq, index) => (
-                        <AccordionItem value={`item-${index}`} key={index}>
-                            <AccordionTrigger>{faq.question}</AccordionTrigger>
-                            <AccordionContent>{faq.answer}</AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
-            </div>
-        </section>
-      </main>
+                <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Tips for Keeping Your Cat Healthy</h2>
+                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li>Provide fresh water daily and quality food appropriate for their life stage.</li>
+                    <li>Keep your cat indoors or supervise outdoor time to protect them from dangers.</li>
+                    <li>Brush your cat’s coat regularly to prevent matting and reduce hairballs.</li>
+                    <li>Ensure annual vet checkups and keep vaccinations up to date.</li>
+                    <li>Encourage playtime and exercise to maintain a healthy weight.</li>
+                    <li>Keep the litter box clean and in a quiet, accessible location.</li>
+                </ul>
+                </div>
+
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">FAQs About Cat Aging</h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        {faqs.map((faq, index) => (
+                            <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                                <AccordionContent>{faq.answer}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
+            </section>
+        </main>
+        <RelatedCalculators currentCategory="Pet Age" currentHref="/cat-age-in-human-years" />
+      </div>
     </div>
   );
 }

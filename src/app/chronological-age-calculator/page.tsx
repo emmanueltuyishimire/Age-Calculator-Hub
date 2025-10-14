@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import RelatedCalculators from '@/components/layout/related-calculators';
 
 export const metadata: Metadata = {
     title: 'Chronological Age Calculator – Find Your Exact Age by Date',
@@ -66,8 +67,8 @@ export default function ChronologicalAgeCalculatorPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="flex flex-col lg:flex-row gap-8">
-        <main className="w-full" role="main">
+      <div className="max-w-4xl mx-auto">
+        <main role="main">
             <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Chronological Age Calculator</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
@@ -77,7 +78,7 @@ export default function ChronologicalAgeCalculatorPage() {
 
             <AgeCalculator />
 
-            <section className="mt-12 space-y-8">
+            <section className="mt-12 space-y-8 animate-fade-in">
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Chronological Age</h2>
                     <p className="text-muted-foreground">
@@ -98,6 +99,7 @@ export default function ChronologicalAgeCalculatorPage() {
                 </div>
             </section>
         </main>
+        <RelatedCalculators currentCategory="Core Age Calculation" currentHref="/chronological-age-calculator" />
       </div>
     </div>
   );

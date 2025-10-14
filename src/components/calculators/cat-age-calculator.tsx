@@ -96,7 +96,7 @@ export default function CatAgeCalculator() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg">
+    <Card className="w-full max-w-md mx-auto shadow-lg animate-fade-in">
     <CardHeader className="text-center">
         <CardTitle>Enter Your Cat's Age</CardTitle>
     </CardHeader>
@@ -143,7 +143,7 @@ export default function CatAgeCalculator() {
         </form>
         </Form>
         {result && (
-        <div className="p-6 bg-muted rounded-lg text-center mt-4 space-y-4">
+        <div className="p-6 bg-muted rounded-lg text-center mt-4 space-y-4 animate-fade-in">
             <div>
                 <h3 className="text-lg font-medium text-muted-foreground">Equivalent Human Age:</h3>
                 <div className="flex justify-center items-baseline space-x-2">

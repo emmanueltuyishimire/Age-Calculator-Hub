@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import RelatedCalculators from '@/components/layout/related-calculators';
 
 export const metadata: Metadata = {
     title: 'Age Calculator by Year - Quick Age Estimate from Birth Year',
@@ -54,18 +55,18 @@ export default function AgeCalculatorByYearPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="flex flex-col lg:flex-row gap-8">
-        <main className="w-full" role="main">
+      <div className="max-w-4xl mx-auto">
+        <main role="main">
             <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Age Calculator by Year</h1>
-                <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
+                <p className="text-md md:text-lg text-muted-foreground">
                     Need a quick age estimate? Just enter a year of birth to get an approximate age. This tool is perfect for when you don't need an exact age down to the day.
                 </p>
             </div>
 
             <AgeCalculatorByYear />
 
-            <section className="mt-12 space-y-8 max-w-4xl mx-auto">
+            <section className="mt-12 space-y-8 animate-fade-in">
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use This Calculator</h2>
                     <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
@@ -102,6 +103,7 @@ export default function AgeCalculatorByYearPage() {
                 </div>
             </section>
         </main>
+        <RelatedCalculators currentCategory="Core Age Calculation" currentHref="/age-calculator-by-year" />
       </div>
     </div>
   );

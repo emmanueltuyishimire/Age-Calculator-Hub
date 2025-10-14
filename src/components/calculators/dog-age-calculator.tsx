@@ -121,7 +121,7 @@ export default function DogAgeCalculator() {
 
 
   return (
-      <Card className="w-full max-w-lg mx-auto shadow-lg">
+      <Card className="w-full max-w-lg mx-auto shadow-lg animate-fade-in">
         <CardHeader className="text-center">
           <CardTitle>Dog's Age in Human Years</CardTitle>
           <CardDescription>Enter your dog's age and size to see how their age compares to yours.</CardDescription>
@@ -176,7 +176,7 @@ export default function DogAgeCalculator() {
             </form>
           </Form>
           {result !== null && (
-            <div className="p-6 bg-muted rounded-lg text-center mt-4 space-y-4">
+            <div className="p-6 bg-muted rounded-lg text-center mt-4 space-y-4 animate-fade-in">
               <div>
                 <h3 className="text-lg font-medium text-muted-foreground">Equivalent Human Age:</h3>
                 <div className="flex justify-center items-baseline space-x-2">

@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import RelatedCalculators from "@/components/layout/related-calculators";
 
 export const metadata: Metadata = {
     title: 'Dog Age Calculator for Mixed & Purebred Dogs – Dog Years to Human Years',
@@ -83,94 +84,97 @@ export default function DogAgePage() {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
-      <main role="main">
-        <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Dog Age Calculator (Works for Mixed Breeds)</h1>
-            <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-                Ever wondered how old your dog is in human years? Our calculator works for purebred and mixed-breed dogs alike, giving you an instant and accurate conversion based on the latest veterinary research. Simply enter your dog’s age and, most importantly, their size to see their equivalent human age and life stage.
-            </p>
-        </div>
-      
-        <DogAgeCalculator />
-
-        <section className="mt-12 space-y-8 max-w-4xl mx-auto">
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Dog Age Calculator</h2>
-                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                    <li><strong>Enter Your Dog's Age:</strong> Input your dog's current age in years.</li>
-                    <li><strong>Select Dog Size:</strong> This is the most important step for an accurate result, especially for a mixed-breed dog. Choose from Small, Medium, Large, or Giant.</li>
-                    <li><strong>Click “Calculate”:</strong> Get an instant conversion to human years, along with your dog's life stage.</li>
-                </ol>
-            </div>
-
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Dog Age to Human Years Chart (by Size)</h2>
-                <p className="text-muted-foreground mb-4">
-                    The old rule of "1 dog year equals 7 human years" is a myth. A dog's aging process depends heavily on their size. Smaller dogs tend to live longer and age more slowly, while larger breeds age more rapidly, especially in their later years.
+      <div className="max-w-4xl mx-auto">
+        <main role="main">
+            <div className="text-center mb-8">
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Dog Age Calculator (Works for Mixed Breeds)</h1>
+                <p className="text-md md:text-lg text-muted-foreground">
+                    Ever wondered how old your dog is in human years? Our calculator works for purebred and mixed-breed dogs alike, giving you an instant and accurate conversion based on the latest veterinary research. Simply enter your dog’s age and, most importantly, their size to see their equivalent human age and life stage.
                 </p>
-                <div className="overflow-x-auto">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Dog’s Age</TableHead>
-                            <TableHead>Small Dog (≤20 lbs)</TableHead>
-                            <TableHead>Medium Dog (21–50 lbs)</TableHead>
-                            <TableHead>Large Dog (51–100 lbs)</TableHead>
-                            <TableHead>Giant Dog (100+ lbs)</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {ageChart.map((row) => (
-                            <TableRow key={row.age}>
-                                <TableCell className="font-medium">{row.age}</TableCell>
-                                <TableCell>{row.small}</TableCell>
-                                <TableCell>{row.medium}</TableCell>
-                                <TableCell>{row.large}</TableCell>
-                                <TableCell>{row.giant}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+            </div>
+        
+            <DogAgeCalculator />
+
+            <section className="mt-12 space-y-8 animate-fade-in">
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use the Dog Age Calculator</h2>
+                    <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                        <li><strong>Enter Your Dog's Age:</strong> Input your dog's current age in years.</li>
+                        <li><strong>Select Dog Size:</strong> This is the most important step for an accurate result, especially for a mixed-breed dog. Choose from Small, Medium, Large, or Giant.</li>
+                        <li><strong>Click “Calculate”:</strong> Get an instant conversion to human years, along with your dog's life stage.</li>
+                    </ol>
                 </div>
-            </div>
 
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Your Dog’s Life Stage</h2>
-                 <Accordion type="single" collapsible className="w-full">
-                    {lifeStages.map((item, index) => (
-                         <AccordionItem value={`item-${index}`} key={index}>
-                            <AccordionTrigger>{item.stage}</AccordionTrigger>
-                            <AccordionContent>{item.description}</AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
-            </div>
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Dog Age to Human Years Chart (by Size)</h2>
+                    <p className="text-muted-foreground mb-4">
+                        The old rule of "1 dog year equals 7 human years" is a myth. A dog's aging process depends heavily on their size. Smaller dogs tend to live longer and age more slowly, while larger breeds age more rapidly, especially in their later years.
+                    </p>
+                    <div className="overflow-x-auto">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Dog’s Age</TableHead>
+                                <TableHead>Small Dog (≤20 lbs)</TableHead>
+                                <TableHead>Medium Dog (21–50 lbs)</TableHead>
+                                <TableHead>Large Dog (51–100 lbs)</TableHead>
+                                <TableHead>Giant Dog (100+ lbs)</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {ageChart.map((row) => (
+                                <TableRow key={row.age}>
+                                    <TableCell className="font-medium">{row.age}</TableCell>
+                                    <TableCell>{row.small}</TableCell>
+                                    <TableCell>{row.medium}</TableCell>
+                                    <TableCell>{row.large}</TableCell>
+                                    <TableCell>{row.giant}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    </div>
+                </div>
 
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Dog Care Tips by Age Group</h2>
-                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                    <li>Feed high-quality protein suited to your dog's age and breed to support their energy and health needs.</li>
-                    <li>Mental stimulation is key. Use puzzle toys, play scent games, and enjoy short, engaging walks to keep their mind sharp.</li>
-                    <li>Maintain good dental care with regular brushing or dental chews to prevent long-term health issues.</li>
-                    <li>Schedule annual vet visits for young and mature dogs, and increase to twice a year for seniors.</li>
-                    <li>Provide appropriate exercise. Avoid overexertion for older dogs, focusing on gentle, consistent movement.</li>
-                    <li>Create a safe environment for aging dogs by ensuring floors aren't slippery and stairs are manageable.</li>
-                </ul>
-            </div>
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Your Dog’s Life Stage</h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        {lifeStages.map((item, index) => (
+                            <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{item.stage}</AccordionTrigger>
+                                <AccordionContent>{item.description}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
 
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions About Dog Aging</h2>
-                <Accordion type="single" collapsible className="w-full">
-                    {faqs.map((faq, index) => (
-                         <AccordionItem value={`item-${index}`} key={index}>
-                            <AccordionTrigger>{faq.question}</AccordionTrigger>
-                            <AccordionContent>{faq.answer}</AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
-            </div>
-        </section>
-      </main>
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Dog Care Tips by Age Group</h2>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                        <li>Feed high-quality protein suited to your dog's age and breed to support their energy and health needs.</li>
+                        <li>Mental stimulation is key. Use puzzle toys, play scent games, and enjoy short, engaging walks to keep their mind sharp.</li>
+                        <li>Maintain good dental care with regular brushing or dental chews to prevent long-term health issues.</li>
+                        <li>Schedule annual vet visits for young and mature dogs, and increase to twice a year for seniors.</li>
+                        <li>Provide appropriate exercise. Avoid overexertion for older dogs, focusing on gentle, consistent movement.</li>
+                        <li>Create a safe environment for aging dogs by ensuring floors aren't slippery and stairs are manageable.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions About Dog Aging</h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        {faqs.map((faq, index) => (
+                            <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                                <AccordionContent>{faq.answer}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
+            </section>
+        </main>
+        <RelatedCalculators currentCategory="Pet Age" currentHref="/dog-age" />
+      </div>
     </div>
   );
 }

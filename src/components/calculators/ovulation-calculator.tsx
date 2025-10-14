@@ -91,7 +91,7 @@ export default function OvulationCalculator() {
   }
 
   return (
-    <Card className="w-full max-w-lg mx-auto shadow-lg">
+    <Card className="w-full max-w-lg mx-auto shadow-lg animate-fade-in">
       <CardHeader className="text-center">
         <CardTitle>Ovulation Calculator</CardTitle>
         <CardDescription>

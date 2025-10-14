@@ -147,7 +147,7 @@ export default function BirthdayAgeCalculator() {
 
   return (
     <div className="space-y-6">
-      <Card className="w-full max-w-lg mx-auto shadow-lg">
+      <Card className="w-full max-w-lg mx-auto shadow-lg animate-fade-in">
         <CardHeader className="text-center">
           <CardTitle>Enter Your Birthday</CardTitle>
         </CardHeader>
@@ -179,7 +179,7 @@ export default function BirthdayAgeCalculator() {
           </div>
 
           {age && (
-            <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4">
+            <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 animate-fade-in">
               <div>
                 <h3 className="text-md sm:text-lg font-medium mb-2">Your Exact Age:</h3>
                 <div className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2">
@@ -197,7 +197,7 @@ export default function BirthdayAgeCalculator() {
           )}
 
           {countdown && (
-                <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 mt-4">
+                <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 mt-4 animate-fade-in">
                     <div className="flex justify-center items-center gap-2">
                         <Gift className="h-6 w-6 text-primary" />
                         <h3 className="text-md sm:text-lg font-medium">Countdown to Your Next Birthday:</h3>
@@ -218,5 +218,3 @@ export default function BirthdayAgeCalculator() {
     </div>
   );
 }
-
-    

@@ -4,6 +4,7 @@ import { PT_Sans } from 'next/font/google';
 import Script from 'next/script';
 import { AppLayout } from '@/components/layout/app-layout';
 import { Toaster } from '@/components/ui/toaster';
+import { ThemeProvider } from '@/components/layout/theme-provider';
 import './globals.css';
 
 const ptSans = PT_Sans({
@@ -67,8 +68,15 @@ export default function RootLayout({
         ></script>
       </head>
       <body className="font-body antialiased">
-        <AppLayout>{children}</AppLayout>
-        <Toaster />
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+          <AppLayout>{children}</AppLayout>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

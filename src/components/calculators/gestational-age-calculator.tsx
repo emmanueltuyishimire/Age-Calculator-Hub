@@ -104,7 +104,7 @@ export default function GestationalAgeCalculator() {
   };
 
   return (
-    <Card className="w-full max-w-lg mx-auto shadow-lg">
+    <Card className="w-full max-w-lg mx-auto shadow-lg animate-fade-in">
       <CardHeader className="text-center">
         <CardTitle>Enter Pregnancy Details</CardTitle>
         <CardDescription>

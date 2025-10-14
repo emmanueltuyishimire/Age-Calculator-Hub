@@ -100,7 +100,7 @@ export default function RetirementAgeCalculator() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto shadow-lg">
+    <Card className="w-full max-w-2xl mx-auto shadow-lg animate-fade-in">
       <CardHeader className="text-center">
         <CardTitle>Calculate Your Retirement Age</CardTitle>
         <CardDescription>

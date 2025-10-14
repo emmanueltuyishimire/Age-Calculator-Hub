@@ -155,7 +155,7 @@ export default function AgeCalculatorOnline() {
 
   return (
     <div className="space-y-6">
-      <Card className="w-full max-w-2xl mx-auto shadow-lg">
+      <Card className="w-full max-w-2xl mx-auto shadow-lg animate-fade-in">
         <CardHeader className="text-center">
           <CardTitle>Calculate Your Age</CardTitle>
           <CardDescription>
@@ -230,5 +230,3 @@ export default function AgeCalculatorOnline() {
     </div>
   );
 }
-
-    

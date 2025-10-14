@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { TopNav } from './top-nav';
 import { navItems } from './nav-items';
+import { ThemeToggle } from './theme-toggle';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const toolItems = navItems.filter(item => 
@@ -28,6 +29,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           
           <div className="flex items-center space-x-2">
             <TopNav />
+            <ThemeToggle />
           </div>
         </div>
       </header>

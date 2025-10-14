@@ -81,7 +81,7 @@ export default function SocialSecurityRetirementAgeCalculator() {
   };
 
   return (
-    <Card className="w-full max-w-xl mx-auto shadow-lg">
+    <Card className="w-full max-w-xl mx-auto shadow-lg animate-fade-in">
       <CardHeader className="text-center">
         <CardTitle>Calculate Your Full Retirement Age</CardTitle>
         <CardDescription>

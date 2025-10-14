@@ -42,7 +42,7 @@ export default function AgeCalculatorByYear() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg">
+    <Card className="w-full max-w-md mx-auto shadow-lg animate-fade-in">
     <CardHeader>
         <CardTitle className="text-center">Calculate Age From Year</CardTitle>
     </CardHeader>
