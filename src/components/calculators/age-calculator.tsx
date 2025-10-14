@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { intervalToDuration, differenceInSeconds, differenceInMinutes, differenceInHours, differenceInDays, differenceInWeeks, differenceInMonths, isValid, isFuture } from 'date-fns';
 import {
   Card,
@@ -68,7 +68,7 @@ export default function AgeCalculator() {
     return null;
   };
 
-  const calculateAge = () => {
+  const calculateAge = useCallback(() => {
     const dobDate = parseDate(dob.day, dob.month, dob.year);
     const ageAtDateVal = parseDate(ageAt.day, ageAt.month, ageAt.year);
 
@@ -119,7 +119,7 @@ export default function AgeCalculator() {
       totalMinutes,
       totalSeconds,
     });
-  };
+  }, [dob.day, dob.month, dob.year, ageAt.day, ageAt.month, ageAt.year, isCalculating]);
 
   const handleCalculate = () => {
     const dobDate = parseDate(dob.day, dob.month, dob.year);
@@ -158,8 +158,7 @@ export default function AgeCalculator() {
       }, 1000);
     }
     return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCalculating]);
+  }, [isCalculating, calculateAge]);
 
   useEffect(() => {
     setIsCalculating(false);
