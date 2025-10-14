@@ -3,10 +3,11 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { categorizedNavItems } from '@/components/layout/nav-items';
 import { Button } from '../ui/button';
+import { CheckCircle2 } from 'lucide-react';
 
 const faqCategories = [
   {
@@ -198,10 +199,7 @@ export default function CalculatorHub() {
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Button size="lg" asChild>
-            <Link href="#calculators">Explore Calculators</Link>
-          </Button>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/login">Sign In</Link>
+            <Link href="#calculators">Get Started</Link>
           </Button>
         </div>
       </div>
@@ -242,6 +240,45 @@ export default function CalculatorHub() {
          <p className="text-muted-foreground text-center text-lg">
             Stay informed and plan ahead with our professional tips, FAQs, and examples integrated into every tool. With fast, reliable, and responsive calculators, Age Calculators Hub makes it simple to understand and track age for yourself, your family, or your furry friends. Start calculating now and see how age truly measures up!
         </p>
+      </section>
+
+      <section className="mt-16">
+        <Card className="bg-muted/50">
+            <CardHeader className="text-center">
+                <CardTitle className="text-3xl">Get More From Your Results</CardTitle>
+                <CardDescription className="max-w-2xl mx-auto">
+                    Create a free account to unlock powerful features. Save your calculations, track your progress over time, and see how your health and life milestones evolve.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+                <div className="grid sm:grid-cols-3 gap-6 mb-8 text-left">
+                     <div className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
+                        <div>
+                            <h3 className="font-semibold">Save Results</h3>
+                            <p className="text-sm text-muted-foreground">Keep a history of your important calculations like biological age or pet age.</p>
+                        </div>
+                    </div>
+                     <div className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
+                        <div>
+                            <h3 className="font-semibold">Track Progress</h3>
+                            <p className="text-sm text-muted-foreground">Monitor how your lifestyle changes affect your health markers over time.</p>
+                        </div>
+                    </div>
+                     <div className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
+                        <div>
+                            <h3 className="font-semibold">Personalized Insights</h3>
+                            <p className="text-sm text-muted-foreground">Gain deeper insights as you build a long-term profile of your data.</p>
+                        </div>
+                    </div>
+                </div>
+                <Button size="lg" asChild>
+                    <Link href="/login">Sign Up for Free</Link>
+                </Button>
+            </CardContent>
+        </Card>
       </section>
 
       <section className="mt-16 max-w-4xl mx-auto">

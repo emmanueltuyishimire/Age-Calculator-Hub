@@ -14,8 +14,8 @@ interface SignUpPromptProps {
 }
 
 export function SignUpPrompt({
-  message = "Want to Save Your Results?",
-  description = "Create a free account to save and track your results over time.",
+  message = "Want to Save and Track Your Results?",
+  description = "Create a free account to save your calculations, track your progress over time, and gain deeper insights into your health and life milestones.",
   buttonText = "Sign Up for Free",
 }: SignUpPromptProps) {
   const { user, isUserLoading } = useUser();
@@ -25,9 +25,9 @@ export function SignUpPrompt({
   }
 
   return (
-    <Card className="mt-6 bg-muted/50 animate-fade-in border-dashed">
+    <Card className="mt-8 bg-muted/50 animate-fade-in border-dashed border-primary">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
+        <CardTitle className="flex items-center gap-2">
             <LogIn className="h-5 w-5" />
             {message}
         </CardTitle>
