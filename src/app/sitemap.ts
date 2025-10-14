@@ -6,12 +6,18 @@ import { articles } from '@/lib/articles';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://age-calculator-hub.com';
 
+  // Find the last modification date from the most recent article
+  const lastModified = articles.reduce((latest, article) => {
+    const articleDate = new Date(article.publishedDate);
+    return articleDate > latest ? articleDate : latest;
+  }, new Date(0));
+
   // Calculator and hub pages
   const pages = navItems
     .filter(item => item.category !== 'Legal' && item.category !== 'Company')
     .map((item) => ({
       url: `${baseUrl}${item.href}`,
-      lastModified: new Date(),
+      lastModified: lastModified,
       changeFrequency: 'monthly',
       priority: item.href === '/' ? 1 : 0.8,
   }));
@@ -26,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { href: '/faq' },
   ].map(page => ({
     url: `${baseUrl}${page.href}`,
-    lastModified: new Date(),
+    lastModified: lastModified,
     changeFrequency: 'yearly',
     priority: 0.5,
   }));
@@ -41,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   
   const articleHubPage = {
     url: `${baseUrl}/articles`,
-    lastModified: new Date(),
+    lastModified: lastModified,
     changeFrequency: 'weekly',
     priority: 0.7,
   };
