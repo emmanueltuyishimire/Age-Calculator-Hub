@@ -22,9 +22,6 @@ export default function ArticleList({ articleCount }: ArticleListProps) {
               <p className="text-sm text-muted-foreground mb-2">{article.category}</p>
               <CardTitle className="text-lg sm:text-xl leading-tight mb-2 group-hover:text-primary">{article.title}</CardTitle>
               <CardDescription className="text-sm">{article.description}</CardDescription>
-               <p className="text-xs text-muted-foreground mt-4">
-                {format(parseISO(article.publishedDate), 'MMMM d, yyyy')}
-              </p>
             </CardHeader>
           </Card>
         </Link>
