@@ -25,6 +25,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu"
 import { Button } from '../ui/button';
 import { Menu, Calculator } from 'lucide-react';
@@ -54,8 +55,10 @@ export function TopNav() {
               {categories.map((category) => (
                  <NavigationMenuItem key={category.name}>
                     {category.href ? (
-                        <Link href={category.href} legacyBehavior passHref>
-                            <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
+                        <Link href={category.href} passHref legacyBehavior>
+                           <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            {category.name}
+                           </NavigationMenuLink>
                         </Link>
                     ) : (
                         <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
