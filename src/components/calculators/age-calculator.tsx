@@ -159,7 +159,7 @@ export default function AgeCalculator() {
     }
     return () => clearInterval(interval);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCalculating, dob, ageAt]);
+  }, [isCalculating]);
 
   useEffect(() => {
     setIsCalculating(false);
