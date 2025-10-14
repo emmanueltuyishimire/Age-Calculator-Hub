@@ -30,6 +30,7 @@ import {
   LayoutGrid,
   Newspaper,
   Calendar as CalendarIcon,
+  Zap,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -102,6 +103,13 @@ export const navItems: NavItem[] = [
     label: 'Biological Age Calculator',
     category: 'Scientific & Health Age',
     description: 'Estimates body’s biological age based on health/lifestyle inputs.'
+  },
+   {
+    href: '/metabolic-age',
+    icon: Zap,
+    label: 'Metabolic Age Calculator',
+    category: 'Scientific & Health Age',
+    description: 'Find out your body’s metabolic age based on your BMR.'
   },
   {
     href: '/health-assessments',
