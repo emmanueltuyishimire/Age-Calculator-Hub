@@ -15,7 +15,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
-import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface PregnancyInfo {
   gestationalAge: string;
@@ -116,7 +115,7 @@ export default function PregnancyCalculator() {
         <Button onClick={handleCalculate} className="w-full">Calculate</Button>
 
         {pregnancyInfo && (
-          <>
+          
             <div className="p-6 bg-muted rounded-lg space-y-4 animate-fade-in mt-4 text-center">
               <div>
                 <h3 className="text-lg font-medium text-muted-foreground">You are approximately:</h3>
@@ -135,11 +134,7 @@ export default function PregnancyCalculator() {
                 <p className="text-xl font-semibold text-primary">{pregnancyInfo.trimester}</p>
               </div>
             </div>
-            <SignUpPrompt
-              message="Track Your Pregnancy?"
-              description="Create a free account to save your due date and track your pregnancy milestones."
-            />
-          </>
+            
         )}
       </CardContent>
     </Card>

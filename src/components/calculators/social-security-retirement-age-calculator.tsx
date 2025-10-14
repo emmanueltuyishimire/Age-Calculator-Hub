@@ -14,7 +14,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface RetirementInfo {
   fullRetirementAge: { years: number; months: number };
@@ -112,7 +111,7 @@ export default function SocialSecurityRetirementAgeCalculator() {
         </div>
 
         {retirementInfo && (
-          <>
+          
             <div className="p-6 bg-muted rounded-lg space-y-6 animate-fade-in mt-4">
               <div className="text-center">
                 <h3 className="text-lg font-medium text-muted-foreground">Your Full Retirement Age is:</h3>
@@ -139,11 +138,7 @@ export default function SocialSecurityRetirementAgeCalculator() {
                   </div>
               </div>
             </div>
-            <SignUpPrompt
-              message="Want to Save Your Retirement Info?"
-              description="Create a free account to save your retirement age calculation and access financial planning tools."
-            />
-          </>
+            
         )}
       </CardContent>
     </Card>

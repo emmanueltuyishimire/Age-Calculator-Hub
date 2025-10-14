@@ -33,7 +33,6 @@ import { getBiologicalAge } from '@/app/biological-age/actions';
 import type { BiologicalAgeInput, BiologicalAgeOutput } from '@/ai/flows/biological-age-calculation';
 import { Loader2 } from 'lucide-react';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
-import { SignUpPrompt } from '../auth/signup-prompt';
 
 const formSchema = z.object({
   chronologicalAge: z.coerce.number().min(18, "Must be 18 or older").max(100, "Must be 100 or younger"),
@@ -302,10 +301,7 @@ export default function BiologicalAgeCalculator() {
               <h3 className="text-lg font-medium">Health Interpretation:</h3>
               <p className="text-muted-foreground whitespace-pre-wrap">{result.insights}</p>
             </div>
-            <SignUpPrompt 
-                message="Want to Track Your Health Journey?"
-                description="Create a free account to save your biological age results and monitor your progress over time."
-            />
+            
           </div>
         )}
       </CardContent>

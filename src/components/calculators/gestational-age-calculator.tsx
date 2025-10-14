@@ -15,7 +15,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
-import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface GestationalInfo {
   weeks: number;
@@ -131,7 +130,7 @@ export default function GestationalAgeCalculator() {
         <Button onClick={handleCalculate} className="w-full">Calculate Gestational Age</Button>
 
         {gestationalInfo && (
-          <>
+          
             <div className="p-6 bg-muted rounded-lg text-center space-y-6 animate-fade-in mt-4">
               <div>
                 <h3 className="text-lg font-medium text-muted-foreground">Current Gestational Age:</h3>
@@ -157,11 +156,7 @@ export default function GestationalAgeCalculator() {
                   <p className="text-md text-foreground">{gestationalInfo.developmentStage}</p>
               </div>
             </div>
-            <SignUpPrompt
-              message="Track Your Pregnancy?"
-              description="Create a free account to save your due date and track your pregnancy milestones."
-            />
-          </>
+            
         )}
       </CardContent>
     </Card>

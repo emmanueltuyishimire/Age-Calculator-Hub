@@ -16,7 +16,6 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import { RefreshCcw } from 'lucide-react';
-import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface OvulationInfo {
   fertileWindow: { start: Date; end: Date };
@@ -127,7 +126,7 @@ export default function OvulationCalculator() {
         </div>
 
         {ovulationInfo && (
-          <>
+          
             <div className="p-6 bg-muted rounded-lg space-y-4 animate-fade-in mt-4 text-center">
               <div>
                 <h3 className="text-lg font-medium text-muted-foreground">Estimated Fertile Window:</h3>
@@ -152,11 +151,7 @@ export default function OvulationCalculator() {
                 <p className="text-xl font-semibold text-primary">{ovulationInfo.currentCycleDay}</p>
               </div>
             </div>
-            <SignUpPrompt
-              message="Want to Track Your Cycle?"
-              description="Create a free account to save your cycle information and track your fertility over time."
-            />
-          </>
+            
         )}
       </CardContent>
     </Card>

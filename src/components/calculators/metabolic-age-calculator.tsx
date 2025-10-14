@@ -30,7 +30,6 @@ import {
 } from '@/components/ui/select';
 import { RefreshCcw } from 'lucide-react';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
-import { SignUpPrompt } from '../auth/signup-prompt';
 
 const formSchema = z.object({
   age: z.coerce.number().min(15, "Must be 15 or older").max(80, "Must be 80 or younger"),
@@ -254,10 +253,7 @@ export default function MetabolicAgeCalculator() {
                 </ResponsiveContainer>
               </div>
             </div>
-            <SignUpPrompt 
-                message="Track Your Metabolic Health?"
-                description="Create a free account to save your metabolic age results and see how your fitness efforts pay off over time."
-            />
+            
           </div>
         )}
       </CardContent>

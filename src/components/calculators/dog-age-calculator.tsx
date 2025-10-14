@@ -30,7 +30,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { RefreshCcw } from 'lucide-react';
-import { SignUpPrompt } from '../auth/signup-prompt';
 
 const formSchema = z.object({
   dogAge: z.coerce.number().min(0, "Age must be 0 or more").max(30, "Age seems too high!"),
@@ -177,7 +176,7 @@ export default function DogAgeCalculator() {
             </form>
           </Form>
           {result !== null && (
-            <>
+            
               <div className="p-6 bg-muted rounded-lg text-center mt-4 space-y-4 animate-fade-in">
                 <div>
                   <h3 className="text-lg font-medium text-muted-foreground">Equivalent Human Age:</h3>
@@ -195,11 +194,7 @@ export default function DogAgeCalculator() {
                     <p className="text-sm text-foreground">{result.tip}</p>
                 </div>
               </div>
-              <SignUpPrompt 
-                message="Want to track your pet's age?"
-                description="Create a free account to save your pet's details and track their age milestones over time."
-              />
-            </>
+              
           )}
         </CardContent>
       </Card>

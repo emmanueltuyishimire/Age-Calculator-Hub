@@ -16,7 +16,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
-import { SignUpPrompt } from '../auth/signup-prompt';
 
 interface Age {
   years: number;
@@ -210,7 +209,7 @@ export default function BirthdayAgeCalculator() {
                     </div>
                 </div>
             )}
-            <SignUpPrompt />
+            
             </>
           )}
         </CardContent>
