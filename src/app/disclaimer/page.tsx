@@ -1,24 +1,35 @@
 
+"use client";
+
 import { type Metadata } from 'next';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
-export const metadata: Metadata = {
-    title: 'Disclaimer – Age Calculator Hub',
-    description: 'Read the disclaimer for Age Calculator Hub. Our tools are for informational purposes only and should not be considered professional, medical, or financial advice.',
-    alternates: {
-        canonical: '/disclaimer',
-    },
-};
+// export const metadata: Metadata = {
+//     title: 'Disclaimer – Age Calculator Hub',
+//     description: 'Read the disclaimer for Age Calculator Hub. Our tools are for informational purposes only and should not be considered professional, medical, or financial advice.',
+//     alternates: {
+//         canonical: '/disclaimer',
+//     },
+// };
 
 export default function DisclaimerPage() {
+    const [lastUpdated, setLastUpdated] = useState('');
+
+    useEffect(() => {
+        setLastUpdated(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+    }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Disclaimer</h1>
-          <p className="text-md md:text-lg text-muted-foreground">
-            Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-          </p>
+          {lastUpdated && (
+            <p className="text-md md:text-lg text-muted-foreground">
+                Last updated: {lastUpdated}
+            </p>
+          )}
         </div>
 
         <section className="space-y-6 text-muted-foreground">
