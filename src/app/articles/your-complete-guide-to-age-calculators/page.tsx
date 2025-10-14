@@ -14,7 +14,7 @@ if (!article) {
 }
 
 export const metadata: Metadata = {
-    title: article.title,
+    title: 'Your Complete Guide to the Age Calculator App',
     description: article.description,
     alternates: {
         canonical: `/articles/${article.slug}`,

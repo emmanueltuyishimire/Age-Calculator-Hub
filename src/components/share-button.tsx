@@ -78,7 +78,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, text, url }) => {
   return (
     <Popover>
         <PopoverTrigger asChild>
-            <Button variant="outline" className="w-full sm:w-auto" aria-label="Share">
+            <Button variant="outline" className="w-full sm:w-auto" aria-label="Share via social media">
                 <Share2 className="mr-2 h-4 w-4" /> Share
             </Button>
         </PopoverTrigger>
@@ -134,7 +134,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, text, url }) => {
                 </div>
                  <div className="flex items-center space-x-2">
                     <Input value={shareUrl} readOnly className="h-9"/>
-                    <Button variant="outline" size="sm" onClick={copyToClipboard}>
+                    <Button variant="outline" size="sm" onClick={copyToClipboard} aria-label="Copy link to clipboard">
                         <Copy className="h-4 w-4" />
                     </Button>
                 </div>
