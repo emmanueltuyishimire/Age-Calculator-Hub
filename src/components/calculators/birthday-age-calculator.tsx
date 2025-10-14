@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { format, intervalToDuration, isFuture, isValid, addYears } from 'date-fns';
 import { RefreshCcw, Gift } from 'lucide-react';
 import {
@@ -36,7 +36,6 @@ interface BirthdayCountdown {
 
 export default function BirthdayAgeCalculator() {
   const [dob, setDob] = useState({ day: '', month: '', year: '' });
-  const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>();
   const [age, setAge] = useState<Age | undefined>();
   const [countdown, setCountdown] = useState<BirthdayCountdown | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
@@ -54,73 +53,69 @@ export default function BirthdayAgeCalculator() {
     return null;
   };
 
-  const calculateAgeAndCountdown = () => {
+  const calculateAgeAndCountdown = useCallback(() => {
     const dobDate = parseDate(dob.day, dob.month, dob.year);
-    setDateOfBirth(dobDate || undefined);
 
     if (!dobDate) return;
+    
+    const now = new Date();
 
-    if (!isValid(dobDate)) {
-      setError("The date of birth is not a valid date.");
-      setIsCalculating(false);
-      return;
+    // Calculate age
+    const ageDuration = intervalToDuration({
+      start: dobDate,
+      end: now,
+    });
+    setAge({
+      years: ageDuration.years || 0,
+      months: ageDuration.months || 0,
+      days: ageDuration.days || 0,
+      hours: ageDuration.hours || 0,
+      minutes: ageDuration.minutes || 0,
+      seconds: ageDuration.seconds || 0,
+    });
+
+    // Calculate next birthday
+    let nextBirthday = new Date(now.getFullYear(), dobDate.getMonth(), dobDate.getDate());
+    if (now > nextBirthday) {
+        nextBirthday = addYears(nextBirthday, 1);
+    }
+
+    const countdownDuration = intervalToDuration({
+        start: now,
+        end: nextBirthday
+    });
+    setCountdown({
+      months: countdownDuration.months || 0,
+      days: countdownDuration.days || 0,
+      hours: countdownDuration.hours || 0,
+      minutes: countdownDuration.minutes || 0,
+      seconds: countdownDuration.seconds || 0,
+    });
+  }, [dob.day, dob.month, dob.year]);
+
+  const handleCalculate = () => {
+    const dobDate = parseDate(dob.day, dob.month, dob.year);
+    if (!dobDate) {
+        setError("Please enter a valid date of birth.");
+        setIsCalculating(false);
+        setAge(undefined);
+        setCountdown(undefined);
+        return;
     }
      if (isFuture(dobDate)) {
       setError("Date of birth cannot be in the future.");
       setIsCalculating(false);
       setAge(undefined);
+      setCountdown(undefined);
       return;
     }
-      
-      setError(null);
-      const now = new Date();
-
-      // Calculate age
-      const ageDuration = intervalToDuration({
-        start: dobDate,
-        end: now,
-      });
-      setAge({
-        years: ageDuration.years || 0,
-        months: ageDuration.months || 0,
-        days: ageDuration.days || 0,
-        hours: ageDuration.hours || 0,
-        minutes: ageDuration.minutes || 0,
-        seconds: ageDuration.seconds || 0,
-      });
-
-      // Calculate next birthday
-      let nextBirthday = new Date(now.getFullYear(), dobDate.getMonth(), dobDate.getDate());
-      if (now > nextBirthday) {
-          nextBirthday = addYears(nextBirthday, 1);
-      }
-
-      const countdownDuration = intervalToDuration({
-          start: now,
-          end: nextBirthday
-      });
-      setCountdown({
-        months: countdownDuration.months || 0,
-        days: countdownDuration.days || 0,
-        hours: countdownDuration.hours || 0,
-        minutes: countdownDuration.minutes || 0,
-        seconds: countdownDuration.seconds || 0,
-      });
-  };
-
-  const handleCalculate = () => {
-    const dobDate = parseDate(dob.day, dob.month, dob.year);
-    if (!dobDate) {
-        setError("Please enter your date of birth to calculate your age.");
-        return;
-    }
+    setError(null);
     setIsCalculating(true);
     calculateAgeAndCountdown();
   };
 
   const handleReset = () => {
       setDob({ day: '', month: '', year: '' });
-      setDateOfBirth(undefined);
       setAge(undefined);
       setCountdown(undefined);
       setIsCalculating(false);
@@ -135,14 +130,14 @@ export default function BirthdayAgeCalculator() {
       }, 1000);
     }
     return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCalculating, dob]);
+  }, [isCalculating, calculateAgeAndCountdown]);
 
+  // Reset calculation when input changes
   useEffect(() => {
     setIsCalculating(false);
     setAge(undefined);
     setCountdown(undefined);
-  }, [dob])
+  }, [dob]);
 
 
   return (
@@ -178,7 +173,7 @@ export default function BirthdayAgeCalculator() {
             </Button>
           </div>
 
-          {age && (
+          {isCalculating && age && (
             <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 animate-fade-in">
               <div>
                 <h3 className="text-md sm:text-lg font-medium mb-2">Your Exact Age:</h3>
@@ -196,7 +191,7 @@ export default function BirthdayAgeCalculator() {
             </div>
           )}
 
-          {countdown && (
+          {isCalculating && countdown && (
                 <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 mt-4 animate-fade-in">
                     <div className="flex justify-center items-center gap-2">
                         <Gift className="h-6 w-6 text-primary" />
