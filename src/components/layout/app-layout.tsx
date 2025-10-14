@@ -16,6 +16,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     item.href !== '/'
   );
 
+  const [year, setYear] = React.useState(new Date().getFullYear());
+
+  React.useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -77,7 +83,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div className="mt-8 border-t pt-6 text-center text-xs text-muted-foreground">
-             © {new Date().getFullYear()} Age Calculator Hub. All Rights Reserved.
+             © {year} Age Calculator Hub. All Rights Reserved.
           </div>
         </div>
       </footer>
