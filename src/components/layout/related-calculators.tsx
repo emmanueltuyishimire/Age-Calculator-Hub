@@ -1,5 +1,7 @@
+
 "use client";
 
+import React from 'react';
 import Link from 'next/link';
 import { categorizedNavItems } from './nav-items';
 import { Card, CardHeader, CardTitle, CardDescription } from '../ui/card';
@@ -9,7 +11,7 @@ interface RelatedCalculatorsProps {
   currentHref: string;
 }
 
-export default function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculatorsProps) {
+function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculatorsProps) {
   const category = categorizedNavItems().find(cat => cat.name === currentCategory);
   if (!category) return null;
 
@@ -38,3 +40,5 @@ export default function RelatedCalculators({ currentCategory, currentHref }: Rel
     </section>
   );
 }
+
+export default React.memo(RelatedCalculators);
