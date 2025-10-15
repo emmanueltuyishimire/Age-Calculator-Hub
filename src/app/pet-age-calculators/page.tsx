@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import CategoryHubClient from '@/components/layout/category-hub-client';
 
@@ -18,7 +19,9 @@ export default function PetAgeCalculatorsHub() {
           Ever wonder how old your furry friend is in human years? Use our specialized calculators for dogs and cats to better understand their life stage and care needs.
         </p>
       </div>
-      <CategoryHubClient categoryName="Pet Age" />
+      <CategoryHubClient categoryName="Other" />
     </main>
   );
 }
+
+    

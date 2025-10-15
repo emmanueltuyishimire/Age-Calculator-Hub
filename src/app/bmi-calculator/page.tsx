@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'BMI Calculator – Calculate Your Body Mass Index',
@@ -84,6 +85,15 @@ export default function BmiCalculatorPage() {
             <BmiCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                 <Card>
+                    <CardHeader><CardTitle>Learn More About Body Composition</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-bmi" className="text-primary hover:underline">A Deep Dive into Understanding BMI and Its Limitations</Link></li>
+                            <li><Link href="/articles/understanding-body-fat" className="text-primary hover:underline">Why Body Fat Percentage is a Better Metric Than Weight</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
                  <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">BMI Categories for Adults</h2>
                     <p className="text-muted-foreground mb-4">
@@ -113,7 +123,7 @@ export default function BmiCalculatorPage() {
                     <CardHeader><CardTitle>Limitations of BMI</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
-                           While BMI is a widely used and simple tool, it's important to understand its limitations. BMI does not differentiate between muscle and fat. This means that very muscular individuals, such as athletes, may have a high BMI that classifies them as 'overweight' or 'obese' even though their body fat is low. Similarly, it may underestimate body fat in older adults who have lost muscle mass. Therefore, BMI should be used as a general screening tool, not a diagnostic one.
+                           While BMI is a widely used and simple tool, it's important to understand its limitations. BMI does not differentiate between muscle and fat. This means that very muscular individuals, such as athletes, may have a high BMI that classifies them as 'overweight' or 'obese' even though their body fat is low. Similarly, it may underestimate body fat in older adults who have lost muscle mass. Therefore, BMI should be used as a general screening tool, not a diagnostic one. For a more accurate picture, consider using our <Link href="/body-fat-calculator" className="text-primary hover:underline">Body Fat Calculator</Link>.
                         </p>
                     </CardContent>
                 </Card>
@@ -133,8 +143,10 @@ export default function BmiCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Scientific & Health Age" currentHref="/bmi-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/bmi-calculator" />
       </div>
     </div>
   );
 }
+
+    

@@ -86,7 +86,7 @@ export default function AgeCalculatorByYearPage() {
                     <CardHeader><CardTitle>The Formula Explained: Simple and Fast</CardTitle></CardHeader>
                     <CardContent>
                          <p className="text-muted-foreground">
-                           This calculator uses the simplest formula for determining age: <strong>Age ≈ Current Year - Birth Year</strong>. This gives you the age a person will turn on their birthday during the current year. For example, in 2024, someone born in 1990 is considered 34 years old for the purpose of this calculation, even if their birthday hasn't occurred yet. This is often called "calendar age" or "nominal age".
+                           This calculator uses the simplest formula for determining age: <strong>Age ≈ Current Year - Birth Year</strong>. This gives you the age a person will turn on their birthday during the current year. For example, in 2024, someone born in 1990 is considered 34 years old for the purpose of this calculation, even if their birthday hasn't occurred yet. This is often called "calendar age" or "nominal age". Read our full guide on <Link href="/articles/how-to-calculate-age-from-year-of-birth" className="text-primary hover:underline">how to calculate age from a birth year</Link> to learn more.
                         </p>
                     </CardContent>
                 </Card>
@@ -129,8 +129,10 @@ export default function AgeCalculatorByYearPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Core Age Calculation" currentHref="/age-calculator-by-year" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/age-calculator-by-year" />
       </div>
     </div>
   );
 }
+
+    

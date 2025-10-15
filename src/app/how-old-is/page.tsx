@@ -71,6 +71,14 @@ export default function HowOldIsPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>Learn More About Age & Generations</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/what-generation-am-i" className="text-primary hover:underline">What Generation Am I? A Guide to Gen Z, Millennials, Gen X, and Boomers</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
                     <CardHeader><CardTitle>How to Use This Flexible Age Finder</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4">Our tool is designed to give you an answer even with incomplete information. Simply select the tab that matches the details you have:</p>
@@ -120,8 +128,10 @@ export default function HowOldIsPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Core Age Calculation" currentHref="/how-old-is" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/how-old-is" />
       </div>
     </div>
   );
 }
+
+    

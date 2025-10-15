@@ -113,6 +113,16 @@ export default function TargetHeartRateCalculatorPage() {
             <TargetHeartRateCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Health & Fitness</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                             <li><Link href="/articles/what-is-biological-age-and-how-to-improve-it" className="text-primary hover:underline">The Ultimate Guide to Your Biological Age</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
                 <Card>
                     <CardHeader>
                         <CardTitle>How to Use the Target Heart Rate Calculator</CardTitle>
@@ -188,8 +198,10 @@ export default function TargetHeartRateCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Scientific &amp; Health Age" currentHref="/target-heart-rate-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/target-heart-rate-calculator" />
       </div>
     </div>
   );
 }
+
+    

@@ -103,6 +103,17 @@ export default function LoanPayoffCalculatorPage() {
             <LoanPayoffCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Debt & Savings</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/how-to-pay-off-debt-faster" className="text-primary hover:underline">The Power of Extra Payments: How to Pay Off Your Loans Faster</Link></li>
+                            <li><Link href="/articles/debt-snowball-vs-avalanche" className="text-primary hover:underline">Debt Snowball vs. Avalanche: Which Debt Payoff Method is Best?</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
                 <Card>
                     <CardHeader>
                         <CardTitle>How to Use the Loan Payoff Calculator</CardTitle>
@@ -159,8 +170,10 @@ export default function LoanPayoffCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Financial Planning" currentHref="/loan-payoff-calculator" />
+        <RelatedCalculators currentCategory="Financial Calculators" currentHref="/loan-payoff-calculator" />
       </div>
     </div>
   );
 }
+
+    

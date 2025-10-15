@@ -107,6 +107,14 @@ export default function GestationalAgePage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>Learn More About Your Pregnancy Journey</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/navigating-pregnancy-milestones" className="text-primary hover:underline">Navigating Your Pregnancy: A Trimester-by-Trimester Milestone Guide</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
                     <CardHeader><CardTitle>How to Use the Gestational Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
@@ -184,8 +192,10 @@ export default function GestationalAgePage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Pregnancy & Baby" currentHref="/gestational-age" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/gestational-age" />
       </div>
     </div>
   );
 }
+
+    

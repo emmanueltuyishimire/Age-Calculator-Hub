@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Body Fat Calculator – Estimate Your Body Fat Percentage',
@@ -85,6 +86,15 @@ export default function BodyFatCalculatorPage() {
             <BodyFatCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                <Card>
+                    <CardHeader><CardTitle>Learn More About Body Metrics</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-body-fat" className="text-primary hover:underline">Why Body Fat Percentage is a Better Metric Than Weight</Link></li>
+                            <li>Compare this to your <Link href="/bmi-calculator" className="text-primary hover:underline">BMI (Body Mass Index)</Link> for a complete picture.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
                  <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Body Fat Percentage Categories</h2>
                     <p className="text-muted-foreground mb-4">
@@ -136,8 +146,10 @@ export default function BodyFatCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Scientific & Health Age" currentHref="/body-fat-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/body-fat-calculator" />
       </div>
     </div>
   );
 }
+
+    

@@ -74,6 +74,15 @@ export default function BirthdayAgeCalculatorPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>Learn More From Our Articles</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/what-generation-am-i" className="text-primary hover:underline">What Generation Am I? A Guide to Gen Z, Millennials, Gen X, and Boomers</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <Card>
                     <CardHeader><CardTitle>How to Use the Birthday Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
@@ -137,8 +146,10 @@ export default function BirthdayAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Core Age Calculation" currentHref="/birthday-age-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/birthday-age-calculator" />
       </div>
     </div>
   );
 }
+
+    

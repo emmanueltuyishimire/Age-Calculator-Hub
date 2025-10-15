@@ -104,6 +104,15 @@ export default function BiologicalAgePage() {
             <BiologicalAgeCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                <Card>
+                    <CardHeader><CardTitle>Learn More From Our Articles</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/what-is-biological-age-and-how-to-improve-it" className="text-primary hover:underline">The Ultimate Guide to Your Biological Age</Link></li>
+                            <li><Link href="/articles/how-to-improve-biological-age" className="text-primary hover:underline">5 Actionable Tips to Lower Your Biological Age</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
                 
                 <Card>
                     <CardHeader><CardTitle>What is Biological Age vs. Chronological Age?</CardTitle></CardHeader>
@@ -162,8 +171,10 @@ export default function BiologicalAgePage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Scientific & Health Age" currentHref="/biological-age" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/biological-age" />
       </div>
     </div>
   );
 }
+
+    

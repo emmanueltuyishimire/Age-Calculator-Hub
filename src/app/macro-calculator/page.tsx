@@ -100,6 +100,16 @@ export default function MacroCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader>
+                        <CardTitle>Learn More About Your Metabolism</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-bmr" className="text-primary hover:underline">Understanding BMR: Your Body's Baseline Calorie Needs</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
                         <CardTitle>What Are Macros and Why Do They Matter?</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -165,8 +175,10 @@ export default function MacroCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Scientific &amp; Health Age" currentHref="/macro-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/macro-calculator" />
       </div>
     </div>
   );
 }
+
+    

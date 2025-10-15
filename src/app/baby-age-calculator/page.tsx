@@ -94,6 +94,14 @@ export default function BabyAgeCalculatorPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>Learn More About Pregnancy & Baby Milestones</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/navigating-pregnancy-milestones" className="text-primary hover:underline">Navigating Your Pregnancy: A Trimester-by-Trimester Milestone Guide</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
                     <CardHeader><CardTitle>How to Use the Baby Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
@@ -156,7 +164,7 @@ export default function BabyAgeCalculatorPage() {
                     <CardHeader><CardTitle>Corrected Age for Premature Babies</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
-                           If your baby was born prematurely (before 37 weeks of pregnancy), your pediatrician will likely use a "corrected age" to track their development. Corrected age is the baby's chronological age minus the number of weeks or months they were born early.
+                           If your baby was born prematurely (before 37 weeks of pregnancy), your pediatrician will likely use a "corrected age" to track their development. Corrected age is the baby's chronological age minus the number of weeks they were born early.
                         </p>
                         <p className="text-muted-foreground mt-2">
                            For example, if your baby is 16 weeks old but was born 4 weeks early, their corrected age is 12 weeks. This adjusted age is used to evaluate developmental milestones because premature babies need time to catch up.
@@ -182,8 +190,10 @@ export default function BabyAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Pregnancy & Baby" currentHref="/baby-age-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/baby-age-calculator" />
       </div>
     </div>
   );
 }
+
+    

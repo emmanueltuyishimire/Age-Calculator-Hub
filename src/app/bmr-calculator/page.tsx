@@ -71,6 +71,15 @@ export default function BmrCalculatorPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>Learn More About Your Metabolism</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-bmr" className="text-primary hover:underline">Understanding BMR: Your Body's Baseline Calorie Needs</Link></li>
+                            <li>Use your BMR to find your daily macro needs with our <Link href="/macro-calculator" className="text-primary hover:underline">Macro Calculator</Link>.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
                     <CardHeader><CardTitle>Understanding Your BMR</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
@@ -94,8 +103,10 @@ export default function BmrCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Scientific & Health Age" currentHref="/bmr-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/bmr-calculator" />
       </div>
     </div>
   );
 }
+
+    

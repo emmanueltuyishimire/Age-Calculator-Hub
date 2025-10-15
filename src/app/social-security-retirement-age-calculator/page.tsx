@@ -93,6 +93,15 @@ export default function SocialSecurityRetirementPage() {
             
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>Learn More About Retirement</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/planning-for-retirement-at-any-age" className="text-primary hover:underline">Planning for Retirement: A Decade-by-Decade Guide</Link></li>
+                            <li><Link href="/articles/guide-to-retirement-savings" className="text-primary hover:underline">A Guide to Retirement Savings: How Much Do You Really Need?</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
                     <CardHeader><CardTitle>How to Use the Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
@@ -163,8 +172,10 @@ export default function SocialSecurityRetirementPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social" currentHref="/social-security-retirement-age-calculator" />
+        <RelatedCalculators currentCategory="Financial Calculators" currentHref="/social-security-retirement-age-calculator" />
       </div>
     </div>
   );
 }
+
+    

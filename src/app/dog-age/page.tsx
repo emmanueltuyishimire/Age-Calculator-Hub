@@ -77,10 +77,10 @@ const ageChart = [
 
 const lifeStages = [
     { stage: "Puppy (0–1 year / ~0-15 human years)", description: "This is a phase of rapid growth, learning, and socialization. Focus on high-quality puppy food, completing vaccinations, starting basic training, and positive exposure to new sights and sounds." },
-    { stage: "Young Adult (1–4 years / ~15-40 human years)", description: "Your dog is energetic, has reached physical maturity, and is in its prime. Regular exercise, consistent training reinforcement, and yearly vet check-ups are key during this stage." },
-    { stage: "Mature (5–8 years / ~40-60 human years)", description: "Energy levels may start to even out, and your dog is a full adult. It's important to monitor their weight to prevent obesity and watch for early signs of common issues like joint or dental problems." },
-    { stage: "Senior (9–12 years / ~56-86 human years)", description: "Mobility, eyesight, or hearing may begin to decline. Prioritize their comfort, switch to twice-yearly vet visits for senior wellness checks, and adapt exercise to be more gentle (like swimming or shorter walks)." },
-    { stage: "Geriatric (13+ years / 80+ human years)", description: "Older dogs need extra care and attention. Ensure they have a warm, comfortable resting place, easy access to food and water, and a diet formulated for their specific senior needs. Cherish this special time." },
+    { stage: "Young Adult (1–4 years / ~15-40 human years)", description: "Your dog is energetic and in its prime. Regular exercise, consistent training, and yearly vet check-ups are key." },
+    { stage: "Mature (5–8 years / ~40-60 human years)", description: "Energy levels may start to even out. Monitor weight to prevent obesity and watch for early signs of joint or dental problems." },
+    { stage: "Senior (9–12 years / ~56-86 human years)", description: "Mobility may decline. Prioritize comfort, switch to twice-yearly vet visits, and adapt exercise to be more gentle." },
+    { stage: "Geriatric (13+ years / 80+ human years)", description: "Older dogs need extra care. Ensure they have a warm, comfortable resting place and easy access to food and water." },
 ];
 
 export default function DogAgePage() {
@@ -102,6 +102,16 @@ export default function DogAgePage() {
             <DogAgeCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                <Card>
+                    <CardHeader><CardTitle>Learn More About Your Dog's Health</CardTitle></CardHeader>
+                    <CardContent>
+                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/the-science-behind-pet-age-calculators" className="text-primary hover:underline">The Science Behind Dog and Cat Age Calculators</Link></li>
+                            <li><Link href="/articles/why-small-dogs-live-longer" className="text-primary hover:underline">Why Do Small Dogs Live Longer Than Large Dogs?</Link></li>
+                            <li><Link href="/articles/senior-dog-care-guide" className="text-primary hover:underline">The Ultimate Guide to Caring for a Senior Dog</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
                 <Card>
                     <CardHeader><CardTitle>How to Use the Dog Age Calculator</CardTitle></CardHeader>
                     <CardContent>
@@ -192,8 +202,10 @@ export default function DogAgePage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Pet Age" currentHref="/dog-age" />
+        <RelatedCalculators currentCategory="Other" currentHref="/dog-age" />
       </div>
     </div>
   );
 }
+
+    

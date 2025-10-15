@@ -70,6 +70,14 @@ export default function PregnancyCalculatorPage() {
             <PregnancyCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                 <Card>
+                    <CardHeader><CardTitle>Learn More About Your Pregnancy Journey</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/navigating-pregnancy-milestones" className="text-primary hover:underline">Navigating Your Pregnancy: A Trimester-by-Trimester Milestone Guide</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
                 <Card>
                     <CardHeader><CardTitle>How to Use the Pregnancy Calculator</CardTitle></CardHeader>
                     <CardContent>
@@ -131,8 +139,10 @@ export default function PregnancyCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Pregnancy & Baby" currentHref="/pregnancy-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/pregnancy-calculator" />
       </div>
     </div>
   );
 }
+
+    

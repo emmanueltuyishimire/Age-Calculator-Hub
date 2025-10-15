@@ -90,6 +90,16 @@ export default function ChronologicalAgeCalculatorPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>Learn More About Different Types of Age</CardTitle></CardHeader>
+                    <CardContent>
+                       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-chronological-age" className="text-primary hover:underline">Understanding Chronological Age: More Than Just a Number</Link></li>
+                            <li>Explore a different perspective with our <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <Card>
                     <CardHeader><CardTitle>How to Use the Chronological Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
@@ -130,8 +140,10 @@ export default function ChronologicalAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Core Age Calculation" currentHref="/chronological-age-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/chronological-age-calculator" />
       </div>
     </div>
   );
 }
+
+    

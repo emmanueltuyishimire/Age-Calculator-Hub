@@ -86,6 +86,19 @@ export default function StatuteOfLimitationsPage() {
                     </CardContent>
                 </Card>
 
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Legal Timelines</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/what-is-statute-of-limitations" className="text-primary hover:underline">What Is a Statute of Limitations? A Complete Guide</Link></li>
+                            <li><Link href="/articles/understanding-the-discovery-rule" className="text-primary hover:underline">The Discovery Rule: An Exception to the Statute of Limitations</Link></li>
+                            <li><Link href="/articles/understanding-tolling-statute-of-limitations" className="text-primary hover:underline">How 'Tolling' Can Pause the Statute of Limitations Clock</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
                 <Card>
                     <CardHeader>
                         <CardTitle>What is a Statute of Limitations?</CardTitle>
@@ -157,3 +170,5 @@ export default function StatuteOfLimitationsPage() {
     </div>
   );
 }
+
+    

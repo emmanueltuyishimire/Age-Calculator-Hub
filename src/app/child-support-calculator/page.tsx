@@ -75,6 +75,16 @@ export default function ChildSupportCalculatorPage() {
             <ChildSupportEstimator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Legal Timelines</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/what-is-statute-of-limitations" className="text-primary hover:underline">What Is a Statute of Limitations? A Complete Guide</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
                 <Card className="border-destructive">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2"><AlertTriangle className="text-destructive" />Important Disclaimer</CardTitle>
@@ -157,8 +167,10 @@ export default function ChildSupportCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Financial Planning" currentHref="/child-support-calculator" />
+        <RelatedCalculators currentCategory="Legal Estimators" currentHref="/child-support-calculator" />
       </div>
     </div>
   );
 }
+
+    

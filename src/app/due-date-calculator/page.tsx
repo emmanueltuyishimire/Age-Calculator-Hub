@@ -90,6 +90,14 @@ export default function DueDateCalculatorPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>Learn More About Your Pregnancy Journey</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/navigating-pregnancy-milestones" className="text-primary hover:underline">Navigating Your Pregnancy: A Trimester-by-Trimester Milestone Guide</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
                     <CardHeader><CardTitle>How to Use the Due Date Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
@@ -156,8 +164,10 @@ export default function DueDateCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Pregnancy & Baby" currentHref="/due-date-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/due-date-calculator" />
       </div>
     </div>
   );
 }
+
+    

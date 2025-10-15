@@ -92,6 +92,19 @@ export default function AgeCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader>
+                        <CardTitle>Learn More From Our Articles</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-chronological-age" className="text-primary hover:underline">Understanding Chronological Age: More Than Just a Number</Link></li>
+                            <li><Link href="/articles/how-to-calculate-age-from-year-of-birth" className="text-primary hover:underline">How to Calculate Age From Year of Birth: The Simple Formula and Its Limits</Link></li>
+                            <li><Link href="/articles/what-is-biological-age-and-how-to-improve-it" className="text-primary hover:underline">The Ultimate Guide to Your Biological Age</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
                         <CardTitle>How to Use the Age Calculator</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -170,8 +183,10 @@ export default function AgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Core Age Calculation" currentHref="/age-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/age-calculator" />
       </div>
     </div>
   );
 }
+
+    

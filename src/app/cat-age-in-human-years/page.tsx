@@ -74,10 +74,10 @@ const ageChart = [
 
 const lifeStages = [
     { stage: "Kitten (0–1 year / 0-15 human years)", description: "A period of rapid growth and high energy. Play is essential for their development. They need kitten-specific food that's high in calories and protein, and they must complete their initial vaccination series." },
-    { stage: "Junior (1–2 years / 15-24 human years)", description: "Your cat has reached full size and is learning about life. Their personality is still developing. This is the ideal time for spaying or neutering if it hasn't been done." },
-    { stage: "Prime (3–6 years / 28-40 human years)", description: "This is your cat's adulthood. They are typically at their peak of health and activity. Focus on maintaining a balanced diet, regular play, and annual wellness checkups." },
-    { stage: "Mature (7–10 years / 44-56 human years)", description: "Your cat may start to slow down. It's a good time to monitor their diet to prevent weight gain. Keep an eye on their mobility and dental health." },
-    { stage: "Senior (11–14 years / 60-72 human years)", description: "Your cat is now a senior citizen. Be watchful for signs of common aging issues like arthritis, kidney disease, or thyroid problems. Softer, more palatable food may be beneficial. Increase vet visits to twice a year." },
+    { stage: "Junior (1–2 years / 15-24 human years)", description: "Your cat is developing their adult personality. This is an ideal time for spaying or neutering." },
+    { stage: "Prime (3–6 years / 28-40 human years)", description: "Your cat is in the prime of their life—healthy, active, and with a settled personality. Focus on maintaining a balanced diet, regular play, and annual wellness checkups." },
+    { stage: "Mature (7–10 years / 44-56 human years)", description: "Your cat may start to slow down. It's a good time to monitor their diet to prevent weight gain, and pay attention to dental health." },
+    { stage: "Senior (11–14 years / 60-72 human years)", description: "Your cat is now a senior citizen. Health issues like arthritis, kidney disease, or thyroid problems become more common. Increase vet visits to twice a year." },
     { stage: "Geriatric (15+ years / 76+ human years)", description: "These are the golden years. Your geriatric cat needs extra comfort, warmth, and care. Ensure their environment is safe and easily accessible (e.g., ramps to favorite spots, low-entry litter boxes)." },
 ];
 
@@ -100,6 +100,16 @@ export default function CatAgePage() {
             <CatAgeCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                <Card>
+                    <CardHeader><CardTitle>Learn More About Your Cat's Health</CardTitle></CardHeader>
+                    <CardContent>
+                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-cat-life-stages" className="text-primary hover:underline">Understanding Your Cat's Life Stages: From Kitten to Geriatric</Link></li>
+                            <li><Link href="/articles/common-health-problems-in-senior-cats" className="text-primary hover:underline">5 Common Health Problems in Senior Cats</Link></li>
+                            <li><Link href="/articles/introducing-a-new-cat" className="text-primary hover:underline">How to Introduce a New Cat to Your Home</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
                 <Card>
                     <CardHeader><CardTitle>How to Use the Cat Age Calculator</CardTitle></CardHeader>
                     <CardContent>
@@ -186,8 +196,10 @@ export default function CatAgePage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Pet Age" currentHref="/cat-age-in-human-years" />
+        <RelatedCalculators currentCategory="Other" currentHref="/cat-age-in-human-years" />
       </div>
     </div>
   );
 }
+
+    

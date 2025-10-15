@@ -77,6 +77,18 @@ export default function RetirementSavingsGoalCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader>
+                        <CardTitle>Learn More About Retirement & Savings</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/guide-to-retirement-savings" className="text-primary hover:underline">A Guide to Retirement Savings: How Much Do You Really Need?</Link></li>
+                            <li><Link href="/articles/planning-for-retirement-at-any-age" className="text-primary hover:underline">Planning for Retirement: A Decade-by-Decade Guide</Link></li>
+                             <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest: The '8th Wonder of the World'</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
                         <CardTitle>How to Use the Retirement Savings Goal Calculator</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -133,8 +145,10 @@ export default function RetirementSavingsGoalCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Financial Planning" currentHref="/retirement-savings-goal-calculator" />
+        <RelatedCalculators currentCategory="Financial Calculators" currentHref="/retirement-savings-goal-calculator" />
       </div>
     </div>
   );
 }
+
+    

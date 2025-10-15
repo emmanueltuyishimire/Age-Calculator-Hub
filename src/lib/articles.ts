@@ -309,4 +309,27 @@ export const articles: Article[] = [
     category: 'Financial Planning',
     publishedDate: '2024-12-03',
   },
+  {
+    slug: 'understanding-bmi',
+    title: 'Understanding BMI: A Deep Dive into Body Mass Index and Its Limitations',
+    description: 'BMI is a common health metric, but what does it really mean? This guide explores how BMI is calculated, its uses, and its important limitations.',
+    category: 'Health & Wellness',
+    publishedDate: '2024-12-04'
+  },
+  {
+    slug: 'understanding-body-fat',
+    title: 'Understanding Body Fat: Why It\'s a Better Metric Than Weight',
+    description: 'The number on the scale doesn\'t tell the whole story. Learn why body fat percentage is a superior metric for tracking health and fitness progress.',
+    category: 'Health & Wellness',
+    publishedDate: '2024-12-05'
+  },
+  {
+    slug: 'understanding-bmr',
+    title: "Understanding BMR: Your Body's Baseline Calorie Needs",
+    description: 'Your Basal Metabolic Rate (BMR) is the foundation of your metabolism. This guide explains what BMR is, how it\'s calculated, and how you can boost it.',
+    category: 'Health & Wellness',
+    publishedDate: '2024-12-06'
+  }
 ].sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
+
+    

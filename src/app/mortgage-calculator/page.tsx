@@ -73,6 +73,18 @@ export default function MortgageCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader>
+                        <CardTitle>Learn More About Mortgages & Financial Planning</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-your-credit-score" className="text-primary hover:underline">Understanding Your Credit Score: The 5 Key Factors</Link></li>
+                            <li><Link href="/articles/how-to-pay-off-debt-faster" className="text-primary hover:underline">The Power of Extra Payments: How to Pay Off Your Loans Faster</Link></li>
+                            <li><Link href="/articles/understanding-life-insurance" className="text-primary hover:underline">A Beginner's Guide to Life Insurance (Term vs. Whole)</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
                         <CardTitle>How to Use the Mortgage Calculator</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -122,3 +134,5 @@ export default function MortgageCalculatorPage() {
     </div>
   );
 }
+
+    

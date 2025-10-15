@@ -43,9 +43,26 @@ const faqs = [
     }
 ];
 
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+        }
+    }))
+};
+
 export default function SavingsGoalCalculatorPage() {
   return (
     <div className="container mx-auto px-4 py-8">
+       <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="max-w-4xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
@@ -58,6 +75,18 @@ export default function SavingsGoalCalculatorPage() {
             <SavingsGoalCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Saving & Investing</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest: The '8th Wonder of the World'</Link></li>
+                            <li><Link href="/articles/creating-a-budget-that-works" className="text-primary hover:underline">Creating a Budget That Works: The 50/30/20 Rule</Link></li>
+                            <li><Link href="/articles/high-yield-savings-vs-stocks" className="text-primary hover:underline">Where to Save: High-Yield Savings Accounts vs. The Stock Market</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
                 <Card>
                     <CardHeader>
                         <CardTitle>How to Use the Savings Goal Calculator</CardTitle>
@@ -117,8 +146,10 @@ export default function SavingsGoalCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Financial Planning" currentHref="/savings-goal-calculator" />
+        <RelatedCalculators currentCategory="Financial Calculators" currentHref="/savings-goal-calculator" />
       </div>
     </div>
   );
 }
+
+    

@@ -16,10 +16,13 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
   if (!category) return null;
 
   // Filter out the current page and the main category hub page
-  const relatedItems = category.items.filter(item => 
-    item.href !== currentHref && 
-    item.href !== category.href
+  let relatedItems = category.items.filter(item => 
+    item.href !== currentHref
   );
+  
+  if(category.href) {
+    relatedItems = relatedItems.filter(item => item.href !== category.href);
+  }
 
   if (relatedItems.length === 0) return null;
 
@@ -46,3 +49,5 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
 }
 
 export default React.memo(RelatedCalculators);
+
+    

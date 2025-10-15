@@ -116,6 +116,16 @@ export default function LifeInsuranceCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader>
+                        <CardTitle>Learn More About Financial Planning</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-life-insurance" className="text-primary hover:underline">A Beginner's Guide to Life Insurance: Term vs. Whole Life</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
                         <CardTitle>How to Use the Life Insurance Needs Calculator</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -176,8 +186,10 @@ export default function LifeInsuranceCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Financial Planning" currentHref="/life-insurance-calculator" />
+        <RelatedCalculators currentCategory="Financial Calculators" currentHref="/life-insurance-calculator" />
       </div>
     </div>
   );
 }
+
+    
