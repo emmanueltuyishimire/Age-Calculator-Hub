@@ -31,7 +31,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts"
+import { PieChart, Pie, Cell } from "recharts"
 import {
   Table,
   TableBody,
@@ -98,7 +98,7 @@ export default function MortgageCalculator() {
       downPayment: 20,
       downPaymentType: 'percent',
       loanTerm: 30,
-      interestRate: 6.337,
+      interestRate: 6.5,
       propertyTax: 1.2,
       propertyTaxType: 'percent',
       homeInsurance: 1500,
@@ -192,12 +192,12 @@ export default function MortgageCalculator() {
       downPayment: 20,
       downPaymentType: 'percent',
       loanTerm: 30,
-      interestRate: undefined,
-      propertyTax: undefined,
+      interestRate: 6.5,
+      propertyTax: 1.2,
       propertyTaxType: 'percent',
-      homeInsurance: undefined,
-      pmi: undefined,
-      hoa: undefined,
+      homeInsurance: 1500,
+      pmi: 0,
+      hoa: 0,
       startDateMonth: (new Date().getMonth() + 1).toString(),
       startDateYear: currentYear,
     });
@@ -213,182 +213,154 @@ export default function MortgageCalculator() {
     { name: 'PMI/HOA', value: result.monthlyPmi + result.monthlyHoa, fill: 'hsl(var(--chart-4))' }
   ].filter(item => item.value > 0) : [];
 
-  const chartConfig = result ? {
-    payment: { label: "Payment" },
-    pni: { label: "P&I", color: "hsl(var(--chart-1))" },
-    taxes: { label: "Taxes", color: "hsl(var(--chart-2))" },
-    insurance: { label: "Insurance", color: "hsl(var(--chart-3))" },
-    other: { label: "PMI/HOA", color: "hsl(var(--chart-4))" }
-  } : {};
-
   return (
     <Card className="w-full max-w-4xl mx-auto shadow-lg animate-fade-in">
       <CardHeader>
         <CardTitle className="text-center">Mortgage Payment Details</CardTitle>
       </CardHeader>
       <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <FormField control={form.control} name="homePrice" render={({ field }) => (<FormItem><FormLabel>Home Price</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormItem>
-                <FormLabel>Down Payment</FormLabel>
-                <div className="flex gap-2">
-                   <FormField control={form.control} name="downPayment" render={({ field }) => (<FormControl><Input type="number" {...field} /></FormControl>)} />
-                   <FormField control={form.control} name="downPaymentType" render={({ field }) => (
-                     <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl><SelectTrigger className="w-[100px]"><SelectValue /></SelectTrigger></FormControl>
-                        <SelectContent>
-                            <SelectItem value="percent">%</SelectItem>
-                            <SelectItem value="amount">$</SelectItem>
-                        </SelectContent>
-                    </Select>
-                   )} />
-                </div>
-                <FormMessage>{form.formState.errors.downPayment?.message}</FormMessage>
-              </FormItem>
-              <FormField control={form.control} name="loanTerm" render={({ field }) => (
-                  <FormItem><FormLabel>Loan Term (Years)</FormLabel>
-                    <Select onValueChange={(val) => field.onChange(Number(val))} defaultValue={String(field.value)}>
-                        <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
-                        <SelectContent>
-                            <SelectItem value="30">30 Years</SelectItem>
-                            <SelectItem value="20">20 Years</SelectItem>
-                            <SelectItem value="15">15 Years</SelectItem>
-                            <SelectItem value="10">10 Years</SelectItem>
-                        </SelectContent>
-                    </Select>
-                  <FormMessage /></FormItem>
-              )} />
-              <FormField control={form.control} name="interestRate" render={({ field }) => (<FormItem><FormLabel>Interest Rate (%)</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              
-               <FormItem>
-                <FormLabel>Property Tax</FormLabel>
-                <div className="flex gap-2">
-                   <FormField control={form.control} name="propertyTax" render={({ field }) => (<FormControl><Input type="number" {...field} /></FormControl>)} />
-                   <FormField control={form.control} name="propertyTaxType" render={({ field }) => (
-                     <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl><SelectTrigger className="w-[100px]"><SelectValue /></SelectTrigger></FormControl>
-                        <SelectContent>
-                            <SelectItem value="percent">%</SelectItem>
-                            <SelectItem value="amount">$</SelectItem>
-                        </SelectContent>
-                    </Select>
-                   )} />
-                </div>
-                <FormMessage>{form.formState.errors.propertyTax?.message}</FormMessage>
-              </FormItem>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+            <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <div className="grid grid-cols-1 gap-4">
+                <FormField control={form.control} name="homePrice" render={({ field }) => (<FormItem><FormLabel>Home Price</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                <FormItem>
+                    <FormLabel>Down Payment</FormLabel>
+                    <div className="flex gap-2">
+                    <FormField control={form.control} name="downPayment" render={({ field }) => (<FormControl><Input type="number" {...field} /></FormControl>)} />
+                    <FormField control={form.control} name="downPaymentType" render={({ field }) => (
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl><SelectTrigger className="w-[100px]"><SelectValue /></SelectTrigger></FormControl>
+                            <SelectContent>
+                                <SelectItem value="percent">%</SelectItem>
+                                <SelectItem value="amount">$</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    )} />
+                    </div>
+                    <FormMessage>{form.formState.errors.downPayment?.message}</FormMessage>
+                </FormItem>
+                <FormField control={form.control} name="loanTerm" render={({ field }) => (
+                    <FormItem><FormLabel>Loan Term (Years)</FormLabel>
+                        <Select onValueChange={(val) => field.onChange(Number(val))} defaultValue={String(field.value)}>
+                            <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
+                            <SelectContent>
+                                <SelectItem value="30">30 Years</SelectItem>
+                                <SelectItem value="20">20 Years</SelectItem>
+                                <SelectItem value="15">15 Years</SelectItem>
+                                <SelectItem value="10">10 Years</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    <FormMessage /></FormItem>
+                )} />
+                <FormField control={form.control} name="interestRate" render={({ field }) => (<FormItem><FormLabel>Interest Rate (%)</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                
+                <FormItem>
+                    <FormLabel>Property Tax</FormLabel>
+                    <div className="flex gap-2">
+                    <FormField control={form.control} name="propertyTax" render={({ field }) => (<FormControl><Input type="number" {...field} /></FormControl>)} />
+                    <FormField control={form.control} name="propertyTaxType" render={({ field }) => (
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl><SelectTrigger className="w-[100px]"><SelectValue /></SelectTrigger></FormControl>
+                            <SelectContent>
+                                <SelectItem value="percent">%</SelectItem>
+                                <SelectItem value="amount">$</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    )} />
+                    </div>
+                    <FormMessage>{form.formState.errors.propertyTax?.message}</FormMessage>
+                </FormItem>
 
-              <FormField control={form.control} name="homeInsurance" render={({ field }) => (<FormItem><FormLabel>Annual Home Insurance</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormField control={form.control} name="pmi" render={({ field }) => (<FormItem><FormLabel>Monthly PMI</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormField control={form.control} name="hoa" render={({ field }) => (<FormItem><FormLabel>Monthly HOA</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormItem>
-                <FormLabel>Start Date</FormLabel>
-                <div className="flex gap-2">
-                   <FormField control={form.control} name="startDateMonth" render={({ field }) => (
-                     <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
-                        <SelectContent>
-                            {Array.from({length: 12}, (_, i) => <SelectItem key={i} value={(i+1).toString()}>{format(new Date(0, i), 'MMM')}</SelectItem>)}
-                        </SelectContent>
-                    </Select>
-                   )} />
-                   <FormField control={form.control} name="startDateYear" render={({ field }) => (<FormControl><Input type="number" {...field} /></FormControl>)} />
+                <FormField control={form.control} name="homeInsurance" render={({ field }) => (<FormItem><FormLabel>Annual Home Insurance</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                <FormField control={form.control} name="pmi" render={({ field }) => (<FormItem><FormLabel>Monthly PMI</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                <FormField control={form.control} name="hoa" render={({ field }) => (<FormItem><FormLabel>Monthly HOA</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                <FormItem>
+                    <FormLabel>Start Date</FormLabel>
+                    <div className="flex gap-2">
+                    <FormField control={form.control} name="startDateMonth" render={({ field }) => (
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
+                            <SelectContent>
+                                {Array.from({length: 12}, (_, i) => <SelectItem key={i} value={(i+1).toString()}>{format(new Date(0, i), 'MMM')}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                    )} />
+                    <FormField control={form.control} name="startDateYear" render={({ field }) => (<FormControl><Input type="number" {...field} /></FormControl>)} />
+                    </div>
+                </FormItem>
                 </div>
-              </FormItem>
+                
+                <div className="flex flex-col sm:flex-row gap-2 pt-2">
+                <Button type="submit" className="w-full"><Home className="mr-2 h-4 w-4"/>Calculate</Button>
+                <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                <ShareButton title="Mortgage Calculator" text="Estimate your monthly mortgage payments with this easy calculator!" url="/mortgage-calculator" />
+                </div>
+            </form>
+            </Form>
             </div>
-            
-            <div className="flex flex-col sm:flex-row gap-2 pt-2">
-              <Button type="submit" className="w-full"><Home className="mr-2 h-4 w-4"/>Calculate</Button>
-              <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
-              <ShareButton title="Mortgage Calculator" text="Estimate your monthly mortgage payments with this easy calculator!" url="/mortgage-calculator" />
-            </div>
-          </form>
-        </Form>
-        
-        {result && chartConfig && (
-          <div className="pt-6 mt-6 border-t animate-fade-in">
-            <div className="text-center mb-6">
-                <h3 className="text-lg font-semibold text-muted-foreground">Estimated Monthly Payment (PITI)</h3>
-                <p className="text-4xl font-bold text-primary">{currencySymbol}{result.monthlyPayment.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div className="h-[250px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel formatter={(value) => `${currencySymbol}${Number(value).toFixed(2)}`} />} />
-                            <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60} outerRadius={80} paddingAngle={5} strokeWidth={2}>
-                                {chartData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+            <div className="flex flex-col space-y-4">
+                {result ? (
+                <div className="space-y-4 animate-fade-in">
+                    <div className="p-4 bg-muted rounded-lg text-center">
+                        <h3 className="text-lg font-semibold text-muted-foreground">Estimated Monthly Payment</h3>
+                        <p className="text-4xl font-bold text-primary">{currencySymbol}{result.monthlyPayment.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    </div>
+                    <div className="h-[200px]">
+                        <ChartContainer config={{}} className="mx-auto aspect-square h-full">
+                            <PieChart>
+                                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel formatter={(value) => `${currencySymbol}${Number(value).toFixed(2)}`} />} />
+                                <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={50} outerRadius={70} paddingAngle={5} strokeWidth={2}>
+                                    {chartData.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={entry.fill} />
+                                    ))}
+                                </Pie>
+                            </PieChart>
+                        </ChartContainer>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                        <div className="flex justify-between"><span className="text-muted-foreground">Principal & Interest:</span><span className="font-semibold">{currencySymbol}{result.principalAndInterest.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span></div>
+                        <div className="flex justify-between"><span className="text-muted-foreground">Property Tax:</span><span className="font-semibold">{currencySymbol}{result.monthlyTax.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span></div>
+                        <div className="flex justify-between"><span className="text-muted-foreground">Home Insurance:</span><span className="font-semibold">{currencySymbol}{result.monthlyInsurance.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span></div>
+                        {(result.monthlyPmi > 0 || result.monthlyHoa > 0) && <div className="flex justify-between"><span className="text-muted-foreground">PMI/HOA:</span><span className="font-semibold">{currencySymbol}{(result.monthlyPmi + result.monthlyHoa).toLocaleString(undefined, { maximumFractionDigits: 2 })}</span></div>}
+                    </div>
+                        <div className="mt-4">
+                        <h3 className="text-lg font-bold text-center mb-2">Amortization Schedule</h3>
+                        <div className="h-[240px] overflow-y-auto border rounded-md">
+                        <Table>
+                            <TableHeader className="sticky top-0 bg-secondary">
+                                <TableRow>
+                                    <TableHead>Year</TableHead>
+                                    <TableHead className="text-right">Interest</TableHead>
+                                    <TableHead className="text-right">Principal</TableHead>
+                                    <TableHead className="text-right">Balance</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {result.amortizationSchedule.map((row) => (
+                                    <TableRow key={row.year}>
+                                        <TableCell className="font-medium">{row.year}</TableCell>
+                                        <TableCell className="text-right">{currencySymbol}{row.interest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</TableCell>
+                                        <TableCell className="text-right">{currencySymbol}{row.principal.toLocaleString(undefined, { maximumFractionDigits: 0 })}</TableCell>
+                                        <TableCell className="text-right">{currencySymbol}{row.balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}</TableCell>
+                                    </TableRow>
                                 ))}
-                            </Pie>
-                        </PieChart>
-                    </ResponsiveContainer>
-                </div>
-                 <div className="space-y-2 text-sm">
-                    <div className="flex justify-between items-center p-2 rounded-md hover:bg-accent">
-                        <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{backgroundColor: 'hsl(var(--chart-1))'}}></span><span>Principal & Interest</span></div>
-                        <span className="font-semibold">{currencySymbol}{result.principalAndInterest.toFixed(2)}</span>
-                    </div>
-                     <div className="flex justify-between items-center p-2 rounded-md hover:bg-accent">
-                        <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{backgroundColor: 'hsl(var(--chart-2))'}}></span><span>Property Tax</span></div>
-                        <span className="font-semibold">{currencySymbol}{result.monthlyTax.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-2 rounded-md hover:bg-accent">
-                        <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{backgroundColor: 'hsl(var(--chart-3))'}}></span><span>Home Insurance</span></div>
-                        <span className="font-semibold">{currencySymbol}{result.monthlyInsurance.toFixed(2)}</span>
-                    </div>
-                     {(result.monthlyPmi > 0 || result.monthlyHoa > 0) && (
-                         <div className="flex justify-between items-center p-2 rounded-md hover:bg-accent">
-                            <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{backgroundColor: 'hsl(var(--chart-4))'}}></span><span>PMI/HOA</span></div>
-                            <span className="font-semibold">{currencySymbol}{(result.monthlyPmi + result.monthlyHoa).toFixed(2)}</span>
-                        </div>
-                     )}
-                 </div>
-            </div>
-            <Card className="mt-8">
-                <CardHeader><CardTitle className="text-center text-xl">Loan Summary</CardTitle></CardHeader>
-                <CardContent>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-                        <div><p className="text-sm text-muted-foreground">Loan Amount</p><p className="font-bold">{currencySymbol}{result.loanAmount.toLocaleString(undefined, {maximumFractionDigits: 0})}</p></div>
-                        <div><p className="text-sm text-muted-foreground">Down Payment</p><p className="font-bold">{currencySymbol}{result.downPaymentAmount.toLocaleString(undefined, {maximumFractionDigits: 0})}</p></div>
-                        <div><p className="text-sm text-muted-foreground">Payoff Date</p><p className="font-bold">{format(result.payoffDate, 'MMM yyyy')}</p></div>
-                        <div className="col-span-2 md:col-span-3 grid grid-cols-2 gap-4">
-                            <div><p className="text-sm text-muted-foreground">Total Interest</p><p className="font-bold">{currencySymbol}{result.totalInterest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p></div>
-                            <div><p className="text-sm text-muted-foreground">Total Paid</p><p className="font-bold">{currencySymbol}{(result.loanAmount + result.totalInterest).toLocaleString(undefined, { maximumFractionDigits: 0 })}</p></div>
+                            </TableBody>
+                        </Table>
                         </div>
                     </div>
-                </CardContent>
-            </Card>
-
-            <div className="mt-8">
-                <h3 className="text-xl font-bold text-center mb-4">Amortization Schedule</h3>
-                <div className="h-[400px] overflow-y-auto border rounded-md">
-                <Table>
-                    <TableHeader className="sticky top-0 bg-muted">
-                        <TableRow>
-                            <TableHead>Year</TableHead>
-                            <TableHead className="text-right">Interest</TableHead>
-                            <TableHead className="text-right">Principal</TableHead>
-                            <TableHead className="text-right">Ending Balance</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {result.amortizationSchedule.map((row) => (
-                            <TableRow key={row.year}>
-                                <TableCell className="font-medium">{row.year}</TableCell>
-                                <TableCell className="text-right">{currencySymbol}{row.interest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</TableCell>
-                                <TableCell className="text-right">{currencySymbol}{row.principal.toLocaleString(undefined, { maximumFractionDigits: 0 })}</TableCell>
-                                <TableCell className="text-right">{currencySymbol}{row.balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
                 </div>
+                ) : (
+                    <div className="flex items-center justify-center h-full bg-muted rounded-lg p-8">
+                        <div className="text-center">
+                            <Home className="mx-auto h-12 w-12 text-muted-foreground" />
+                            <p className="mt-4 text-muted-foreground">Your results will appear here.</p>
+                        </div>
+                    </div>
+                )}
             </div>
-            <p className="text-xs text-muted-foreground pt-4 text-center">This is an estimate and does not include potential changes in taxes, insurance, or interest rates for variable loans. Consult a mortgage professional for an exact quote.</p>
-          </div>
-        )}
+        </div>
       </CardContent>
     </Card>
   );

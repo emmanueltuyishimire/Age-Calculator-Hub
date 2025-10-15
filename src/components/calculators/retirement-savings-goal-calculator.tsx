@@ -47,7 +47,6 @@ interface Result {
   totalNeeded: number;
   projectedSavings: number;
   shortfall: number;
-  chartData: { name: string; projected: number; needed: number; }[];
 }
 
 const currencySymbols: { [key: string]: string } = {
@@ -95,9 +94,6 @@ export default function RetirementSavingsGoalCalculator() {
         totalNeeded,
         projectedSavings,
         shortfall: shortfall > 0 ? shortfall : 0,
-        chartData: [
-            { name: 'Retirement Goal', projected: projectedSavings, needed: totalNeeded, },
-        ]
     });
   }
 
@@ -171,18 +167,24 @@ export default function RetirementSavingsGoalCalculator() {
                     </p>
                 </div>
             </div>
-             <div className="h-[250px] w-full mt-4">
+             <div className="h-[60px] w-full mt-4">
                 <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={result.chartData} layout="vertical" margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                        <XAxis type="number" hide />
+                    <BarChart
+                        data={[{ name: 'Savings', projected: result.projectedSavings, needed: result.totalNeeded }]}
+                        layout="vertical"
+                        margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+                        barGap={0}
+                        barCategoryGap={0}
+                    >
+                        <XAxis type="number" hide domain={[0, 'dataMax']} />
                         <YAxis type="category" dataKey="name" hide />
                         <Tooltip
+                            cursor={{fill: 'transparent'}}
                             contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
                             formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`}
                         />
-                        <Legend />
-                        <Bar dataKey="projected" stackId="a" fill="hsl(var(--primary))" name="Projected Savings" />
-                        <Bar dataKey="needed" stackId="b" fill="hsl(var(--secondary))" name="Total Needed" />
+                        <Bar dataKey="projected" stackId="a" fill="hsl(var(--primary))" name="Projected Savings" radius={[4, 4, 4, 4]} />
+                        <Bar dataKey="needed" stackId="b" fill="hsl(var(--secondary))" name="Total Needed" radius={[4, 4, 4, 4]} background={{ fill: 'hsl(var(--muted))', radius: 4 }} data={[{name: 'Needed', needed: result.totalNeeded}]} />
                     </BarChart>
                 </ResponsiveContainer>
             </div>

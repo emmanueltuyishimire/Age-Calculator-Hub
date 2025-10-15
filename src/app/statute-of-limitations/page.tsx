@@ -100,9 +100,7 @@ export default function StatuteOfLimitationsPage() {
                 </Card>
 
                 <Card>
-                    <CardHeader>
-                        <CardTitle>What is a Statute of Limitations?</CardTitle>
-                    </CardHeader>
+                    <CardHeader><CardTitle>What is a Statute of Limitations?</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">A statute of limitations is a law that prescribes the time limit for bringing a legal action. Once the deadline has passed, the claim is 'time-barred,' and the defendant can have the lawsuit dismissed, regardless of its merits. These laws exist to ensure fairness and prevent the litigation of stale claims where evidence may be lost and memories have faded.</p>
                         <p className="text-muted-foreground mt-2">Our estimator uses general timeframes for a few common claim types in a sample of states to demonstrate how these deadlines work. The actual deadline for your case could be different.</p>
@@ -170,5 +168,3 @@ export default function StatuteOfLimitationsPage() {
     </div>
   );
 }
-
-    
