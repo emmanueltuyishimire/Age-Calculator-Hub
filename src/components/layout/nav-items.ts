@@ -41,6 +41,7 @@ import {
   Minus,
   Plus,
   Users,
+  BookOpen,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -311,6 +312,20 @@ export const navItems: NavItem[] = [
     description: 'Calculate your baby\'s age in weeks, months, and days.'
   },
   {
+    href: '/legal-estimators',
+    icon: Scale,
+    label: 'Legal Estimators',
+    category: 'Legal Estimators',
+    description: 'A hub for our informational legal estimators.'
+  },
+  {
+    href: '/statute-of-limitations',
+    icon: BookOpen,
+    label: 'Statute of Limitations Calculator',
+    category: 'Legal Estimators',
+    description: 'Estimate legal filing deadlines for common claims.'
+  },
+  {
     href: '/about',
     icon: Info,
     label: 'About Us',
@@ -354,6 +369,7 @@ const categoryHubs: Record<string, string> = {
   'Pet Age': '/pet-age-calculators',
   'Retirement & Social': '/retirement-calculators',
   'Financial Planning': '/financial-planning',
+  'Legal Estimators': '/legal-estimators',
 };
 
 
@@ -378,6 +394,7 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Pet Age',
     'Financial Planning',
     'Retirement & Social',
+    'Legal Estimators',
     'Company',
     'Legal',
   ];
