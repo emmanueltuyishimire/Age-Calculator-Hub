@@ -49,8 +49,8 @@ export default function ContactPage() {
               <p className="text-muted-foreground">
                 For all inquiries, please send us an email. We do our best to respond to all messages as quickly as possible.
               </p>
-              <a href="mailto:norababysleep@gmail.ccom" className="inline-block mt-2 text-primary text-lg font-semibold hover:underline">
-                  norababysleep@gmail.ccom
+              <a href="mailto:norababysleep@gmail.com" className="inline-block mt-2 text-primary text-lg font-semibold hover:underline">
+                  norababysleep@gmail.com
               </a>
               <p className="text-xs text-muted-foreground mt-4">
                 Thank you for your interest in Calculator Hub!

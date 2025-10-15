@@ -72,13 +72,6 @@ export const articles: Article[] = [
     publishedDate: '2024-10-08',
   },
   {
-    slug: 'what-is-chronological-age',
-    title: 'What Is Chronological Age?',
-    description: 'This article defines chronological age and explains its importance as the most common measure of how long a person has been alive.',
-    category: 'Core Concepts',
-    publishedDate: '2024-10-21',
-  },
-  {
     slug: 'how-to-tell-a-dogs-age',
     title: "How to Tell a Dog's Age: A Detective's Guide",
     description: 'Learn how to estimate a rescue or adopted dog\'s age by examining their teeth, eyes, coat, and energy level. A guide for curious pet owners.',
@@ -331,5 +324,3 @@ export const articles: Article[] = [
     publishedDate: '2024-12-06'
   }
 ].sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
-
-    

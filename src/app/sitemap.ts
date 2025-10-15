@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Calculator and hub pages
   const pages = navItems
-    .filter(item => item.category !== 'Legal' && item.category !== 'Company' && !item.href.includes('core-age-calculators') && !item.href.includes('health-assessments'))
+    .filter(item => item.category !== 'Legal' && item.category !== 'Company')
     .map((item) => ({
       url: `${baseUrl}${item.href}`,
       lastModified: lastModified,
