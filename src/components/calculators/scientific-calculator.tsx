@@ -18,12 +18,13 @@ const basicButtons = [
 ];
 
 const scientificButtons = [
-  ['sin', 'cos', 'tan', 'Deg', 'Rad'],
+  ['sin', 'cos', 'tan', 'Deg/Rad'],
   ['asin', 'acos', 'atan', 'π', 'e'],
-  ['(', ')', '^', '√', 'ln'],
-  ['Ans', 'exp', 'log', 'n!', '1/x'],
-  ['M+', 'M-', 'MR', 'RND', 'E'],
+  ['x^y', 'x^3', 'x^2', 'exp', '10^x'],
+  ['y√x', '3√x', '√', 'ln', 'log'],
+  ['(', ')', '1/x', 'n!'],
 ];
+
 
 const getVariant = (btn: any) => {
   const btnStr = typeof btn === 'string' ? btn : 'Backspace';
@@ -32,7 +33,11 @@ const getVariant = (btn: any) => {
   if (['+', '−', '×', '÷', '='].includes(btnStr)) return 'secondary';
   if (typeof btn !== 'string') return 'secondary';
 
-  const scientificOps = ['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e', '(', ')', '^', '√', 'ln', 'Ans', 'exp', 'log', 'n!', '1/x', 'M+', 'M-', 'MR', 'RND', 'E', 'Deg', 'Rad'];
+  const scientificOps = [
+    'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e', 'x^y', 'x^3', 'x^2',
+    'exp', '10^x', 'y√x', '3√x', '√', 'ln', 'log', '(', ')', '1/x', 'n!',
+    'Deg/Rad', 'Ans', 'M+', 'M-', 'MR', 'RND', 'E'
+  ];
   if (scientificOps.includes(btnStr)) return 'outline';
 
   return 'default';
@@ -106,7 +111,7 @@ const ScientificCalculator = () => {
           setExpression('');
         }
 
-        if (isResult && !['+', '−', '×', '÷', '^', '%', '='].includes(value)) {
+        if (isResult && !['+', '−', '×', '÷', '^', '%'].includes(value) && value !== '=') {
             setExpression('');
             setIsResult(false);
         } else {
@@ -124,13 +129,10 @@ const ScientificCalculator = () => {
             case '=':
                 calculate();
                 break;
-            case 'Deg':
-                setIsDeg(true);
+            case 'Deg/Rad':
+                setIsDeg(prev => !prev);
                 break;
-            case 'Rad':
-                setIsDeg(false);
-                break;
-            case 'sin': case 'cos': case 'tan': case 'asin': case 'acos': case 'atan': case 'log': case 'ln': case '√': case 'exp':
+            case 'sin': case 'cos': case 'tan': case 'asin': case 'acos': case 'atan': case 'log': case 'ln': case '√': case 'exp': case '3√x':
                 setExpression(prev => prev + value + '(');
                 break;
             case '1/x':
@@ -144,6 +146,24 @@ const ScientificCalculator = () => {
                 break;
             case 'e':
                 setExpression(prev => prev + 'e');
+                break;
+             case 'x^y':
+                setExpression(prev => prev + '^');
+                break;
+            case 'x^2':
+                setExpression(prev => `(${prev || '0'})^2`);
+                break;
+            case 'x^3':
+                setExpression(prev => `(${prev || '0'})^3`);
+                break;
+            case '10^x':
+                setExpression(prev => `10^(${prev || '0'})`);
+                break;
+            case 'y√x':
+                // This is more complex, might require two inputs. For simplicity, let's treat it as nth root.
+                // e.g. nthRoot(value, root)
+                // This will be tricky with current input method. Let's make it a power for now.
+                setExpression(prev => prev + '^(1/');
                 break;
             case 'Ans':
                 setExpression(prev => prev + ans.toString());
@@ -234,23 +254,6 @@ const ScientificCalculator = () => {
         }
     }, [expression]);
 
-    const renderButtonWithIndicator = (btn: string, isActive: boolean) => (
-      <Button
-          key={`sci-${btn}`}
-          variant={getVariant(btn)}
-          className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1 relative")}
-          onClick={() => handleButtonClick(btn)}
-      >
-          {isActive && (
-              <div className="absolute top-1 right-1 h-3 w-3 rounded-full border border-blue-500 flex items-center justify-center">
-                  <div className="h-1.5 w-1.5 rounded-full bg-green-500"></div>
-              </div>
-          )}
-          {btn}
-      </Button>
-  );
-
-
   return (
     <div className="bg-card border rounded-lg p-2 sm:p-3 w-full max-w-2xl shadow-lg">
       <Input
@@ -262,25 +265,22 @@ const ScientificCalculator = () => {
       />
       <div className="grid grid-cols-2 gap-2 sm:gap-3">
         {/* Scientific Calculator Part */}
-        <div className="grid grid-cols-5 gap-1 sm:gap-2">
-            {scientificButtons.flat().map((btn) => {
-                if (btn === 'Deg') {
-                    return renderButtonWithIndicator(btn, isDeg);
-                }
-                if (btn === 'Rad') {
-                    return renderButtonWithIndicator(btn, !isDeg);
-                }
-                return (
-                    <Button
-                        key={`sci-${btn}`}
-                        variant={getVariant(btn)}
-                        className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1")}
-                        onClick={() => handleButtonClick(btn)}
-                    >
-                        {btn}
-                    </Button>
-                )
-            })}
+        <div className="grid grid-cols-4 gap-1 sm:gap-2">
+            {scientificButtons.flat().map((btn, index) => (
+                <Button
+                    key={`sci-${index}-${btn}`}
+                    variant={getVariant(btn)}
+                    className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1 relative")}
+                    onClick={() => handleButtonClick(btn)}
+                >
+                    {btn === 'Deg/Rad' ? (isDeg ? 'Deg' : 'Rad') : btn}
+                     {btn === 'Deg/Rad' && (
+                        <div className="absolute top-1 right-1 h-3 w-3 rounded-full border border-blue-500 flex items-center justify-center">
+                            <div className="h-1.5 w-1.5 rounded-full bg-green-500"></div>
+                        </div>
+                    )}
+                </Button>
+            ))}
         </div>
         {/* Basic Calculator Part */}
         <div className="grid grid-cols-4 gap-1 sm:gap-2">
