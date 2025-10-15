@@ -34,9 +34,10 @@ interface SearchableItem {
 }
 
 export function SearchBar() {
-  const [open, setOpen] = React.useState(false);
-  const [query, setQuery] = React.useState('');
-  const router = useRouter();
+  const [open, setOpen] = React.useState(false)
+  const [query, setQuery] = React.useState("")
+  const [submittedQuery, setSubmittedQuery] = React.useState("")
+  const router = useRouter()
 
   const searchableItems: SearchableItem[] = React.useMemo(() => {
     const calculatorItems = navItems
@@ -64,16 +65,16 @@ export function SearchBar() {
   }), [searchableItems]);
 
   const results = React.useMemo(() => {
-    if (!query) {
+    if (!submittedQuery) {
       const allCalculators = searchableItems.filter(i => i.type === 'calculator');
       const allArticles = searchableItems.filter(i => i.type === 'article');
-      return { calculators: allCalculators.slice(0, 5), articles: allArticles.slice(0, 5) };
+      return { calculators: allCalculators.slice(0, 5), articles: allArticles.slice(0, 5), hasResults: true };
     }
-    const searchResults = fuse.search(query);
+    const searchResults = fuse.search(submittedQuery);
     const calculators = searchResults.filter(r => r.item.type === 'calculator').map(r => r.item);
     const articles = searchResults.filter(r => r.item.type === 'article').map(r => r.item);
-    return { calculators, articles };
-  }, [query, fuse, searchableItems]);
+    return { calculators, articles, hasResults: calculators.length > 0 || articles.length > 0 };
+  }, [submittedQuery, fuse, searchableItems]);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -100,6 +101,16 @@ export function SearchBar() {
     command()
   }, [])
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmittedQuery(query);
+  }
+
+  const handleClear = () => {
+    setQuery("");
+    setSubmittedQuery("");
+  }
+
   return (
     <>
       <Button
@@ -118,18 +129,21 @@ export function SearchBar() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="overflow-hidden p-0 shadow-lg">
           <DialogHeader className="sr-only">
-            <DialogTitle>Search Calculators and Articles</DialogTitle>
-            <DialogDescription>Type to search for a specific calculator or article on the site.</DialogDescription>
+            <DialogTitle>Search</DialogTitle>
+            <DialogDescription>Search for calculators and articles</DialogDescription>
           </DialogHeader>
           <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-            <CommandInput
-              placeholder="Type to search..."
-              value={query}
-              onValueChange={setQuery}
-              onClear={() => setQuery('')}
-            />
+            <form onSubmit={handleSearchSubmit}>
+              <CommandInput
+                placeholder="Type to search..."
+                value={query}
+                onValueChange={setQuery}
+                onClear={handleClear}
+              />
+            </form>
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
+              {!results.hasResults && <CommandEmpty>No results found.</CommandEmpty>}
+
               {results.calculators.length > 0 && (
                  <CommandGroup heading="Calculators">
                     {results.calculators.map((item) => (
