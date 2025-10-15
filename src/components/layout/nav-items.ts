@@ -37,6 +37,9 @@ import {
   Goal,
   Landmark,
   PieChart,
+  Brain,
+  Minus,
+  Plus,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -139,18 +142,32 @@ export const navItems: NavItem[] = [
     description: 'Find your ideal heart rate zones for exercise (fat burn, cardio, peak).'
   },
   {
-    href: '/health-assessments',
-    icon: Stethoscope,
-    label: 'Health Metric Calculators',
-    category: 'Scientific & Health Age',
-    description: 'Tools to assess BMI, BMR, Body Fat, and other key health markers.'
-  },
-  {
     href: '/macro-calculator',
     icon: PieChart,
-    label: 'Macronutrient Calculator',
+    label: 'Macro Calculator',
     category: 'Scientific & Health Age',
     description: 'Get daily protein, carb, and fat intake recommendations.'
+  },
+  {
+    href: '/bmi-calculator',
+    icon: Scale,
+    label: 'BMI Calculator',
+    category: 'Scientific & Health Age',
+    description: 'Calculate your Body Mass Index to assess your weight status.'
+  },
+  {
+    href: '/bmr-calculator',
+    icon: Brain,
+    label: 'BMR Calculator',
+    category: 'Scientific & Health Age',
+    description: 'Estimate your Basal Metabolic Rate (calories burned at rest).'
+  },
+  {
+    href: '/body-fat-calculator',
+    icon: Stethoscope,
+    label: 'Body Fat Calculator',
+    category: 'Scientific & Health Age',
+    description: 'Estimate your body fat percentage using the U.S. Navy method.'
   },
   {
     href: '/dog-age',
