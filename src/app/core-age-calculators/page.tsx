@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'Core Age Calculators - Chronological & Birthday Tools',
     description: 'Explore our fundamental tools for calculating chronological age. Find your exact age in years, months, and days, or count down to your next birthday with our precise and easy-to-use calculators.',
     alternates: {
-        canonical: '/health-fitness-calculators',
+        canonical: '/core-age-calculators',
     },
 };
 
@@ -19,7 +19,7 @@ export default function CoreAgeCalculatorsHub() {
           Your fundamental tools for calculating chronological age. Find your exact age in years, months, and days, or count down to your next birthday with our precise and easy-to-use calculators.
         </p>
       </div>
-      <CategoryHubClient categoryName="Fitness & Health Calculators" />
+      <CategoryHubClient categoryName="Core Age Calculators" />
     </main>
   );
 }

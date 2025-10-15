@@ -78,6 +78,43 @@ export const navItems: NavItem[] = [
     description: 'Read our latest articles.'
   },
 
+  // Core Age Calculators
+  {
+    href: '/core-age-calculators',
+    icon: Clock,
+    label: 'Core Age Calculators',
+    category: 'Core Age Calculators',
+    description: 'A hub for chronological age and birthday tools.'
+  },
+  {
+    href: '/age-calculator',
+    icon: Clock,
+    label: 'Age Calculator',
+    category: 'Core Age Calculators',
+    description: 'Calculates age from date of birth in years, months, and days.'
+  },
+  {
+    href: '/birthday-age-calculator',
+    icon: Cake,
+    label: 'Birthday Calculator',
+    category: 'Core Age Calculators',
+    description: 'Find your exact age and see a live countdown to your next birthday.'
+  },
+  {
+    href: '/how-old-is',
+    icon: HelpCircle,
+    label: 'How Old Is...?',
+    category: 'Core Age Calculators',
+    description: 'A quick age finder to determine how old someone is from their birth date.'
+  },
+  {
+    href: '/age-calculator-by-year',
+    icon: CalendarIcon,
+    label: 'Age by Year Calculator',
+    category: 'Core Age Calculators',
+    description: 'Quickly estimate age by only entering the year of birth.'
+  },
+
   // Fitness & Health Calculators
   {
     href: '/health-fitness-calculators',
@@ -85,27 +122,6 @@ export const navItems: NavItem[] = [
     label: 'Fitness & Health Calculators',
     category: 'Fitness & Health Calculators',
     description: 'A hub for all health, fitness, and scientific calculators.'
-  },
-  {
-    href: '/age-calculator',
-    icon: Clock,
-    label: 'Age Calculator',
-    category: 'Fitness & Health Calculators',
-    description: 'Calculates age from date of birth in years, months, and days.'
-  },
-  {
-    href: '/birthday-age-calculator',
-    icon: Cake,
-    label: 'Birthday Calculator',
-    category: 'Fitness & Health Calculators',
-    description: 'Find your exact age and see a live countdown to your next birthday.'
-  },
-  {
-    href: '/how-old-is',
-    icon: HelpCircle,
-    label: 'How Old Is...?',
-    category: 'Fitness & Health Calculators',
-    description: 'A quick age finder to determine how old someone is from their birth date.'
   },
   {
     href: '/biological-age',
@@ -316,14 +332,7 @@ export const navItems: NavItem[] = [
     category: 'Other Calculators',
     description: 'Get a simple estimate of potential child support payments.'
   },
-   {
-    href: '/age-calculator-by-year',
-    icon: CalendarIcon,
-    label: 'Age by Year Calculator',
-    category: 'Other Calculators',
-    description: 'Quickly estimate age by only entering the year of birth.'
-  },
-
+  
   // Company & Legal Links (for footer and mobile nav)
   {
     href: '/about',
@@ -365,6 +374,7 @@ export const navItems: NavItem[] = [
 const categoryHubs: Record<string, string> = {
   'Financial Calculators': '/financial-calculators',
   'Fitness & Health Calculators': '/health-fitness-calculators',
+  'Core Age Calculators': '/core-age-calculators',
   'Math Calculators': '/math-calculators',
   'Other Calculators': '/other-calculators',
 };
@@ -385,6 +395,7 @@ export const categorizedNavItems = (): NavCategory[] => {
   // Define the desired order
   const categoryOrder = [
     'Navigation',
+    'Core Age Calculators',
     'Financial Calculators',
     'Fitness & Health Calculators',
     'Math Calculators',

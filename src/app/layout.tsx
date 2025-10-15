@@ -1,17 +1,10 @@
 
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { PT_Sans } from 'next/font/google';
 import { AppLayout } from '@/components/layout/app-layout';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/layout/theme-provider';
 import './globals.css';
-
-const ptSans = PT_Sans({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-pt-sans',
-});
 
 
 export const metadata: Metadata = {
@@ -72,13 +65,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${ptSans.variable}`} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <Script
           id="gtag-init"
-          strategy="afterInteractive"
+          strategy="worker"
         >
           {`
             window.dataLayer = window.dataLayer || [];
@@ -89,13 +82,14 @@ export default function RootLayout({
         </Script>
          <Script
           id="gtag-js"
-          strategy="afterInteractive"
+          strategy="worker"
           src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"
         />
          <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
           crossOrigin="anonymous"
+          type="text/partytown"
         ></script>
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
