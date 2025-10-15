@@ -11,10 +11,10 @@ import { evaluate } from 'mathjs';
 
 const scientificButtons = [
     ['sin', 'cos', 'tan'],
-    [<span>sin<sup>-1</sup></span>, <span>cos<sup>-1</sup></span>, <span>tan<sup>-1</sup></span>],
-    [<span>x<sup>y</sup></span>, <span>x<sup>3</sup></span>, <span>x<sup>2</sup></span>],
+    [<span key="asin">sin<sup>-1</sup></span>, <span key="acos">cos<sup>-1</sup></span>, <span key="atan">tan<sup>-1</sup></span>],
+    [<span key="pow">x<sup>y</sup></span>, <span key="pow3">x<sup>3</sup></span>, <span key="pow2">x<sup>2</sup></span>],
     ['ln', 'log', '√'],
-    [<span>e<sup>x</sup></span>, <span>10<sup>x</sup></span>, 'n!'],
+    [<span key="epow">e<sup>x</sup></span>, <span key="10pow">10<sup>x</sup></span>, 'n!'],
     ['(', ')', '%'],
 ];
 
@@ -27,7 +27,6 @@ const basicButtons = [
 ];
 
 const memoryButtons = ['M+', 'M-', 'MR'];
-
 
 const factorial = (n: number): number => {
     if (n < 0 || n !== Math.floor(n)) return NaN;
@@ -96,7 +95,6 @@ const ScientificCalculator = () => {
             if (btn.type === Trash2 || btn.key === 'backspace') {
                 value = 'backspace';
              } else if (btn.props?.children) {
-                 // Handles sup/sub scripts
                  value = React.Children.toArray(btn.props.children).join('');
              } else {
                  value = String(btn.key);
@@ -241,7 +239,7 @@ const ScientificCalculator = () => {
     if (['+', '−', '×', '÷'].includes(value)) return 'secondary';
     if (value === '=') return 'default';
     if (value === 'AC') return 'destructive';
-    if (['Ans', 'M+', 'M-', 'MR'].includes(value)) return 'secondary';
+    if (['Ans', 'M+', 'M-', 'MR'].includes(value)) return 'outline';
 
     return 'outline';
   }
@@ -261,12 +259,12 @@ const ScientificCalculator = () => {
   };
 
   return (
-    <div className="bg-card border rounded-lg p-2 sm:p-4 w-full max-w-4xl mx-auto shadow-lg">
+    <div className="bg-muted border rounded-lg p-2 sm:p-4 w-full max-w-4xl mx-auto shadow-lg">
       <Input
         type="text"
         value={display}
         readOnly
-        className="w-full h-20 text-4xl text-right mb-2 bg-muted pr-4"
+        className="w-full h-20 text-4xl text-right mb-2 bg-background pr-4"
         aria-label="Calculator display"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -283,7 +281,7 @@ const ScientificCalculator = () => {
                })
              ))}
              {memoryButtons.map(btn => (
-                  <Button key={btn} variant="secondary" className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>{btn}</Button>
+                  <Button key={btn} variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>{btn}</Button>
              ))}
         </div>
         {/* Basic Keypad Panel */}
