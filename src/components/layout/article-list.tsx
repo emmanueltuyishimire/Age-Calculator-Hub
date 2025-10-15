@@ -24,13 +24,13 @@ export default function ArticleList({ articleCount, category }: ArticleListProps
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {articlesToDisplay.map((article) => (
         <Link href={`/articles/${article.slug}`} key={article.slug} className="block hover:no-underline group">
-          <Card className="h-full flex flex-col hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary/50 group-hover:bg-card/50">
-            <CardHeader className="flex-grow">
+          <Card className="h-full flex flex-col hover:shadow-xl transition-shadow duration-300 ease-in-out group-hover:border-primary/50">
+            <CardHeader className="flex-grow pb-4">
               <p className="text-sm text-primary font-semibold mb-2">{article.category}</p>
-              <CardTitle className="text-lg leading-tight group-hover:text-primary">{article.title}</CardTitle>
+              <CardTitle className="text-lg leading-snug group-hover:text-primary">{article.title}</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-sm">{article.description}</CardDescription>
+              <CardDescription className="text-sm line-clamp-2">{article.description}</CardDescription>
             </CardContent>
           </Card>
         </Link>
