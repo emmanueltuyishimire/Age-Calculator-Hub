@@ -43,7 +43,8 @@ import {
   Hash,
   DollarSign,
   Car,
-  FlaskConical
+  FlaskConical,
+  Percent,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -249,6 +250,13 @@ export const navItems: NavItem[] = [
     label: 'Scientific Calculator',
     category: 'Math Calculators',
     description: 'An online scientific calculator with advanced functions.'
+  },
+   {
+    href: '/percentage-calculator',
+    icon: Percent,
+    label: 'Percentage Calculator',
+    category: 'Math Calculators',
+    description: 'A suite of tools for all your percentage calculation needs.'
   },
   
   // Other Calculators (Pet, Legal, etc. might go here or their own categories)
