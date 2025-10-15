@@ -9,18 +9,25 @@ import { cn } from '@/lib/utils';
 import { Trash2 } from 'lucide-react';
 import { evaluate } from 'mathjs';
 
-const scientificButtonRows = [
-    ['sin', 'cos', 'tan', 'DegRad'],
-    [<span>sin<sup>-1</sup></span>, <span>cos<sup>-1</sup></span>, <span>tan<sup>-1</sup></span>, 'π', 'e'],
-    [<span>x<sup>y</sup></span>, <span>x<sup>3</sup></span>, <span>x<sup>2</sup></span>, <span>e<sup>x</sup></span>, <span>10<sup>x</sup></span>],
-    [<span><sup>y</sup>√x</span>, <span><sup>3</sup>√x</span>, '√', 'ln', 'log'],
-    ['(', ')', '1/x', '%', 'n!'],
-    ['7', '8', '9', '+', <Trash2 key="backspace" />],
-    ['4', '5', '6', '−', 'Ans'],
-    ['1', '2', '3', '×', 'M+'],
-    ['0', '.', 'EXP', '÷', 'M-'],
-    ['±', 'RND', 'AC', '=', 'MR'],
+const scientificButtons = [
+    ['sin', 'cos', 'tan'],
+    [<span>sin<sup>-1</sup></span>, <span>cos<sup>-1</sup></span>, <span>tan<sup>-1</sup></span>],
+    [<span>x<sup>y</sup></span>, <span>x<sup>3</sup></span>, <span>x<sup>2</sup></span>],
+    ['ln', 'log', '√'],
+    [<span>e<sup>x</sup></span>, <span>10<sup>x</sup></span>, 'n!'],
+    ['(', ')', '%'],
 ];
+
+const basicButtons = [
+    ['AC', <Trash2 key="backspace" />, 'Ans', '÷'],
+    ['7', '8', '9', '×'],
+    ['4', '5', '6', '−'],
+    ['1', '2', '3', '+'],
+    ['0', '.', '±', '='],
+];
+
+const memoryButtons = ['M+', 'M-', 'MR'];
+
 
 const factorial = (n: number): number => {
     if (n < 0 || n !== Math.floor(n)) return NaN;
@@ -88,8 +95,11 @@ const ScientificCalculator = () => {
         } else if (React.isValidElement(btn)) {
             if (btn.type === Trash2 || btn.key === 'backspace') {
                 value = 'backspace';
-             } else if (btn.key) {
-                value = String(btn.key);
+             } else if (btn.props?.children) {
+                 // Handles sup/sub scripts
+                 value = React.Children.toArray(btn.props.children).join('');
+             } else {
+                 value = String(btn.key);
              }
         }
         
@@ -152,7 +162,8 @@ const ScientificCalculator = () => {
                     return `-(${prev})`;
                 });
                 break;
-            case 'DegRad': setIsDeg(prev => !prev); break;
+            case 'Deg': setIsDeg(true); break;
+            case 'Rad': setIsDeg(false); break;
             case 'EXP': setExpression(prev => prev + 'e+'); break;
             case 'RND': setExpression(prev => prev + Math.random().toPrecision(8)); break;
             default:
@@ -224,7 +235,7 @@ const ScientificCalculator = () => {
         value = btn;
     } else if (React.isValidElement(btn)) {
         if (btn.type === Trash2) return 'secondary';
-        if (btn.key) value = String(btn.key);
+        if (btn.props?.children) value = React.Children.toArray(btn.props.children).join('');
     }
     
     if (['+', '−', '×', '÷'].includes(value)) return 'secondary';
@@ -235,8 +246,22 @@ const ScientificCalculator = () => {
     return 'outline';
   }
 
+  const renderButtonWithIndicator = (btn: string) => {
+    const isActive = (btn === 'Deg' && isDeg) || (btn === 'Rad' && !isDeg);
+    return (
+      <Button
+        key={btn}
+        variant={isActive ? 'default' : 'outline'}
+        className={cn('h-10 text-xs p-1 flex-1', isActive && 'bg-green-600 hover:bg-green-700')}
+        onClick={() => handleButtonClick(btn)}
+      >
+        {btn}
+      </Button>
+    );
+  };
+
   return (
-    <div className="bg-card border rounded-lg p-2 sm:p-4 w-full max-w-[480px] mx-auto shadow-lg">
+    <div className="bg-card border rounded-lg p-2 sm:p-4 w-full max-w-4xl mx-auto shadow-lg">
       <Input
         type="text"
         value={display}
@@ -244,36 +269,36 @@ const ScientificCalculator = () => {
         className="w-full h-20 text-4xl text-right mb-2 bg-muted pr-4"
         aria-label="Calculator display"
       />
-      <div className="grid grid-cols-5 gap-1">
-        {scientificButtonRows.flat().map((btn, index) => {
-            let value: string;
-            let key: string | number;
-            
-            if (typeof btn === 'string') {
-                value = btn;
-                key = btn;
-            } else if (React.isValidElement(btn)) {
-                value = (btn.key as string) || `icon-${index}`;
-                key = value;
-            } else {
-                value = `btn-${index}`;
-                key = index;
-            }
-            
-            if(value === 'DegRad') {
-                return (
-                    <Button key="deg-rad-toggle" variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick('DegRad')}>
-                       {isDeg ? 'Deg' : 'Rad'}
-                    </Button>
-                )
-            }
-            
-             return (
-              <Button key={key} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>
-                {btn}
-              </Button>
-            );
-          })}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {/* Scientific Functions Panel */}
+        <div className="grid grid-cols-3 gap-1">
+            <div className="col-span-3 flex gap-1">
+                {renderButtonWithIndicator('Deg')}
+                {renderButtonWithIndicator('Rad')}
+            </div>
+             {scientificButtons.map((row, rowIndex) => (
+               row.map((btn, btnIndex) => {
+                 let value = typeof btn === 'string' ? btn : `btn-${rowIndex}-${btnIndex}`;
+                 return <Button key={value} variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>{btn}</Button>
+               })
+             ))}
+             {memoryButtons.map(btn => (
+                  <Button key={btn} variant="secondary" className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>{btn}</Button>
+             ))}
+        </div>
+        {/* Basic Keypad Panel */}
+        <div className="grid grid-cols-4 gap-1">
+            {basicButtons.map(row => (
+                row.map(btn => {
+                    let value = typeof btn === 'string' ? btn : (btn.key || 'backspace');
+                    return (
+                        <Button key={value} variant={getVariant(btn)} className={cn("h-10 text-xs p-1 text-base", value === '0' && 'col-span-2')} onClick={() => handleButtonClick(btn)}>
+                            {btn}
+                        </Button>
+                    );
+                })
+            ))}
+        </div>
       </div>
     </div>
   );
