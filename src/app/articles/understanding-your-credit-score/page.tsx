@@ -49,6 +49,31 @@ const faqs = [
     }
 ];
 
+const articleSchema = article ? {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": article.description,
+    "datePublished": article.publishedDate,
+    "author": {
+        "@type": "Organization",
+        "name": "Calculator Hub"
+    }
+} : null;
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+        }
+    }))
+};
+
 export default function CreditScorePage() {
   if (!article) {
     notFound();
@@ -56,6 +81,14 @@ export default function CreditScorePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {articleSchema && <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />}
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <main role="main" className="max-w-4xl mx-auto">
         <article className="prose dark:prose-invert lg:prose-xl max-w-none">
           <div className="text-center mb-12">
@@ -76,7 +109,7 @@ export default function CreditScorePage() {
             {factors.map((factor) => (
               <Card key={factor.name}>
                 <CardHeader className="flex flex-row items-center gap-4">
-                    <factor.icon className="h-8 w-8 text-primary" />
+                    <factor.icon className="h-8 w-8 text-primary" aria-hidden="true" />
                     <CardTitle className="text-xl">{factor.name}</CardTitle>
                 </CardHeader>
                 <CardContent>

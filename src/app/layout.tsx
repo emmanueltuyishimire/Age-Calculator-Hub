@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://innerpeacejournals.com'),
   title: {
     default: 'Calculator Hub – Free Online Financial, Health & Math Calculators',
-    template: '%s – Calculator Hub',
+    template: '%s',
   },
   description:
     'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
@@ -28,11 +28,14 @@ export const metadata: Metadata = {
     'max-snippet': -1,
     'max-image-preview': 'large',
     'max-video-preview': -1,
-    'noarchive': true,
-    'notranslate': true,
-    'noimageindex': true,
-    'nositelinkssearchbox': true,
-    'unavailable_after': '2025-10-15T10:51:19Z',
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
    alternates: {
     canonical: 'https://innerpeacejournals.com',
@@ -49,8 +52,8 @@ export const metadata: Metadata = {
     description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
   },
   icons: {
-    icon: '/favicon.png',
-    apple: '/apple-touch-icon.png',
+    icon: '/logo.png',
+    apple: '/logo.png',
   },
 };
 
@@ -62,9 +65,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ptSans.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"

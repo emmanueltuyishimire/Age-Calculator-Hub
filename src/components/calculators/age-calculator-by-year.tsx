@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { RefreshCcw } from 'lucide-react';
 import {
   Card,
@@ -21,7 +21,7 @@ export default function AgeCalculatorByYear() {
   const [age, setAge] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleCalculate = () => {
+  const handleCalculate = useCallback(() => {
     const year = parseInt(birthYear, 10);
     const currentYear = new Date().getFullYear();
 
@@ -34,13 +34,13 @@ export default function AgeCalculatorByYear() {
     setError(null);
     const calculatedAge = currentYear - year;
     setAge(calculatedAge);
-  };
+  }, [birthYear]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
       setBirthYear('');
       setAge(null);
       setError(null);
-  }
+  }, []);
 
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg animate-fade-in">

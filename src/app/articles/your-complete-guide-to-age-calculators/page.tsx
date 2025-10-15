@@ -22,7 +22,7 @@ export function generateMetadata(): Metadata {
         canonical: `/articles/${article.slug}`,
     },
     openGraph: {
-        title: article.title,
+        title: 'Your Complete Guide to Calculator Hub',
         description: article.description,
         type: 'article',
         publishedTime: article.publishedDate,
@@ -58,7 +58,7 @@ export default function AgeCalculatorAppArticle() {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": article.title,
+    "headline": 'Your Complete Guide to Calculator Hub',
     "description": article.description,
     "datePublished": article.publishedDate,
     "author": {
@@ -90,6 +90,7 @@ const faqSchema = {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <main role="main" className="max-w-4xl mx-auto">
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
@@ -98,7 +99,6 @@ const faqSchema = {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <main role="main" className="max-w-4xl mx-auto">
         <article className="prose dark:prose-invert lg:prose-xl max-w-none">
           <div className="text-center mb-12">
             <p className="text-base text-primary font-semibold">{article.category}</p>
@@ -214,7 +214,7 @@ const faqSchema = {
                     <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Accurate & Reliable:</strong> Our tools are built on up-to-date formulas and official scientific and governmental data to provide trustworthy results.</span></li>
                     <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Completely Free & Accessible:</strong> No fees, no sign-ups, no paywalls. Just instant, accessible information for everyone.</span></li>
                     <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Private & Secure:</strong> All calculations are performed in your browser. We do not see, track, or store your personal data. Your privacy is guaranteed.</span></li>
-                     <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Comprehensive & User-Friendly:</strong> We aim to provide a calculator for nearly every need in a clean, easy-to-use interface that works perfectly on any device.</span></li>
+                     <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>User-Friendly:</strong> We aim to provide a calculator for nearly every need in a clean, easy-to-use interface that works perfectly on any device.</span></li>
                 </ul>
             </CardContent>
           </Card>

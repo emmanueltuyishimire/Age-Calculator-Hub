@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { intervalToDuration, isValid, isFuture, format, differenceInYears, differenceInMonths } from 'date-fns';
 import {
   Card,
@@ -39,7 +39,7 @@ export default function HowOldIsCalculator() {
   const monthYearYearRef = useRef<HTMLInputElement>(null);
   const yearYearRef = useRef<HTMLInputElement>(null);
 
-  const handleCalculate = () => {
+  const handleCalculate = useCallback(() => {
     setError(null);
     setAgeResult(undefined);
 
@@ -93,13 +93,13 @@ export default function HowOldIsCalculator() {
             text: `Someone born in ${yearNum} is or will be this year:`
         });
     }
-  };
+  }, [dob, mode]);
   
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
       setDob({ day: '', month: '', year: '' });
       setAgeResult(undefined);
       setError(null);
-  }
+  }, []);
 
   const handleDobChange = (field: 'day' | 'month' | 'year', value: string) => {
     setDob(prev => ({...prev, [field]: value}));
@@ -114,7 +114,7 @@ export default function HowOldIsCalculator() {
     setAgeResult(undefined);
   };
   
-  const renderInputs = () => {
+  const renderInputs = useCallback(() => {
     switch(mode) {
       case 'year':
         return (
@@ -139,14 +139,14 @@ export default function HowOldIsCalculator() {
           </div>
         );
     }
-  }
+  }, [mode, dob]);
 
   useEffect(() => {
     handleReset();
     if(mode === 'full') fullDayRef.current?.focus();
     if(mode === 'monthYear') monthYearMonthRef.current?.focus();
     if(mode === 'year') yearYearRef.current?.focus();
-  }, [mode]);
+  }, [mode, handleReset]);
 
   return (
     <Card className="w-full max-w-lg mx-auto shadow-lg animate-fade-in">

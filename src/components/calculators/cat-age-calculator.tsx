@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -82,18 +82,18 @@ export default function CatAgeCalculator() {
   }, [form]);
 
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = useCallback((values: z.infer<typeof formSchema>) => {
     localStorage.setItem('catAgeCalculator', JSON.stringify(values));
     const humanAge = calculateCatAge(values.catAgeYears, values.catAgeMonths);
     const { lifeStage, tip } = getLifeStageAndTip(humanAge);
     setResult({ humanAge, lifeStage, tip });
-  }
+  }, []);
 
-  function handleReset() {
+  const handleReset = useCallback(() => {
       form.reset({ catAgeYears: 0, catAgeMonths: 0});
       setResult(null);
       localStorage.removeItem('catAgeCalculator');
-  }
+  }, [form]);
 
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg animate-fade-in">

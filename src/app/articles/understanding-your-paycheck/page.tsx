@@ -50,17 +50,17 @@ const faqs = [
     }
 ];
 
-const articleSchema = {
+const articleSchema = article ? {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": article?.title,
-    "description": article?.description,
-    "datePublished": article?.publishedDate,
+    "headline": article.title,
+    "description": article.description,
+    "datePublished": article.publishedDate,
     "author": {
         "@type": "Organization",
         "name": "Calculator Hub"
     }
-};
+} : null;
 
 const faqSchema = {
     "@context": "https://schema.org",
@@ -82,10 +82,10 @@ export default function PaycheckGuidePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-        <script
+        {articleSchema && <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-        />
+        />}
         <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

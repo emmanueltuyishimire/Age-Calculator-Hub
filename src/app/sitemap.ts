@@ -8,9 +8,9 @@ const baseUrl = 'https://innerpeacejournals.com';
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  // All calculator pages
+  // All calculator pages and hub pages
   const calculatorPages = navItems
-    .filter(item => !item.href.includes('/articles') && item.href !== '/faq' && !item.href.includes('calculator-hub'))
+    .filter(item => item.category !== 'Navigation' && item.category !== 'Company' && item.category !== 'Legal')
     .map((item) => ({
       url: `${baseUrl}${item.href}`,
       lastModified: lastModified,

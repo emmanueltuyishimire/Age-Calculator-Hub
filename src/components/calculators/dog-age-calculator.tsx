@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -111,18 +111,18 @@ export default function DogAgeCalculator() {
   }, [form]);
 
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = useCallback((values: z.infer<typeof formSchema>) => {
     localStorage.setItem('dogAgeCalculator', JSON.stringify(values));
     const humanAge = calculateDogAge(values.dogAgeYears, values.dogAgeMonths, values.dogSize as DogSize);
     const { lifeStage, tip } = getLifeStageAndTip(humanAge);
     setResult({ humanAge, lifeStage, tip });
-  }
+  }, []);
 
-  function handleReset() {
+  const handleReset = useCallback(() => {
       form.reset({ dogAgeYears: 0, dogAgeMonths: 0, dogSize: 'medium' });
       setResult(null);
       localStorage.removeItem('dogAgeCalculator');
-  }
+  }, [form]);
 
 
   return (

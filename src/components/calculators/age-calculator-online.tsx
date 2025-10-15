@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { format, intervalToDuration, differenceInSeconds, differenceInMinutes, differenceInHours, differenceInDays, differenceInWeeks, differenceInMonths, isFuture, isValid } from 'date-fns';
 import { RefreshCcw, CalendarIcon } from 'lucide-react';
 import {
@@ -42,7 +42,7 @@ export default function AgeCalculatorOnline() {
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const calculateAge = () => {
+  const calculateAge = useCallback(() => {
     const dobDate = dob;
     const currentDateVal = currentDate;
     
@@ -95,9 +95,9 @@ export default function AgeCalculatorOnline() {
         totalMinutes,
         totalSeconds,
       });
-  };
+  }, [dob, currentDate, isCalculating]);
 
-  const handleCalculate = () => {
+  const handleCalculate = useCallback(() => {
     const dobDate = dob;
     if (!dobDate) {
         setError("Please enter your date of birth to calculate your age.");
@@ -105,15 +105,15 @@ export default function AgeCalculatorOnline() {
     }
     setIsCalculating(true);
     calculateAge();
-  };
+  }, [dob, calculateAge]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
       setDob(undefined);
       setCurrentDate(new Date());
       setAge(undefined);
       setIsCalculating(false);
       setError(null);
-  }
+  }, []);
   
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -123,8 +123,7 @@ export default function AgeCalculatorOnline() {
       }, 1000);
     }
     return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCalculating, dob, currentDate]);
+  }, [isCalculating, calculateAge]);
 
   useEffect(() => {
     setIsCalculating(false);

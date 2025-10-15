@@ -94,7 +94,7 @@ export default function BirthdayAgeCalculator() {
     });
   }, [dob]);
 
-  const handleCalculate = () => {
+  const handleCalculate = useCallback(() => {
     const dobDate = dob;
     if (!dobDate || !isValid(dobDate)) {
         setError("Please enter a valid date of birth.");
@@ -114,16 +114,16 @@ export default function BirthdayAgeCalculator() {
     localStorage.setItem('birthdayAgeCalculatorDob', JSON.stringify(dob));
     setIsCalculating(true);
     calculateAgeAndCountdown();
-  };
+  }, [dob, calculateAgeAndCountdown]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
       setDob(undefined);
       setAge(undefined);
       setCountdown(undefined);
       setIsCalculating(false);
       setError(null);
       localStorage.removeItem('birthdayAgeCalculatorDob');
-  }
+  }, []);
   
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
@@ -212,7 +212,7 @@ export default function BirthdayAgeCalculator() {
             {countdown && (
                 <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 mt-4 animate-fade-in">
                     <div className="flex justify-center items-center gap-2">
-                        <Gift className="h-6 w-6 text-primary" />
+                        <Gift className="h-6 w-6 text-primary" aria-hidden="true" />
                         <h3 className="text-md sm:text-lg font-medium">Countdown to Your Next Birthday:</h3>
                     </div>
                     <div className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2">

@@ -1,27 +1,25 @@
+import type { Config } from 'tailwindcss';
 
-import type {Config} from 'tailwindcss';
-import { fontFamily } from 'tailwindcss/defaultTheme';
-
-export default {
+const config: Config = {
   darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  prefix: "",
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: "2rem",
       screens: {
-        '2xl': '1400px',
+        "2xl": "1400px",
       },
     },
     extend: {
       fontFamily: {
-        body: ['var(--font-pt-sans)', ...fontFamily.sans],
-        headline: ['var(--font-pt-sans)', ...fontFamily.sans],
-        code: ['monospace'],
+        body: ['var(--font-pt-sans)'],
+        headline: ['var(--font-pt-sans)'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -59,28 +57,20 @@ export default {
         },
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        lg: `var(--radius)`,
+        md: `calc(var(--radius) - 2px)`,
+        sm: `calc(var(--radius) - 4px)`,
       },
       keyframes: {
         'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+          from: { height: "0" },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: "0" },
         },
-        "fade-in": {
+         "fade-in": {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
@@ -93,4 +83,6 @@ export default {
     },
   },
   plugins: [require('tailwindcss-animate')],
-} satisfies Config;
+};
+
+export default config;
