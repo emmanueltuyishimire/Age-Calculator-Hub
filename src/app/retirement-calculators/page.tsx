@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import CategoryHubClient from '@/components/layout/category-hub-client';
 

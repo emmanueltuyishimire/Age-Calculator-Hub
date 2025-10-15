@@ -12,7 +12,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center justify-between px-4">
+        <div className="container flex h-14 max-w-screen-2xl items-center justify-between px-4">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2 mr-6">
                 <Image src="/logo.png" alt="Calculators Logo" width={24} height={24} className="h-6 w-6" priority />
@@ -26,7 +26,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </header>
-      <main className="flex-grow">
+      <main className="flex-1">
         {children}
       </main>
       <Footer />

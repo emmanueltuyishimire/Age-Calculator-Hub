@@ -86,6 +86,11 @@ export default function RootLayout({
             gtag('config', 'G-7XVG2YF7MY');
           `}
         </Script>
+         <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider

@@ -169,7 +169,7 @@ export const navItems: NavItem[] = [
     href: '/social-security-retirement-age-calculator',
     icon: PiggyBank,
     label: 'Social Security Retirement Age Calculator',
-    category: 'Financial Calculators',
+    category: 'Retirement & Social',
     description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
   },
 
@@ -396,6 +396,7 @@ const categoryHubs: Record<string, string> = {
   'Pregnancy & Baby': '/pregnancy-calculators',
   'Math Calculators': '/math-calculators',
   'Legal Estimators': '/legal-estimators',
+  'Retirement & Social': '/retirement-calculators',
   'Other': '/other-calculators',
 };
 
@@ -419,6 +420,7 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Health & Fitness',
     'Pregnancy & Baby',
     'Financial Calculators',
+    'Retirement & Social',
     'Math Calculators',
     'Legal Estimators',
     'Other',
