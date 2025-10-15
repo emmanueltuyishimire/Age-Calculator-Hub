@@ -53,7 +53,7 @@ const faqs = [
     {
         question: "How important is taking a prenatal vitamin?",
         answer: "Extremely important. Prenatal vitamins contain crucial nutrients like folic acid, iron, and calcium that are essential for preventing birth defects and supporting the healthy development of your baby's brain, bones, and blood supply. It's recommended to start taking them even before you conceive."
-    },
+    }
 ];
 
 const articleSchema = {
