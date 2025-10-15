@@ -9,26 +9,36 @@ import { cn } from '@/lib/utils';
 import { Trash2 } from 'lucide-react';
 import { evaluate } from 'mathjs';
 
-const buttonLayout = [
-  ['sin', 'cos', 'tan', 'Deg', 'Rad'],
-  ['asin', 'acos', 'atan', 'π', 'e'],
-  ['^', 'x³', 'x²', 'exp', '10^'],
-  ['y√x', '∛', '√', 'ln', 'log'],
-  ['(', ')', '1/x', '%', 'n!'],
-  ['7', '8', '9', '÷', <Trash2 key="back" />],
-  ['4', '5', '6', '×', 'Ans'],
-  ['1', '2', '3', '−', 'M+'],
-  ['0', '.', 'E', '+', 'M-'],
-  ['±', 'RND', 'AC', '=', 'MR'],
+const basicButtons = [
+  ['AC', '±', '%', '÷'],
+  ['7', '8', '9', '×'],
+  ['4', '5', '6', '−'],
+  ['1', '2', '3', '+'],
+  ['0', '.', '=', <Trash2 key="back" />],
 ];
 
-const getVariant = (btn: any) => {
-  if (typeof btn !== 'string') return 'destructive';
-  if (['+', '−', '×', '÷', '='].includes(btn)) return 'secondary';
-  if (['AC'].includes(btn)) return 'destructive';
-  if (['Deg', 'Rad', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e', '^', 'x³', 'x²', 'exp', '10^', 'y√x', '∛', '√', 'ln', 'log', '(', ')', '1/x', '%', 'n!', 'Ans', 'M+', 'M-', 'MR', 'E', '±', 'RND'].includes(btn)) return 'outline';
+const scientificButtons = [
+  ['sin', 'cos', 'tan', 'Deg', 'Rad'],
+  ['asin', 'acos', 'atan', 'π', 'e'],
+  ['(', ')', '^', '√', 'ln'],
+  ['Ans', 'exp', 'log', 'n!', '1/x'],
+  ['M+', 'M-', 'MR', 'RND', 'E'],
+];
+
+const getVariant = (btn: any, isDeg?: boolean) => {
+  const btnStr = typeof btn === 'string' ? btn : 'Backspace';
+
+  if (btnStr === 'Backspace' || btnStr === 'AC') return 'destructive';
+  if (['+', '−', '×', '÷', '='].includes(btnStr)) return 'secondary';
+  if ((isDeg && btnStr === 'Deg') || (!isDeg && btnStr === 'Rad')) return 'default';
+  if (typeof btn !== 'string') return 'secondary';
+
+  const scientificOps = ['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e', '(', ')', '^', '√', 'ln', 'Ans', 'exp', 'log', 'n!', '1/x', 'M+', 'M-', 'MR', 'RND', 'E', 'Deg', 'Rad'];
+  if (scientificOps.includes(btnStr)) return 'outline';
+
   return 'default';
 };
+
 
 const factorial = (n: number): number => {
     if (n < 0 || n !== Math.floor(n)) return NaN;
@@ -53,14 +63,14 @@ const ScientificCalculator = () => {
                 .replace(/×/g, '*')
                 .replace(/÷/g, '/')
                 .replace(/−/g, '-')
-                .replace(/√/g, 'sqrt')
-                .replace(/∛/g, 'cbrt')
+                .replace(/√\(/g, 'sqrt(') // Handle √ as a function
                 .replace(/(\d+)!/g, 'factorial($1)');
             
-            if (isDeg) {
-                finalExpression = finalExpression.replace(/(sin|cos|tan|asin|acos|atan)\(/g, (match, p1) => `${p1}(`);
-            }
-            
+            // Handle implicit multiplication for parentheses, e.g. 5(3) -> 5*3
+            finalExpression = finalExpression.replace(/(\d)\(/g, '$1*(');
+            finalExpression = finalExpression.replace(/\)(\d)/g, ')*$1');
+            finalExpression = finalExpression.replace(/\)\(/g, ')*(');
+
             const scope = {
                 sin: (x:number) => isDeg ? Math.sin(x * Math.PI / 180) : Math.sin(x),
                 cos: (x:number) => isDeg ? Math.cos(x * Math.PI / 180) : Math.cos(x),
@@ -68,6 +78,9 @@ const ScientificCalculator = () => {
                 asin: (x:number) => isDeg ? Math.asin(x) * 180 / Math.PI : Math.asin(x),
                 acos: (x:number) => isDeg ? Math.acos(x) * 180 / Math.PI : Math.acos(x),
                 atan: (x:number) => isDeg ? Math.atan(x) * 180 / Math.PI : Math.atan(x),
+                log: (x:number) => Math.log10(x),
+                ln: (x:number) => Math.log(x),
+                factorial: factorial
             };
 
             const result = evaluate(finalExpression, scope);
@@ -89,8 +102,12 @@ const ScientificCalculator = () => {
         } else if (React.isValidElement(btn) && btn.key) {
             value = 'Backspace';
         }
+        
+        if (display === 'Error') {
+          setExpression('');
+        }
 
-        if (isResult && !['+', '−', '×', '÷', '^', 'y√x', '%', '='].includes(value)) {
+        if (isResult && !['+', '−', '×', '÷', '^', '%', '='].includes(value)) {
             setExpression('');
             setIsResult(false);
         } else {
@@ -114,26 +131,14 @@ const ScientificCalculator = () => {
             case 'Rad':
                 setIsDeg(false);
                 break;
-            case 'sin': case 'cos': case 'tan': case 'asin': case 'acos': case 'atan': case 'log': case 'ln': case '√': case '∛': case 'exp':
+            case 'sin': case 'cos': case 'tan': case 'asin': case 'acos': case 'atan': case 'log': case 'ln': case '√': case 'exp':
                 setExpression(prev => prev + value + '(');
                 break;
-            case 'x²':
-                setExpression(prev => `(${prev})^2`);
-                break;
-            case 'x³':
-                setExpression(prev => `(${prev})^3`);
-                break;
-            case '10^':
-                setExpression(prev => `10^(${prev})`);
-                break;
             case '1/x':
-                setExpression(prev => `1/(${prev})`);
+                setExpression(prev => `1/(${prev || '0'})`);
                 break;
             case 'n!':
-                try {
-                    const num = evaluate(expression);
-                    setExpression(factorial(num).toString());
-                } catch { setDisplay('Error'); setExpression(''); }
+                setExpression(prev => `(${prev || '0'})!`);
                 break;
             case 'π':
                 setExpression(prev => prev + 'pi');
@@ -145,16 +150,27 @@ const ScientificCalculator = () => {
                 setExpression(prev => prev + ans.toString());
                 break;
             case 'M+':
-                try { setMemory(mem => mem + evaluate(expression || display)); } catch { setDisplay('Error'); }
+                try { 
+                    const currentValue = evaluate(expression || display);
+                    setMemory(mem => mem + currentValue);
+                } catch { setDisplay('Error'); setExpression(''); }
                 break;
             case 'M-':
-                try { setMemory(mem => mem - evaluate(expression || display)); } catch { setDisplay('Error'); }
+                try { 
+                    const currentValue = evaluate(expression || display);
+                    setMemory(mem => mem - currentValue);
+                } catch { setDisplay('Error'); setExpression(''); }
                 break;
             case 'MR':
                 setExpression(prev => prev + memory.toString());
                 break;
             case '±':
-                setExpression(prev => prev.startsWith('-') ? prev.substring(1) : '-' + prev);
+                setExpression(prev => {
+                    if (prev.startsWith('-(') && prev.endsWith(')')) {
+                        return prev.substring(2, prev.length -1);
+                    }
+                    return `-(${prev})`
+                });
                 break;
             case 'RND':
                 setExpression(prev => prev + Math.random().toString());
@@ -173,30 +189,31 @@ const ScientificCalculator = () => {
     
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            event.preventDefault();
             const { key } = event;
-            if (/\d/.test(key)) {
+             if (/[\d.]/.test(key) || ['(', ')'].includes(key)) {
+                event.preventDefault();
                 handleButtonClick(key);
-            } else if (key === '.') {
-                handleButtonClick('.');
             } else if (key === '+') {
+                event.preventDefault();
                 handleButtonClick('+');
             } else if (key === '-') {
+                event.preventDefault();
                 handleButtonClick('−');
             } else if (key === '*') {
+                event.preventDefault();
                 handleButtonClick('×');
             } else if (key === '/') {
+                event.preventDefault();
                 handleButtonClick('÷');
             } else if (key === 'Enter' || key === '=') {
+                event.preventDefault();
                 calculate();
             } else if (key === 'Backspace') {
+                event.preventDefault();
                 handleButtonClick('Backspace');
             } else if (key === 'Escape') {
+                event.preventDefault();
                 handleButtonClick('AC');
-            } else if (key === '(') {
-                handleButtonClick('(');
-            } else if (key === ')') {
-                handleButtonClick(')');
             }
         };
 
@@ -219,31 +236,43 @@ const ScientificCalculator = () => {
     }, [expression]);
 
   return (
-    <div className="bg-card border rounded-lg p-2 sm:p-4 w-full max-w-sm sm:max-w-md shadow-lg">
+    <div className="bg-card border rounded-lg p-2 sm:p-3 w-full max-w-2xl shadow-lg">
       <Input
         type="text"
         value={display}
         readOnly
-        className="w-full h-16 text-3xl sm:text-4xl text-right mb-4 bg-muted"
+        className="w-full h-16 text-3xl sm:text-4xl text-right mb-2 sm:mb-3 bg-muted"
         aria-label="Calculator display"
       />
-      <div className="grid grid-cols-5 gap-1 sm:gap-2">
-        {buttonLayout.flat().map((btn, i) => {
-            const btnStr = React.isValidElement(btn) ? 'Backspace' : btn;
-            const isDegRad = btnStr === 'Deg' || btnStr === 'Rad';
-          return (
-            <Button
-              key={i}
-              variant={getVariant(btn)}
-              className={cn("h-10 sm:h-12 text-sm sm:text-lg", {
-                  'bg-primary/80 text-primary-foreground': (isDeg && btnStr === 'Deg') || (!isDeg && btnStr === 'Rad')
-              })}
-              onClick={() => handleButtonClick(btn)}
-            >
-              {btn}
-            </Button>
-          );
-        })}
+      <div className="grid grid-cols-2 gap-2 sm:gap-3">
+        {/* Basic Calculator Part */}
+        <div className="grid grid-cols-4 gap-1 sm:gap-2">
+            {basicButtons.flat().map((btn, i) => (
+                <Button
+                    key={`basic-${i}`}
+                    variant={getVariant(btn)}
+                    className="h-10 sm:h-12 text-md sm:text-xl"
+                    onClick={() => handleButtonClick(btn)}
+                >
+                    {btn}
+                </Button>
+            ))}
+        </div>
+        {/* Scientific Calculator Part */}
+        <div className="grid grid-cols-5 gap-1 sm:gap-2">
+            {scientificButtons.flat().map((btn, i) => (
+                <Button
+                    key={`sci-${i}`}
+                    variant={getVariant(btn, isDeg)}
+                    className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1", {
+                        'bg-primary text-primary-foreground': (isDeg && btn === 'Deg') || (!isDeg && btn === 'Rad')
+                    })}
+                    onClick={() => handleButtonClick(btn)}
+                >
+                    {btn}
+                </Button>
+            ))}
+        </div>
       </div>
     </div>
   );

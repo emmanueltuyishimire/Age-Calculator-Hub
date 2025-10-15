@@ -44,7 +44,7 @@ import {
   DollarSign,
   Car,
   FlaskConical,
-  Cube,
+  Cuboid,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -267,7 +267,7 @@ export const navItems: NavItem[] = [
   },
   {
     href: '/volume-calculator',
-    icon: Cube,
+    icon: Cuboid,
     label: 'Volume Calculator',
     category: 'Math Calculators',
     description: 'Calculate the volume of common 3D shapes like spheres, cubes, and cylinders.'

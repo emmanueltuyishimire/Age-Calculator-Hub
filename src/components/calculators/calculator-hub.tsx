@@ -22,17 +22,6 @@ export default function CalculatorHub() {
         <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
       </div>
       <div className="container mx-auto px-4 pt-16 pb-16 sm:pt-20 sm:pb-20 relative">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto">
-              Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
-          </p>
-        </div>
-        
-        <div className="max-w-3xl mx-auto mb-16">
-          <SearchBar />
-        </div>
-
         <div id="calculators">
           {categories.map((category) => (
             <section className="mb-16" key={category.name}>

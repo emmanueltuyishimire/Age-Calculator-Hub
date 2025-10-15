@@ -1,19 +1,35 @@
 
 "use client";
 
-import CalculatorHub from '@/components/calculators/calculator-hub';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
+import CalculatorHub from '@/components/calculators/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { SearchBar } from '@/components/layout/search-bar';
 
 export default function Home() {
   return (
     <main role="main">
-      <section className="container mx-auto px-4 pt-12 pb-8 flex justify-center">
-        <ScientificCalculator />
+      <section className="container mx-auto px-4 pt-12 pb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="text-center lg:text-left">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
+                <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
+                    Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
+                </p>
+                <div className="mt-8 max-w-md mx-auto lg:mx-0">
+                    <SearchBar />
+                </div>
+            </div>
+            <div className="flex justify-center lg:justify-end">
+                <ScientificCalculator />
+            </div>
+        </div>
       </section>
+      
       <CalculatorHub />
+
       <section className="container mx-auto px-4 py-8 sm:py-12">
         <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Latest Articles & Insights</h2>
