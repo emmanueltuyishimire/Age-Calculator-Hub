@@ -39,12 +39,12 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-    { question: "How accurate is the cat age to human years formula?", answer: "It’s a widely accepted veterinary approximation based on feline development milestones. Cats mature very rapidly in their first two years, and then their aging process slows down. This calculator uses that non-linear scale for a more accurate result than the old 'multiply by 7' myth." },
-    { question: "Do indoor cats live longer than outdoor cats?", answer: "Yes, significantly. Indoor cats are protected from predators, accidents, and diseases spread by other animals. An indoor cat's average lifespan is 13–17 years, while an outdoor cat's is often only 2–5 years." },
-    { question: "What’s the oldest recorded cat age?", answer: "A cat named Creme Puff from Austin, Texas, lived to be 38 years and 3 days old! This is, of course, highly exceptional." },
-    { question: "How can I tell if my cat is aging well?", answer: "Look for signs of good health like a consistent weight, a healthy appetite, bright and clear eyes, a clean coat, and regular activity levels. Any sudden changes in behavior, appetite, or litter box habits warrant a vet visit." },
-    { question: "How often should older cats see a vet?", answer: "Once a cat reaches the 'Senior' stage (around 11 years old), it's recommended to schedule veterinary checkups twice a year. This helps in early detection of common age-related issues." },
-    { question: "Does this calculator work for all cat breeds?", answer: "Yes. Unlike dogs, where size dramatically affects lifespan and aging, the aging curve is much more consistent across different cat breeds. This calculator is suitable for any breed of domestic cat." }
+    { question: "How do you calculate a cat's age?", answer: "A common veterinary method is to consider the first year of a cat's life as 15 human years, the second year as 9 more years (totaling 24), and every subsequent year as 4 human years. Our calculator uses this widely accepted formula." },
+    { question: "Is 17 old for a cat?", answer: "Yes, 17 is very old for a cat. It's equivalent to about 84 in human years. A cat of this age is considered geriatric and requires special care." },
+    { question: "How long do cats normally live?", answer: "Indoor cats typically live for 13-17 years on average, though many live into their late teens or early twenties. Outdoor cats have a much shorter average lifespan of 2-5 years due to increased risks." },
+    { question: "At what age do cats slow down?", answer: "Cats often start to slow down and become less active during their 'Mature' years, around 7 to 10 years old (44 to 56 in human years). This is a good time to adjust their diet and monitor for age-related changes." },
+    { question: "Do male or female cats live longer?", answer: "Generally, female cats, especially those that have been spayed, tend to live slightly longer than male cats. However, factors like healthcare, lifestyle (indoor vs. outdoor), and genetics play a much larger role." },
+    { question: "Is it rare for a cat to live to 20?", answer: "While not common, it's certainly not unheard of, especially for well-cared-for indoor cats. A 20-year-old cat is equivalent to a 96-year-old human, which is a testament to excellent care and good genes." },
 ];
 
 const faqSchema = {

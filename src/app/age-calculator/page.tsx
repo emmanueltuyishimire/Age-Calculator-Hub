@@ -33,45 +33,29 @@ export const metadata: Metadata = {
 
 const faqs = [
     {
-        question: "How is age calculated in this tool?",
-        answer: "Our calculator determines age by finding the total time elapsed between your date of birth and the specified 'Age at Date of' (or today's date). It accounts for differences in month lengths and leap years to provide a precise result."
+        question: "What is the easiest way to calculate age?",
+        answer: "The easiest way is to use a reliable online tool like this Age Calculator. It automatically handles all the complexities like month lengths and leap years. Just enter the date of birth and get an instant, accurate result."
     },
     {
-        question: "Does it update my age automatically?",
-        answer: "Yes! After you click 'Calculate Your Age Now Online', the calculator begins a real-time countdown, updating the seconds, minutes, and other units automatically."
+        question: "How do age calculators work?",
+        answer: "Age calculators work by finding the precise time interval between a starting date (the date of birth) and an ending date (usually today's date). A good calculator accounts for all calendar variations, including leap years, to provide an exact age in years, months, and days."
     },
     {
-        question: "Can I calculate my age in months or seconds?",
-        answer: "Absolutely. The results include a detailed breakdown of your age in total months, weeks, days, hours, minutes, and seconds."
+        question: "Can I calculate my age in months and days?",
+        answer: "Yes. Our calculator provides a full breakdown of your age, not just in years, but also in a combination of years, months, and days. The results also show your age in total months, total weeks, total days, and even total seconds."
     },
     {
-        question: "Why is real-time calculation useful?",
-        answer: "Real-time updates provide a dynamic and engaging way to see your age with second-by-second precision, which can be fun for birthdays or simply for accuracy."
+        question: "How accurate are age calculators?",
+        answer: "A well-programmed age calculator is extremely accurate. It uses precise date and time functions to measure the duration between two dates, removing the potential for human error that comes with manual calculation."
     },
     {
-        question: "Can I use this for someone else’s birthday?",
-        answer: "Yes, you can enter any valid date of birth to calculate the age of a friend, family member, or for any other purpose."
+        question: "How do I calculate my exact age manually?",
+        answer: "To do it manually, first subtract the birth year from the current year. Then, adjust for the month and day. If the current month and day are earlier in the year than the birth month and day, you subtract one from the year count. You then have to calculate the months and days, which can be complex due to varying month lengths."
     },
-    {
-        question: "Does leap year affect the calculation?",
-        answer: "Yes, our algorithm correctly accounts for leap years to ensure the calculation of days and years is accurate."
+     {
+        question: "How do I know my age if I was born in 1990?",
+        answer: "You can use this calculator for an exact answer. As a quick estimate, if the current year is 2024, you would be 34 years old on your birthday in 2024. Your exact current age depends on whether your birthday has already passed this year."
     },
-    {
-        question: "How accurate is this online age calculator?",
-        answer: "This calculator is highly accurate as it bases its calculations on the precise time difference between the two dates you provide, down to the second."
-    },
-    {
-        question: "Can I share my results?",
-        answer: "Currently, you can manually share the results by copying the text. We plan to add dedicated 'Copy' and 'Share' buttons in a future update."
-    },
-    {
-        question: "Is this age calculator free?",
-        answer: "Yes, this is a completely free online tool."
-    },
-    {
-        question: "How can I calculate age manually?",
-        answer: "To calculate age manually, subtract the birth year from the current year. Then, adjust for the birth month and day. If the current month and day are before the birth month and day, subtract one year from the total."
-    }
 ];
 
 const faqSchema = {

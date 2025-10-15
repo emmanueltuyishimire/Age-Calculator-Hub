@@ -38,8 +38,12 @@ const faqs = [
         answer: "If you were born in 1997, you are at the very beginning of Generation Z (Gen Z), which is the generation that follows Millennials."
     },
     {
-        question: "How old is Gen Z in 2024?",
-        answer: "As of 2024, members of Gen Z are between 12 and 27 years old. The term 'Gen Z' typically refers to those born between 1997 and 2012."
+        question: "What are people who were born in 2000 called?",
+        answer: "People born in the year 2000 are also part of Generation Z. They are sometimes referred to as 'early Gen Z-ers'."
+    },
+    {
+        question: "What generation is 2025?",
+        answer: "A child born in 2025 will be part of Generation Alpha, which is the cohort following Generation Z. Gen Alpha is generally considered to start in the early 2010s."
     },
     {
         question: "Are Millennials and Gen Y the same thing?",
@@ -49,10 +53,6 @@ const faqs = [
         question: "Why are the cutoff years for generations sometimes different?",
         answer: "Generational boundaries are not officially defined and can vary slightly depending on the source (e.g., researchers, marketers, sociologists). The dates used in this guide are based on the widely cited definitions from the Pew Research Center, but you may see slight variations elsewhere. Generations are defined by shared experiences and cultural shifts, not hard-and-fast rules."
     },
-    {
-        question: "What generation comes after Generation Alpha?",
-        answer: "The generation that will follow Generation Alpha has not yet been named. It will likely be defined by the major technological and societal shifts that occur during their formative years."
-    }
 ];
 
 export default function WhatGenerationAmIPage() {

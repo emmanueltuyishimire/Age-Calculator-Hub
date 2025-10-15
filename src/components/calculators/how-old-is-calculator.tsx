@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { intervalToDuration, isValid, isFuture, format, differenceInYears, differenceInMonths } from 'date-fns';
 import {
   Card,
@@ -30,10 +30,14 @@ export default function HowOldIsCalculator() {
   const [dob, setDob] = useState({ day: '', month: '', year: '' });
   const [ageResult, setAgeResult] = useState<AgeResult | undefined>();
   const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<InputMode>("year");
+  const [mode, setMode] = useState<InputMode>("full");
 
-  const monthRef = useRef<HTMLInputElement>(null);
-  const yearRef = useRef<HTMLInputElement>(null);
+  const fullDayRef = useRef<HTMLInputElement>(null);
+  const fullMonthRef = useRef<HTMLInputElement>(null);
+  const fullYearRef = useRef<HTMLInputElement>(null);
+  const monthYearMonthRef = useRef<HTMLInputElement>(null);
+  const monthYearYearRef = useRef<HTMLInputElement>(null);
+  const yearYearRef = useRef<HTMLInputElement>(null);
 
   const handleCalculate = () => {
     setError(null);
@@ -99,8 +103,14 @@ export default function HowOldIsCalculator() {
 
   const handleDobChange = (field: 'day' | 'month' | 'year', value: string) => {
     setDob(prev => ({...prev, [field]: value}));
-    if (field === 'day' && value.length === 2 && mode === 'full') monthRef.current?.focus();
-    if (field === 'month' && value.length === 2 && mode === 'full') yearRef.current?.focus();
+    
+    if (mode === 'full') {
+        if (field === 'day' && value.length === 2) fullMonthRef.current?.focus();
+        if (field === 'month' && value.length === 2) fullYearRef.current?.focus();
+    } else if (mode === 'monthYear') {
+        if (field === 'month' && value.length === 2) monthYearYearRef.current?.focus();
+    }
+    
     setAgeResult(undefined);
   };
   
@@ -109,27 +119,34 @@ export default function HowOldIsCalculator() {
       case 'year':
         return (
           <div className="flex gap-2">
-            <Input id="dob-year-year" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
+            <Input ref={yearYearRef} id="dob-year-year" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
           </div>
         );
       case 'monthYear':
         return (
            <div className="flex gap-2">
-            <Input ref={monthRef} id="dob-month-monthyear" placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
-            <Input ref={yearRef} id="dob-year-monthyear" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
+            <Input ref={monthYearMonthRef} id="dob-month-monthyear" placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
+            <Input ref={monthYearYearRef} id="dob-year-monthyear" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
           </div>
         );
       case 'full':
       default:
         return (
           <div className="flex gap-2">
-            <Input id="dob-day-full" placeholder="DD" value={dob.day} onChange={e => handleDobChange('day', e.target.value)} maxLength={2} aria-label="Day of Birth"/>
-            <Input ref={monthRef} id="dob-month-full" placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
-            <Input ref={yearRef} id="dob-year-full" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
+            <Input ref={fullDayRef} id="dob-day-full" placeholder="DD" value={dob.day} onChange={e => handleDobChange('day', e.target.value)} maxLength={2} aria-label="Day of Birth"/>
+            <Input ref={fullMonthRef} id="dob-month-full" placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
+            <Input ref={fullYearRef} id="dob-year-full" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
           </div>
         );
     }
   }
+
+  useEffect(() => {
+    handleReset();
+    if(mode === 'full') fullDayRef.current?.focus();
+    if(mode === 'monthYear') monthYearMonthRef.current?.focus();
+    if(mode === 'year') yearYearRef.current?.focus();
+  }, [mode]);
 
   return (
     <Card className="w-full max-w-lg mx-auto shadow-lg animate-fade-in">
@@ -142,9 +159,9 @@ export default function HowOldIsCalculator() {
       <CardContent className="space-y-4">
         <Tabs value={mode} onValueChange={(value) => setMode(value as InputMode)} className="w-full">
             <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="year">Year Only</TabsTrigger>
-                <TabsTrigger value="monthYear">Month & Year</TabsTrigger>
                 <TabsTrigger value="full">Full Date</TabsTrigger>
+                <TabsTrigger value="monthYear">Month & Year</TabsTrigger>
+                <TabsTrigger value="year">Year Only</TabsTrigger>
             </TabsList>
             <TabsContent value="full" className="mt-4">
                 {renderInputs()}

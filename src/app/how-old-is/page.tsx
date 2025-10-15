@@ -31,13 +31,11 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-    { question: "How does the 'How Old Is...?' calculator work?", answer: "This tool calculates the precise duration between the entered date of birth and today's date, providing the result in years, months, and days for a full date, or as an estimate for partial dates." },
-    { question: "Is this calculator accurate?", answer: "Yes, when you provide a full date of birth, it uses a precise algorithm that accounts for leap years and month lengths to give you an accurate chronological age. When using only the year or month/year, it provides a reliable estimate." },
-    { question: "Can I use this tool to find out my own age?", answer: "Absolutely! Just enter your own date of birth to see your exact current age." },
-    { question: "When is it useful to calculate age by year only?", answer: "This is perfect for situations where you don't know the full birth date, like for historical figures or when you only need a quick 'ballpark' age." },
-    { question: "What is the fastest way to find someone's age?", answer: "This tool is designed to be the fastest way. Simply enter the information you have (year, month/year, or full date) and get an instant answer." },
-    { question: "Why does the result show 'approximately' for month and year calculations?", answer: "Without the exact day of birth, it's impossible to know if the person's birthday has passed in the current year. The calculator gives the most likely age based on the information provided." },
-    { question: "Is this tool free to use?", answer: "Yes, this is a 100% free online tool, available for anyone to use anytime." },
+    { question: "How old is someone born on May 30, 1988?", answer: "To find their exact age, enter the full date (May 30, 1988) into the 'Full Date' tab of our calculator. It will give you their current age in years, months, and days." },
+    { question: "How old are people born in 1996?", answer: "Enter the year '1996' into the 'Year Only' tab. This will tell you the age they will be on their birthday in the current year. Their actual age could be one year less if their birthday hasn't passed yet." },
+    { question: "How do I find someone's birth year?", answer: "If you know their current age and whether their birthday has passed this year, you can estimate their birth year by subtracting their age from the current year. For example, if it's 2024 and someone is 30 but hasn't had their birthday yet, they were likely born in 1993." },
+    { question: "How old is 1967 to 2025?", answer: "This question asks for the number of years between two dates. To find this, you can use our main <a href='/age-calculator' class='text-primary hover:underline'>Age Calculator</a>. Enter '1/1/1967' as the Date of Birth and '1/1/2025' as the 'Age at Date of' to find the duration." },
+    { question: "What is the easiest way to calculate days between dates?", answer: "Our main <a href='/age-calculator' class='text-primary hover:underline'>Age Calculator</a> can do this. Enter the start date as the 'Date of Birth' and the end date as the 'Age at the Date of'. The results will show the total number of days." },
 ];
 
 const faqSchema = {

@@ -14,7 +14,7 @@ import { Apple, Brain, HeartPulse, Bed, Zap, User } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Biological Age Calculator – Discover Your True Age Based on Health & Lifestyle',
-    description: 'Use our Biological Age Calculator to estimate your body’s real age (or "real age") based on lifestyle, fitness, and health factors. Compare it with your chronological age and take control of your wellness today!',
+    description: 'Use our Biological Age Calculator to estimate your body’s real age (or "true age") based on lifestyle, fitness, and health factors. Compare it with your chronological age and take control of your wellness today!',
     openGraph: {
         title: 'Biological Age Calculator – Know Your True Age',
         description: 'Discover your biological age based on health, lifestyle, and habits. Compare it with your chronological age and see how your choices impact your healthspan.',
@@ -32,13 +32,12 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-    { question: "What is biological age vs chronological age?", answer: "Chronological age is the number of years you have been alive. Biological age is a measure of how well your body is functioning relative to your chronological age. It reflects your overall health and can be influenced by lifestyle, genetics, and environment." },
-    { question: "Can biological age be lower than chronological age?", answer: "Yes, absolutely. A healthy lifestyle with good diet, regular exercise, sufficient sleep, and low stress can lead to a biological age that is significantly younger than your actual age." },
-    { question: "How is biological age calculated?", answer: "Our calculator uses an AI model to estimate your biological age based on key lifestyle factors you provide, such as exercise habits, diet, sleep patterns, and stress levels. It compares your inputs to patterns associated with aging." },
-    { question: "How often should I calculate my biological age?", answer: "Calculating it every 6 to 12 months can be a great way to track your progress after making lifestyle changes and see how your efforts are paying off." },
-    { question: "Which lifestyle changes can reduce my biological age the most?", answer: "While all factors are important, regular physical activity, a balanced whole-foods diet, quitting smoking, and getting consistent, quality sleep are four of the most impactful changes you can make." },
-    { question: "Is this calculator a medical diagnosis?", answer: "No. This calculator provides an educational estimate based on scientific research into the lifestyle factors that influence aging. For the most accurate assessment, clinical tests that measure epigenetic markers (like DNA methylation) are available. This tool is an excellent starting point for self-assessment." },
-    { question: "Can I reverse my biological age?", answer: "Yes, studies have shown that intensive lifestyle interventions can lead to a measurable reversal in biological age markers. Your biological age is not fixed and can be improved at any point in life." },
+    { question: "What is my true age?", answer: "Your 'true age' is often another term for your biological age. It reflects your body's health and how well it's functioning, which can be different from your calendar age. Our calculator estimates this based on key lifestyle factors." },
+    { question: "Is your body age the same as your calendar age?", answer: "Not necessarily. Your calendar (chronological) age is fixed, but your body (biological) age is flexible. A healthy lifestyle can make your body age younger than your calendar age, while an unhealthy one can make it older." },
+    { question: "How can I calculate my real age?", answer: "You can get a good estimate of your 'real' or biological age by using calculators that assess your lifestyle habits, like diet, exercise, and sleep. For a clinical measurement, you would need lab tests that analyze biomarkers like DNA methylation." },
+    { question: "Can exercise increase your lifespan?", answer: "Yes, numerous studies show that regular exercise is one of the most effective ways to increase both healthspan (healthy years) and lifespan. It lowers the risk of many chronic diseases and improves overall bodily function, which can lower your biological age." },
+    { question: "How accurate is this biological age calculator?", answer: "This calculator provides an educational estimate based on an AI model trained on lifestyle factors that influence aging. It's a great starting point for self-assessment but is not a medical diagnosis. Clinical tests are required for a precise measurement." },
+    { question: "Can I reverse my biological age?", answer: "Yes, research has shown that lifestyle interventions can lead to a measurable reversal in biological age markers. Your biological age is not fixed and can be improved at any point in life." },
 ];
 
 const faqSchema = {

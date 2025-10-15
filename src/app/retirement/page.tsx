@@ -32,23 +32,23 @@ export const metadata: Metadata = {
 
 const faqs = [
     {
-        question: "How is my full retirement age calculated?",
-        answer: "Your full retirement age is determined by the U.S. Social Security Administration (SSA) based on your year of birth. For anyone born in 1960 or later, the full retirement age is 67. The age gradually increases from 65 to 67 for those born between 1938 and 1959."
+        question: "What is the full retirement age if I was born in 1948?",
+        answer: "For individuals born between 1943 and 1954, the full retirement age for Social Security benefits is 66 years. You can use our calculator to see this specifically for your birth date."
     },
     {
-        question: "What is the earliest I can start receiving Social Security benefits?",
-        answer: "You can start receiving Social Security retirement benefits as early as age 62. However, be aware that your monthly benefits will be permanently reduced if you claim them before reaching your full retirement age."
+        question: "Can I retire at age 62?",
+        answer: "Yes, you can start receiving Social Security retirement benefits as early as age 62. However, your monthly benefits will be permanently reduced if you claim them before reaching your full retirement age."
     },
     {
-        question: "What happens if I delay my retirement past my full retirement age?",
-        answer: "If you delay taking your benefits, your monthly benefit amount will increase. For each year you delay past your full retirement age, up to age 70, you earn 'delayed retirement credits' that result in a higher payout. There is no additional benefit to delaying past age 70."
+        question: "What is the best age to retire?",
+        answer: "There is no single 'best' age. It depends on your financial situation, health, and personal goals. Financially, delaying benefits until age 70 provides the largest monthly Social Security payment. However, retiring earlier may be better for your lifestyle. It's a personal decision."
     },
      {
-        question: "Is this calculator accurate for all countries?",
-        answer: "No. This calculator is based specifically on the rules set by the U.S. Social Security Administration. Retirement ages, rules, and benefits vary significantly by country, so it should not be used for other systems."
+        question: "Is it possible to retire at 50?",
+        answer: "Retiring at 50 is possible but requires significant financial planning, as you cannot claim Social Security retirement benefits until age 62. You would need to rely entirely on personal savings, pensions, or other investments until then."
     },
     {
-        question: "Does this calculator tell me how much my benefit will be?",
+        question: "Does this calculator show my benefit amount?",
         answer: "No, this tool only calculates your retirement age eligibility. To get a personalized estimate of your benefit amount, you should use the official calculator on the Social Security Administration's website."
     }
 ];

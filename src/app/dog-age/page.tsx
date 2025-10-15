@@ -39,12 +39,12 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
+    { question: "What is my age in dog years?", answer: "This is a fun way of asking what a dog's equivalent age is in human years. For example, if you are 36, that's roughly the 'human age' of a 5-year-old small dog. Our calculator does the reverse: converting your dog's age to a human equivalent." },
     { question: "How do I calculate the age of my mixed-breed dog?", answer: "This calculator is perfect for mixed-breed dogs. The most important factor for determining a dog's age in human years is its size, not its breed. Simply choose the size category (Small, Medium, Large, or Giant) that best fits your mixed-breed dog to get an accurate estimate." },
-    { question: "Is the '1 dog year = 7 human years' rule accurate?", answer: "No, that’s an outdated myth. Modern veterinary research shows that dog aging is non-linear—they age very quickly in their first two years, and then the rate slows. Furthermore, aging varies dramatically by size." },
-    { question: "How long do dogs live?", answer: "On average, small dogs live 12–16 years, while giant breeds may only live 6–9 years. Mixed-breed dogs often have a slightly longer lifespan than purebreds of a similar size due to genetic diversity (hybrid vigor)." },
     { question: "Why do large dogs age faster?", answer: "The leading theory is that the rapid growth of large breeds from puppy to adult puts significant strain on their bodies, leading to faster cellular aging and a higher incidence of age-related diseases like cancer and arthritis." },
-    { question: "Can I slow down my dog’s aging?", answer: "While you can't stop time, you can significantly improve their healthspan and vitality with regular exercise, a balanced diet, maintaining a healthy weight, and consistent veterinary care. These factors are even more important than genetics." },
-    { question: "When is a dog considered old?", answer: "Generally, giant breeds are considered 'senior' around age 6-7, large breeds around 7-8, medium breeds at 8-9, and small breeds enter their senior years around age 9 or 10. Knowing this helps you adjust their care accordingly." }
+    { question: "Is the '1 dog year = 7 human years' rule accurate?", answer: "No, that’s an outdated myth. Modern veterinary research shows that dog aging is non-linear—they age very quickly in their first two years, and then the rate slows. Furthermore, aging varies dramatically by size." },
+    { question: "How old was the oldest dog?", answer: "The official record for the oldest dog ever is held by Bobi, a Rafeiro do Alentejo from Portugal, who lived to be 31 years and 165 days old. This is highly exceptional." },
+    { question: "When is a dog considered old or a senior?", answer: "Generally, giant breeds are considered 'senior' around age 6-7, large breeds around 7-8, medium breeds at 8-9, and small breeds enter their senior years around age 9 or 10. Knowing this helps you adjust their care accordingly." }
 ];
 
 const faqSchema = {
