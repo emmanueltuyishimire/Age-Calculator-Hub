@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Check } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { notFound } from 'next/navigation';
+import AdBanner from '@/components/layout/ad-banner';
 
 const article = articles.find(a => a.slug === 'your-complete-guide-to-age-calculators');
 
@@ -121,6 +122,10 @@ const faqSchema = {
           <p>
             This guide will walk you through the different categories of calculators available on our site, explaining what they do, who they're for, and how they can provide valuable insights into your life and the lives of your loved ones.
           </p>
+          
+          <div className="my-8">
+            <AdBanner />
+          </div>
 
           <h2 className="text-3xl font-bold">Core Age Calculators: The Foundation of Time</h2>
           <p>

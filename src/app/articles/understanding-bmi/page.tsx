@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/table"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { notFound } from 'next/navigation';
+import AdBanner from '@/components/layout/ad-banner';
 
 const article = articles.find(a => a.slug === 'understanding-bmi');
 
@@ -77,6 +78,10 @@ export default function BmiArticle() {
                 <Button size="lg">Calculate Your BMI Now</Button>
             </Link>
             <p className="text-sm text-muted-foreground mt-2">Get your BMI score in seconds.</p>
+          </div>
+
+          <div className="my-8">
+            <AdBanner />
           </div>
 
           <h2 className="text-3xl font-bold">What are the BMI Categories?</h2>

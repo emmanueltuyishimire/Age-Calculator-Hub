@@ -11,6 +11,7 @@ import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import AdBanner from '@/components/layout/ad-banner';
 
 export const metadata: Metadata = {
     title: 'Age Calculator – Calculate Your Age by Date of Birth in Real Time',
@@ -88,6 +89,10 @@ export default function AgeCalculatorPage() {
             </div>
 
             <AgeCalculator />
+
+            <div className="my-8">
+              <AdBanner />
+            </div>
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
@@ -188,5 +193,3 @@ export default function AgeCalculatorPage() {
     </div>
   );
 }
-
-    
