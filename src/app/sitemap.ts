@@ -3,35 +3,31 @@ import { MetadataRoute } from 'next';
 import { navItems } from '@/components/layout/nav-items';
 import { articles } from '@/lib/articles';
 
+const baseUrl = 'https://innerpeacejournals.com';
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://innerpeacejournals.com';
+  const lastModified = new Date();
 
-  // Find the last modification date from the most recent article
-  const lastModified = articles.reduce((latest, article) => {
-    const articleDate = new Date(article.publishedDate);
-    return articleDate > latest ? articleDate : latest;
-  }, new Date(0));
-
-  // Calculator and hub pages
-  const pages = navItems
-    .filter(item => item.category !== 'Legal' && item.category !== 'Company')
+  // All calculator pages
+  const calculatorPages = navItems
+    .filter(item => !item.href.includes('/articles') && item.href !== '/faq' && !item.href.includes('calculator-hub'))
     .map((item) => ({
       url: `${baseUrl}${item.href}`,
       lastModified: lastModified,
       changeFrequency: 'monthly',
-      priority: item.href === '/' ? 1 : 0.8,
+      priority: item.href === '/' ? 1.0 : 0.8,
   }));
   
   // Static pages like about, contact, etc.
   const staticPages = [
-    { href: '/about' },
-    { href: '/contact' },
-    { href: '/privacy' },
-    { href: '/terms' },
-    { href: '/disclaimer' },
-    { href: '/faq' },
+    '/about',
+    '/contact',
+    '/privacy',
+    '/terms',
+    '/disclaimer',
+    '/faq',
   ].map(page => ({
-    url: `${baseUrl}${page.href}`,
+    url: `${baseUrl}${page}`,
     lastModified: lastModified,
     changeFrequency: 'yearly',
     priority: 0.5,
@@ -45,12 +41,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
   
+  // The main article hub page
   const articleHubPage = {
     url: `${baseUrl}/articles`,
-    lastModified: lastModified,
+    lastModified: lastModified, // Use the most recent article's date
     changeFrequency: 'weekly',
     priority: 0.7,
   };
 
-  return [...pages, ...staticPages, ...articlePages, articleHubPage];
+  return [...calculatorPages, ...staticPages, ...articlePages, articleHubPage];
 }

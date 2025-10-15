@@ -234,5 +234,3 @@ const faqSchema = {
     </div>
   );
 }
-
-  

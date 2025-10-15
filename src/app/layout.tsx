@@ -1,12 +1,21 @@
 
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import { PT_Sans } from 'next/font/google';
 import { AppLayout } from '@/components/layout/app-layout';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/layout/theme-provider';
 import './globals.css';
 
+const ptSans = PT_Sans({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-pt-sans',
+});
+
+
 export const metadata: Metadata = {
+  metadataBase: new URL('https://innerpeacejournals.com'),
   title: {
     default: 'Calculator Hub – Free Online Financial, Health & Math Calculators',
     template: '%s – Calculator Hub',
@@ -16,6 +25,14 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    'max-snippet': -1,
+    'max-image-preview': 'large',
+    'max-video-preview': -1,
+    'noarchive': true,
+    'notranslate': true,
+    'noimageindex': true,
+    'nositelinkssearchbox': true,
+    'unavailable_after': '2025-10-15T10:51:19Z',
   },
    alternates: {
     canonical: 'https://innerpeacejournals.com',
@@ -43,12 +60,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${ptSans.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
-        
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
 

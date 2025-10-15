@@ -11,3 +11,6 @@ export async function GET() {
     },
   });
 }
+
+// Statically generate this route
+export const dynamic = 'force-static';

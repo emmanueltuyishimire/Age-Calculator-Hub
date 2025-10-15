@@ -27,8 +27,8 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
   if (relatedItems.length === 0) return null;
 
   return (
-    <section className="mt-16 animate-fade-in">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">Related Calculators</h2>
+    <section className="mt-16 animate-fade-in" aria-labelledby="related-calculators-heading">
+      <h2 id="related-calculators-heading" className="text-2xl md:text-3xl font-bold mb-6 text-center">Related Calculators</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {relatedItems.slice(0, 3).map((item) => (
           <Link href={item.href} key={item.href} className="block hover:no-underline group">
@@ -49,5 +49,3 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
 }
 
 export default React.memo(RelatedCalculators);
-
-    
