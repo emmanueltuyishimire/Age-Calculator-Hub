@@ -19,7 +19,7 @@ export default function OtherCalculatorsHub() {
           Discover a variety of useful tools, from pet age calculators to legal estimators and other everyday utilities.
         </p>
       </div>
-      <CategoryHubClient categoryName="Other" />
+      <CategoryHubClient categoryName="Other Calculators" />
     </main>
   );
 }

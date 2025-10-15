@@ -202,7 +202,7 @@ export default function DogAgePage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Other" currentHref="/dog-age" />
+        <RelatedCalculators currentCategory="Other Calculators" currentHref="/dog-age" />
       </div>
     </div>
   );

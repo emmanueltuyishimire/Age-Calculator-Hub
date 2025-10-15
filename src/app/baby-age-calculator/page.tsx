@@ -190,7 +190,7 @@ export default function BabyAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/baby-age-calculator" />
+        <RelatedCalculators currentCategory="Fitness & Health Calculators" currentHref="/baby-age-calculator" />
       </div>
     </div>
   );

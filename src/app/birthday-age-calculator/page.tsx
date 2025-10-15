@@ -146,7 +146,7 @@ export default function BirthdayAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/birthday-age-calculator" />
+        <RelatedCalculators currentCategory="Fitness & Health Calculators" currentHref="/birthday-age-calculator" />
       </div>
     </div>
   );

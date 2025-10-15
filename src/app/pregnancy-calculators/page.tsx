@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'Pregnancy & Baby Calculators Hub - Due Date, Ovulation & More',
     description: 'Explore our free pregnancy and baby tools. Calculate your due date, track pregnancy progress, find your ovulation window, and calculate your baby\'s age in weeks and months.',
     alternates: {
-        canonical: '/pregnancy-calculators',
+        canonical: '/health-fitness-calculators',
     },
 };
 
@@ -19,7 +19,7 @@ export default function PregnancyCalculatorsHub() {
           From conception to your baby's first milestones, our free tools support you at every stage. Calculate your due date, track your ovulation window, and find out your baby's age in weeks and months.
         </p>
       </div>
-      <CategoryHubClient categoryName="Pregnancy & Baby" />
+      <CategoryHubClient categoryName="Fitness & Health Calculators" />
     </main>
   );
 }

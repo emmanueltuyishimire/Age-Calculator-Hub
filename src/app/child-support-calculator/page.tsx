@@ -167,7 +167,7 @@ export default function ChildSupportCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Legal Estimators" currentHref="/child-support-calculator" />
+        <RelatedCalculators currentCategory="Other Calculators" currentHref="/child-support-calculator" />
       </div>
     </div>
   );

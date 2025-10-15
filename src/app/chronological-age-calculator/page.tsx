@@ -140,7 +140,7 @@ export default function ChronologicalAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/chronological-age-calculator" />
+        <RelatedCalculators currentCategory="Fitness & Health Calculators" currentHref="/chronological-age-calculator" />
       </div>
     </div>
   );

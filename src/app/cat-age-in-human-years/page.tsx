@@ -196,10 +196,8 @@ export default function CatAgePage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Other" currentHref="/cat-age-in-human-years" />
+        <RelatedCalculators currentCategory="Other Calculators" currentHref="/cat-age-in-human-years" />
       </div>
     </div>
   );
 }
-
-    

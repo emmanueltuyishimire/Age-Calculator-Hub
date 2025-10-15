@@ -128,7 +128,7 @@ export default function HowOldIsPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/how-old-is" />
+        <RelatedCalculators currentCategory="Fitness & Health Calculators" currentHref="/how-old-is" />
       </div>
     </div>
   );

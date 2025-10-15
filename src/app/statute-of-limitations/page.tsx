@@ -163,7 +163,7 @@ export default function StatuteOfLimitationsPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Legal Estimators" currentHref="/statute-of-limitations" />
+        <RelatedCalculators currentCategory="Other Calculators" currentHref="/statute-of-limitations" />
       </div>
     </div>
   );

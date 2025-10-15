@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'Pet Age Calculators - Dog & Cat Age in Human Years',
     description: 'Ever wonder how old your furry friend is in human years? Use our specialized calculators for dogs and cats to better understand their life stage, health, and care needs.',
     alternates: {
-        canonical: '/pet-age-calculators',
+        canonical: '/other-calculators',
     },
 };
 
@@ -19,9 +19,7 @@ export default function PetAgeCalculatorsHub() {
           Ever wonder how old your furry friend is in human years? Use our specialized calculators for dogs and cats to better understand their life stage and care needs.
         </p>
       </div>
-      <CategoryHubClient categoryName="Other" />
+      <CategoryHubClient categoryName="Other Calculators" />
     </main>
   );
 }
-
-    

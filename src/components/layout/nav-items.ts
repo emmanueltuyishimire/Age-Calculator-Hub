@@ -44,6 +44,7 @@ import {
   DollarSign,
   Car,
   FlaskConical,
+  Cube,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -69,48 +70,119 @@ export const navItems: NavItem[] = [
     category: 'Navigation',
     description: 'Read our latest articles.'
   },
-  // Core Age Calculators
+
+  // Fitness & Health Calculators
   {
-    href: '/core-age-calculators',
-    icon: Clock,
-    label: 'Core Age Calculators',
-    category: 'Core Age Calculators',
-    description: 'A hub for chronological age and birthday tools.'
+    href: '/health-fitness-calculators',
+    icon: HeartPulse,
+    label: 'Fitness & Health Calculators',
+    category: 'Fitness & Health Calculators',
+    description: 'A hub for all health, fitness, and scientific calculators.'
   },
-   {
+  {
     href: '/age-calculator',
-    icon: Calculator,
+    icon: Clock,
     label: 'Age Calculator',
-    category: 'Core Age Calculators',
+    category: 'Fitness & Health Calculators',
     description: 'Calculates age from date of birth in years, months, and days.'
   },
   {
     href: '/birthday-age-calculator',
     icon: Cake,
     label: 'Birthday Calculator',
-    category: 'Core Age Calculators',
+    category: 'Fitness & Health Calculators',
     description: 'Find your exact age and see a live countdown to your next birthday.'
-  },
-  {
-    href: '/age-calculator-by-year',
-    icon: CalendarIcon,
-    label: 'Age by Year Calculator',
-    category: 'Core Age Calculators',
-    description: 'Quickly estimate age by only entering the year of birth.'
-  },
-  {
-    href: '/age-calculator-by-date-of-birth',
-    icon: CalendarDays,
-    label: 'Online Age Calculator',
-    category: 'Core Age Calculators',
-    description: 'A real-time tool to find your age from your date of birth.'
   },
   {
     href: '/how-old-is',
     icon: HelpCircle,
     label: 'How Old Is...?',
-    category: 'Core Age Calculators',
+    category: 'Fitness & Health Calculators',
     description: 'A quick age finder to determine how old someone is from their birth date.'
+  },
+  {
+    href: '/biological-age',
+    icon: TestTube,
+    label: 'Biological Age Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Estimates body’s biological age based on health/lifestyle inputs.'
+  },
+   {
+    href: '/metabolic-age',
+    icon: Zap,
+    label: 'Metabolic Age Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Find out your body’s metabolic age based on your BMR.'
+  },
+  {
+    href: '/target-heart-rate-calculator',
+    icon: HeartPulse,
+    label: 'Target Heart Rate Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Find your ideal heart rate zones for exercise (fat burn, cardio, peak).'
+  },
+  {
+    href: '/macro-calculator',
+    icon: PieChart,
+    label: 'Macro Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Get daily protein, carb, and fat intake recommendations.'
+  },
+  {
+    href: '/bmi-calculator',
+    icon: Scale,
+    label: 'BMI Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Calculate your Body Mass Index to assess your weight status.'
+  },
+  {
+    href: '/bmr-calculator',
+    icon: Brain,
+    label: 'BMR Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Estimate your Basal Metabolic Rate (calories burned at rest).'
+  },
+  {
+    href: '/body-fat-calculator',
+    icon: Stethoscope,
+    label: 'Body Fat Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Estimate your body fat percentage using the U.S. Navy method.'
+  },
+   {
+    href: '/pregnancy-calculator',
+    icon: CalendarHeart,
+    label: 'Pregnancy Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Estimate your pregnancy week, due date, and conception date.'
+  },
+  {
+    href: '/due-date-calculator',
+    icon: CalendarCheck,
+    label: 'Due Date Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Predict your baby\'s due date from LMP, conception, or IVF.'
+  },
+  {
+    href: '/ovulation-calculator',
+    icon: ClipboardList,
+    label: 'Ovulation Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Predict your fertile window and ovulation day.'
+  },
+  {
+    href: '/gestational-age',
+    icon: FileHeart,
+    label: 'Gestational Age Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Calculates pregnancy gestational age from last menstrual period or due date.'
+  },
+  {
+    href: '/baby-age-calculator',
+    icon: Baby,
+    label: 'Baby Age Calculator',
+    category: 'Fitness & Health Calculators',
+    description: 'Calculate your baby\'s age in weeks, months, and days.'
   },
 
   // Financial Calculators
@@ -166,111 +238,9 @@ export const navItems: NavItem[] = [
   {
     href: '/social-security-retirement-age-calculator',
     icon: PiggyBank,
-    label: 'Social Security Retirement Age Calculator',
-    category: 'Retirement & Social',
+    label: 'Social Security Retirement Age',
+    category: 'Financial Calculators',
     description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
-  },
-
-  // Health & Fitness Calculators
-  {
-    href: '/health-fitness-calculators',
-    icon: HeartPulse,
-    label: 'Health & Fitness Calculators',
-    category: 'Health & Fitness',
-    description: 'A hub for all health, fitness, and scientific calculators.'
-  },
-  {
-    href: '/biological-age',
-    icon: TestTube,
-    label: 'Biological Age Calculator',
-    category: 'Health & Fitness',
-    description: 'Estimates body’s biological age based on health/lifestyle inputs.'
-  },
-   {
-    href: '/metabolic-age',
-    icon: Zap,
-    label: 'Metabolic Age Calculator',
-    category: 'Health & Fitness',
-    description: 'Find out your body’s metabolic age based on your BMR.'
-  },
-  {
-    href: '/target-heart-rate-calculator',
-    icon: HeartPulse,
-    label: 'Target Heart Rate Calculator',
-    category: 'Health & Fitness',
-    description: 'Find your ideal heart rate zones for exercise (fat burn, cardio, peak).'
-  },
-  {
-    href: '/macro-calculator',
-    icon: PieChart,
-    label: 'Macro Calculator',
-    category: 'Health & Fitness',
-    description: 'Get daily protein, carb, and fat intake recommendations.'
-  },
-  {
-    href: '/bmi-calculator',
-    icon: Scale,
-    label: 'BMI Calculator',
-    category: 'Health & Fitness',
-    description: 'Calculate your Body Mass Index to assess your weight status.'
-  },
-  {
-    href: '/bmr-calculator',
-    icon: Brain,
-    label: 'BMR Calculator',
-    category: 'Health & Fitness',
-    description: 'Estimate your Basal Metabolic Rate (calories burned at rest).'
-  },
-  {
-    href: '/body-fat-calculator',
-    icon: Stethoscope,
-    label: 'Body Fat Calculator',
-    category: 'Health & Fitness',
-    description: 'Estimate your body fat percentage using the U.S. Navy method.'
-  },
-
-   // Pregnancy & Baby Calculators
-   {
-    href: '/pregnancy-calculators',
-    icon: Baby,
-    label: 'Pregnancy & Baby Calculators',
-    category: 'Pregnancy & Baby',
-    description: 'A hub for due date, ovulation, and baby age tracking tools.'
-  },
-   {
-    href: '/pregnancy-calculator',
-    icon: CalendarHeart,
-    label: 'Pregnancy Calculator',
-    category: 'Pregnancy & Baby',
-    description: 'Estimate your pregnancy week, due date, and conception date.'
-  },
-  {
-    href: '/due-date-calculator',
-    icon: CalendarCheck,
-    label: 'Due Date Calculator',
-    category: 'Pregnancy & Baby',
-    description: 'Predict your baby\'s due date from LMP, conception, or IVF.'
-  },
-  {
-    href: '/ovulation-calculator',
-    icon: ClipboardList,
-    label: 'Ovulation Calculator',
-    category: 'Pregnancy & Baby',
-    description: 'Predict your fertile window and ovulation day.'
-  },
-  {
-    href: '/gestational-age',
-    icon: FileHeart,
-    label: 'Gestational Age Calculator',
-    category: 'Pregnancy & Baby',
-    description: 'Calculates pregnancy gestational age from last menstrual period or due date.'
-  },
-  {
-    href: '/baby-age-calculator',
-    icon: Baby,
-    label: 'Baby Age Calculator',
-    category: 'Pregnancy & Baby',
-    description: 'Calculate your baby\'s age in weeks, months, and days.'
   },
   
   // Math Calculators
@@ -288,51 +258,63 @@ export const navItems: NavItem[] = [
     category: 'Math Calculators',
     description: 'An online scientific calculator with advanced functions.'
   },
-  
-  // Other Calculators (Pet, Legal, etc. might go here or their own categories)
   {
-    href: '/pet-age-calculators',
-    icon: PawPrint,
-    label: 'Pet Age Calculators',
-    category: 'Other',
-    description: 'A hub for our dog and cat age conversion tools.'
+    href: '/percentage-calculator',
+    icon: Calculator,
+    label: 'Percentage Calculator',
+    category: 'Math Calculators',
+    description: 'A versatile tool for all types of percentage calculations.'
+  },
+  {
+    href: '/volume-calculator',
+    icon: Cube,
+    label: 'Volume Calculator',
+    category: 'Math Calculators',
+    description: 'Calculate the volume of common 3D shapes like spheres, cubes, and cylinders.'
+  },
+  
+  // Other Calculators (Pet, Legal, etc.)
+  {
+    href: '/other-calculators',
+    icon: LayoutGrid,
+    label: 'Other Calculators',
+    category: 'Other Calculators',
+    description: 'A hub for pet age, legal estimators, and more.'
   },
   {
     href: '/dog-age',
     icon: Dog,
     label: 'Dog Age Calculator',
-    category: 'Other',
-    description: 'Find out how old your dog is in human years.'
+    category: 'Other Calculators',
+    description: 'Find out how old your dog is in human years based on size.'
   },
    {
     href: '/cat-age-in-human-years',
     icon: Cat,
     label: 'Cat Age Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Find out how old your cat is in human years.'
-  },
-  
-  // Legal Estimators
-  {
-    href: '/legal-estimators',
-    icon: Scale,
-    label: 'Legal Estimators',
-    category: 'Legal Estimators',
-    description: 'A hub for our legal information and estimation tools.'
   },
   {
     href: '/statute-of-limitations',
     icon: BookOpen,
     label: 'Statute of Limitations Calculator',
-    category: 'Legal Estimators',
+    category: 'Other Calculators',
     description: 'Estimate legal filing deadlines for common claims.'
   },
   {
     href: '/child-support-calculator',
     icon: Users,
     label: 'Child Support Calculator',
-    category: 'Legal Estimators',
+    category: 'Other Calculators',
     description: 'Get a simple estimate of potential child support payments.'
+  },
+   {
+    href: '/age-calculator-by-year',
+    icon: CalendarIcon,
+    label: 'Age by Year Calculator',
+    category: 'Other Calculators',
+    description: 'Quickly estimate age by only entering the year of birth.'
   },
 
   // Company & Legal Links (for footer and mobile nav)
@@ -375,13 +357,9 @@ export const navItems: NavItem[] = [
 
 const categoryHubs: Record<string, string> = {
   'Financial Calculators': '/financial-calculators',
-  'Health & Fitness': '/health-fitness-calculators',
-  'Core Age Calculators': '/core-age-calculators',
-  'Pregnancy & Baby': '/pregnancy-calculators',
+  'Fitness & Health Calculators': '/health-fitness-calculators',
   'Math Calculators': '/math-calculators',
-  'Legal Estimators': '/legal-estimators',
-  'Retirement & Social': '/retirement-calculators',
-  'Other': '/other-calculators',
+  'Other Calculators': '/other-calculators',
 };
 
 
@@ -400,14 +378,10 @@ export const categorizedNavItems = (): NavCategory[] => {
   
   // Define the desired order
   const categoryOrder = [
-    'Core Age Calculators',
-    'Health & Fitness',
-    'Pregnancy & Baby',
     'Financial Calculators',
-    'Retirement & Social',
+    'Fitness & Health Calculators',
     'Math Calculators',
-    'Legal Estimators',
-    'Other',
+    'Other Calculators',
     'Company',
     'Legal',
   ];
