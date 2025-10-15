@@ -92,12 +92,11 @@ export default function RootLayout({
           strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"
         />
-         <Script
-          id="adsense"
-          strategy="afterInteractive"
+         <script
+          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
           crossOrigin="anonymous"
-        />
+        ></script>
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider
