@@ -2,6 +2,7 @@
 "use client";
 
 import CalculatorHub from '@/components/calculators/calculator-hub';
+import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
 import ArticleList from '@/components/layout/article-list';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,9 @@ import { Button } from '@/components/ui/button';
 export default function Home() {
   return (
     <main role="main">
+      <section className="container mx-auto px-4 pt-12 pb-8">
+        <ChronologicalAgeCalculatorForm />
+      </section>
       <CalculatorHub />
       <section className="container mx-auto px-4 py-8 sm:py-12">
         <div className="text-center mb-10">
