@@ -64,6 +64,13 @@ export type NavCategory = {
 export const navItems: NavItem[] = [
   // General Navigation
   {
+    href: '/',
+    icon: Home,
+    label: 'Home',
+    category: 'Navigation',
+    description: 'Return to the homepage.'
+  },
+  {
     href: '/articles',
     icon: Newspaper,
     label: 'Articles',
@@ -366,7 +373,6 @@ const categoryHubs: Record<string, string> = {
 export const categorizedNavItems = (): NavCategory[] => {
   const categories: { [key: string]: NavItem[] } = {};
   navItems.forEach(item => {
-    if (item.category === 'Navigation') return;
     if (!categories[item.category]) {
       categories[item.category] = [];
     }
@@ -378,6 +384,7 @@ export const categorizedNavItems = (): NavCategory[] => {
   
   // Define the desired order
   const categoryOrder = [
+    'Navigation',
     'Financial Calculators',
     'Fitness & Health Calculators',
     'Math Calculators',
