@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main role="main">
       <CalculatorHub />
-      <section className="container mx-auto px-4 py-12">
+      <section className="container mx-auto px-4 py-8 sm:py-12">
         <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Latest Articles & Insights</h2>
             <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">

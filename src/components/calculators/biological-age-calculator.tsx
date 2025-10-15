@@ -114,12 +114,12 @@ export default function BiologicalAgeCalculator() {
   return (
     <Card className="w-full max-w-3xl mx-auto shadow-lg">
       <CardHeader>
-        <CardTitle className="text-center text-2xl">Calculate Your Biological Age Now</CardTitle>
+        <CardTitle className="text-center text-xl sm:text-2xl">Calculate Your Biological Age Now</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <FormField
                 control={form.control}
                 name="chronologicalAge"
@@ -253,7 +253,7 @@ export default function BiologicalAgeCalculator() {
                 )}
               />
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 pt-2">
                 <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? <Loader2 className="animate-spin" /> : 'Calculate Biological Age'}
                 </Button>
@@ -273,16 +273,16 @@ export default function BiologicalAgeCalculator() {
           <div className="mt-8 pt-6 border-t animate-fade-in">
             <h2 className="text-center text-2xl font-bold mb-4">Your Biological Age Results</h2>
             <div className="grid md:grid-cols-2 gap-6 items-center">
-              <div className="text-center p-6 bg-muted rounded-lg">
-                <p className="text-lg font-medium text-muted-foreground">Your Biological Age Is</p>
-                <p className="text-6xl font-bold text-primary my-2">{result.biologicalAge}</p>
-                <p className="text-lg font-semibold">{getComparisonText()}</p>
+              <div className="text-center p-4 sm:p-6 bg-muted rounded-lg">
+                <p className="text-md sm:text-lg font-medium text-muted-foreground">Your Biological Age Is</p>
+                <p className="text-5xl sm:text-6xl font-bold text-primary my-2">{result.biologicalAge}</p>
+                <p className="text-md sm:text-lg font-semibold">{getComparisonText()}</p>
               </div>
               <div className="h-[200px]">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={chartData} layout="vertical" margin={{ left: 20 }}>
                         <XAxis type="number" hide />
-                        <YAxis type="category" dataKey="name" stroke="hsl(var(--foreground))" axisLine={false} tickLine={false} />
+                        <YAxis type="category" dataKey="name" stroke="hsl(var(--foreground))" axisLine={false} tickLine={false} width={120} />
                         <Tooltip
                             cursor={{fill: 'transparent'}}
                             content={({ active, payload }) => {
@@ -296,7 +296,7 @@ export default function BiologicalAgeCalculator() {
                                 return null;
                             }}
                         />
-                        <Bar dataKey="value" radius={[4, 4, 4, 4]} />
+                        <Bar dataKey="value" radius={[4, 4, 4, 4]} barSize={32} />
                     </BarChart>
                 </ResponsiveContainer>
               </div>

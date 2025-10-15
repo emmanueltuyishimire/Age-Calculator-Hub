@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { RefreshCcw, Home, Percent, DollarSign } from 'lucide-react';
+import { RefreshCcw, Home } from 'lucide-react';
 import ShareButton from '../share-button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import {
@@ -123,7 +123,9 @@ export default function MortgageCalculator() {
     const monthlyRate = interestRate / 100 / 12;
     const numberOfPayments = loanTerm * 12;
 
-    const principalAndInterest = loanAmount * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments) / (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+    const principalAndInterest = loanAmount > 0 && monthlyRate > 0
+        ? loanAmount * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments) / (Math.pow(1 + monthlyRate, numberOfPayments) - 1)
+        : (loanAmount > 0 ? loanAmount / numberOfPayments : 0);
     
     const taxAmount = propertyTaxType === 'percent' ? homePrice * ((propertyTax || 0) / 100) : (propertyTax || 0);
     const monthlyTax = taxAmount / 12;
@@ -143,23 +145,25 @@ export default function MortgageCalculator() {
     let annualInterest = 0;
     let annualPrincipal = 0;
     
-    for (let i = 1; i <= numberOfPayments; i++) {
-        const interestForMonth = balance * monthlyRate;
-        const principalForMonth = principalAndInterest - interestForMonth;
-        
-        annualInterest += interestForMonth;
-        annualPrincipal += principalForMonth;
-        balance -= principalForMonth;
+    if (loanAmount > 0) {
+        for (let i = 1; i <= numberOfPayments; i++) {
+            const interestForMonth = balance * monthlyRate;
+            const principalForMonth = principalAndInterest - interestForMonth;
+            
+            annualInterest += interestForMonth;
+            annualPrincipal += principalForMonth;
+            balance -= principalForMonth;
 
-        if (i % 12 === 0 || i === numberOfPayments) {
-            schedule.push({
-                year: Math.ceil(i/12),
-                interest: annualInterest,
-                principal: annualPrincipal,
-                balance: balance > 0 ? balance : 0
-            });
-            annualInterest = 0;
-            annualPrincipal = 0;
+            if (i % 12 === 0 || i === numberOfPayments) {
+                schedule.push({
+                    year: Math.ceil(i/12),
+                    interest: annualInterest,
+                    principal: annualPrincipal,
+                    balance: balance > 0 ? balance : 0
+                });
+                annualInterest = 0;
+                annualPrincipal = 0;
+            }
         }
     }
 
@@ -225,7 +229,7 @@ export default function MortgageCalculator() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <FormField control={form.control} name="homePrice" render={({ field }) => (<FormItem><FormLabel>Home Price</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
               <FormItem>
                 <FormLabel>Down Payment</FormLabel>
@@ -346,8 +350,8 @@ export default function MortgageCalculator() {
                 <CardHeader><CardTitle className="text-center text-xl">Loan Summary</CardTitle></CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-                        <div><p className="text-sm text-muted-foreground">Loan Amount</p><p className="font-bold">{currencySymbol}{result.loanAmount.toLocaleString()}</p></div>
-                        <div><p className="text-sm text-muted-foreground">Down Payment</p><p className="font-bold">{currencySymbol}{result.downPaymentAmount.toLocaleString()}</p></div>
+                        <div><p className="text-sm text-muted-foreground">Loan Amount</p><p className="font-bold">{currencySymbol}{result.loanAmount.toLocaleString(undefined, {maximumFractionDigits: 0})}</p></div>
+                        <div><p className="text-sm text-muted-foreground">Down Payment</p><p className="font-bold">{currencySymbol}{result.downPaymentAmount.toLocaleString(undefined, {maximumFractionDigits: 0})}</p></div>
                         <div><p className="text-sm text-muted-foreground">Payoff Date</p><p className="font-bold">{format(result.payoffDate, 'MMM yyyy')}</p></div>
                         <div className="col-span-2 md:col-span-3 grid grid-cols-2 gap-4">
                             <div><p className="text-sm text-muted-foreground">Total Interest</p><p className="font-bold">{currencySymbol}{result.totalInterest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p></div>
