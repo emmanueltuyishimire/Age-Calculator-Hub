@@ -44,6 +44,13 @@ export const articles: Article[] = [
     publishedDate: '2024-10-14',
   },
   {
+    slug: 'what-generation-am-i',
+    title: 'What Generation Am I? A Guide to Gen Z, Millennials, Gen X, and Boomers',
+    description: 'Find out which generation you belong to with our easy-to-use chart. Learn the birth year cutoffs for Gen Z, Millennials, Gen X, and Baby Boomers.',
+    category: 'Guides',
+    publishedDate: '2024-10-13',
+  },
+  {
     slug: 'the-science-behind-pet-age-calculators',
     title: 'The Science Behind Dog and Cat Age Calculators',
     description: 'Is one dog year really equal to seven human years? We explore the modern science behind converting pet age to human years and why it matters for their health.',
@@ -65,7 +72,3 @@ export const articles: Article[] = [
     publishedDate: '2024-10-08',
   },
 ];
-
-    
-
-    
