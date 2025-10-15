@@ -2,6 +2,7 @@
 import { type Metadata } from 'next';
 import ArticleList from '@/components/layout/article-list';
 import { articles } from '@/lib/articles';
+import AdBanner from '@/components/layout/ad-banner';
 
 export const metadata: Metadata = {
     title: 'Articles – Calculator Hub',
@@ -21,6 +22,10 @@ export default function ArticlesHubPage() {
         <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
           Explore our collection of articles to learn more about the science of aging, health and wellness tips, financial planning for retirement, and more.
         </p>
+      </div>
+
+      <div className="my-8">
+        <AdBanner />
       </div>
 
       {categories.map(category => (

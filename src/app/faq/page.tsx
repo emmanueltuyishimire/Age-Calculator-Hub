@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import AdBanner from '@/components/layout/ad-banner';
 
 export const metadata: Metadata = {
     title: 'Frequently Asked Questions – Calculator Hub',
@@ -26,6 +27,10 @@ export default function FAQPage() {
         </p>
       </div>
       
+      <div className="my-8">
+        <AdBanner />
+      </div>
+
       <section className="max-w-4xl mx-auto">
         <Accordion type="single" collapsible className="w-full">
             {faqCategories.map((cat) => (

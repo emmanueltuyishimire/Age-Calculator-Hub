@@ -2,6 +2,7 @@
 import { type Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, MessageSquare, Lightbulb } from 'lucide-react';
+import AdBanner from '@/components/layout/ad-banner';
 
 export const metadata: Metadata = {
     title: 'Contact Us – Calculator Hub',
@@ -20,6 +21,10 @@ export default function ContactPage() {
           <p className="text-md md:text-lg text-muted-foreground">
             We're here to help and eager to hear from you.
           </p>
+        </div>
+
+        <div className="my-8">
+          <AdBanner />
         </div>
 
         <Card className="shadow-lg">
