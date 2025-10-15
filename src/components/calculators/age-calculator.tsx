@@ -257,7 +257,7 @@ export default function AgeCalculator() {
               </div>
               <div>
                  <h3 className="text-md sm:text-lg font-medium mb-2 mt-4 text-muted-foreground">In Other Units:</h3>
-                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 text-xs sm:text-sm text-foreground">
+                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs sm:text-sm text-foreground">
                     <p><span className='font-semibold'>{age.totalMonths.toLocaleString()}</span> months, <span className='font-semibold'>{age.days}</span> days</p>
                     <p><span className='font-semibold'>{age.totalWeeks.toLocaleString()}</span> weeks, <span className='font-semibold'>{age.totalDays % 7}</span> days</p>
                     <p><span className='font-semibold'>{age.totalDays.toLocaleString()}</span> days</p>

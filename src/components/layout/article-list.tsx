@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -25,11 +26,11 @@ export default function ArticleList({ articleCount, category }: ArticleListProps
       {articlesToDisplay.map((article) => (
         <Link href={`/articles/${article.slug}`} key={article.slug} className="block hover:no-underline group">
           <Card className="h-full flex flex-col hover:shadow-xl transition-shadow duration-300 ease-in-out group-hover:border-primary/50">
-            <CardHeader className="flex-grow pb-4">
+            <CardHeader className="pb-4">
               <p className="text-sm text-primary font-semibold mb-2">{article.category}</p>
               <CardTitle className="text-lg leading-snug group-hover:text-primary">{article.title}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-grow">
               <CardDescription className="text-sm line-clamp-2">{article.description}</CardDescription>
             </CardContent>
           </Card>
