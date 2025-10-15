@@ -2,7 +2,7 @@
 "use client";
 
 import * as React from "react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -47,7 +47,42 @@ const ScientificCalculator = () => {
     const [expression, setExpression] = useState('');
     const [isResult, setIsResult] = useState(false);
 
-    const handleButtonClick = (btn: string | React.ReactNode) => {
+    const calculate = useCallback(() => {
+        try {
+            let finalExpression = expression
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/')
+                .replace(/−/g, '-')
+                .replace(/√/g, 'sqrt')
+                .replace(/∛/g, 'cbrt')
+                .replace(/(\d+)!/g, 'factorial($1)');
+            
+            if (isDeg) {
+                finalExpression = finalExpression.replace(/(sin|cos|tan|asin|acos|atan)\(/g, (match, p1) => `${p1}(`);
+            }
+            
+            const scope = {
+                sin: (x:number) => isDeg ? Math.sin(x * Math.PI / 180) : Math.sin(x),
+                cos: (x:number) => isDeg ? Math.cos(x * Math.PI / 180) : Math.cos(x),
+                tan: (x:number) => isDeg ? Math.tan(x * Math.PI / 180) : Math.tan(x),
+                asin: (x:number) => isDeg ? Math.asin(x) * 180 / Math.PI : Math.asin(x),
+                acos: (x:number) => isDeg ? Math.acos(x) * 180 / Math.PI : Math.acos(x),
+                atan: (x:number) => isDeg ? Math.atan(x) * 180 / Math.PI : Math.atan(x),
+            };
+
+            const result = evaluate(finalExpression, scope);
+            const resultString = Number(result.toFixed(10)).toString();
+            setAns(result);
+            setExpression(resultString);
+            setIsResult(true);
+
+        } catch (error) {
+            setExpression('');
+            setDisplay('Error');
+        }
+    }, [expression, isDeg]);
+
+    const handleButtonClick = useCallback((btn: string | React.ReactNode) => {
         let value = '';
         if (typeof btn === 'string') {
             value = btn;
@@ -134,43 +169,42 @@ const ScientificCalculator = () => {
                     setExpression(prev => prev + value);
                 }
         }
-    };
+    }, [isResult, calculate, expression, display, ans, memory]);
     
-    const calculate = () => {
-        try {
-            let finalExpression = expression
-                .replace(/×/g, '*')
-                .replace(/÷/g, '/')
-                .replace(/−/g, '-')
-                .replace(/√/g, 'sqrt')
-                .replace(/∛/g, 'cbrt')
-                .replace(/(\d+)!/g, 'factorial($1)');
-            
-            // Convert trig functions if in degrees
-            if (isDeg) {
-                finalExpression = finalExpression.replace(/(sin|cos|tan|asin|acos|atan)\(/g, (match, p1) => `${p1}(`);
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            event.preventDefault();
+            const { key } = event;
+            if (/\d/.test(key)) {
+                handleButtonClick(key);
+            } else if (key === '.') {
+                handleButtonClick('.');
+            } else if (key === '+') {
+                handleButtonClick('+');
+            } else if (key === '-') {
+                handleButtonClick('−');
+            } else if (key === '*') {
+                handleButtonClick('×');
+            } else if (key === '/') {
+                handleButtonClick('÷');
+            } else if (key === 'Enter' || key === '=') {
+                calculate();
+            } else if (key === 'Backspace') {
+                handleButtonClick('Backspace');
+            } else if (key === 'Escape') {
+                handleButtonClick('AC');
+            } else if (key === '(') {
+                handleButtonClick('(');
+            } else if (key === ')') {
+                handleButtonClick(')');
             }
-            
-            const scope = {
-                sin: (x:number) => isDeg ? Math.sin(x * Math.PI / 180) : Math.sin(x),
-                cos: (x:number) => isDeg ? Math.cos(x * Math.PI / 180) : Math.cos(x),
-                tan: (x:number) => isDeg ? Math.tan(x * Math.PI / 180) : Math.tan(x),
-                asin: (x:number) => isDeg ? Math.asin(x) * 180 / Math.PI : Math.asin(x),
-                acos: (x:number) => isDeg ? Math.acos(x) * 180 / Math.PI : Math.acos(x),
-                atan: (x:number) => isDeg ? Math.atan(x) * 180 / Math.PI : Math.atan(x),
-            };
+        };
 
-            const result = evaluate(finalExpression, scope);
-            const resultString = Number(result.toFixed(10)).toString(); // Fix floating point issues
-            setAns(result);
-            setExpression(resultString);
-            setIsResult(true);
-
-        } catch (error) {
-            setExpression('');
-            setDisplay('Error');
-        }
-    };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [handleButtonClick, calculate]);
     
     useEffect(() => {
         if (expression === '') {
