@@ -65,13 +65,6 @@ export type NavCategory = {
 export const navItems: NavItem[] = [
   // General Navigation
   {
-    href: '/',
-    icon: Home,
-    label: 'Home',
-    category: 'Navigation',
-    description: 'Return to the main hub.'
-  },
-  {
     href: '/articles',
     icon: Newspaper,
     label: 'Articles',
@@ -364,7 +357,7 @@ export const navItems: NavItem[] = [
     icon: Info,
     label: 'About Us',
     category: 'Company',
-    description: 'Learn more about Calculator Hub.'
+    description: 'Learn more about Calculators.'
   },
   {
     href: '/contact',

@@ -43,15 +43,6 @@ export function TopNav() {
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-6 text-sm" aria-label="Main navigation">
-        <Link
-            href="/"
-            aria-label="Go to Homepage"
-            className={`transition-colors hover:text-foreground/80 ${
-              pathname === '/' ? 'text-foreground' : 'text-foreground/60'
-            }`}
-          >
-            Home
-          </Link>
           <Link
             href="/articles"
             aria-label="View all articles"
@@ -107,16 +98,6 @@ export function TopNav() {
             <nav role="navigation" aria-label="Mobile menu">
               <div className="px-2">
               <div className="flex flex-col gap-1">
-                <Link
-                    href="/"
-                    onClick={() => setIsOpen(false)}
-                    aria-label="Go to Homepage"
-                    className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
-                      pathname === '/' ? 'bg-muted' : 'hover:bg-muted/50'
-                    }`}
-                  >
-                    Home
-                </Link>
                 <Link
                     href="/articles"
                     onClick={() => setIsOpen(false)}
