@@ -143,7 +143,7 @@ export const navItems: NavItem[] = [
     icon: Stethoscope,
     label: 'Health Assessments',
     category: 'Scientific & Health Age',
-    description: 'Tools to assess various health-related age factors.'
+    description: 'Tools to assess BMI, BMR, body fat, and other health factors.'
   },
   {
     href: '/macro-calculator',
@@ -354,3 +354,5 @@ export const categorizedNavItems = (): NavCategory[] => {
     };
   });
 };
+
+    

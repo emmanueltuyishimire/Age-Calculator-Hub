@@ -9,17 +9,17 @@ import {
 } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
-    title: 'Health Assessment Tools - Monitor Your Wellness',
-    description: 'Explore our collection of free health assessment tools. Check your biological age, blood pressure risks, and other key health markers to stay informed about your wellness.',
+    title: 'Health Assessment Tools - BMI, BMR & Body Fat Calculators',
+    description: 'Explore our free health assessment tools. Calculate your BMI, BMR, Body Fat Percentage, and other key health markers to stay informed about your wellness.',
     openGraph: {
-        title: 'Health Assessment Tools - Monitor Your Wellness',
+        title: 'Health Assessment Tools - BMI, BMR & Body Fat Calculators',
         description: 'Explore our collection of free health assessment tools. Check your biological age, blood pressure risks, and other key health markers to stay informed about your wellness.',
         type: 'website',
         url: '/health-assessments',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Health Assessment Tools - Monitor Your Wellness',
+        title: 'Health Assessment Tools - BMI, BMR & Body Fat Calculators',
         description: 'Explore our collection of free health assessment tools. Check your biological age, blood pressure risks, and other key health markers to stay informed about your wellness.',
     },
     alternates: {
@@ -70,7 +70,7 @@ export default function HealthAssessmentsPage() {
         <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Health Assessment Tools</h1>
             <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-                Explore our collection of free health assessment tools designed to help you stay informed about your wellness. From understanding your biological age to checking key health markers, these calculators provide valuable insights to support your health journey.
+                Explore our collection of free health assessment tools designed to help you stay informed about your wellness. From calculating your BMI, BMR, and body fat percentage to understanding your biological age, these calculators provide valuable insights to support your health journey.
             </p>
         </div>
         <HealthAssessmentCalculator />
@@ -98,3 +98,5 @@ export default function HealthAssessmentsPage() {
     </div>
   );
 }
+
+    

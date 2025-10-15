@@ -21,12 +21,22 @@ import {
 } from "@/components/ui/select";
 import ShareButton from "../share-button";
 
+function getBmiCategory(bmi: number) {
+    if (bmi < 18.5) return 'Underweight';
+    if (bmi < 25) return 'Normal weight';
+    if (bmi < 30) return 'Overweight';
+    return 'Obesity';
+}
+
 export default function HealthAssessmentCalculator() {
   const [bmrData, setBmrData] = useState({ age: '', gender: 'male', height: '', weight: '' });
   const [bmrResult, setBmrResult] = useState("");
 
   const [bodyFatData, setBodyFatData] = useState({ gender: 'male', neck: '', waist: '', height: '', hip: '' });
   const [bodyFatResult, setBodyFatResult] = useState("");
+  
+  const [bmiData, setBmiData] = useState({ height: '', weight: '' });
+  const [bmiResult, setBmiResult] = useState<{ bmi: string, category: string } | null>(null);
 
   const handleBmrCalculation = () => {
     const age = parseFloat(bmrData.age);
@@ -70,9 +80,63 @@ export default function HealthAssessmentCalculator() {
     }
   };
 
+  const handleBmiCalculation = () => {
+    const height = parseFloat(bmiData.height);
+    const weight = parseFloat(bmiData.weight);
+
+    if (height > 0 && weight > 0) {
+        const heightInMeters = height / 100;
+        const bmi = weight / (heightInMeters * heightInMeters);
+        setBmiResult({
+            bmi: bmi.toFixed(1),
+            category: getBmiCategory(bmi),
+        });
+    } else {
+        setBmiResult(null);
+    }
+  };
+
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mx-auto">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto">
+      <Card className="shadow-lg">
+        <CardHeader className="text-center">
+          <CardTitle>BMI Calculator</CardTitle>
+          <CardDescription>
+            Calculate your Body Mass Index.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+           <div className="space-y-2">
+            <Label htmlFor="bmi-weight">Weight (kg)</Label>
+            <Input
+              id="bmi-weight" type="number" value={bmiData.weight}
+              onChange={(e) => setBmiData({...bmiData, weight: e.target.value})} placeholder="e.g., 70"
+            />
+          </div>
+           <div className="space-y-2">
+            <Label htmlFor="bmi-height">Height (cm)</Label>
+            <Input
+              id="bmi-height" type="number" value={bmiData.height}
+              onChange={(e) => setBmiData({...bmiData, height: e.target.value})} placeholder="e.g., 175"
+            />
+          </div>
+          <div className="flex gap-2">
+            <Button onClick={handleBmiCalculation} className="w-full">
+                Calculate BMI
+            </Button>
+            <ShareButton title="BMI Calculator" text="Check your Body Mass Index (BMI) with this simple health calculator!" url="/health-assessments" />
+          </div>
+          {bmiResult && (
+            <div className="p-4 bg-muted rounded-lg text-center">
+                <p className="font-semibold text-muted-foreground">Your BMI is</p>
+                <p className="text-3xl font-bold text-primary">{bmiResult.bmi}</p>
+                <p className="font-semibold">{bmiResult.category}</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+      
       <Card className="shadow-lg">
         <CardHeader className="text-center">
           <CardTitle>Basal Metabolic Rate (BMR)</CardTitle>
@@ -178,3 +242,5 @@ export default function HealthAssessmentCalculator() {
     </div>
   );
 }
+
+    
