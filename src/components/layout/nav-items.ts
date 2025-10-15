@@ -33,6 +33,7 @@ import {
   HelpCircle,
   PiggyBank,
   Target,
+  Goal,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -161,6 +162,13 @@ export const navItems: NavItem[] = [
     label: 'Retirement Savings Goal Calculator',
     category: 'Financial Planning',
     description: 'Estimate how much money you need to save for retirement.'
+  },
+  {
+    href: '/savings-goal-calculator',
+    icon: Goal,
+    label: 'Savings Goal Calculator',
+    category: 'Financial Planning',
+    description: 'Find out how long it will take to reach any savings goal.'
   },
   {
     href: '/retirement',
