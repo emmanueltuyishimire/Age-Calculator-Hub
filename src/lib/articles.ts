@@ -288,4 +288,13 @@ export const articles: Article[] = [
     category: 'Health & Wellness',
     publishedDate: '2024-11-21',
   },
+  {
+    slug: 'what-is-statute-of-limitations',
+    title: 'What Is a Statute of Limitations? A Complete Guide',
+    description: 'A comprehensive guide explaining what a statute of limitations is, how it works for civil and criminal cases, and why these legal deadlines are so important.',
+    category: 'Legal',
+    publishedDate: '2024-11-22',
+  },
 ];
+
+    
