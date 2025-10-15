@@ -163,7 +163,7 @@ export default function MacroCalculator() {
           </form>
         </Form>
         
-        {result && (
+        {result && chartConfig && (
           <div className="p-4 bg-muted rounded-lg mt-6 space-y-4 animate-fade-in">
             <div className="text-center">
                 <h3 className="text-xl font-bold text-foreground">Your Daily Goal</h3>
@@ -171,16 +171,18 @@ export default function MacroCalculator() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="h-[250px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                            <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60} outerRadius={80} strokeWidth={5}>
-                                {chartData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                                ))}
-                            </Pie>
-                        </PieChart>
-                    </ResponsiveContainer>
+                    <ChartContainer config={chartConfig}>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                                <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60} outerRadius={80} strokeWidth={5}>
+                                    {chartData.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={entry.fill} />
+                                    ))}
+                                </Pie>
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </ChartContainer>
                 </div>
                  <div className="flex flex-col justify-center space-y-2">
                     <div className="flex items-center justify-between p-3 border rounded-lg bg-background">
