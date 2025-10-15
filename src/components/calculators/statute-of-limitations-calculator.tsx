@@ -31,28 +31,58 @@ import { cn } from '@/lib/utils';
 import { Calendar } from '../ui/calendar';
 
 // IMPORTANT: This is sample data for demonstration purposes only.
-// It is NOT a comprehensive or legally accurate list.
+// It is NOT a comprehensive or legally accurate list and is subject to change.
 const statuteData: Record<string, Record<string, { years: number, months?: number }>> = {
-  'California': {
-    'Personal Injury': { years: 2 },
-    'Breach of Written Contract': { years: 4 },
-    'Property Damage': { years: 3 },
-  },
-  'New York': {
-    'Personal Injury': { years: 3 },
-    'Breach of Written Contract': { years: 6 },
-    'Property Damage': { years: 3 },
-  },
-  'Texas': {
-    'Personal Injury': { years: 2 },
-    'Breach of Written Contract': { years: 4 },
-    'Property Damage': { years: 2 },
-  },
-   'Florida': {
-    'Personal Injury': { years: 2 },
-    'Breach of Written Contract': { years: 5 },
-    'Property Damage': { years: 4 },
-  }
+  'Alabama': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 2 } },
+  'Alaska': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 3 }, 'Property Damage': { years: 2 } },
+  'Arizona': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 2 } },
+  'Arkansas': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 5 }, 'Property Damage': { years: 3 } },
+  'California': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 4 }, 'Property Damage': { years: 3 } },
+  'Colorado': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 3 }, 'Property Damage': { years: 2 } },
+  'Connecticut': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 2 } },
+  'Delaware': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 3 }, 'Property Damage': { years: 2 } },
+  'Florida': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 5 }, 'Property Damage': { years: 4 } },
+  'Georgia': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 4 } },
+  'Hawaii': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 2 } },
+  'Idaho': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 5 }, 'Property Damage': { years: 3 } },
+  'Illinois': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 10 }, 'Property Damage': { years: 5 } },
+  'Indiana': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 2 } },
+  'Iowa': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 10 }, 'Property Damage': { years: 5 } },
+  'Kansas': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 5 }, 'Property Damage': { years: 2 } },
+  'Kentucky': { 'Personal Injury': { years: 1 }, 'Breach of Written Contract': { years: 10 }, 'Property Damage': { years: 2 } },
+  'Louisiana': { 'Personal Injury': { years: 1 }, 'Breach of Written Contract': { years: 10 }, 'Property Damage': { years: 1 } },
+  'Maine': { 'Personal Injury': { years: 6 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 6 } },
+  'Maryland': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 3 }, 'Property Damage': { years: 3 } },
+  'Massachusetts': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 3 } },
+  'Michigan': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 3 } },
+  'Minnesota': { 'Personal Injury': { years: 6 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 6 } },
+  'Mississippi': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 3 }, 'Property Damage': { years: 3 } },
+  'Missouri': { 'Personal Injury': { years: 5 }, 'Breach of Written Contract': { years: 10 }, 'Property Damage': { years: 5 } },
+  'Montana': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 8 }, 'Property Damage': { years: 2 } },
+  'Nebraska': { 'Personal Injury': { years: 4 }, 'Breach of Written Contract': { years: 5 }, 'Property Damage': { years: 4 } },
+  'Nevada': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 3 } },
+  'New Hampshire': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 3 }, 'Property Damage': { years: 3 } },
+  'New Jersey': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 6 } },
+  'New Mexico': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 4 } },
+  'New York': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 3 } },
+  'North Carolina': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 3 }, 'Property Damage': { years: 3 } },
+  'North Dakota': { 'Personal Injury': { years: 6 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 6 } },
+  'Ohio': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 8 }, 'Property Damage': { years: 4 } },
+  'Oklahoma': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 5 }, 'Property Damage': { years: 2 } },
+  'Oregon': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 6 } },
+  'Pennsylvania': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 4 }, 'Property Damage': { years: 2 } },
+  'Rhode Island': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 10 }, 'Property Damage': { years: 10 } },
+  'South Carolina': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 3 }, 'Property Damage': { years: 3 } },
+  'South Dakota': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 6 } },
+  'Tennessee': { 'Personal Injury': { years: 1 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 3 } },
+  'Texas': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 4 }, 'Property Damage': { years: 2 } },
+  'Utah': { 'Personal Injury': { years: 4 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 3 } },
+  'Vermont': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 3 } },
+  'Virginia': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 5 }, 'Property Damage': { years: 5 } },
+  'Washington': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 3 } },
+  'West Virginia': { 'Personal Injury': { years: 2 }, 'Breach of Written Contract': { years: 10 }, 'Property Damage': { years: 2 } },
+  'Wisconsin': { 'Personal Injury': { years: 3 }, 'Breach of Written Contract': { years: 6 }, 'Property Damage': { years: 6 } },
+  'Wyoming': { 'Personal Injury': { years: 4 }, 'Breach of Written Contract': { years: 10 }, 'Property Damage': { years: 4 } },
 };
 
 const formSchema = z.object({
@@ -120,10 +150,10 @@ export default function StatuteOfLimitationsCalculator() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField control={form.control} name="state" render={({ field }) => (
-                <FormItem><FormLabel>State (Sample)</FormLabel>
+                <FormItem><FormLabel>State</FormLabel>
                   <Select onValueChange={(value) => { field.onChange(value); form.setValue('claimType', ''); }} defaultValue={field.value}>
                     <FormControl><SelectTrigger><SelectValue placeholder="Select a state" /></SelectTrigger></FormControl>
-                    <SelectContent>{Object.keys(statuteData).map(state => (<SelectItem key={state} value={state}>{state}</SelectItem>))}</SelectContent>
+                    <SelectContent>{Object.keys(statuteData).sort().map(state => (<SelectItem key={state} value={state}>{state}</SelectItem>))}</SelectContent>
                   </Select>
                 <FormMessage /></FormItem>
               )} />
