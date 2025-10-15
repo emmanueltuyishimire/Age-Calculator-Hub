@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -23,8 +24,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { RefreshCcw, DollarSign } from 'lucide-react';
 import ShareButton from '../share-button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
 const formSchema = z.object({
+  currency: z.string().default('USD'),
   annualIncome: z.coerce.number().min(0, "Income cannot be negative."),
   incomeYears: z.coerce.number().min(1, "Must be at least 1 year.").max(50),
   debts: z.coerce.number().min(0, "Debts cannot be negative."),
@@ -36,19 +39,29 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
+const currencySymbols: { [key: string]: string } = {
+    USD: '$',
+    EUR: '€',
+    GBP: '£',
+    CAD: 'C$',
+    AUD: 'A$',
+    JPY: '¥',
+};
+
 export default function LifeInsuranceNeedsCalculator() {
   const [coverage, setCoverage] = useState<number | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      annualIncome: 75000,
+      currency: 'USD',
+      annualIncome: undefined,
       incomeYears: 10,
-      debts: 20000,
-      mortgage: 250000,
-      education: 100000,
+      debts: undefined,
+      mortgage: undefined,
+      education: undefined,
       funeral: 15000,
-      savings: 50000,
+      savings: undefined,
     },
   });
 
@@ -60,9 +73,20 @@ export default function LifeInsuranceNeedsCalculator() {
   }
   
   function handleReset() {
-      form.reset();
+      form.reset({
+        currency: 'USD',
+        annualIncome: undefined,
+        incomeYears: 10,
+        debts: undefined,
+        mortgage: undefined,
+        education: undefined,
+        funeral: 15000,
+        savings: undefined,
+      });
       setCoverage(null);
   }
+
+  const selectedCurrency = form.watch('currency');
 
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg animate-fade-in">
@@ -74,7 +98,25 @@ export default function LifeInsuranceNeedsCalculator() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Income Section */}
+              <FormField
+                control={form.control}
+                name="currency"
+                render={({ field }) => (
+                  <FormItem className="md:col-span-2">
+                    <FormLabel>Currency</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                            <SelectTrigger><SelectValue /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                            {Object.entries(currencySymbols).map(([code, symbol]) => (
+                                <SelectItem key={code} value={code}>{code} ({symbol})</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="annualIncome"
@@ -97,7 +139,6 @@ export default function LifeInsuranceNeedsCalculator() {
                   </FormItem>
                 )}
               />
-              {/* Debts Section */}
               <FormField
                 control={form.control}
                 name="debts"
@@ -120,7 +161,6 @@ export default function LifeInsuranceNeedsCalculator() {
                   </FormItem>
                 )}
               />
-              {/* Education & Final Expenses */}
               <FormField
                 control={form.control}
                 name="education"
@@ -143,7 +183,6 @@ export default function LifeInsuranceNeedsCalculator() {
                   </FormItem>
                 )}
               />
-               {/* Savings */}
               <FormField
                 control={form.control}
                 name="savings"
@@ -171,7 +210,7 @@ export default function LifeInsuranceNeedsCalculator() {
           <div className="p-6 bg-muted rounded-lg text-center mt-6 space-y-2 animate-fade-in">
             <h3 className="text-lg font-medium text-muted-foreground">Estimated Life Insurance Coverage Needed:</h3>
             <div className="flex justify-center items-baseline space-x-2">
-              <span className="text-4xl font-bold text-primary">${coverage.toLocaleString()}</span>
+              <span className="text-4xl font-bold text-primary">{currencySymbols[selectedCurrency]}{coverage.toLocaleString()}</span>
             </div>
             <p className="text-xs text-muted-foreground pt-2">This is an estimate. Consult a licensed financial professional for personalized advice.</p>
           </div>

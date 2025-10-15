@@ -1,3 +1,4 @@
+
 import LifeInsuranceNeedsCalculator from '@/components/calculators/life-insurance-needs-calculator';
 import { type Metadata } from 'next';
 import {
@@ -79,7 +80,7 @@ export default function LifeInsuranceCalculatorPage() {
             <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Life Insurance Needs Calculator</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
-                    Don't guess how much life insurance you need. Our calculator helps you get a realistic estimate based on your family's specific financial needs.
+                    Don't guess how much life insurance you need. Our calculator helps you get a realistic estimate based on your family's specific financial needs, so you can plan with confidence.
                 </p>
             </div>
 
@@ -92,13 +93,14 @@ export default function LifeInsuranceCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Annual Income:</strong> Input your current pre-tax annual salary.</li>
-                            <li><strong>Years of Support:</strong> Choose the number of years your family would need your income replaced. A common starting point is 10 years or until your youngest child graduates college.</li>
+                            <li><strong>Select Your Currency:</strong> Choose your local currency for an accurate calculation.</li>
+                            <li><strong>Enter Your Annual Income:</strong> Input your current pre-tax annual salary to calculate income replacement.</li>
+                            <li><strong>Years of Support:</strong> Choose how many years your family would need your income. 10 years or until your youngest child graduates is a common benchmark.</li>
                             <li><strong>List Your Debts:</strong> Add up all non-mortgage debts, such as car loans, student loans, and credit card balances.</li>
-                            <li><strong>Mortgage Balance:</strong> Enter the remaining amount owed on your home mortgage.</li>
-                            <li><strong>Future Education Costs:</strong> Estimate the total amount you want to set aside for your children's education.</li>
-                            <li><strong>Final Expenses:</strong> Input an amount for funeral and other end-of-life costs (a typical estimate is $15,000).</li>
-                            <li><strong>Subtract Existing Assets:</strong> Enter any current savings or existing life insurance policies. These will be subtracted to find your net need.</li>
+                            <li><strong>Mortgage Balance:</strong> Enter the remaining amount owed on your home. This is often the largest debt for a family.</li>
+                            <li><strong>Future Education Costs:</strong> Estimate the total amount you want to set aside for your children's higher education.</li>
+                            <li><strong>Final Expenses:</strong> Input an amount for funeral and other end-of-life costs. A typical estimate is $15,000, but this can vary.</li>
+                            <li><strong>Subtract Existing Assets:</strong> Enter any current savings, investments, or existing life insurance policies that can offset the total need.</li>
                             <li><strong>Click “Calculate”:</strong> Get your personalized life insurance coverage estimate instantly.</li>
                         </ol>
                     </CardContent>
@@ -109,14 +111,14 @@ export default function LifeInsuranceCalculatorPage() {
                         <CardTitle>Why Accurate Life Insurance Calculation Matters</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <p className="text-muted-foreground">Choosing the right amount of life insurance is one of the most important financial decisions you can make for your family's future. It ensures that in the event of your passing, your loved ones are not burdened by financial hardship.</p>
+                        <p className="text-muted-foreground">Choosing the right amount of life insurance is one of the most important financial decisions you can make for your family's future. It ensures that in the event of your passing, your loved ones are not burdened by financial hardship. A proper policy provides peace of mind.</p>
                         <ul className="space-y-3">
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Income Replacement:</strong> Provides your family with a steady stream of income to cover daily living expenses for years to come.</span></li>
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Debt Elimination:</strong> Pays off outstanding debts like a mortgage, car loans, or student loans, so your family can start with a clean slate.</span></li>
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Future Goals:</strong> Funds long-term goals like your children's college education or a spouse's retirement.</span></li>
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Peace of Mind:</strong> Knowing your family is financially secure provides invaluable peace of mind for you and them.</span></li>
                         </ul>
-                         <p className="text-muted-foreground mt-4">An online calculator is the best first step toward finding the right coverage amount for your specific situation.</p>
+                         <p className="text-muted-foreground mt-4">An online calculator is the best first step toward finding the right coverage amount. For more tips on long-term planning, see our <Link href="/articles/planning-for-retirement-at-any-age" className="text-primary hover:underline">decade-by-decade retirement guide</Link>.</p>
                     </CardContent>
                 </Card>
                 
