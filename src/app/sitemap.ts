@@ -49,5 +49,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   };
 
-  return [...pageUrls, ...staticPages, ...articlePages, articleHubPage];
+  return [
+    { url: baseUrl, lastModified: lastModified, changeFrequency: 'weekly', priority: 1.0 },
+    ...pageUrls.filter(page => page.url !== baseUrl), 
+    ...staticPages, 
+    ...articlePages, 
+    articleHubPage
+];
 }
