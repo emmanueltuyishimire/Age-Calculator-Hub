@@ -302,6 +302,39 @@ export const articles: Article[] = [
     category: 'Legal',
     publishedDate: '2024-11-23',
   },
+  {
+    slug: 'understanding-the-discovery-rule',
+    title: "The Discovery Rule: An Exception to the Statute of Limitations",
+    description: "Learn about the discovery rule, a critical legal principle that can extend the deadline for filing a lawsuit when an injury isn't immediately apparent.",
+    category: 'Legal',
+    publishedDate: '2024-11-24',
+  },
+  {
+    slug: 'statute-of-limitations-for-debt',
+    title: "Statute of Limitations for Debt Collection: A Consumer's Guide",
+    description: "Discover how long creditors have to sue you for a debt. This guide explains time-barred debt and your rights as a consumer.",
+    category: 'Legal',
+    publishedDate: '2024-11-25',
+  },
+  {
+    slug: 'personal-injury-statute-of-limitations',
+    title: "A Guide to Personal Injury Statutes of Limitations",
+    description: "If you've been injured, the clock is ticking. Learn about the typical deadlines for filing a personal injury lawsuit in different states.",
+    category: 'Legal',
+    publishedDate: '2024-11-26',
+  },
+  {
+    slug: 'understanding-tolling-statute-of-limitations',
+    title: "How 'Tolling' Can Pause the Statute of Limitations Clock",
+    description: "Explore the legal concept of 'tolling,' which can temporarily stop the statute of limitations from running in situations involving minors, incompetency, or fraud.",
+    category: 'Legal',
+    publishedDate: '2024-11-27',
+  },
+  {
+    slug: 'federal-vs-state-statutes-of-limitations',
+    title: "Federal vs. State Statutes of Limitations: Key Differences",
+    description: "Understand why the deadline for a legal claim depends on which law was broken—federal or state—and how these two systems interact.",
+    category: 'Legal',
+    publishedDate: '2024-11-28',
+  },
 ];
-
-    
