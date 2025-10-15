@@ -21,7 +21,7 @@ export default function Home() {
         <ArticleList articleCount={6} />
         <div className="text-center mt-10">
             <Link href="/articles" passHref>
-                <Button size="lg" variant="outline">View All Articles</Button>
+                <Button size="lg">View All Articles</Button>
             </Link>
         </div>
       </section>

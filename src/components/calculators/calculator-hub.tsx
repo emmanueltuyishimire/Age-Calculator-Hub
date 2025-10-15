@@ -11,7 +11,7 @@ export default function CalculatorHub() {
   const categories = categorizedNavItems().filter(cat => cat.name !== 'Company' && cat.name !== 'Legal' && cat.name !== 'Navigation');
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden bg-background">
       <div
         aria-hidden="true"
         className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-20 dark:opacity-10"
