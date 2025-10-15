@@ -295,6 +295,13 @@ export const articles: Article[] = [
     category: 'Legal',
     publishedDate: '2024-11-22',
   },
+  {
+    slug: 'statute-of-limitations-federal-crimes',
+    title: 'What Is the Statute of Limitations for Federal Crimes?',
+    description: 'An in-depth look at the specific time limits for prosecuting federal crimes, from the general 5-year rule to exceptions for capital crimes, fraud, and more.',
+    category: 'Legal',
+    publishedDate: '2024-11-23',
+  },
 ];
 
     
