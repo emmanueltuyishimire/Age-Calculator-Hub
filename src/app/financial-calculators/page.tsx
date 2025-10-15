@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     },
 };
 
-export default function FinancialPlanningHub() {
+export default function FinancialCalculatorsHub() {
   return (
     <main className="container mx-auto px-4 py-8" role="main">
       <div className="text-center mb-12">

@@ -15,8 +15,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="container flex h-14 items-center justify-between px-4">
           <div className="flex items-center mr-6">
             <Link href="/" className="flex items-center space-x-2">
-                <Image src="/logo.png" alt="Age Calculator Hub Logo" width={24} height={24} className="h-6 w-6" priority />
-                <span className="hidden font-bold sm:inline-block">Age Calculator Hub</span>
+                <Image src="/logo.png" alt="Calculator Hub Logo" width={24} height={24} className="h-6 w-6" priority />
+                <span className="hidden font-bold sm:inline-block">Calculator Hub</span>
             </Link>
           </div>
           

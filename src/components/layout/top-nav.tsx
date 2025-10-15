@@ -25,11 +25,10 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu"
 import { Button } from '../ui/button';
-import { Menu, Calculator } from 'lucide-react';
-import { categorizedNavItems, type NavItem } from './nav-items';
+import { Menu } from 'lucide-react';
+import { categorizedNavItems } from './nav-items';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
@@ -64,23 +63,25 @@ export function TopNav() {
           </Link>
           <NavigationMenu>
             <NavigationMenuList>
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger aria-label="Open calculators menu">Calculators</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                        {mainCategories.map((category) => (
-                             <ListItem
-                                key={category.name}
-                                title={category.name}
-                                href={category.href}
-                                aria-label={`View all ${category.name} calculators`}
-                                >
-                                {category.items[0]?.description}
-                            </ListItem>
-                        ))}
-                        </ul>
-                    </NavigationMenuContent>
+              {mainCategories.map(category => (
+                 <NavigationMenuItem key={category.name}>
+                  <NavigationMenuTrigger aria-label={`Open ${category.name} menu`}>{category.name}</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                      <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {category.items.map((item) => (
+                           <ListItem
+                              key={item.label}
+                              title={item.label}
+                              href={item.href}
+                              aria-label={`Go to ${item.label}`}
+                              >
+                              {item.description}
+                          </ListItem>
+                      ))}
+                      </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
+              ))}
             </NavigationMenuList>
           </NavigationMenu>
       </nav>
@@ -97,10 +98,10 @@ export function TopNav() {
           <SheetContent side="left">
              <SheetHeader className="px-2 py-6">
                 <SheetTitle className="sr-only">Main Menu</SheetTitle>
-                <SheetDescription className="sr-only">Main navigation menu for Age Calculator Hub, including links to all calculators.</SheetDescription>
+                <SheetDescription className="sr-only">Main navigation menu for Calculator Hub, including links to all calculators.</SheetDescription>
                  <Link href="/" className="flex items-center space-x-2 mb-6" onClick={() => setIsOpen(false)}>
-                    <Image src="/logo.png" alt="Age Calculator Hub Logo" width={24} height={24} className="h-6 w-6" priority />
-                    <span className="font-bold">Age Calculator Hub</span>
+                    <Image src="/logo.png" alt="Calculator Hub Logo" width={24} height={24} className="h-6 w-6" priority />
+                    <span className="font-bold">Calculator Hub</span>
                 </Link>
             </SheetHeader>
             <nav role="navigation" aria-label="Mobile menu">

@@ -1,27 +1,25 @@
-
 "use client";
 
 import React from 'react';
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { categorizedNavItems } from '@/components/layout/nav-items';
 import { Button } from '../ui/button';
 import { Check } from 'lucide-react';
 
 export default function CalculatorHub() {
-  const categories = categorizedNavItems();
+  const categories = categorizedNavItems().filter(cat => cat.name !== 'Company' && cat.name !== 'Legal');
 
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Your Hub for All Age Calculators</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">The Ultimate Calculator Hub</h1>
          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Welcome to Age Calculator Hub, your ultimate free online destination for accurate and easy-to-use age-related tools.
+            Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Button size="lg" asChild>
-            <Link href="#calculators">Explore Calculators</Link>
+            <Link href="#calculators">Explore All Calculators</Link>
           </Button>
            <Button size="lg" variant="outline" asChild>
             <Link href="/faq">View All FAQs</Link>
@@ -53,9 +51,9 @@ export default function CalculatorHub() {
       </div>
 
       <section className="mt-16 space-y-8 max-w-4xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">A Comprehensive Age Calculation Resource</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">A Comprehensive & Reliable Resource</h2>
          <p className="text-muted-foreground text-center text-lg">
-            Whether you want to determine your chronological age, track your biological or metabolic age, plan for retirement with our Social Security Retirement Age Calculator, or even discover your pet’s age in human years, we have the right tool for you.
+            Whether you need to calculate a mortgage payment, check your BMI, or find your pet's age in human years, we have a precise and easy-to-use tool for you.
         </p>
         <div className="p-6 border rounded-lg">
              <ul className="space-y-4">
@@ -77,7 +75,7 @@ export default function CalculatorHub() {
             </CardHeader>
             <CardContent className="text-center">
                 <Button size="lg" asChild>
-                    <Link href="/articles/your-complete-guide-to-age-calculators">Your Complete Guide to the Age Calculator Hub</Link>
+                    <Link href="/articles/your-complete-guide-to-age-calculators">Your Complete Guide to Calculator Hub</Link>
                 </Button>
             </CardContent>
         </Card>

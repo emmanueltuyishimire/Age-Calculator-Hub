@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import CategoryHubClient from '@/components/layout/category-hub-client';
 
@@ -6,6 +7,10 @@ export const metadata: Metadata = {
     description: 'Explore our fundamental tools for calculating chronological age. Find your exact age in years, months, and days, or count down to your next birthday with our precise and easy-to-use calculators.',
     alternates: {
         canonical: '/core-age-calculators',
+    },
+    robots: {
+        index: false,
+        follow: false,
     },
 };
 
@@ -18,7 +23,7 @@ export default function CoreAgeCalculatorsHub() {
           Your fundamental tools for calculating chronological age. Find your exact age in years, months, and days, or count down to your next birthday with our precise and easy-to-use calculators.
         </p>
       </div>
-      <CategoryHubClient categoryName="Core Age Calculation" />
+      <CategoryHubClient categoryName="Health & Fitness" />
     </main>
   );
 }

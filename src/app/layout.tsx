@@ -8,11 +8,11 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Age Calculator Hub – Online Age, Birthday, Biological & Pet Age Calculators',
-    template: '%s – Age Calculator Hub',
+    default: 'Calculator Hub – Free Online Financial, Health & Math Calculators',
+    template: '%s – Calculator Hub',
   },
   description:
-    'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
+    'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
   robots: {
     index: true,
     follow: true,
@@ -21,15 +21,15 @@ export const metadata: Metadata = {
     canonical: 'https://innerpeacejournals.com',
   },
   openGraph: {
-    title: 'Age Calculator Hub – Online Age, Birthday, Biological & Pet Age Calculators',
-    description: 'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
+    title: 'Calculator Hub – Free Online Financial, Health & Math Calculators',
+    description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
     type: 'website',
     url: 'https://innerpeacejournals.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Age Calculator Hub – Online Age, Birthday, Biological & Pet Age Calculators',
-    description: 'Discover our free, accurate online age calculators. Calculate your chronological, biological, metabolic, gestational, birthday, retirement, and pet ages instantly. Easy-to-use tools for every age-related calculation.',
+    title: 'Calculator Hub – Free Online Financial, Health & Math Calculators',
+    description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
   },
   icons: {
     icon: '/favicon.png',

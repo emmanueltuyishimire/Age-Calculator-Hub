@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     },
 };
 
-export default function HealthAssessmentsHub() {
+export default function HealthFitnessCalculatorsHub() {
   return (
     <main className="container mx-auto px-4 py-8" role="main">
       <div className="text-center mb-12">

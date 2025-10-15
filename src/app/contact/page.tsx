@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, MessageSquare, Lightbulb } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'Contact Us – Age Calculator Hub',
-    description: 'Get in touch with the Age Calculator Hub team. We welcome your questions, feedback, and suggestions. Contact us via email for any inquiries.',
+    title: 'Contact Us – Calculator Hub',
+    description: 'Get in touch with the Calculator Hub team. We welcome your questions, feedback, and suggestions. Contact us via email for any inquiries.',
     alternates: {
         canonical: '/contact',
     },
@@ -53,7 +53,7 @@ export default function ContactPage() {
                   norababysleep@gmail.ccom
               </a>
               <p className="text-xs text-muted-foreground mt-4">
-                Thank you for your interest in Age Calculator Hub!
+                Thank you for your interest in Calculator Hub!
               </p>
             </div>
           </CardContent>
