@@ -1,5 +1,6 @@
 
-import type { Metadata } from 'next';
+"use client";
+
 import { faqCategories } from '@/lib/faqs';
 import {
   Accordion,
@@ -8,16 +9,10 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import AdBanner from '@/components/layout/ad-banner';
-
-export const metadata: Metadata = {
-    title: 'Frequently Asked Questions – Calculator Hub',
-    description: 'Find answers to common questions about our online age calculators, including how they work, their accuracy, and how to use them for various purposes.',
-    alternates: {
-        canonical: '/faq',
-    },
-};
+import { usePathname } from 'next/navigation';
 
 export default function FAQPage() {
+  const pathname = usePathname();
   return (
     <main className="container mx-auto px-4 py-8" role="main">
       <div className="text-center mb-12">
@@ -28,7 +23,7 @@ export default function FAQPage() {
       </div>
       
       <div className="my-8">
-        <AdBanner />
+        <AdBanner key={pathname} />
       </div>
 
       <section className="max-w-4xl mx-auto">

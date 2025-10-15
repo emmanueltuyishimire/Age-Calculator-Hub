@@ -1,5 +1,6 @@
 
-import { type Metadata } from 'next';
+"use client";
+
 import Link from 'next/link';
 import { articles } from '@/lib/articles';
 import { Button } from '@/components/ui/button';
@@ -8,28 +9,9 @@ import { Check } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { notFound } from 'next/navigation';
 import AdBanner from '@/components/layout/ad-banner';
+import { usePathname } from 'next/navigation';
 
 const article = articles.find(a => a.slug === 'your-complete-guide-to-age-calculators');
-
-export function generateMetadata(): Metadata {
-  if (!article) {
-    return {};
-  }
-  return {
-    title: 'Your Complete Guide to Calculator Hub',
-    description: article.description,
-    alternates: {
-        canonical: `/articles/${article.slug}`,
-    },
-    openGraph: {
-        title: 'Your Complete Guide to Calculator Hub',
-        description: article.description,
-        type: 'article',
-        publishedTime: article.publishedDate,
-        url: `/articles/${article.slug}`,
-    },
-  };
-}
 
 const faqs = [
     {
@@ -84,7 +66,7 @@ const faqSchema = {
 };
 
 export default function AgeCalculatorAppArticle() {
-
+  const pathname = usePathname();
   if (!article) {
     notFound();
   }
@@ -125,7 +107,7 @@ export default function AgeCalculatorAppArticle() {
           </p>
           
           <div className="my-8">
-            <AdBanner />
+            <AdBanner key={pathname} />
           </div>
 
           <h2 className="text-3xl font-bold">Core Age Calculators: The Foundation of Time</h2>

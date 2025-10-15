@@ -1,5 +1,6 @@
 
-import { type Metadata } from 'next';
+"use client";
+
 import Link from 'next/link';
 import { articles } from '@/lib/articles';
 import { Button } from '@/components/ui/button';
@@ -13,19 +14,10 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { notFound } from 'next/navigation';
 import AdBanner from '@/components/layout/ad-banner';
+import { usePathname } from 'next/navigation';
 
 const article = articles.find(a => a.slug === 'understanding-bmi');
-
-export function generateMetadata(): Metadata {
-  if (!article) return {};
-  return {
-    title: article.title,
-    description: article.description,
-    alternates: { canonical: `/articles/${article.slug}` },
-  };
-}
 
 const faqs = [
     {
@@ -57,7 +49,8 @@ const bmiCategories = [
 
 
 export default function BmiArticle() {
-  if (!article) notFound();
+  const pathname = usePathname();
+  if (!article) return null;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -81,7 +74,7 @@ export default function BmiArticle() {
           </div>
 
           <div className="my-8">
-            <AdBanner />
+            <AdBanner key={pathname} />
           </div>
 
           <h2 className="text-3xl font-bold">What are the BMI Categories?</h2>

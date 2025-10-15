@@ -1,6 +1,7 @@
 
+"use client";
+
 import DueDateCalculator from "@/components/calculators/due-date-calculator";
-import { type Metadata } from 'next';
 import {
   Accordion,
   AccordionContent,
@@ -11,25 +12,7 @@ import RelatedCalculators from "@/components/layout/related-calculators";
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import AdBanner from "@/components/layout/ad-banner";
-
-export const metadata: Metadata = {
-    title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date by LMP, Conception or IVF',
-    description: 'Use our free Due Date Calculator to estimate your baby\'s expected delivery date from LMP, conception date, or IVF transfer. Fast, reliable, and easy—get your estimated due date and pregnancy week instantly.',
-    openGraph: {
-        title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date by LMP, Conception or IVF',
-        description: 'Use our free Due Date Calculator to estimate your baby\'s expected delivery date from LMP, conception date, or IVF transfer. Fast, reliable, and easy—get your estimated due date and pregnancy week instantly.',
-        type: 'website',
-        url: '/due-date-calculator',
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Due Date Calculator – Estimate Your Baby’s Delivery Date by LMP, Conception or IVF',
-        description: 'Use our free Due Date Calculator to estimate your baby\'s expected delivery date from LMP, conception date, or IVF transfer. Fast, reliable, and easy—get your estimated due date and pregnancy week instantly.',
-    },
-    alternates: {
-        canonical: '/due-date-calculator',
-    },
-};
+import { usePathname } from "next/navigation";
 
 const faqs = [
     {
@@ -72,6 +55,7 @@ const faqSchema = {
 };
 
 export default function DueDateCalculatorPage() {
+  const pathname = usePathname();
   return (
     <div className="container mx-auto px-4 py-8">
        <script
@@ -90,7 +74,7 @@ export default function DueDateCalculatorPage() {
             <DueDateCalculator />
 
             <div className="my-8">
-              <AdBanner />
+              <AdBanner key={pathname} />
             </div>
 
             <section className="mt-12 space-y-8 animate-fade-in">

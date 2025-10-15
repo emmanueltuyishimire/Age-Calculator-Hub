@@ -1,6 +1,7 @@
 
+"use client";
+
 import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
-import { type Metadata } from 'next';
 import {
   Accordion,
   AccordionContent,
@@ -12,25 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import AdBanner from '@/components/layout/ad-banner';
-
-export const metadata: Metadata = {
-    title: 'Age Calculator – Calculate Your Age by Date of Birth in Real Time',
-    description: 'Free online age calculator to find your exact age in years, months, days, hours, minutes, and seconds. Calculate your age by date of birth instantly and watch it update in real time.',
-    openGraph: {
-        title: 'Age Calculator – Calculate Your Age by Date of Birth in Real Time',
-        description: 'Free online age calculator to find your exact age in years, months, days, hours, minutes, and seconds. Calculate your age by date of birth instantly and watch it update in real time.',
-        type: 'website',
-        url: '/age-calculator',
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Age Calculator – Calculate Your Age by Date of Birth in Real Time',
-        description: 'Free online age calculator to find your exact age in years, months, days, hours, minutes, and seconds. Calculate your age by date of birth instantly and watch it update in real time.',
-    },
-    alternates: {
-        canonical: '/age-calculator',
-    },
-};
+import { usePathname } from 'next/navigation';
 
 const faqs = [
     {
@@ -73,6 +56,7 @@ const faqSchema = {
 };
 
 export default function AgeCalculatorPage() {
+  const pathname = usePathname();
   return (
     <div className="container mx-auto px-4 py-8">
       <script
@@ -91,7 +75,7 @@ export default function AgeCalculatorPage() {
             <ChronologicalAgeCalculatorForm />
 
             <div className="my-8">
-              <AdBanner />
+              <AdBanner key={pathname} />
             </div>
 
             <section className="mt-12 space-y-8 animate-fade-in">

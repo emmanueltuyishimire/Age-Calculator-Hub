@@ -1,18 +1,13 @@
 
-import { type Metadata } from 'next';
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, MessageSquare, Lightbulb } from 'lucide-react';
 import AdBanner from '@/components/layout/ad-banner';
-
-export const metadata: Metadata = {
-    title: 'Contact Us – Calculator Hub',
-    description: 'Get in touch with the Calculator Hub team. We welcome your questions, feedback, and suggestions. Contact us via email for any inquiries.',
-    alternates: {
-        canonical: '/contact',
-    },
-};
+import { usePathname } from 'next/navigation';
 
 export default function ContactPage() {
+  const pathname = usePathname();
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">
@@ -24,7 +19,7 @@ export default function ContactPage() {
         </div>
 
         <div className="my-8">
-          <AdBanner />
+          <AdBanner key={pathname} />
         </div>
 
         <Card className="shadow-lg">

@@ -1,17 +1,12 @@
 
-import { type Metadata } from 'next';
+"use client";
+
 import Link from 'next/link';
 import AdBanner from '@/components/layout/ad-banner';
-
-export const metadata: Metadata = {
-    title: 'About Us – Calculator Hub',
-    description: 'Learn about Calculator Hub, our mission, and the team behind our free, accurate online calculation tools. Discover why we are dedicated to providing the best calculators.',
-    alternates: {
-        canonical: '/about',
-    },
-};
+import { usePathname } from 'next/navigation';
 
 export default function AboutPage() {
+  const pathname = usePathname();
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">
@@ -28,7 +23,7 @@ export default function AboutPage() {
           </p>
           
           <div className="my-8">
-            <AdBanner />
+            <AdBanner key={pathname} />
           </div>
 
           <h2 className="text-2xl font-bold text-foreground pt-4">Our Mission</h2>

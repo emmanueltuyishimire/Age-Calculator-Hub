@@ -2,10 +2,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 
 export default function AdBanner() {
-  const pathname = usePathname();
 
   useEffect(() => {
     try {
@@ -14,10 +12,10 @@ export default function AdBanner() {
     } catch (err) {
       console.error(err);
     }
-  }, [pathname]);
+  }, []);
 
   return (
-    <div key={pathname} className="container mx-auto my-4 text-center">
+    <div className="container mx-auto my-4 text-center">
       <div style={{ minHeight: '100px' }} className="flex justify-center items-center bg-muted rounded-lg">
         <ins
           className="adsbygoogle"

@@ -1,19 +1,14 @@
 
-import { type Metadata } from 'next';
+"use client";
+
+import { usePathname } from 'next/navigation';
 import ArticleList from '@/components/layout/article-list';
 import { articles } from '@/lib/articles';
 import AdBanner from '@/components/layout/ad-banner';
 
-export const metadata: Metadata = {
-    title: 'Articles – Calculator Hub',
-    description: 'Read our collection of articles about age, health, wellness, and financial planning. Stay informed with our expert insights and tips.',
-    alternates: {
-        canonical: '/articles',
-    },
-};
-
 export default function ArticlesHubPage() {
   const categories = [...new Set(articles.map(article => article.category))];
+  const pathname = usePathname();
 
   return (
     <main className="container mx-auto px-4 py-8" role="main">
@@ -25,7 +20,7 @@ export default function ArticlesHubPage() {
       </div>
 
       <div className="my-8">
-        <AdBanner />
+        <AdBanner key={pathname} />
       </div>
 
       {categories.map(category => (
