@@ -184,7 +184,7 @@ export default function GestationalAgePage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Pregnancy Calculators" currentHref="/gestational-age" />
+        <RelatedCalculators currentCategory="Pregnancy & Baby" currentHref="/gestational-age" />
       </div>
     </div>
   );

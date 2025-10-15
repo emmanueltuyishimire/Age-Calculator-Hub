@@ -165,36 +165,43 @@ export const navItems: NavItem[] = [
     href: '/pregnancy-calculators',
     icon: CalendarHeart,
     label: 'Pregnancy Calculators Hub',
-    category: 'Pregnancy Calculators',
+    category: 'Pregnancy & Baby',
     description: 'A hub for all pregnancy-related calculators.'
   },
   {
     href: '/pregnancy-calculator',
     icon: CalendarHeart,
     label: 'Pregnancy Calculator',
-    category: 'Pregnancy Calculators',
+    category: 'Pregnancy & Baby',
     description: 'Estimate your pregnancy week, due date, and conception date.'
   },
   {
     href: '/due-date-calculator',
     icon: CalendarCheck,
     label: 'Due Date Calculator',
-    category: 'Pregnancy Calculators',
+    category: 'Pregnancy & Baby',
     description: 'Predict your baby\'s due date from LMP, conception, or IVF.'
   },
   {
     href: '/ovulation-calculator',
     icon: ClipboardList,
     label: 'Ovulation Calculator',
-    category: 'Pregnancy Calculators',
+    category: 'Pregnancy & Baby',
     description: 'Predict your fertile window and ovulation day.'
   },
   {
     href: '/gestational-age',
-    icon: Baby,
+    icon: FileHeart,
     label: 'Gestational Age Calculator',
-    category: 'Pregnancy Calculators',
+    category: 'Pregnancy & Baby',
     description: 'Calculates pregnancy gestational age from last menstrual period or due date.'
+  },
+  {
+    href: '/baby-age-calculator',
+    icon: Baby,
+    label: 'Baby Age Calculator',
+    category: 'Pregnancy & Baby',
+    description: 'Calculate your baby\'s age in weeks, months, and days.'
   },
   {
     href: '/about',
@@ -235,7 +242,7 @@ export const navItems: NavItem[] = [
 
 const categoryHubs: Record<string, string> = {
   'Core Age Calculation': '/core-age-calculators',
-  'Pregnancy Calculators': '/pregnancy-calculators',
+  'Pregnancy & Baby': '/pregnancy-calculators',
   'Scientific & Health Age': '/health-assessments',
   'Pet Age': '/pet-age-calculators',
   'Retirement & Social': '/retirement-calculators',
@@ -258,7 +265,7 @@ export const categorizedNavItems = (): NavCategory[] => {
   // Define the desired order
   const categoryOrder = [
     'Core Age Calculation',
-    'Pregnancy Calculators',
+    'Pregnancy & Baby',
     'Scientific & Health Age',
     'Pet Age',
     'Retirement & Social',

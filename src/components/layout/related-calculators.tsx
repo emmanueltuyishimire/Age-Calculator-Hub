@@ -15,7 +15,7 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
   const category = categorizedNavItems().find(cat => cat.name === currentCategory);
   if (!category) return null;
 
-  const relatedItems = category.items.filter(item => item.href !== currentHref && !item.href.includes('/all-'));
+  const relatedItems = category.items.filter(item => item.href !== currentHref && item.href !== category.href);
 
   if (relatedItems.length === 0) return null;
 

@@ -126,7 +126,7 @@ export default function OvulationCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Pregnancy Calculators" currentHref="/ovulation-calculator" />
+        <RelatedCalculators currentCategory="Pregnancy & Baby" currentHref="/ovulation-calculator" />
       </div>
     </div>
   );

@@ -156,7 +156,7 @@ export default function DueDateCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Pregnancy Calculators" currentHref="/due-date-calculator" />
+        <RelatedCalculators currentCategory="Pregnancy & Baby" currentHref="/due-date-calculator" />
       </div>
     </div>
   );
