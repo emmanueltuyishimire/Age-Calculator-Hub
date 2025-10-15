@@ -40,6 +40,7 @@ import {
   Brain,
   Minus,
   Plus,
+  Users,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -177,6 +178,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate your body fat percentage using the U.S. Navy method.'
   },
   {
+    href: '/pet-age-calculators',
+    icon: PawPrint,
+    label: 'Pet Age Calculators',
+    category: 'Pet Age',
+    description: 'A hub for our dog and cat age conversion tools.'
+  },
+  {
     href: '/your-pets-first-year',
     icon: PawPrint,
     label: 'Your Pet\'s First Year',
@@ -196,6 +204,20 @@ export const navItems: NavItem[] = [
     label: 'Cat Age Calculator',
     category: 'Pet Age',
     description: 'Find out how old your cat is in human years.'
+  },
+  {
+    href: '/financial-planning',
+    icon: PiggyBank,
+    label: 'Financial Planning Calculators',
+    category: 'Financial Planning',
+    description: 'A hub for our financial planning and estimation tools.'
+  },
+   {
+    href: '/child-support-calculator',
+    icon: Users,
+    label: 'Child Support Calculator',
+    category: 'Financial Planning',
+    description: 'Get a simple estimate of potential child support payments.'
   },
   {
     href: '/life-insurance-calculator',
@@ -224,6 +246,13 @@ export const navItems: NavItem[] = [
     label: 'Loan Payoff Calculator',
     category: 'Financial Planning',
     description: 'Calculate how long it will take to pay off a loan.'
+  },
+  {
+    href: '/retirement-calculators',
+    icon: Briefcase,
+    label: 'Retirement Calculators',
+    category: 'Retirement & Social',
+    description: 'A hub for our Social Security and retirement age tools.'
   },
   {
     href: '/retirement',
