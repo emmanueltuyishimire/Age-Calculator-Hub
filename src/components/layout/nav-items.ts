@@ -43,6 +43,7 @@ import {
   Hash,
   DollarSign,
   Car,
+  FlaskConical
 } from 'lucide-react';
 
 export type NavItem = {
@@ -241,6 +242,13 @@ export const navItems: NavItem[] = [
     label: 'Math Calculators',
     category: 'Math Calculators',
     description: 'A hub for all our mathematical and scientific calculators.'
+  },
+  {
+    href: '/scientific-calculator',
+    icon: FlaskConical,
+    label: 'Scientific Calculator',
+    category: 'Math Calculators',
+    description: 'An online scientific calculator with advanced functions.'
   },
   
   // Other Calculators (Pet, Legal, etc. might go here or their own categories)
