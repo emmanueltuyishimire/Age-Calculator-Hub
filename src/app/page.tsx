@@ -1,4 +1,3 @@
-
 import CalculatorHub from '@/components/calculators/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
 import Link from 'next/link';
