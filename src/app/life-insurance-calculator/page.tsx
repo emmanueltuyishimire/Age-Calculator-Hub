@@ -54,6 +54,33 @@ const faqs = [
     }
 ];
 
+const terminologies = [
+    {
+        term: "The DIME Method",
+        definition: "A straightforward acronym to help you calculate your insurance needs: Debt, Income replacement, Mortgage, and Education. Our calculator is based on this popular and effective method."
+    },
+    {
+        term: "Coverage Amount",
+        definition: "This is the total amount of money the insurance policy will pay out to your beneficiaries upon your death. It's the number our calculator helps you estimate."
+    },
+    {
+        term: "Term Life Insurance",
+        definition: "A type of life insurance that provides coverage for a specific period or 'term' (e.g., 10, 20, or 30 years). It's typically the most affordable option and suitable for covering temporary needs like a mortgage or raising children."
+    },
+    {
+        term: "Whole Life Insurance",
+        definition: "A type of permanent life insurance that provides coverage for your entire life and includes a savings component (cash value). It is significantly more expensive than term life insurance."
+    },
+    {
+        term: "Beneficiary",
+        definition: "The person, people, or entity you designate to receive the payout from your life insurance policy. This can be a spouse, children, a trust, or a charity."
+    },
+    {
+        term: "Premium",
+        definition: "The regular payment (usually monthly or annually) you make to the insurance company to keep your policy active."
+    }
+];
+
 const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -122,6 +149,18 @@ export default function LifeInsuranceCalculatorPage() {
                     </CardContent>
                 </Card>
                 
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Key Life Insurance Terms</h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        {terminologies.map((item, index) => (
+                             <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{item.term}</AccordionTrigger>
+                                <AccordionContent>{item.definition}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
+
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
                     <Accordion type="single" collapsible className="w-full">
