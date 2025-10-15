@@ -32,6 +32,7 @@ import {
   Zap,
   HelpCircle,
   PiggyBank,
+  Target,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -82,7 +83,7 @@ export const navItems: NavItem[] = [
     icon: HelpCircle,
     label: 'How Old Is...?',
     category: 'Core Age Calculation',
-    description: 'Quickly find out how old someone is from their date of birth.'
+    description: 'Quickly find out how old someone is from their birth date.'
   },
   {
     href: '/chronological-age-calculator',
@@ -149,10 +150,17 @@ export const navItems: NavItem[] = [
   },
   {
     href: '/life-insurance-calculator',
-    icon: PiggyBank,
+    icon: ShieldCheck,
     label: 'Life Insurance Calculator',
     category: 'Financial Planning',
     description: 'Estimate how much life insurance coverage you really need.'
+  },
+   {
+    href: '/retirement-savings-goal-calculator',
+    icon: Target,
+    label: 'Retirement Savings Goal Calculator',
+    category: 'Financial Planning',
+    description: 'Estimate how much money you need to save for retirement.'
   },
   {
     href: '/retirement',
@@ -163,7 +171,7 @@ export const navItems: NavItem[] = [
   },
   {
     href: '/social-security-retirement-age-calculator',
-    icon: ShieldCheck,
+    icon: PiggyBank,
     label: 'Social Security Retirement Age Calculator',
     category: 'Retirement & Social',
     description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
