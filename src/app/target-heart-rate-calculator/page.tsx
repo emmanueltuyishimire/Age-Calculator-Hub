@@ -31,7 +31,7 @@ const faqs = [
     },
     {
         question: "What is the best heart rate for fat burning?",
-        answer: "The 'fat-burning' zone is typically 60-70% of your maximum heart rate. In this zone, your body uses a higher percentage of fat for fuel. However, higher intensity workouts in the cardio zone may burn more total calories."
+        answer: "The 'fat-burning' zone is typically 60-70% of your maximum heart rate. In this zone, your body uses a higher percentage of fat for fuel. However, higher intensity workouts in the cardio zone may burn more total calories, which also contributes to fat loss."
     },
     {
         question: "Is this calculator 100% accurate?",
@@ -39,27 +39,47 @@ const faqs = [
     },
     {
         question: "How can I monitor my heart rate during exercise?",
-        answer: "You can do it manually by taking your pulse for 15 seconds and multiplying by four. For more convenience and accuracy, using a fitness tracker, heart rate monitor chest strap, or smart watch is highly recommended."
+        answer: "You can do it manually by taking your pulse at your wrist or neck for 15 seconds and multiplying by four. For more convenience and accuracy, using a fitness tracker, heart rate monitor chest strap, or smart watch is highly recommended."
     }
 ];
 
 const zones = [
     {
         icon: Flame,
-        title: "Zone 2: Fat Burn Zone (60-70% MHR)",
-        description: "This is a low-to-moderate intensity zone. In this range, your body primarily uses stored fat for energy. It's excellent for building endurance, improving your body's ability to use fat as fuel, and is sustainable for long workouts."
+        title: "Zone 2: Fat Burn Zone (60-70% of MHR)",
+        description: "This is a low-to-moderate intensity zone where your body primarily uses stored fat for energy. It's excellent for building endurance, improving your body's ability to use fat as fuel, and is sustainable for long workouts."
     },
     {
         icon: HeartPulse,
-        title: "Zone 3: Cardio Zone (70-80% MHR)",
-        description: "This is the ideal zone for improving cardiovascular fitness. Working out here strengthens your heart and lungs, improves circulation, and increases your VO2 max. It feels challenging but sustainable."
+        title: "Zone 3: Aerobic/Cardio Zone (70-80% of MHR)",
+        description: "This is the ideal zone for improving cardiovascular fitness. Working out here strengthens your heart and lungs, improves circulation, and increases your cardiorespiratory capacity (VO2 max). It feels challenging but sustainable."
     },
     {
         icon: Zap,
-        title: "Zone 4: Peak Zone (80-90% MHR)",
-        description: "This is a high-intensity zone that should be maintained for shorter periods. It's used for interval training and helps improve your anaerobic threshold, speed, and performance. This zone pushes your limits."
+        title: "Zone 4: Anaerobic/Peak Zone (80-90% of MHR)",
+        description: "This is a high-intensity zone that can only be maintained for shorter periods. It's used for interval training and helps improve your anaerobic threshold, speed, and performance. This zone pushes your limits and burns a high number of calories."
     }
 ];
+
+const terminologies = [
+    {
+        term: "Maximum Heart Rate (MHR)",
+        definition: "The highest number of times your heart can safely beat in one minute. The most common formula to estimate MHR is 220 minus your age. This calculator uses that formula."
+    },
+    {
+        term: "Resting Heart Rate (RHR)",
+        definition: "The number of times your heart beats per minute while you are at complete rest. A lower RHR is often a sign of good cardiovascular fitness. You can measure it by taking your pulse after resting for several minutes."
+    },
+    {
+        term: "Heart Rate Reserve (HRR)",
+        definition: "The difference between your Maximum Heart Rate and your Resting Heart Rate (MHR - RHR). Some more advanced formulas (like the Karvonen formula) use HRR to calculate target zones, which can be more accurate for very fit individuals."
+    },
+    {
+        term: "VO2 Max",
+        definition: "A measure of the maximum amount of oxygen your body can utilize during intense exercise. It is a key indicator of cardiovascular fitness. Training in the higher heart rate zones helps to improve your VO2 Max."
+    }
+];
+
 
 const faqSchema = {
     "@context": "https://schema.org",
@@ -137,9 +157,21 @@ export default function TargetHeartRateCalculatorPage() {
                             <li><strong>Maximizes Efficiency:</strong> Ensures every minute of your workout is effective for your specific goal, whether it's fat loss or improving cardio fitness.</li>
                             <li><strong>Tracks Progress:</strong> As your fitness improves, you'll notice you can do more work at a lower heart rate, which is a clear sign of progress.</li>
                         </ul>
-                         <p className="text-muted-foreground mt-4">For more health insights, try our <Link href="/metabolic-age" className="text-primary hover:underline">Metabolic Age Calculator</Link> to understand your body's efficiency.</p>
+                         <p className="text-muted-foreground mt-4">For more health insights, try our <Link href="/metabolic-age" className="text-primary hover:underline">Metabolic Age Calculator</Link> to understand your body's efficiency, or our <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link> to see how your lifestyle impacts your overall aging process.</p>
                     </CardContent>
                 </Card>
+                
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Key Terminologies</h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        {terminologies.map((item, index) => (
+                             <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{item.term}</AccordionTrigger>
+                                <AccordionContent>{item.definition}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
