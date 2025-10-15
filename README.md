@@ -60,10 +60,10 @@ The site is set up to display ads via Google AdSense. To enable this and start e
 
 1.  **Update Your Publisher ID**:
     - Open the file `src/app/layout.tsx`.
-    - Find the AdSense script tag and replace the placeholder with **your own Google AdSense Publisher ID**.
+    - Find the AdSense script tag and replace the placeholder with **your own Google AdSense Publisher ID**. It has been pre-filled with `ca-pub-3042243846300811`.
 
 2.  **Authorize Your Site**:
     - Open the `public/ads.txt` file.
-    - Replace the placeholder with **your own Google AdSense Publisher ID**. This file is crucial for advertisers to verify that your site is authorized to sell ad inventory.
+    - Replace the placeholder with **your own Google AdSense Publisher ID**. This file is crucial for advertisers to verify that your site is authorized to sell ad inventory. It has been pre-filled with `pub-3042243846300811`.
 
 Once these steps are completed, AdSense will be correctly configured for your site.
