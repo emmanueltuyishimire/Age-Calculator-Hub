@@ -29,20 +29,24 @@ const keyTakeaways = [
 
 const faqs = [
     {
-        question: "What is the purpose of a Statute of Limitations?",
-        answer: "The purpose is to protect defendants from unfair legal action. After a significant amount of time, evidence can be lost, and witness memories can fade, making a fair trial difficult. They ensure legal claims are pursued while the evidence is still fresh."
+        question: "What crimes have no statute of limitations in the US?",
+        answer: "Typically, the most heinous crimes like murder have no statute of limitations. Many states have also eliminated or extended the time limits for serious felony sex offenses, especially those involving minors."
     },
     {
-        question: "How long is the U.S. statute of limitations?",
-        answer: "There isn't one single statute of limitations. It varies by federal vs. state law and by the type of case. Federal law often has a five-year limit for non-capital crimes, but most civil cases (like personal injury or contract disputes) are governed by state laws, which differ greatly."
+        question: "What is an exception to the statute of limitations?",
+        answer: "A common exception is the 'discovery rule.' This rule pauses, or 'tolls,' the statute of limitations clock until the injury or harm is actually discovered by the victim, or reasonably should have been discovered."
     },
     {
-        question: "How long before a debt becomes uncollectible?",
-        answer: "This depends on the state and the type of debt. It typically ranges from three to six years, but can be longer. After this period, a creditor can no longer sue you, but the debt itself doesn't disappear. Making a payment can restart the clock."
+        question: "How long is the statute of limitations in America?",
+        answer: "There isn't one single statute for the entire country. It varies greatly. Federal criminal law often has a five-year statute of limitations for non-capital offenses, but most civil and criminal matters are governed by specific state laws, which differ widely."
     },
     {
-        question: "Which crimes have the longest statute of limitations?",
-        answer: "The most serious crimes, such as murder, almost always have no statute of limitations, meaning a person can be prosecuted at any time. Many states have also extended or eliminated the statute of limitations for serious felony sex crimes."
+        question: "What is the IRS statute of limitations?",
+        answer: "The IRS generally has three years to audit a tax return and assess additional taxes. However, this can extend to six years if you've significantly underreported your income, and there's no limit in cases of fraud."
+    },
+    {
+        question: "Can you get around the statute of limitations?",
+        answer: "It is very difficult to get around a statute of limitations once it has expired, as it provides a strong legal defense. However, certain actions can 'toll' or pause the clock, and legal arguments can sometimes be made to extend the deadline. You must speak with a lawyer about this."
     }
 ];
 
@@ -103,7 +107,7 @@ export default function StatuteOfLimitationsArticlePage() {
 
           <h2 className="text-3xl font-bold">How Statutes of Limitations Work</h2>
           <p>
-            The time allowed under a statute of limitations varies depending on the nature of the offense. For medical malpractice, it can range from one to four years, depending on the state. For consumer debt, it's often between three and six years. The clock generally starts ticking from the date the incident occurred or, in some cases, from the date the harm was "discovered."
+            In general, the time allowed under a statute of limitations varies depending on the nature of the offense, with most statutes of limitations being applicable to civil cases. For example, how long is the statute of limitations for medical malpractice? It can range from one to four years, depending on the state. It's crucial to check the specific statute of limitations by state.
           </p>
           <p>
             Once the deadline passes, a claim is considered "time-barred." This means a court can dismiss the case, regardless of its merits, if the defendant raises the statute of limitations as a defense.
@@ -111,21 +115,21 @@ export default function StatuteOfLimitationsArticlePage() {
           
           <Card className="my-8">
             <CardHeader>
-                <CardTitle>Case Examples: Criminal vs. Civil</CardTitle>
+                <CardTitle>Statute of Limitations Examples: Criminal vs. Civil</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div>
-                    <h3 className="font-semibold text-lg">Criminal Offenses</h3>
-                    <p className="text-muted-foreground">Statutes of limitations cover many criminal offenses, but the most serious crimes like murder typically have no time limit. Many states have also extended or eliminated the time limits for felony-level sex offenses, especially those involving minors, recognizing that it can take victims a long time to come forward.</p>
+                    <h3 className="font-semibold text-lg">Statute of Limitations for Criminal Law</h3>
+                    <p className="text-muted-foreground">The rules for criminal law often depend on the severity of the crime. For example, the **statute of limitations for murder** is nonexistent in all jurisdictions—a prosecution can begin at any time. This is one of the key **crimes that have no statute of limitations**. Other serious felonies, like arson or kidnapping, may also have very long or nonexistent time limits. In contrast, the **statute of limitations for theft** (e.g., misdemeanor theft) is typically much shorter, often only a few years. In California, for instance, many misdemeanor statutes of limitations are one year, while some felonies are three or five years.</p>
                 </div>
                 <div>
-                    <h3 className="font-semibold text-lg">Consumer Debt</h3>
+                    <h3 className="font-semibold text-lg">Statute of Limitations for Consumer Debt</h3>
                     <p className="text-muted-foreground">For consumer debt, the statute of limitations restricts how long a creditor can sue you to collect. After it passes, they can no longer use the courts to garnish your wages or place a lien on your property. However, the debt itself is not erased. Importantly, making even a small payment on a time-barred debt can sometimes restart the clock on the statute of limitations.</p>
                 </div>
             </CardContent>
           </Card>
           
-           <h2 className="text-3xl font-bold">The Pros and Cons</h2>
+           <h2 className="text-3xl font-bold">Pros and Cons</h2>
           <div className="grid md:grid-cols-2 gap-8 my-8">
              <Card className="flex flex-col">
                 <CardHeader><CardTitle>Advantages</CardTitle></CardHeader>
@@ -134,9 +138,9 @@ export default function StatuteOfLimitationsArticlePage() {
                 </CardContent>
             </Card>
             <Card className="flex flex-col">
-                <CardHeader><CardTitle>Disadvantages</CardTitle></CardHeader>
+                <CardHeader><CardTitle>Disadvantages (The Cons)</CardTitle></CardHeader>
                 <CardContent className="flex-grow">
-                     <p>Critics argue that these laws can inadvertently protect wrongdoers, especially if a victim doesn't realize they've been harmed until after the deadline has passed. They can also disadvantage individuals who lack the resources or knowledge to file a claim quickly.</p>
+                     <p>Critics argue that these laws can inadvertently protect wrongdoers, especially if a victim doesn't realize they've been harmed until after the deadline has passed. This can disproportionately affect those who lack immediate resources to seek legal counsel.</p>
                 </CardContent>
             </Card>
           </div>
@@ -147,7 +151,7 @@ export default function StatuteOfLimitationsArticlePage() {
             </CardHeader>
             <CardContent>
                 <p className="text-destructive-foreground font-semibold">
-                    This information is for educational purposes only. Statutes of limitations are highly complex and vary greatly. Rules like the "discovery rule" can change the deadline. For any legal matter, you must consult with a qualified attorney in your jurisdiction.
+                    This information is for educational purposes only. Statutes of limitations are highly complex and vary greatly by state and the specifics of the case. Rules like the "discovery rule" can change the deadline. For any legal matter, you must consult with a qualified attorney in your jurisdiction.
                 </p>
             </CardContent>
           </Card>
@@ -166,5 +170,3 @@ export default function StatuteOfLimitationsArticlePage() {
     </div>
   );
 }
-
-    
