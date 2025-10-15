@@ -8,17 +8,19 @@ const baseUrl = 'https://innerpeacejournals.com';
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  // All calculator pages and hub pages
-  const calculatorPages = navItems
-    .filter(item => item.category !== 'Navigation' && item.category !== 'Company' && item.category !== 'Legal')
-    .map((item) => ({
-      url: `${baseUrl}${item.href}`,
-      lastModified: lastModified,
-      changeFrequency: 'monthly',
-      priority: item.href === '/' ? 1.0 : 0.8,
+  const allNavItems = navItems.flatMap(item => 
+    item.category !== 'Navigation' && item.category !== 'Company' && item.category !== 'Legal' 
+      ? { ...item, priority: item.href === '/' ? 1.0 : 0.8 } 
+      : []
+  );
+
+  const pageUrls = allNavItems.map(item => ({
+    url: `${baseUrl}${item.href}`,
+    lastModified: lastModified,
+    changeFrequency: 'monthly' as const,
+    priority: item.priority,
   }));
   
-  // Static pages like about, contact, etc.
   const staticPages = [
     '/about',
     '/contact',
@@ -29,25 +31,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ].map(page => ({
     url: `${baseUrl}${page}`,
     lastModified: lastModified,
-    changeFrequency: 'yearly',
+    changeFrequency: 'yearly' as const,
     priority: 0.5,
   }));
 
-  // Article pages
   const articlePages = articles.map(article => ({
     url: `${baseUrl}/articles/${article.slug}`,
     lastModified: new Date(article.publishedDate),
-    changeFrequency: 'weekly',
+    changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
   
-  // The main article hub page
   const articleHubPage = {
     url: `${baseUrl}/articles`,
-    lastModified: lastModified, // Use the most recent article's date
-    changeFrequency: 'weekly',
-    priority: 0.7,
+    lastModified: new Date(articles[0]?.publishedDate || lastModified),
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
   };
 
-  return [...calculatorPages, ...staticPages, ...articlePages, articleHubPage];
+  return [...pageUrls, ...staticPages, ...articlePages, articleHubPage];
 }
