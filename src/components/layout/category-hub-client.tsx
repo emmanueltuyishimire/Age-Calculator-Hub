@@ -15,10 +15,10 @@ export default function CategoryHubClient({ categoryName }: CategoryHubClientPro
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {navItems.map((item) => (
         <Link href={item.href} key={item.href} className="block hover:no-underline group">
-          <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary/50 group-hover:bg-accent">
+          <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary/50 group-hover:bg-accent/50">
             <CardHeader>
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg">
+                    <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                         <item.icon className="h-6 w-6 text-primary" aria-hidden="true" />
                     </div>
                     <CardTitle className="text-lg">{item.label}</CardTitle>
