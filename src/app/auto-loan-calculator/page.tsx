@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 const faqs = [
     {
         question: "How is a monthly car payment calculated?",
-        answer: "A car payment is calculated based on the loan principal (vehicle price minus down payment and trade-in), the interest rate, and the loan term (number of months). Our calculator uses the standard amortization formula to determine this."
+        answer: "A car payment is calculated based on the loan principal (vehicle price + fees - down payment - net trade-in), the interest rate, and the loan term. Our calculator uses the standard amortization formula to determine this."
     },
     {
         question: "What is a good interest rate for a car loan?",
@@ -34,8 +34,8 @@ const faqs = [
         answer: "A common recommendation is to put down at least 20% on a new car and 10% on a used car. A larger down payment reduces your loan amount, lowers your monthly payment, and helps you avoid being 'upside down' on your loan (owing more than the car is worth)."
     },
     {
-        question: "Does a trade-in value act like a down payment?",
-        answer: "Yes. Your trade-in value is subtracted from the vehicle price, directly reducing the amount you need to finance. It works in the same way as a cash down payment."
+        question: "How does the 'Amount Owed on Trade-in' work?",
+        answer: "If you owe money on your trade-in, that amount is typically added to your new loan principal. If your trade-in is worth more than you owe, the difference (positive equity) is subtracted from your new loan, acting like a down payment."
     },
      {
         question: "Should I choose a longer loan term for a lower payment?",
@@ -63,7 +63,7 @@ export default function AutoLoanCalculatorPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Auto Loan Calculator</h1>
@@ -80,27 +80,27 @@ export default function AutoLoanCalculatorPage() {
                         <CardTitle>How to Use the Auto Loan Calculator</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Vehicle Price:</strong> Enter the sticker price or negotiated price of the car.</li>
-                            <li><strong>Down Payment & Trade-in:</strong> Input any cash down payment and the value of your trade-in vehicle.</li>
-                            <li><strong>Loan Term:</strong> Select the length of your loan in months (e.g., 60 months = 5 years).</li>
-                            <li><strong>Interest Rate:</strong> Enter the annual interest rate (APR) you expect to receive.</li>
-                            <li><strong>Sales Tax:</strong> Provide your local sales tax rate to include it in the total financed amount.</li>
-                            <li><strong>Click “Calculate”:</strong> Instantly see your estimated monthly payment and a full breakdown of the loan.</li>
+                        <p className="text-muted-foreground">This comprehensive tool helps you understand the full cost of your next vehicle purchase. Here's how to use it:</p>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-4">
+                            <li><strong>Select Calculation Mode:</strong> Choose to calculate "By Total Price" if you know the car's cost, or "By Monthly Payment" if you have a budget in mind.</li>
+                            <li><strong>Enter Vehicle Details:</strong> Input the vehicle price, plus any cash incentives, your down payment, and trade-in details.</li>
+                            <li><strong>Define Loan Parameters:</strong> Set your desired loan term (in months) and the interest rate (APR) you expect.</li>
+                            <li><strong>Include Taxes & Fees:</strong> Add your state sales tax and any title or registration fees to get a true total loan amount.</li>
+                            <li><strong>Click “Calculate”:</strong> Instantly see your estimated monthly payment, a full cost breakdown, and a year-by-year amortization schedule.</li>
                         </ol>
                     </CardContent>
                 </Card>
                 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Tips for Getting a Better Car Loan</CardTitle>
+                        <CardTitle>Tips for Getting the Best Car Loan</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <ul className="space-y-3">
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Check Your Credit Score:</strong> Your credit score is the single biggest factor in determining your interest rate. Knowing your score beforehand gives you negotiating power.</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Get Pre-Approved:</strong> Before you even step into a dealership, get a pre-approved loan offer from your bank or a credit union. This gives you a benchmark rate to compare against the dealership's financing offer.</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Negotiate the Price, Not the Payment:</strong> Focus on negotiating the total price of the vehicle first. Only discuss financing options and monthly payments after you've agreed on the car's price.</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Choose a Shorter Loan Term:</strong> A shorter term means higher monthly payments but significantly less interest paid over the life of the loan. Avoid stretching a loan beyond 72 months if possible.</span></li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Improve Your Credit Score:</strong> Your credit score is the single biggest factor in determining your interest rate. Paying bills on time and reducing credit card balances can boost your score.</span></li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Get Pre-Approved:</strong> Before you shop, get a pre-approved loan offer from your bank or a credit union. This gives you a benchmark rate and strengthens your negotiating position at the dealership.</span></li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Negotiate the Price, Not the Payment:</strong> Always focus on negotiating the total price of the vehicle first. Discuss financing options and monthly payments only after you've agreed on the car's final price.</span></li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Choose the Shortest Term You Can Afford:</strong> A shorter loan term means higher monthly payments but significantly less interest paid over time. Try to avoid stretching a loan beyond 72 months.</span></li>
                         </ul>
                     </CardContent>
                 </Card>
