@@ -50,6 +50,31 @@ const faqs = [
     }
 ];
 
+const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article?.title,
+    "description": article?.description,
+    "datePublished": article?.publishedDate,
+    "author": {
+        "@type": "Organization",
+        "name": "Calculator Hub"
+    }
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+        }
+    }))
+};
+
 export default function PaycheckGuidePage() {
   if (!article) {
     notFound();
@@ -57,6 +82,14 @@ export default function PaycheckGuidePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
       <main role="main" className="max-w-4xl mx-auto">
         <article className="prose dark:prose-invert lg:prose-xl max-w-none">
           <div className="text-center mb-12">

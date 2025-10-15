@@ -124,7 +124,7 @@ export default function LoanPayoffArticlePage() {
                 <li><strong>The 'Round Up' Method:</strong> If your monthly payment is $455, round it up to $500. That extra $45 a month makes a big difference over time.</li>
                 <li><strong>The 'Bi-Weekly' Method:</strong> Make half of your monthly payment every two weeks. This results in 26 half-payments a year, which equals 13 full monthly payments—one extra payment per year, effortlessly.</li>
                 <li><strong>The 'Windfall' Method:</strong> Whenever you receive unexpected money—a bonus, a tax refund, or a gift—apply a portion or all of it directly to your loan's principal.</li>
-                <li><strong>The 'Snowball' or 'Avalanche' Method:</strong> If you have multiple debts, focus on paying off one at a time. Once it's paid off, roll that entire payment amount into the next debt, creating a "snowball" of payments that accelerates your progress.</li>
+                <li><strong>The 'Snowball' or 'Avalanche' Method:</strong> If you have multiple debts, focus on paying off one at a time. Once it's paid off, roll that entire payment amount into the next debt, creating a "snowball" of payments that accelerates your progress. For more on this, read our <Link href="/articles/debt-snowball-vs-avalanche" className="text-primary hover:underline">guide on debt payoff strategies</Link>.</li>
             </ul>
 
            <h2 className="text-3xl font-bold text-center mt-12 mb-6">Frequently Asked Questions</h2>
