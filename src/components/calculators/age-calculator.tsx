@@ -1,8 +1,8 @@
 
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { intervalToDuration, differenceInSeconds, differenceInMinutes, differenceInHours, differenceInDays, differenceInWeeks, differenceInMonths, isValid, isFuture } from 'date-fns';
+import { useState, useEffect, useCallback } from 'react';
+import { intervalToDuration, differenceInSeconds, differenceInMinutes, differenceInHours, differenceInDays, differenceInWeeks, differenceInMonths, isValid, isFuture, format } from 'date-fns';
 import {
   Card,
   CardContent,
@@ -11,11 +11,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, RefreshCcw } from "lucide-react"
+import { AlertCircle, CalendarIcon, RefreshCcw } from "lucide-react"
 import ShareButton from '../share-button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface Age {
   years: number;
@@ -33,51 +35,32 @@ interface Age {
 }
 
 export default function AgeCalculator() {
-  const [dob, setDob] = useState({ day: '', month: '', year: '' });
-  const [ageAt, setAgeAt] = useState({ day: '', month: '', year: '' });
+  const [dob, setDob] = useState<Date | undefined>();
+  const [ageAt, setAgeAt] = useState<Date | undefined>(new Date());
   const [age, setAge] = useState<Age | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const dobMonthRef = useRef<HTMLInputElement>(null);
-  const dobYearRef = useRef<HTMLInputElement>(null);
-  const ageAtMonthRef = useRef<HTMLInputElement>(null);
-  const ageAtYearRef = useRef<HTMLInputElement>(null);
-
-
   useEffect(() => {
-    const now = new Date();
-    setAgeAt({ day: String(now.getDate()), month: String(now.getMonth() + 1), year: String(now.getFullYear())});
-    
     try {
         const savedDob = localStorage.getItem('ageCalculatorDob');
         const savedAgeAt = localStorage.getItem('ageCalculatorAgeAt');
         if (savedDob) {
-            setDob(JSON.parse(savedDob));
+            const parsedDob = new Date(JSON.parse(savedDob));
+            if(isValid(parsedDob)) setDob(parsedDob);
         }
         if (savedAgeAt) {
-            setAgeAt(JSON.parse(savedAgeAt));
+            const parsedAgeAt = new Date(JSON.parse(savedAgeAt));
+            if(isValid(parsedAgeAt)) setAgeAt(parsedAgeAt);
         }
     } catch(e) {
         // ignore
     }
   }, []);
 
-  const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
-    const day = parseInt(dayStr, 10);
-    const month = parseInt(monthStr, 10) - 1;
-    const year = parseInt(yearStr, 10);
-    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1000 || year > 9999) return null;
-    const date = new Date(year, month, day);
-    if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
-      return date;
-    }
-    return null;
-  };
-
   const calculateAge = useCallback(() => {
-    const dobDate = parseDate(dob.day, dob.month, dob.year);
-    const ageAtDateVal = parseDate(ageAt.day, ageAt.month, ageAt.year);
+    const dobDate = dob;
+    const ageAtDateVal = ageAt;
 
     if (!dobDate || !ageAtDateVal) {
       return;
@@ -126,15 +109,15 @@ export default function AgeCalculator() {
       totalMinutes,
       totalSeconds,
     });
-  }, [dob.day, dob.month, dob.year, ageAt.day, ageAt.month, ageAt.year, isCalculating]);
+  }, [dob, ageAt, isCalculating]);
 
   const handleCalculate = () => {
-    const dobDate = parseDate(dob.day, dob.month, dob.year);
+    const dobDate = dob;
     if (!dobDate) {
         setError("Please enter a valid date of birth.");
         return;
     }
-    const ageAtDate = parseDate(ageAt.day, ageAt.month, ageAt.year);
+    const ageAtDate = ageAt;
     if (!ageAtDate) {
         setError("Please enter a valid 'Age at' date.");
         return;
@@ -147,9 +130,8 @@ export default function AgeCalculator() {
   };
   
   const handleReset = () => {
-      setDob({ day: '', month: '', year: '' });
-      const now = new Date();
-      setAgeAt({ day: String(now.getDate()), month: String(now.getMonth() + 1), year: String(now.getFullYear())});
+      setDob(undefined);
+      setAgeAt(new Date());
       setAge(undefined);
       setIsCalculating(false);
       setError(null);
@@ -170,19 +152,7 @@ export default function AgeCalculator() {
   useEffect(() => {
     setIsCalculating(false);
     setAge(undefined);
-  }, [dob.day, dob.month, dob.year, ageAt.day, ageAt.month, ageAt.year])
-
-  const handleDobChange = (field: 'day' | 'month' | 'year', value: string) => {
-    setDob(prev => ({...prev, [field]: value}));
-    if (field === 'day' && value.length === 2) dobMonthRef.current?.focus();
-    if (field === 'month' && value.length === 2) dobYearRef.current?.focus();
-  };
-
-  const handleAgeAtChange = (field: 'day' | 'month' | 'year', value: string) => {
-    setAgeAt(prev => ({...prev, [field]: value}));
-    if (field === 'day' && value.length === 2) ageAtMonthRef.current?.focus();
-    if (field === 'month' && value.length === 2) ageAtYearRef.current?.focus();
-  };
+  }, [dob, ageAt])
 
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg animate-fade-in">
@@ -202,20 +172,62 @@ export default function AgeCalculator() {
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className='space-y-2'>
-            <Label htmlFor="dob-day-main">Date of Birth</Label>
-            <div className="flex gap-2">
-              <Input id="dob-day-main" placeholder="DD" value={dob.day} onChange={e => handleDobChange('day', e.target.value)} maxLength={2} aria-label="Day of Birth"/>
-              <Input ref={dobMonthRef} id="dob-month-main" placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
-              <Input ref={dobYearRef} id="dob-year-main" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
-            </div>
+            <Label htmlFor="dob-picker">Date of Birth</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="dob-picker"
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !dob && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={1900}
+                  toYear={new Date().getFullYear()}
+                  selected={dob}
+                  onSelect={setDob}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
           <div className='space-y-2'>
-            <Label htmlFor="ageAt-day-main">Age at the Date of</Label>
-            <div className="flex gap-2">
-              <Input id="ageAt-day-main" placeholder="DD" value={ageAt.day} onChange={e => handleAgeAtChange('day', e.target.value)} maxLength={2} aria-label="Current Day"/>
-              <Input ref={ageAtMonthRef} id="ageAt-month-main" placeholder="MM" value={ageAt.month} onChange={e => handleAgeAtChange('month', e.target.value)} maxLength={2} aria-label="Current Month"/>
-              <Input ref={ageAtYearRef} id="ageAt-year-main" placeholder="YYYY" value={ageAt.year} onChange={e => handleAgeAtChange('year', e.target.value)} maxLength={4} aria-label="Current Year"/>
-            </div>
+            <Label htmlFor="age-at-picker">Age at the Date of</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="age-at-picker"
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !ageAt && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {ageAt ? format(ageAt, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={1900}
+                  toYear={new Date().getFullYear() + 100}
+                  selected={ageAt}
+                  onSelect={setAgeAt}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
@@ -261,5 +273,3 @@ export default function AgeCalculator() {
     </Card>
   );
 }
-
-    

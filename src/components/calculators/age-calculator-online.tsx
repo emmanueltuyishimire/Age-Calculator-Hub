@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { format, intervalToDuration, differenceInSeconds, differenceInMinutes, differenceInHours, differenceInDays, differenceInWeeks, differenceInMonths, isFuture, isValid } from 'date-fns';
-import { RefreshCcw } from 'lucide-react';
+import { RefreshCcw, CalendarIcon } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -12,11 +12,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface Age {
   years: number;
@@ -34,36 +36,15 @@ interface Age {
 }
 
 export default function AgeCalculatorOnline() {
-  const [dob, setDob] = useState({ day: '', month: '', year: '' });
-  const [current, setCurrent] = useState({ day: '', month: '', year: '' });
-  const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>();
-  const [currentDate, setCurrentDate] = useState<Date | undefined>();
+  const [dob, setDob] = useState<Date | undefined>();
+  const [currentDate, setCurrentDate] = useState<Date | undefined>(new Date());
   const [age, setAge] = useState<Age | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const now = new Date();
-    setCurrent({ day: String(now.getDate()), month: String(now.getMonth() + 1), year: String(now.getFullYear())});
-  }, []);
-
-  const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
-    const day = parseInt(dayStr, 10);
-    const month = parseInt(monthStr, 10) - 1;
-    const year = parseInt(yearStr, 10);
-    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1000 || year > 3000) return null;
-    const date = new Date(year, month, day);
-    if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
-      return date;
-    }
-    return null;
-  };
-
   const calculateAge = () => {
-    const dobDate = parseDate(dob.day, dob.month, dob.year);
-    const currentDateVal = parseDate(current.day, current.month, current.year);
-    setDateOfBirth(dobDate || undefined);
-    setCurrentDate(currentDateVal || undefined);
+    const dobDate = dob;
+    const currentDateVal = currentDate;
     
     if (!dobDate || !currentDateVal) return;
     
@@ -117,7 +98,7 @@ export default function AgeCalculatorOnline() {
   };
 
   const handleCalculate = () => {
-    const dobDate = parseDate(dob.day, dob.month, dob.year);
+    const dobDate = dob;
     if (!dobDate) {
         setError("Please enter your date of birth to calculate your age.");
         return;
@@ -127,11 +108,8 @@ export default function AgeCalculatorOnline() {
   };
 
   const handleReset = () => {
-      setDob({ day: '', month: '', year: '' });
-      const now = new Date();
-      setCurrent({ day: String(now.getDate()), month: String(now.getMonth() + 1), year: String(now.getFullYear())});
-      setDateOfBirth(undefined);
-      setCurrentDate(now);
+      setDob(undefined);
+      setCurrentDate(new Date());
       setAge(undefined);
       setIsCalculating(false);
       setError(null);
@@ -146,12 +124,12 @@ export default function AgeCalculatorOnline() {
     }
     return () => clearInterval(interval);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCalculating, dob, current]);
+  }, [isCalculating, dob, currentDate]);
 
   useEffect(() => {
     setIsCalculating(false);
     setAge(undefined);
-  }, [dob, current])
+  }, [dob, currentDate])
 
 
   return (
@@ -174,20 +152,32 @@ export default function AgeCalculatorOnline() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className='space-y-2'>
-              <Label htmlFor="dob-day-online">Date of Birth</Label>
-              <div className="flex gap-2">
-                <Input id="dob-day-online" placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
-                <Input id="dob-month-online" placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
-                <Input id="dob-year-online" placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
-              </div>
+              <Label htmlFor="dob-picker-online">Date of Birth</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                    <Button id="dob-picker-online" variant={"outline"} className={cn("w-full justify-start text-left font-normal",!dob && "text-muted-foreground")}>
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                    <Calendar mode="single" captionLayout="dropdown-buttons" fromYear={1900} toYear={new Date().getFullYear()} selected={dob} onSelect={setDob} initialFocus/>
+                </PopoverContent>
+              </Popover>
             </div>
             <div className='space-y-2'>
-              <Label htmlFor="current-day-online">Current Date</Label>
-              <div className="flex gap-2">
-                <Input id="current-day-online" placeholder="DD" value={current.day} onChange={e => setCurrent({...current, day: e.target.value})} aria-label="Current Day" />
-                <Input id="current-month-online" placeholder="MM" value={current.month} onChange={e => setCurrent({...current, month: e.target.value})} aria-label="Current Month" />
-                <Input id="current-year-online" placeholder="YYYY" value={current.year} onChange={e => setCurrent({...current, year: e.target.value})} aria-label="Current Year" />
-              </div>
+              <Label htmlFor="current-date-picker-online">Current Date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                    <Button id="current-date-picker-online" variant={"outline"} className={cn("w-full justify-start text-left font-normal",!currentDate && "text-muted-foreground")}>
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {currentDate ? format(currentDate, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                    <Calendar mode="single" captionLayout="dropdown-buttons" fromYear={1900} toYear={new Date().getFullYear() + 100} selected={currentDate} onSelect={setCurrentDate} initialFocus/>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
 

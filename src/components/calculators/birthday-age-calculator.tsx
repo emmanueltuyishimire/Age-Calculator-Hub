@@ -1,9 +1,9 @@
 
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { format, intervalToDuration, isFuture, isValid, addYears } from 'date-fns';
-import { RefreshCcw, Gift } from 'lucide-react';
+import { RefreshCcw, Gift, CalendarIcon } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -11,11 +11,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface Age {
   years: number;
@@ -35,41 +37,26 @@ interface BirthdayCountdown {
 }
 
 export default function BirthdayAgeCalculator() {
-  const [dob, setDob] = useState({ day: '', month: '', year: '' });
+  const [dob, setDob] = useState<Date | undefined>();
   const [age, setAge] = useState<Age | undefined>();
   const [countdown, setCountdown] = useState<BirthdayCountdown | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const monthRef = useRef<HTMLInputElement>(null);
-  const yearRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     try {
         const savedDob = localStorage.getItem('birthdayAgeCalculatorDob');
         if (savedDob) {
-            setDob(JSON.parse(savedDob));
+            const parsedDob = new Date(JSON.parse(savedDob));
+            if(isValid(parsedDob)) setDob(parsedDob);
         }
     } catch(e) {
         // ignore
     }
   }, []);
 
-  const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
-    const day = parseInt(dayStr, 10);
-    const month = parseInt(monthStr, 10) - 1;
-    const year = parseInt(yearStr, 10);
-    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1000 || year > 3000) return null;
-    const date = new Date(year, month, day);
-    if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
-      return date;
-    }
-    return null;
-  };
-
   const calculateAgeAndCountdown = useCallback(() => {
-    const dobDate = parseDate(dob.day, dob.month, dob.year);
-
+    const dobDate = dob;
     if (!dobDate) return;
     
     const now = new Date();
@@ -105,11 +92,11 @@ export default function BirthdayAgeCalculator() {
       minutes: countdownDuration.minutes || 0,
       seconds: countdownDuration.seconds || 0,
     });
-  }, [dob.day, dob.month, dob.year]);
+  }, [dob]);
 
   const handleCalculate = () => {
-    const dobDate = parseDate(dob.day, dob.month, dob.year);
-    if (!dobDate) {
+    const dobDate = dob;
+    if (!dobDate || !isValid(dobDate)) {
         setError("Please enter a valid date of birth.");
         setIsCalculating(false);
         setAge(undefined);
@@ -130,7 +117,7 @@ export default function BirthdayAgeCalculator() {
   };
 
   const handleReset = () => {
-      setDob({ day: '', month: '', year: '' });
+      setDob(undefined);
       setAge(undefined);
       setCountdown(undefined);
       setIsCalculating(false);
@@ -156,12 +143,6 @@ export default function BirthdayAgeCalculator() {
     setCountdown(undefined);
   }, [dob]);
 
-  const handleDobChange = (field: 'day' | 'month' | 'year', value: string) => {
-    setDob(prev => ({...prev, [field]: value}));
-    if (field === 'day' && value.length === 2) monthRef.current?.focus();
-    if (field === 'month' && value.length === 2) yearRef.current?.focus();
-  };
-
   return (
     <div className="space-y-6">
       <Card className="w-full max-w-lg mx-auto shadow-lg animate-fade-in">
@@ -179,12 +160,26 @@ export default function BirthdayAgeCalculator() {
 
           <div className="grid grid-cols-1 gap-4">
             <div className='space-y-2'>
-              <Label htmlFor='dob-day'>Date of Birth</Label>
-              <div className="flex gap-2">
-                <Input id="dob-day" placeholder="DD" value={dob.day} onChange={e => handleDobChange('day', e.target.value)} maxLength={2} aria-label="Day of Birth"/>
-                <Input ref={monthRef} id="dob-month" placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
-                <Input ref={yearRef} id="dob-year" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
-              </div>
+              <Label htmlFor='dob-picker'>Date of Birth</Label>
+               <Popover>
+                <PopoverTrigger asChild>
+                    <Button id="dob-picker" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !dob && "text-muted-foreground")}>
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                    <Calendar
+                        mode="single"
+                        captionLayout="dropdown-buttons"
+                        fromYear={1900}
+                        toYear={new Date().getFullYear()}
+                        selected={dob}
+                        onSelect={setDob}
+                        initialFocus
+                    />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
 
@@ -239,5 +234,3 @@ export default function BirthdayAgeCalculator() {
     </div>
   );
 }
-
-    

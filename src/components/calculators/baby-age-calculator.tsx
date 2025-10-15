@@ -1,9 +1,9 @@
 
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { format, intervalToDuration, isValid, isFuture, differenceInWeeks, differenceInDays, differenceInMonths } from 'date-fns';
-import { RefreshCcw, Baby } from 'lucide-react';
+import { RefreshCcw, Baby, CalendarIcon } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -12,11 +12,13 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface BabyAge {
   years: number;
@@ -29,29 +31,13 @@ interface BabyAge {
 }
 
 export default function BabyAgeCalculator() {
-  const [dob, setDob] = useState({ day: '', month: '', year: '' });
+  const [dob, setDob] = useState<Date|undefined>();
   const [age, setAge] = useState<BabyAge | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const monthRef = useRef<HTMLInputElement>(null);
-  const yearRef = useRef<HTMLInputElement>(null);
-
-  const parseDate = (dayStr: string, monthStr: string, yearStr:string): Date | null => {
-    const day = parseInt(dayStr, 10);
-    const month = parseInt(monthStr, 10) - 1;
-    const year = parseInt(yearStr, 10);
-    const currentYear = new Date().getFullYear();
-    if (isNaN(day) || isNaN(month) || isNaN(year) || year < currentYear - 5 || year > currentYear) return null;
-    const date = new Date(year, month, day);
-    if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
-      return date;
-    }
-    return null;
-  };
-
   const calculateAge = useCallback(() => {
-    const dobDate = parseDate(dob.day, dob.month, dob.year);
+    const dobDate = dob;
     if (!dobDate) return;
     
     const now = new Date();
@@ -79,11 +65,11 @@ export default function BabyAgeCalculator() {
       totalDays,
       weekPart,
     });
-  }, [dob.day, dob.month, dob.year]);
+  }, [dob]);
 
   const handleCalculate = () => {
-    const dobDate = parseDate(dob.day, dob.month, dob.year);
-    if (!dobDate) {
+    const dobDate = dob;
+    if (!dobDate || !isValid(dobDate)) {
         setError("Please enter a valid date of birth for your baby.");
         setIsCalculating(false);
         return;
@@ -93,7 +79,7 @@ export default function BabyAgeCalculator() {
   };
 
   const handleReset = () => {
-      setDob({ day: '', month: '', year: '' });
+      setDob(undefined);
       setAge(undefined);
       setIsCalculating(false);
       setError(null);
@@ -115,12 +101,6 @@ export default function BabyAgeCalculator() {
     setAge(undefined);
   }, [dob]);
 
-  const handleDobChange = (field: 'day' | 'month' | 'year', value: string) => {
-    setDob(prev => ({...prev, [field]: value}));
-    if (field === 'day' && value.length === 2) monthRef.current?.focus();
-    if (field === 'month' && value.length === 2) yearRef.current?.focus();
-  };
-
   return (
     <Card className="w-full max-w-lg mx-auto shadow-lg animate-fade-in">
       <CardHeader className="text-center">
@@ -136,12 +116,26 @@ export default function BabyAgeCalculator() {
             </Alert>
         )}
         <div className='space-y-2'>
-            <Label htmlFor='dob-day-baby'>Baby's Date of Birth</Label>
-            <div className="flex gap-2">
-            <Input id="dob-day-baby" placeholder="DD" value={dob.day} onChange={e => handleDobChange('day', e.target.value)} maxLength={2} aria-label="Day of Birth"/>
-            <Input ref={monthRef} id="dob-month-baby" placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
-            <Input ref={yearRef} id="dob-year-baby" placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
-            </div>
+            <Label htmlFor='dob-baby-picker'>Baby's Date of Birth</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button id="dob-baby-picker" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !dob && "text-muted-foreground")}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={new Date().getFullYear() - 5}
+                  toYear={new Date().getFullYear()}
+                  selected={dob}
+                  onSelect={setDob}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
         </div>
 
         <div className="flex flex-col md:flex-row gap-2">

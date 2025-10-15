@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -21,8 +20,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, CalendarIcon } from "lucide-react"
 import ShareButton from '../share-button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface DueDateInfo {
   dueDate: Date;
@@ -32,25 +34,13 @@ interface DueDateInfo {
 
 export default function DueDateCalculator() {
   const [calculationMethod, setCalculationMethod] = useState('lmp');
-  const [inputDate, setInputDate] = useState({ day: '', month: '', year: '' });
+  const [inputDate, setInputDate] = useState<Date | undefined>();
   const [dueDateInfo, setDueDateInfo] = useState<DueDateInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
-    const day = parseInt(dayStr, 10);
-    const month = parseInt(monthStr, 10) - 1;
-    const year = parseInt(yearStr, 10);
-    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1900 || year > new Date().getFullYear() + 1) return null;
-    const date = new Date(year, month, day);
-    if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
-      return date;
-    }
-    return null;
-  };
-
   const handleCalculate = () => {
-    const date = parseDate(inputDate.day, inputDate.month, inputDate.year);
-    if (!date) {
+    const date = inputDate;
+    if (!date || !isValid(date)) {
       setError("Please enter a valid date.");
       setDueDateInfo(null);
       return;
@@ -129,12 +119,33 @@ export default function DueDateCalculator() {
           </Select>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="date-day">Date</Label>
-           <div className="flex gap-2">
-                <Input id="date-day" placeholder="DD" value={inputDate.day} onChange={e => setInputDate({...inputDate, day: e.target.value})} aria-label="Day"/>
-                <Input id="date-month" placeholder="MM" value={inputDate.month} onChange={e => setInputDate({...inputDate, month: e.target.value})} aria-label="Month"/>
-                <Input id="date-year" placeholder="YYYY" value={inputDate.year} onChange={e => setInputDate({...inputDate, year: e.target.value})} aria-label="Year"/>
-            </div>
+          <Label htmlFor="date-picker-due-date">Date</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date-picker-due-date"
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !inputDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {inputDate ? format(inputDate, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={new Date().getFullYear() - 2}
+                  toYear={new Date().getFullYear() + 1}
+                  selected={inputDate}
+                  onSelect={setInputDate}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
         </div>
         <div className="flex gap-2">
             <Button onClick={handleCalculate} className="w-full">Calculate Due Date</Button>

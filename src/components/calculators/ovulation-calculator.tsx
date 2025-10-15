@@ -14,9 +14,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, CalendarIcon } from "lucide-react"
 import { RefreshCcw } from 'lucide-react';
 import ShareButton from '../share-button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface OvulationInfo {
   fertileWindow: { start: Date; end: Date };
@@ -27,28 +30,16 @@ interface OvulationInfo {
 }
 
 export default function OvulationCalculator() {
-  const [lmp, setLmp] = useState({ day: '', month: '', year: '' });
+  const [lmp, setLmp] = useState<Date | undefined>();
   const [cycleLength, setCycleLength] = useState('28');
   const [ovulationInfo, setOvulationInfo] = useState<OvulationInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
-    const day = parseInt(dayStr, 10);
-    const month = parseInt(monthStr, 10) - 1;
-    const year = parseInt(yearStr, 10);
-    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1900 || year > new Date().getFullYear() + 2) return null;
-    const date = new Date(year, month, day);
-    if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
-      return date;
-    }
-    return null;
-  };
-
   const handleCalculate = () => {
-    const lmpDate = parseDate(lmp.day, lmp.month, lmp.year);
+    const lmpDate = lmp;
     const cycle = parseInt(cycleLength, 10);
 
-    if (!lmpDate) {
+    if (!lmpDate || !isValid(lmpDate)) {
       setError("Please enter a valid date for your last menstrual period.");
       setOvulationInfo(null);
       return;
@@ -85,7 +76,7 @@ export default function OvulationCalculator() {
   };
 
   const handleReset = () => {
-    setLmp({day: '', month: '', year: ''});
+    setLmp(undefined);
     setCycleLength('28');
     setOvulationInfo(null);
     setError(null);
@@ -108,12 +99,26 @@ export default function OvulationCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-            <Label htmlFor='lmp-day'>First Day of Last Period</Label>
-             <div className="flex gap-2">
-                <Input id="lmp-day" placeholder="DD" value={lmp.day} onChange={e => setLmp({...lmp, day: e.target.value})} aria-label="LMP Day"/>
-                <Input id="lmp-month" placeholder="MM" value={lmp.month} onChange={e => setLmp({...lmp, month: e.target.value})} aria-label="LMP Month"/>
-                <Input id="lmp-year" placeholder="YYYY" value={lmp.year} onChange={e => setLmp({...lmp, year: e.target.value})} aria-label="LMP Year"/>
-            </div>
+            <Label htmlFor='lmp-picker'>First Day of Last Period</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button id="lmp-picker" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !lmp && "text-muted-foreground")}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {lmp ? format(lmp, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={new Date().getFullYear() - 1}
+                  toYear={new Date().getFullYear()}
+                  selected={lmp}
+                  onSelect={setLmp}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
         </div>
         <div className="space-y-2">
           <Label htmlFor="cycle-length">Average Cycle Length (days)</Label>

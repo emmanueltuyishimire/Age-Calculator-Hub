@@ -11,11 +11,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, CalendarIcon } from "lucide-react"
 import ShareButton from '../share-button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface RetirementInfo {
   fullRetirement: {
@@ -49,7 +51,7 @@ const getRetirementAge = (birthYear: number): { years: number; months: number } 
 };
 
 export default function RetirementAgeCalculator() {
-  const [dob, setDob] = useState({ day: '', month: '', year: '' });
+  const [dob, setDob] = useState<Date | undefined>();
   const [retirementInfo, setRetirementInfo] = useState<RetirementInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -57,31 +59,18 @@ export default function RetirementAgeCalculator() {
     try {
         const savedDob = localStorage.getItem('retirementAgeCalculatorDob');
         if (savedDob) {
-            setDob(JSON.parse(savedDob));
+            const parsedDate = new Date(JSON.parse(savedDob));
+            if(isValid(parsedDate)) setDob(parsedDate);
         }
     } catch(e) {
         // ignore
     }
   }, []);
 
-  const parseDate = (dayStr: string, monthStr: string, yearStr: string): Date | null => {
-    const day = parseInt(dayStr, 10);
-    const month = parseInt(monthStr, 10) - 1;
-    const year = parseInt(yearStr, 10);
-    if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
-      return null;
-    }
-    const date = new Date(year, month, day);
-    if (isValid(date) && date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
-      return date;
-    }
-    return null;
-  };
-
   const handleCalculate = () => {
-    const selectedDate = parseDate(dob.day, dob.month, dob.year);
+    const selectedDate = dob;
 
-    if (!selectedDate) {
+    if (!selectedDate || !isValid(selectedDate)) {
       setError("Please enter a valid date of birth.");
       setRetirementInfo(null);
       return;
@@ -129,12 +118,26 @@ export default function RetirementAgeCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-            <Label htmlFor="dob-day-ret">Date of Birth</Label>
-            <div className="flex flex-col sm:flex-row gap-2">
-                <Input id="dob-day-ret" placeholder="DD" value={dob.day} onChange={e => setDob({...dob, day: e.target.value})} aria-label="Day of Birth"/>
-                <Input id="dob-month-ret" placeholder="MM" value={dob.month} onChange={e => setDob({...dob, month: e.target.value})} aria-label="Month of Birth"/>
-                <Input id="dob-year-ret" placeholder="YYYY" value={dob.year} onChange={e => setDob({...dob, year: e.target.value})} aria-label="Year of Birth"/>
-            </div>
+            <Label htmlFor="dob-picker-ret">Date of Birth</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button id="dob-picker-ret" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !dob && "text-muted-foreground")}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={1920}
+                  toYear={new Date().getFullYear()}
+                  selected={dob}
+                  onSelect={setDob}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
         </div>
         <div className="flex gap-2">
             <Button onClick={handleCalculate} className="w-full">Calculate Retirement Age</Button>
@@ -178,5 +181,3 @@ export default function RetirementAgeCalculator() {
     </Card>
   );
 }
-
-    
