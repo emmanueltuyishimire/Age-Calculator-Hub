@@ -40,7 +40,7 @@ export function SearchBar() {
 
   const searchableItems: SearchableItem[] = React.useMemo(() => {
     const calculatorItems = navItems
-      .filter(item => item.href.startsWith('/') && !['/articles', '/about', '/contact', '/privacy', '/terms', '/disclaimer', '/faq'].includes(item.href) && !item.href.includes('calculators'))
+      .filter(item => item.href.startsWith('/') && !['/articles', '/about', '/contact', '/privacy', '/terms', '/disclaimer', '/faq'].includes(item.href) && !item.href.endsWith('-calculators'))
       .map(item => ({
         title: item.label,
         href: item.href,
@@ -65,7 +65,9 @@ export function SearchBar() {
 
   const results = React.useMemo(() => {
     if (!query) {
-      return { calculators: searchableItems.filter(i => i.type === 'calculator').slice(0, 5), articles: searchableItems.filter(i => i.type === 'article').slice(0, 5) };
+      const allCalculators = searchableItems.filter(i => i.type === 'calculator');
+      const allArticles = searchableItems.filter(i => i.type === 'article');
+      return { calculators: allCalculators.slice(0, 5), articles: allArticles.slice(0, 5) };
     }
     const searchResults = fuse.search(query);
     const calculators = searchResults.filter(r => r.item.type === 'calculator').map(r => r.item);
@@ -124,6 +126,7 @@ export function SearchBar() {
               placeholder="Type to search..."
               value={query}
               onValueChange={setQuery}
+              onClear={() => setQuery('')}
             />
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
