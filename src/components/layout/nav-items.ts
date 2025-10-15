@@ -131,6 +131,13 @@ export const navItems: NavItem[] = [
     description: 'Find out your body’s metabolic age based on your BMR.'
   },
   {
+    href: '/target-heart-rate-calculator',
+    icon: HeartPulse,
+    label: 'Target Heart Rate Calculator',
+    category: 'Scientific & Health Age',
+    description: 'Find your ideal heart rate zones for exercise (fat burn, cardio, peak).'
+  },
+  {
     href: '/health-assessments',
     icon: Stethoscope,
     label: 'Health Assessments',
