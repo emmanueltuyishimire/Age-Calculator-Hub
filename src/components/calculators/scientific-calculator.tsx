@@ -12,20 +12,23 @@ import { evaluate } from 'mathjs';
 const scientificButtons: (string | React.ReactNode)[][] = [
     ['sin', 'cos', 'tan'],
     [<span key="asin">sin<sup>-1</sup></span>, <span key="acos">cos<sup>-1</sup></span>, <span key="atan">tan<sup>-1</sup></span>],
-    ['ln', 'log', 'n!'],
-    ['π', 'e', 'EXP'],
-    ['√', '³√', 'y√x'],
-    [<span key="pow2">x<sup>2</sup></span>, <span key="pow3">x<sup>3</sup></span>, <span key="powy">x<sup>y</sup></span>],
-    ['(', ')', '1/x'],
+    [<span key="powy">x<sup>y</sup></span>, <span key="pow3">x<sup>3</sup></span>, <span key="pow2">x<sup>2</sup></span>],
+    [<span key="yroot">y√x</span>, <span key="cuberoot">³√x</span>, <span key="sqrt">√x</span>],
+    ['(', ')', <span key="reciprocal">1/x</span>],
+    ['π', 'e'],
+    [<span key="ex">e<sup>x</sup></span>, <span key="10x">10<sup>x</sup></span>],
+    ['ln', 'log'],
+    ['n!'],
 ];
 
 const basicButtons: (string | React.ReactNode)[][] = [
-    ['AC', <Trash2 key="backspace" />, '%', '÷'],
-    ['7', '8', '9', '×'],
-    ['4', '5', '6', '−'],
-    ['1', '2', '3', '+'],
-    ['0', '.', '±', '='],
+    ['7', '8', '9'],
+    ['4', '5', '6'],
+    ['1', '2', '3'],
+    ['0', '.', '±']
 ];
+
+const operatorButtons: (string | React.ReactNode)[] = ['÷', '×', '−', '+', '='];
 
 const memoryButtons = ['Ans', 'M+', 'M-', 'MR'];
 
@@ -130,11 +133,11 @@ const ScientificCalculator = () => {
             case 'n!': setExpression(prev => `(${prev || '0'})!`); break;
             case 'π': setExpression(prev => prev + 'pi'); break;
             case 'e': setExpression(prev => prev + 'e'); break;
-            case 'x^y': setExpression(prev => prev + '^'); break;
-            case 'x^2': setExpression(prev => `(${prev || '0'})^2`); break;
-            case 'x^3': setExpression(prev => `(${prev || '0'})^3`); break;
-            case 'e^x': setExpression(prev => `e^(${prev || '0'})`); break;
-            case '10^x': setExpression(prev => `10^(${prev || '0'})`); break;
+            case 'xy': setExpression(prev => prev + '^'); break;
+            case 'x2': setExpression(prev => `(${prev || '0'})^2`); break;
+            case 'x3': setExpression(prev => `(${prev || '0'})^3`); break;
+            case 'ex': setExpression(prev => `e^(${prev || '0'})`); break;
+            case '10x': setExpression(prev => `10^(${prev || '0'})`); break;
             case 'y√x': setExpression(prev => prev + ' nthRoot('); break;
             case 'Ans': setExpression(prev => prev + ans.toString()); break;
             case 'M+':
@@ -196,7 +199,7 @@ const ScientificCalculator = () => {
             } else if (key === 'Escape') {
                 handleButtonClick('AC');
             } else if (key === '^') {
-                handleButtonClick('x^y');
+                handleButtonClick('xy');
             } else if (key === '%') {
                 handleButtonClick('%');
             }
@@ -239,7 +242,7 @@ const ScientificCalculator = () => {
     return 'outline';
   }
   
-  const renderButton = (btn: string | React.ReactNode, index: number) => {
+  const renderButton = (btn: string | React.ReactNode, index: number, style?: string) => {
     let value: string;
     if (typeof btn === 'string') {
         value = btn;
@@ -255,8 +258,9 @@ const ScientificCalculator = () => {
         <Button 
             key={value + index} 
             variant={getVariant(btn)} 
-            className={cn("h-10 text-xs p-1 text-base", {
-                'col-span-2': btn === '='
+            className={cn("h-10 text-xs p-1 text-base", style, {
+                'bg-green-700 hover:bg-green-800 text-white': value === 'Deg/Rad' && isDeg,
+                'bg-green-700 hover:bg-green-800 text-white': value === 'Rad' && !isDeg,
             })}
             onClick={() => handleButtonClick(btn)}
         >
@@ -276,29 +280,47 @@ const ScientificCalculator = () => {
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Scientific Panel */}
-        <div className="space-y-1">
-            <div className="grid grid-cols-3 gap-1">
-                {scientificButtons.map((row, rowIndex) => 
-                    row.map((btn, btnIndex) => renderButton(btn, rowIndex * 3 + btnIndex))
-                )}
-            </div>
-            <Button variant={isDeg ? 'secondary' : 'outline'} className="w-full h-10 text-xs p-1 text-base" onClick={() => setIsDeg(prev => !prev)}>
-                {isDeg ? 'Deg' : 'Rad'}
-            </Button>
+        <div className="grid grid-cols-5 gap-1">
+            {['sin', 'cos', 'tan', 'π', 'e'].map((btn, i) => renderButton(btn, i))}
+            {[<span key="asin">sin<sup>-1</sup></span>, <span key="acos">cos<sup>-1</sup></span>, <span key="atan">tan<sup>-1</sup></span>, 'n!', '('].map((btn, i) => renderButton(btn, i+5))}
+            {[<span key="powy">x<sup>y</sup></span>, <span key="pow3">x<sup>3</sup></span>, <span key="pow2">x<sup>2</sup></span>, <span key="ex">e<sup>x</sup></span>, ')'].map((btn, i) => renderButton(btn, i+10))}
+            {[<span key="yroot">y√x</span>, <span key="cuberoot">³√x</span>, '√', <span key="10x">10<sup>x</sup></span>, '%'].map((btn, i) => renderButton(btn, i+15))}
+            {['ln', 'log', <span key="reciprocal">1/x</span>, 'EXP', 'RND'].map((btn, i) => renderButton(btn, i+20))}
         </div>
 
         {/* Basic Panel */}
-        <div className="space-y-1">
-            <div className="grid grid-cols-4 gap-1">
-                 {memoryButtons.map((btn, index) => renderButton(btn, index))}
-            </div>
-            <div className="grid grid-cols-4 gap-1 pt-1">
-                 {basicButtons.map((row, rowIndex) => 
-                    row.map((btn, btnIndex) => renderButton(btn, rowIndex * 4 + btnIndex))
-                )}
-            </div>
+        <div className="grid grid-cols-5 gap-1">
+            {renderButton('AC', 25, 'col-span-2')}
+            {renderButton(<Trash2 key="backspace" className="h-5 w-5 mx-auto"/>, 26)}
+            {renderButton('÷', 27)}
+            {renderButton('×', 28)}
+
+            {renderButton('7', 29)}
+            {renderButton('8', 30)}
+            {renderButton('9', 31)}
+            {renderButton('−', 32)}
+            {renderButton('M+', 33)}
+
+            {renderButton('4', 34)}
+            {renderButton('5', 35)}
+            {renderButton('6', 36)}
+            {renderButton('+', 37)}
+            {renderButton('M-', 38)}
+
+            {renderButton('1', 39)}
+            {renderButton('2', 40)}
+            {renderButton('3', 41)}
+            {renderButton('=', 42, 'row-span-2 h-auto')}
+            {renderButton('MR', 43)}
+            
+            {renderButton('0', 44, 'col-span-2')}
+            {renderButton('.', 45)}
+            {renderButton('Ans', 46)}
         </div>
       </div>
+       <Button variant="outline" className="w-full h-10 text-xs p-1 text-base mt-2" onClick={() => setIsDeg(prev => !prev)}>
+            Mode: {isDeg ? 'Degrees' : 'Radians'}
+       </Button>
     </div>
   );
 };
