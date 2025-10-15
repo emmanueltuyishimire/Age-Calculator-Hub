@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import { intervalToDuration, isValid, isFuture, format, differenceInYears, differenceInMonths } from 'date-fns';
 import {
   Card,
@@ -12,13 +12,12 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, RefreshCcw } from "lucide-react"
 import ShareButton from '../share-button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-type InputMode = "full" | "monthYear" | "year";
+type InputMode = "year" | "monthYear" | "full";
 
 interface AgeResult {
   years?: number;
