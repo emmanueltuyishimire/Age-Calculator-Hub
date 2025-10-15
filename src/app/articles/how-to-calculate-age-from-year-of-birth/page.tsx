@@ -54,11 +54,11 @@ const articleSchema = {
     "datePublished": article?.publishedDate,
     "author": {
         "@type": "Organization",
-        "name": "Calculator Hub"
+        "name": "Calculators"
     },
     "publisher": {
         "@type": "Organization",
-        "name": "Calculator Hub",
+        "name": "Calculators",
         "logo": {
             "@type": "ImageObject",
             "url": "https://innerpeacejournals.com/logo.png"
