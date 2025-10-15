@@ -84,6 +84,13 @@ export const navItems: NavItem[] = [
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
   {
+    href: '/mortgage-calculator',
+    icon: Landmark,
+    label: 'Mortgage Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate your monthly mortgage payment with PITI.'
+  },
+  {
     href: '/life-insurance-calculator',
     icon: ShieldCheck,
     label: 'Life Insurance Calculator',
@@ -110,13 +117,6 @@ export const navItems: NavItem[] = [
     label: 'Loan Payoff Calculator',
     category: 'Financial Calculators',
     description: 'Calculate how long it will take to pay off a loan.'
-  },
-  {
-    href: '/child-support-calculator',
-    icon: Users,
-    label: 'Child Support Calculator',
-    category: 'Financial Calculators',
-    description: 'Get a simple estimate of potential child support payments.'
   },
   {
     href: '/social-security-retirement-age-calculator',
@@ -257,14 +257,29 @@ export const navItems: NavItem[] = [
     category: 'Other',
     description: 'Find out how old your cat is in human years.'
   },
+  
+  // Legal Estimators
+  {
+    href: '/legal-estimators',
+    icon: Scale,
+    label: 'Legal Estimators',
+    category: 'Legal Estimators',
+    description: 'A hub for our legal information and estimation tools.'
+  },
   {
     href: '/statute-of-limitations',
     icon: BookOpen,
     label: 'Statute of Limitations Calculator',
-    category: 'Other',
+    category: 'Legal Estimators',
     description: 'Estimate legal filing deadlines for common claims.'
   },
-  
+  {
+    href: '/child-support-calculator',
+    icon: Users,
+    label: 'Child Support Calculator',
+    category: 'Legal Estimators',
+    description: 'Get a simple estimate of potential child support payments.'
+  },
 
   // Company & Legal Links (for footer and mobile nav)
   {
@@ -308,6 +323,7 @@ const categoryHubs: Record<string, string> = {
   'Financial Calculators': '/financial-calculators',
   'Health & Fitness': '/health-fitness-calculators',
   'Math Calculators': '/math-calculators',
+  'Legal Estimators': '/legal-estimators',
   'Other': '/other-calculators',
 };
 
@@ -330,6 +346,7 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Financial Calculators',
     'Health & Fitness',
     'Math Calculators',
+    'Legal Estimators',
     'Other',
     'Company',
     'Legal',
