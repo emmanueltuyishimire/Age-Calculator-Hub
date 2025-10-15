@@ -49,7 +49,7 @@ const articleSchema = {
     "datePublished": article?.publishedDate,
     "author": {
         "@type": "Organization",
-        "name": "Age Calculator Hub"
+        "name": "Calculator Hub"
     }
 };
 
