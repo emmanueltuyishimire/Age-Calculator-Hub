@@ -28,6 +28,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
 const formSchema = z.object({
+  parent1Name: z.string().default('Parent 1'),
+  parent2Name: z.string().default('Parent 2'),
   parent1Income: z.coerce.number().min(0, "Income cannot be negative."),
   parent2Income: z.coerce.number().min(0, "Income cannot be negative."),
   numChildren: z.coerce.number().min(1, "Must be at least 1 child.").max(10),
@@ -57,6 +59,8 @@ export default function ChildSupportEstimator() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      parent1Name: 'Parent 1',
+      parent2Name: 'Parent 2',
       parent1Income: undefined,
       parent2Income: undefined,
       numChildren: 1,
@@ -65,7 +69,7 @@ export default function ChildSupportEstimator() {
   });
 
   function onSubmit(values: FormData) {
-    const { parent1Income, parent2Income, numChildren, custody } = values;
+    const { parent1Income, parent2Income, numChildren, custody, parent1Name, parent2Name } = values;
 
     const combinedIncome = parent1Income + parent2Income;
     if (combinedIncome === 0) {
@@ -79,14 +83,17 @@ export default function ChildSupportEstimator() {
     const parent1Proportion = parent1Income / combinedIncome;
     const parent2Proportion = parent2Income / combinedIncome;
 
+    const p1Name = parent1Name || 'Parent 1';
+    const p2Name = parent2Name || 'Parent 2';
+
     let payingParent, receivingParent, estimatedSupport;
     if (custody === 'parent2') { // Parent 2 is custodial, Parent 1 pays
-      payingParent = "Parent 1";
-      receivingParent = "Parent 2";
+      payingParent = p1Name;
+      receivingParent = p2Name;
       estimatedSupport = basicObligation * parent1Proportion;
     } else { // Parent 1 is custodial, Parent 2 pays
-      payingParent = "Parent 2";
-      receivingParent = "Parent 1";
+      payingParent = p2Name;
+      receivingParent = p1Name;
       estimatedSupport = basicObligation * parent2Proportion;
     }
 
@@ -99,6 +106,8 @@ export default function ChildSupportEstimator() {
 
   function handleReset() {
     form.reset({
+      parent1Name: 'Parent 1',
+      parent2Name: 'Parent 2',
       parent1Income: undefined,
       parent2Income: undefined,
       numChildren: 1,
@@ -106,6 +115,9 @@ export default function ChildSupportEstimator() {
     });
     setResult(null);
   }
+
+  const parent1NameValue = form.watch('parent1Name') || 'Parent 1';
+  const parent2NameValue = form.watch('parent2Name') || 'Parent 2';
 
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg animate-fade-in">
@@ -117,10 +129,28 @@ export default function ChildSupportEstimator() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField control={form.control} name="parent1Income" render={({ field }) => (<FormItem><FormLabel>Parent 1 Gross Monthly Income</FormLabel><FormControl><Input type="number" placeholder="e.g., 5000" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormField control={form.control} name="parent2Income" render={({ field }) => (<FormItem><FormLabel>Parent 2 Gross Monthly Income</FormLabel><FormControl><Input type="number" placeholder="e.g., 3000" {...field} /></FormControl><FormMessage /></FormItem>)} />
+               <FormField control={form.control} name="parent1Name" render={({ field }) => (<FormItem><FormLabel>Parent 1 Name</FormLabel><FormControl><Input placeholder="e.g., Alex" {...field} /></FormControl><FormMessage /></FormItem>)} />
+               <FormField control={form.control} name="parent2Name" render={({ field }) => (<FormItem><FormLabel>Parent 2 Name</FormLabel><FormControl><Input placeholder="e.g., Jordan" {...field} /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="parent1Income" render={({ field }) => (<FormItem><FormLabel>{parent1NameValue}'s Gross Monthly Income</FormLabel><FormControl><Input type="number" placeholder="e.g., 5000" {...field} /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="parent2Income" render={({ field }) => (<FormItem><FormLabel>{parent2NameValue}'s Gross Monthly Income</FormLabel><FormControl><Input type="number" placeholder="e.g., 3000" {...field} /></FormControl><FormMessage /></FormItem>)} />
               <FormField control={form.control} name="numChildren" render={({ field }) => (<FormItem><FormLabel>Number of Children</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormField control={form.control} name="custody" render={({ field }) => (<FormItem><FormLabel>Primary Custodial Parent</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="parent1">Parent 1</SelectItem><SelectItem value="parent2">Parent 2</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="custody" render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Primary Custodial Parent</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                        <SelectTrigger>
+                            <SelectValue />
+                        </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                        <SelectItem value="parent1">{parent1NameValue}</SelectItem>
+                        <SelectItem value="parent2">{parent2NameValue}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )} />
             </div>
             
             <div className="flex flex-col sm:flex-row gap-2 pt-2">
