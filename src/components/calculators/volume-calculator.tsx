@@ -20,9 +20,14 @@ const unitOptions = [
     { value: 'inches', label: 'inches' },
 ];
 
-const ShapeCalculatorCard = ({ title, children }: { title: string, children: React.ReactNode }) => (
+const ShapeCalculatorCard = ({ title, formula, children }: { title: string, formula: string, children: React.ReactNode }) => (
     <Card>
-        <CardHeader><CardTitle>{title}</CardTitle></CardHeader>
+        <CardHeader>
+            <CardTitle>{title}</CardTitle>
+            <p className="text-sm text-muted-foreground font-mono bg-muted p-2 rounded-md mt-2">
+                Formula: {formula}
+            </p>
+        </CardHeader>
         <CardContent>{children}</CardContent>
     </Card>
 );
@@ -70,7 +75,7 @@ const SphereCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Sphere Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Sphere Volume" formula="V = (4/3)πr³"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const ConeCalculator = () => {
@@ -111,7 +116,7 @@ const ConeCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Cone Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Cone Volume" formula="V = (1/3)πr²h"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const CubeCalculator = () => {
@@ -145,7 +150,7 @@ const CubeCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Cube Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Cube Volume" formula="V = a³"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const CylinderCalculator = () => {
@@ -188,7 +193,7 @@ const CylinderCalculator = () => {
         </svg>
     );
     
-    return <ShapeCalculatorCard title="Cylinder Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Cylinder Volume" formula="V = πr²h"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const RectangularTankCalculator = () => {
@@ -232,7 +237,7 @@ const RectangularTankCalculator = () => {
         </svg>
     );
     
-    return <ShapeCalculatorCard title="Rectangular Tank Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Rectangular Tank Volume" formula="V = lwh"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const CapsuleCalculator = () => {
@@ -277,7 +282,7 @@ const CapsuleCalculator = () => {
         </svg>
     );
     
-    return <ShapeCalculatorCard title="Capsule Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Capsule Volume" formula="V = πr²a + (4/3)πr³"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const SphericalCapCalculator = () => {
@@ -347,7 +352,7 @@ const SphericalCapCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Spherical Cap Volume (Provide 2 of 3 values)"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Spherical Cap Volume (Provide 2 of 3 values)" formula="V = (1/3)πh²(3R-h)"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const ConicalFrustumCalculator = () => {
@@ -394,7 +399,7 @@ const ConicalFrustumCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Conical Frustum Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Conical Frustum Volume" formula="V = (1/3)πh(r² + R² + rR)"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const EllipsoidCalculator = () => {
@@ -438,7 +443,7 @@ const EllipsoidCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Ellipsoid Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Ellipsoid Volume" formula="V = (4/3)πabc"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const SquarePyramidCalculator = () => {
@@ -479,7 +484,7 @@ const SquarePyramidCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Square Pyramid Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Square Pyramid Volume" formula="V = (1/3)a²h"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const TubeCalculator = () => {
@@ -530,7 +535,7 @@ const TubeCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Tube Volume"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Tube Volume" formula="V = π(r₁² - r₂²)l"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 
