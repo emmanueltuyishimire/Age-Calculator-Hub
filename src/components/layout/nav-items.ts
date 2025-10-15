@@ -213,13 +213,6 @@ export const navItems: NavItem[] = [
     category: 'Financial Planning',
     description: 'A hub for our financial planning and estimation tools.'
   },
-   {
-    href: '/child-support-calculator',
-    icon: Users,
-    label: 'Child Support Calculator',
-    category: 'Financial Planning',
-    description: 'Get a simple estimate of potential child support payments.'
-  },
   {
     href: '/life-insurance-calculator',
     icon: ShieldCheck,
@@ -317,6 +310,13 @@ export const navItems: NavItem[] = [
     label: 'Legal Estimators',
     category: 'Legal Estimators',
     description: 'A hub for our informational legal estimators.'
+  },
+  {
+    href: '/child-support-calculator',
+    icon: Users,
+    label: 'Child Support Calculator',
+    category: 'Legal Estimators',
+    description: 'Get a simple estimate of potential child support payments.'
   },
   {
     href: '/statute-of-limitations',
