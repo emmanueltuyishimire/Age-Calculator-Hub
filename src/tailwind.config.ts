@@ -18,8 +18,8 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        body: ['var(--font-pt-sans)'],
-        headline: ['var(--font-pt-sans)'],
+        sans: ['var(--font-pt-sans)', 'sans-serif'],
+        body: ['var(--font-pt-sans)', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',

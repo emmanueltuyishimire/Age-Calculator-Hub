@@ -243,7 +243,7 @@ export default function AgeCalculator() {
           
             <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 animate-fade-in">
               <div>
-                <h3 className="text-md sm:text-lg font-medium mb-2">Your Exact Age:</h3>
+                <h3 className="text-md sm:text-lg font-medium mb-2 text-muted-foreground">Your Exact Age:</h3>
                 <div className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2">
                   <div><span className="text-2xl sm:text-3xl font-bold text-primary">{age.years}</span> <span className="text-md sm:text-lg text-muted-foreground">years</span></div>
                   <div><span className="text-2xl sm:text-3xl font-bold text-primary">{age.months}</span> <span className="text-md sm:text-lg text-muted-foreground">months</span></div>
@@ -256,7 +256,7 @@ export default function AgeCalculator() {
                 </div>
               </div>
               <div>
-                 <h3 className="text-md sm:text-lg font-medium mb-2 mt-4">In Other Units:</h3>
+                 <h3 className="text-md sm:text-lg font-medium mb-2 mt-4 text-muted-foreground">In Other Units:</h3>
                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs sm:text-sm">
                     <p><span className='font-semibold'>{age.totalMonths.toLocaleString()}</span> months <span className='font-semibold'>{age.days}</span> days</p>
                     <p><span className='font-semibold'>{age.totalWeeks.toLocaleString()}</span> weeks <span className='font-semibold'>{age.days}</span> days</p>
