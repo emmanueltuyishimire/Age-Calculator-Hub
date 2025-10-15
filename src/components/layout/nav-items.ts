@@ -36,6 +36,7 @@ import {
   Target,
   Goal,
   Landmark,
+  PieChart,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -143,6 +144,13 @@ export const navItems: NavItem[] = [
     label: 'Health Assessments',
     category: 'Scientific & Health Age',
     description: 'Tools to assess various health-related age factors.'
+  },
+  {
+    href: '/macro-calculator',
+    icon: PieChart,
+    label: 'Macro Calculator',
+    category: 'Scientific & Health Age',
+    description: 'Get your daily protein, carb, and fat intake recommendations.'
   },
   {
     href: '/dog-age',
