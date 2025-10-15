@@ -1,8 +1,6 @@
-# See https://www.robotstxt.org/robotstxt.html for syntax and more information
 
+# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
-Disallow: /_next/
-Disallow: /api/
 
 Sitemap: https://innerpeacejournals.com/sitemap.xml

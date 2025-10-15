@@ -17,7 +17,7 @@ import { AlertCircle, RefreshCcw } from "lucide-react"
 import ShareButton from '../share-button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-type InputMode = "year" | "monthYear" | "full";
+type InputMode = "full" | "monthYear" | "year";
 
 interface AgeResult {
   years?: number;

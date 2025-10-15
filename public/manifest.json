@@ -1,7 +1,8 @@
+
 {
   "name": "Calculator Hub",
-  "short_name": "CalculatorHub",
-  "description": "Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.",
+  "short_name": "CalcHub",
+  "description": "A comprehensive suite of free, user-friendly calculators for age, health, and finance.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

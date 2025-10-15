@@ -188,7 +188,7 @@ export default function AgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/age-calculator" />
+        <RelatedCalculators currentCategory="Core Age Calculators" currentHref="/age-calculator" />
       </div>
     </div>
   );

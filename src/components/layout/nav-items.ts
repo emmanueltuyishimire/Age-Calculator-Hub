@@ -78,6 +78,49 @@ export const navItems: NavItem[] = [
     category: 'Navigation',
     description: 'Read our latest articles.'
   },
+  // Core Age Calculators
+  {
+    href: '/core-age-calculators',
+    icon: Clock,
+    label: 'Core Age Calculators',
+    category: 'Core Age Calculators',
+    description: 'A hub for chronological age and birthday tools.'
+  },
+   {
+    href: '/age-calculator',
+    icon: Calculator,
+    label: 'Age Calculator',
+    category: 'Core Age Calculators',
+    description: 'Calculates age from date of birth in years, months, and days.'
+  },
+  {
+    href: '/birthday-age-calculator',
+    icon: Cake,
+    label: 'Birthday Calculator',
+    category: 'Core Age Calculators',
+    description: 'Find your exact age and see a live countdown to your next birthday.'
+  },
+  {
+    href: '/age-calculator-by-year',
+    icon: CalendarIcon,
+    label: 'Age by Year Calculator',
+    category: 'Core Age Calculators',
+    description: 'Quickly estimate age by only entering the year of birth.'
+  },
+  {
+    href: '/age-calculator-by-date-of-birth',
+    icon: CalendarDays,
+    label: 'Online Age Calculator',
+    category: 'Core Age Calculators',
+    description: 'A real-time tool to find your age from your date of birth.'
+  },
+  {
+    href: '/how-old-is',
+    icon: HelpCircle,
+    label: 'How Old Is...?',
+    category: 'Core Age Calculators',
+    description: 'A quick age finder to determine how old someone is from their birth date.'
+  },
 
   // Financial Calculators
    {
@@ -146,13 +189,6 @@ export const navItems: NavItem[] = [
     description: 'A hub for all health, fitness, and scientific calculators.'
   },
   {
-    href: '/age-calculator',
-    icon: Calculator,
-    label: 'Age Calculator',
-    category: 'Health & Fitness',
-    description: 'Calculates age from date of birth in years, months, and days.'
-  },
-  {
     href: '/biological-age',
     icon: TestTube,
     label: 'Biological Age Calculator',
@@ -201,39 +237,48 @@ export const navItems: NavItem[] = [
     category: 'Health & Fitness',
     description: 'Estimate your body fat percentage using the U.S. Navy method.'
   },
+
+   // Pregnancy & Baby Calculators
+   {
+    href: '/pregnancy-calculators',
+    icon: Baby,
+    label: 'Pregnancy & Baby Calculators',
+    category: 'Pregnancy & Baby',
+    description: 'A hub for due date, ovulation, and baby age tracking tools.'
+  },
    {
     href: '/pregnancy-calculator',
     icon: CalendarHeart,
     label: 'Pregnancy Calculator',
-    category: 'Health & Fitness',
+    category: 'Pregnancy & Baby',
     description: 'Estimate your pregnancy week, due date, and conception date.'
   },
   {
     href: '/due-date-calculator',
     icon: CalendarCheck,
     label: 'Due Date Calculator',
-    category: 'Health & Fitness',
+    category: 'Pregnancy & Baby',
     description: 'Predict your baby\'s due date from LMP, conception, or IVF.'
   },
   {
     href: '/ovulation-calculator',
     icon: ClipboardList,
     label: 'Ovulation Calculator',
-    category: 'Health & Fitness',
+    category: 'Pregnancy & Baby',
     description: 'Predict your fertile window and ovulation day.'
   },
   {
     href: '/gestational-age',
     icon: FileHeart,
     label: 'Gestational Age Calculator',
-    category: 'Health & Fitness',
+    category: 'Pregnancy & Baby',
     description: 'Calculates pregnancy gestational age from last menstrual period or due date.'
   },
   {
     href: '/baby-age-calculator',
     icon: Baby,
     label: 'Baby Age Calculator',
-    category: 'Health & Fitness',
+    category: 'Pregnancy & Baby',
     description: 'Calculate your baby\'s age in weeks, months, and days.'
   },
   
@@ -354,6 +399,8 @@ export const navItems: NavItem[] = [
 const categoryHubs: Record<string, string> = {
   'Financial Calculators': '/financial-calculators',
   'Health & Fitness': '/health-fitness-calculators',
+  'Core Age Calculators': '/core-age-calculators',
+  'Pregnancy & Baby': '/pregnancy-calculators',
   'Math Calculators': '/math-calculators',
   'Legal Estimators': '/legal-estimators',
   'Other': '/other-calculators',
@@ -375,8 +422,10 @@ export const categorizedNavItems = (): NavCategory[] => {
   
   // Define the desired order
   const categoryOrder = [
-    'Financial Calculators',
+    'Core Age Calculators',
     'Health & Fitness',
+    'Pregnancy & Baby',
+    'Financial Calculators',
     'Math Calculators',
     'Legal Estimators',
     'Other',
