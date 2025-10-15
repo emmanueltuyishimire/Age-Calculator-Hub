@@ -47,6 +47,30 @@ const faqs = [
     }
 ];
 
+const terminologies = [
+    {
+        term: "Amortization",
+        definition: "The process of paying off a loan over time with regular, fixed payments. Each payment is split between covering the interest cost and reducing the principal balance."
+    },
+    {
+        term: "Principal",
+        definition: "The original amount of money you borrowed. Extra payments typically go directly toward reducing the principal, which is the key to paying off your loan faster."
+    },
+    {
+        term: "Interest",
+        definition: "The cost you pay for borrowing money, usually expressed as an annual percentage rate (APR). A portion of each monthly payment goes toward covering the interest accrued."
+    },
+    {
+        term: "Loan Term",
+        definition: "The length of time you have to repay your loan. For example, a standard mortgage might have a 30-year term, while a car loan might have a 5-year term."
+    },
+    {
+        term: "Extra Payment",
+        definition: "Any amount you pay that is above your required monthly payment. This money is usually applied directly to the principal, reducing the loan balance and saving you money on future interest."
+    }
+];
+
+
 const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -107,6 +131,18 @@ export default function LoanPayoffCalculatorPage() {
                         </ul>
                     </CardContent>
                 </Card>
+
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Key Loan Terms</h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        {terminologies.map((item, index) => (
+                             <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{item.term}</AccordionTrigger>
+                                <AccordionContent>{item.definition}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
                 
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
