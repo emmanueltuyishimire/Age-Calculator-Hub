@@ -31,6 +31,7 @@ import {
   Newspaper,
   Calendar as CalendarIcon,
   Zap,
+  HelpCircle,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -75,6 +76,13 @@ export const navItems: NavItem[] = [
     label: 'Age Calculator',
     category: 'Core Age Calculation',
     description: 'Calculates age from date of birth in years, months, and days.'
+  },
+  {
+    href: '/how-old-is',
+    icon: HelpCircle,
+    label: 'How Old Is...?',
+    category: 'Core Age Calculation',
+    description: 'Quickly find out how old someone is from their date of birth.'
   },
   {
     href: '/chronological-age-calculator',
@@ -290,5 +298,3 @@ export const categorizedNavItems = (): NavCategory[] => {
     };
   });
 };
-
-    
