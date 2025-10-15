@@ -170,6 +170,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate your body fat percentage using the U.S. Navy method.'
   },
   {
+    href: '/your-pets-first-year',
+    icon: PawPrint,
+    label: 'Your Pet\'s First Year',
+    category: 'Pet Age',
+    description: 'A guide to the crucial first 12 months for puppies and kittens.'
+  },
+  {
     href: '/dog-age',
     icon: Dog,
     label: 'Dog Age Calculator',
