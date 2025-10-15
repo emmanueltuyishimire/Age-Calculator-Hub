@@ -8,8 +8,9 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import Link from 'next/link';
+import { CheckCircle2 } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Percentage Calculator – Find Percentages, Differences & Changes',
@@ -74,6 +75,33 @@ export default function PercentageCalculatorPage() {
             <PercentageCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>How to Use the Percentage Calculators</CardTitle>
+                        <CardDescription>
+                            This page contains four distinct calculators. Here’s how each one works.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <div>
+                            <h3 className="font-semibold text-lg">1. Standard Percentage Calculator</h3>
+                            <p className="text-muted-foreground">This solves the equation "[P]% of [X] = [Y]". Fill in any two of the three fields to calculate the missing value. For example, to find 25% of 200, enter '25' in the first box, '200' in the second, leave the third blank, and click 'Calculate'.</p>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-lg">2. Percentage in Common Phrases</h3>
+                            <p className="text-muted-foreground">This tool lets you solve common percentage problems framed as everyday questions. Simply fill in the blanks for questions like "What is X% of Y?" or "X is what % of Y?" and click the question mark button to get the answer.</p>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-lg">3. Percentage Difference Calculator</h3>
+                            <p className="text-muted-foreground">Use this to find the percentage difference between two numbers. This calculation treats both numbers equally, so the order you enter them in doesn't matter. It's useful for comparing two data points without implying one is an 'original' value.</p>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-lg">4. Percentage Change Calculator</h3>
+                            <p className="text-muted-foreground">Use this to calculate the percentage increase or decrease from a starting value to an ending value. Enter the "From" (original) value and the "To" (new) value to see the change. The result will indicate whether it was an increase or a decrease.</p>
+                        </div>
+                    </CardContent>
+                </Card>
+
                 <Card>
                     <CardHeader>
                         <CardTitle>Learn More About Math & Finance</CardTitle>
