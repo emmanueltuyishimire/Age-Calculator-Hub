@@ -1,4 +1,3 @@
-
 import {
   Baby,
   Briefcase,
@@ -32,6 +31,7 @@ import {
   Calendar as CalendarIcon,
   Zap,
   HelpCircle,
+  PiggyBank,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -148,6 +148,13 @@ export const navItems: NavItem[] = [
     description: 'Find out how old your cat is in human years.'
   },
   {
+    href: '/life-insurance-calculator',
+    icon: PiggyBank,
+    label: 'Life Insurance Calculator',
+    category: 'Financial Planning',
+    description: 'Estimate how much life insurance coverage you really need.'
+  },
+  {
     href: '/retirement',
     icon: Briefcase,
     label: 'Retirement Age Calculator',
@@ -246,6 +253,7 @@ const categoryHubs: Record<string, string> = {
   'Scientific & Health Age': '/health-assessments',
   'Pet Age': '/pet-age-calculators',
   'Retirement & Social': '/retirement-calculators',
+  'Financial Planning': '/financial-planning',
 };
 
 
@@ -268,6 +276,7 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Pregnancy & Baby',
     'Scientific & Health Age',
     'Pet Age',
+    'Financial Planning',
     'Retirement & Social',
     'Company',
     'Legal',
