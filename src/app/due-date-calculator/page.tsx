@@ -93,7 +93,7 @@ export default function DueDateCalculatorPage() {
                     <CardHeader><CardTitle>How to Use the Due Date Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Choose a Calculation Method:</strong> Select the option that best fits your situation: Last Menstrual Period (LMP) is the most common, but Conception Date and IVF Date provide more precision if you know them.</li>
+                            <li><strong>Choose a Calculation Method:</strong> Select the option that best fits your situation: "Last Menstrual Period (LMP)" is the most common, but "Conception Date" and "IVF Date" provide more precision if you know them.</li>
                             <li><strong>Enter the Relevant Date:</strong> Use the date picker to provide the exact date based on your chosen method.</li>
                             <li><strong>Click “Calculate Due Date”:</strong> Instantly see your estimated delivery date, how far along you are, and which trimester you're in.</li>
                         </ol>

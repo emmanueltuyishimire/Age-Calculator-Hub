@@ -93,6 +93,17 @@ export default function SocialSecurityRetirementPage() {
             
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>How to Use the Calculator</CardTitle></CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Enter Your Birth Year:</strong> Input the 4-digit year you were born.</li>
+                            <li><strong>Click "Calculate":</strong> Press the button to get your results.</li>
+                            <li><strong>Review Your Retirement Details:</strong> The tool will show your Full Retirement Age (FRA) and the approximate reduction or increase in benefits for claiming early or delaying.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
+                <Card>
                     <CardHeader><CardTitle>How is Social Security Retirement Age Determined?</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">

@@ -112,7 +112,7 @@ export default function AgeCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Birth Date:</strong> Use the date picker to select your exact date of birth (Day, Month, Year).</li>
+                            <li><strong>Enter Your Birth Date:</strong> Use the input fields (DD, MM, YYYY) to enter your exact date of birth.</li>
                             <li><strong>Choose a Second Date (Optional):</strong> The "Age at the Date of" field defaults to today. You can change it to any other date—past, present, or future—to find the time interval between two dates.</li>
                             <li><strong>Click “Calculate Age”:</strong> Press the button to get your results instantly.</li>
                             <li><strong>See Your Exact Age:</strong> Instantly view your age broken down into years, months, and days. If the "Age at Date of" is set to today, you'll also see the hours, minutes, and seconds updating in real-time.</li>

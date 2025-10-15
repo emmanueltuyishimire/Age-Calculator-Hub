@@ -74,7 +74,7 @@ export default function PregnancyCalculatorPage() {
                     <CardHeader><CardTitle>How to Use the Pregnancy Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Last Menstrual Period (LMP):</strong> Select the first day of your last period from the calendar. This is the most crucial piece of information.</li>
+                            <li><strong>Enter Your Last Menstrual Period (LMP):</strong> Select the first day of your last period from the calendar input fields (DD, MM, YYYY). This is the most crucial piece of information.</li>
                             <li><strong>Adjust Cycle Length (Optional):</strong> The calculator defaults to a 28-day cycle, which is the average. If your cycle is consistently longer or shorter, adjust this number for better accuracy.</li>
                             <li><strong>Click “Calculate”:</strong> Get your personalized pregnancy timeline instantly.</li>
                         </ol>

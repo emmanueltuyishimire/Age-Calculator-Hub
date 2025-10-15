@@ -89,8 +89,8 @@ export default function RetirementPage() {
                     <CardHeader><CardTitle>How to Use the Retirement Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Date of Birth:</strong> Provide your exact birth date to get the most accurate retirement age calculation based on SSA rules.</li>
-                            <li><strong>Calculate Your Full Retirement Age:</strong> Click the button to instantly see the age at which you are eligible for full Social Security benefits.</li>
+                            <li><strong>Enter Your Date of Birth:</strong> Provide your exact birth date using the DD, MM, and YYYY fields to get the most accurate retirement age calculation based on SSA rules.</li>
+                            <li><strong>Click "Calculate Retirement Age":</strong> Press the button to instantly see the age at which you are eligible for full Social Security benefits.</li>
                             <li><strong>Review Your Retirement Options:</strong> The results will clearly show your full retirement age, the date you become eligible, and how your benefits are affected by retiring early (at 62) or delaying (until 70).</li>
                         </ol>
                     </CardContent>

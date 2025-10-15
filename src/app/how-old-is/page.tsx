@@ -80,6 +80,7 @@ export default function HowOldIsPage() {
                             <li><strong>Year Only:</strong> Perfect for a quick estimate. Just enter the 4-digit birth year for a ballpark age.</li>
                             <li><strong>Month & Year:</strong> More precise. Enter the birth month and year for a closer approximation.</li>
                             <li><strong>Full Date:</strong> The most accurate. Enter the complete date of birth (Day, Month, Year) for the exact age.</li>
+                            <li><strong>Click "Find Out":</strong> Press the button to see the result framed as a direct answer to your question.</li>
                         </ol>
                     </CardContent>
                 </Card>

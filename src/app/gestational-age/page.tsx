@@ -110,7 +110,7 @@ export default function GestationalAgePage() {
                     <CardHeader><CardTitle>How to Use the Gestational Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Last Menstrual Period (LMP):</strong> Use the input fields to provide the first day of your last period (Day, Month, Year).</li>
+                            <li><strong>Enter Your Last Menstrual Period (LMP):</strong> Use the input fields (DD, MM, YYYY) to provide the first day of your last period.</li>
                             <li><strong>Click “Calculate Gestational Age”:</strong> Press the button to get your results instantly.</li>
                             <li><strong>See Your Results:</strong> The calculator will show your estimated gestational age in weeks and days, your current trimester, your estimated due date, and a key development milestone for your current week.</li>
                         </ol>

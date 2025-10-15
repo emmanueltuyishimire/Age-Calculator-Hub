@@ -77,8 +77,8 @@ export default function BirthdayAgeCalculatorPage() {
                     <CardHeader><CardTitle>How to Use the Birthday Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Input Your Birth Date:</strong> Use the easy-to-navigate calendar to select your exact date of birth (Day, Month, Year).</li>
-                            <li><strong>Calculate Age in Real-Time:</strong> Click the "Calculate Age & Birthday" button.</li>
+                            <li><strong>Input Your Birth Date:</strong> Use the easy-to-navigate input fields (DD, MM, YYYY) to select your exact date of birth.</li>
+                            <li><strong>Click "Calculate Age & Birthday":</strong> Press the button to run the calculation.</li>
                             <li><strong>View Your Two Key Results:</strong>
                                 <ul className="list-disc list-inside pl-6 mt-2">
                                     <li><strong>Your Exact Age:</strong> Instantly see your current age, with the seconds ticking up live.</li>

@@ -93,6 +93,23 @@ export default function BabyAgeCalculatorPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>How to Use the Baby Age Calculator</CardTitle></CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Enter Your Baby's Date of Birth:</strong> Use the input fields (DD, MM, YYYY) to enter their exact birthday.</li>
+                            <li><strong>Click "Calculate Baby's Age":</strong> Press the button to get an instant result.</li>
+                            <li><strong>View the Results:</strong> The tool will show your baby's age in three useful formats:
+                                <ul className="list-disc list-inside pl-6 mt-2">
+                                    <li>Years, months, and days for a standard view.</li>
+                                    <li>Total weeks and days, which is common for newborns.</li>
+                                    <li>Total months and days.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
+                <Card>
                     <CardHeader><CardTitle>Why Use a Baby Age Calculator?</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">

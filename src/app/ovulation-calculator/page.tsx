@@ -70,9 +70,9 @@ export default function OvulationCalculatorPage() {
                     <CardHeader><CardTitle>How to Use the Ovulation Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter the First Day of Your Last Period:</strong> Use the date fields to input the start date of your last menstrual period.</li>
+                            <li><strong>Enter the First Day of Your Last Period:</strong> Use the date input fields (DD, MM, YYYY) to enter the start date of your last menstrual period.</li>
                             <li><strong>Enter Your Average Cycle Length:</strong> Provide the average number of days from the start of one period to the start of the next. The average is 28 days, but it can vary.</li>
-                            <li><strong>Click "Calculate":</strong> See your personalized fertility calendar instantly.</li>
+                            <li><strong>Click "Calculate Fertile Window":</strong> See your personalized fertility calendar instantly.</li>
                             <li><strong>Plan Accordingly:</strong> The results will show your estimated ovulation date and your most fertile days, helping you time intercourse to maximize your chances of conception.</li>
                         </ol>
                     </CardContent>

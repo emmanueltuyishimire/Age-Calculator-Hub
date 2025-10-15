@@ -90,6 +90,20 @@ export default function ChronologicalAgeCalculatorPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>How to Use the Chronological Age Calculator</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">
+                           Our tool uses a precise algorithm to give you an accurate result. Here’s a quick guide:
+                        </p>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-4">
+                            <li>Enter your full <strong>Date of Birth</strong> using the DD, MM, and YYYY fields.</li>
+                            <li>The <strong>Age at the Date of</strong> field is set to today by default, but you can change it to any past, present, or future date.</li>
+                            <li>Click "Calculate Your Age Now Online" to see the exact time interval between the two dates, presented as your chronological age.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
+                <Card>
                     <CardHeader><CardTitle>Understanding Chronological Age</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
@@ -98,20 +112,6 @@ export default function ChronologicalAgeCalculatorPage() {
                         <p className="text-muted-foreground mt-2">
                             Unlike <Link href="/biological-age" className="text-primary hover:underline">biological age</Link>, which reflects your body's health, chronological age is a simple, objective measure of time. Our calculator provides a precise measurement, breaking down your age into years, months, and days, and can even update in real-time to the second. For a deeper dive, read our <Link href="/articles/understanding-chronological-age" className="text-primary hover:underline">article on chronological age</Link>.
                         </p>
-                    </CardContent>
-                </Card>
-
-                 <Card>
-                    <CardHeader><CardTitle>How Our Calculator Works</CardTitle></CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">
-                           Our tool uses a precise algorithm to give you an accurate result. Here’s a quick guide:
-                        </p>
-                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-4">
-                            <li>Enter your full <strong>Date of Birth</strong>.</li>
-                            <li>The <strong>Age at the Date of</strong> field is set to today by default, but you can change it to any date.</li>
-                            <li>Click "Calculate" to see the exact time interval between the two dates, presented as your chronological age.</li>
-                        </ol>
                     </CardContent>
                 </Card>
 
