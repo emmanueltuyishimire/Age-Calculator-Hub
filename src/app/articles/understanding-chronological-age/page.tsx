@@ -19,6 +19,18 @@ export function generateMetadata(): Metadata {
     alternates: {
         canonical: `/articles/${article.slug}`,
     },
+    openGraph: {
+        title: article.title,
+        description: article.description,
+        type: 'article',
+        publishedTime: article.publishedDate,
+        url: `/articles/${article.slug}`,
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: article.title,
+        description: article.description,
+    },
   };
 }
 
@@ -49,11 +61,11 @@ const articleSchema = {
     "datePublished": article?.publishedDate,
     "author": {
         "@type": "Organization",
-        "name": "Age Calculator Hub"
+        "name": "Calculator Hub"
     },
     "publisher": {
         "@type": "Organization",
-        "name": "Age Calculator Hub",
+        "name": "Calculator Hub",
         "logo": {
             "@type": "ImageObject",
             "url": "https://innerpeacejournals.com/logo.png"
@@ -182,5 +194,3 @@ export default function ChronologicalAgeArticlePage() {
     </div>
   );
 }
-
-  

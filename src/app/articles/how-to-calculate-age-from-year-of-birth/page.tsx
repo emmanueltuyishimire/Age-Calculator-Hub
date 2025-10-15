@@ -54,11 +54,11 @@ const articleSchema = {
     "datePublished": article?.publishedDate,
     "author": {
         "@type": "Organization",
-        "name": "Age Calculator Hub"
+        "name": "Calculator Hub"
     },
     "publisher": {
         "@type": "Organization",
-        "name": "Age Calculator Hub",
+        "name": "Calculator Hub",
         "logo": {
             "@type": "ImageObject",
             "url": "https://innerpeacejournals.com/logo.png"

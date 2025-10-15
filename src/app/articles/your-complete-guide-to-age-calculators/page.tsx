@@ -15,7 +15,7 @@ export function generateMetadata(): Metadata {
     return {};
   }
   return {
-    title: 'Your Complete Guide to Age Calculator Hub',
+    title: 'Your Complete Guide to Calculator Hub',
     description: article.description,
     alternates: {
         canonical: `/articles/${article.slug}`,
@@ -62,11 +62,11 @@ export default function AgeCalculatorAppArticle() {
     "datePublished": article.publishedDate,
     "author": {
         "@type": "Organization",
-        "name": "Age Calculator Hub"
+        "name": "Calculator Hub"
     },
     "publisher": {
         "@type": "Organization",
-        "name": "Age Calculator Hub",
+        "name": "Calculator Hub",
         "logo": {
             "@type": "ImageObject",
             "url": "https://innerpeacejournals.com/logo.png"
@@ -108,7 +108,7 @@ const faqSchema = {
           </div>
 
           <p className="lead">
-            Welcome to the ultimate hub for all things age-related. Age Calculator Hub is more than just a single tool; it's a comprehensive suite of free, specialized online calculators designed to answer any question you might have about age, time, and life's milestones. Whether you need your exact age down to the second, are curious about your body's "true" biological age, planning for retirement, or even converting your pet's age to human years, you've come to the right place.
+            Welcome to the ultimate hub for all things age-related. Calculator Hub is more than just a single tool; it's a comprehensive suite of free, specialized online calculators designed to answer any question you might have about age, time, and life's milestones. Whether you need your exact age down to the second, are curious about your body's "true" biological age, planning for retirement, or even converting your pet's age to human years, you've come to the right place.
           </p>
 
           <div className="my-10 text-center">
@@ -201,7 +201,7 @@ const faqSchema = {
 
           <Card className="my-12 bg-muted border-l-4 border-primary">
             <CardHeader>
-                <CardTitle>Why Use Age Calculator Hub?</CardTitle>
+                <CardTitle>Why Use Calculator Hub?</CardTitle>
                 <CardDescription>Our Commitment to You</CardDescription>
             </CardHeader>
             <CardContent>
@@ -215,7 +215,7 @@ const faqSchema = {
           </Card>
 
           <p>
-            Our mission is to be the single, most trustworthy destination for anyone needing to calculate age in any context. Explore the calculators, read our in-depth articles, and empower yourself with knowledge. Thank you for choosing Age Calculator Hub!
+            Our mission is to be the single, most trustworthy destination for anyone needing to calculate age in any context. Explore the calculators, read our in-depth articles, and empower yourself with knowledge. Thank you for choosing Calculator Hub!
           </p>
 
             <h2 className="text-3xl font-bold text-center mt-12 mb-6">Frequently Asked Questions</h2>

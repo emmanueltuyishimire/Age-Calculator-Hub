@@ -1,7 +1,6 @@
+# Calculator Hub - A Comprehensive Next.js Application
 
-# Age Calculator Hub - A Comprehensive Next.js Application
-
-Welcome to the Age Calculator Hub, a full-featured web application built with Next.js and Firebase Studio. This project provides a wide array of free, accurate, and user-friendly age-related calculators, designed to be fast, accessible, and SEO-optimized.
+Welcome to the Calculator Hub, a full-featured web application built with Next.js and Firebase Studio. This project provides a wide array of free, accurate, and user-friendly age-related calculators, designed to be fast, accessible, and SEO-optimized.
 
 ## ✨ Features
 

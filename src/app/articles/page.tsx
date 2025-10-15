@@ -4,7 +4,7 @@ import ArticleList from '@/components/layout/article-list';
 import { articles } from '@/lib/articles';
 
 export const metadata: Metadata = {
-    title: 'Articles – Age Calculator Hub',
+    title: 'Articles – Calculator Hub',
     description: 'Read our collection of articles about age, health, wellness, and financial planning. Stay informed with our expert insights and tips.',
     alternates: {
         canonical: '/articles',

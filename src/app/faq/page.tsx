@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
-    title: 'Frequently Asked Questions – Age Calculator Hub',
+    title: 'Frequently Asked Questions – Calculator Hub',
     description: 'Find answers to common questions about our online age calculators, including how they work, their accuracy, and how to use them for various purposes.',
     alternates: {
         canonical: '/faq',
