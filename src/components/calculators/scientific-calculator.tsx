@@ -9,25 +9,17 @@ import { cn } from '@/lib/utils';
 import { Trash2 } from 'lucide-react';
 import { evaluate } from 'mathjs';
 
-const scientificButtons = [
-    [<span key="sin-1">sin<sup>-1</sup></span>, <span key="cos-1">cos<sup>-1</sup></span>, <span key="tan-1">tan<sup>-1</sup></span>],
-    ['ln', 'log', 'n!'],
-    ['π', 'e', '%'],
-    ['Ans', 'M+', 'M-'],
-    [<span key="y√x"><sup>y</sup>√x</span>, <span key="3√x"><sup>3</sup>√x</span>, '√'],
-    [<span key="x^y">x<sup>y</sup></span>, <span key="x^3">x<sup>3</sup></span>, <span key="x^2">x<sup>2</sup></span>],
-];
-
-const basicButtons = [
-    'AC', '(', ')',
-    '7', '8', '9',
-    '4', '5', '6',
-    '1', '2', '3',
-    '0', '.', '±',
-];
-
-const operatorButtons = [
-    <Trash2 key="backspace" />, '÷', '×', '−', '+', '=',
+const scientificButtonRows = [
+    ['sin', 'cos', 'tan', 'DegRad'],
+    [<span>sin<sup>-1</sup></span>, <span>cos<sup>-1</sup></span>, <span>tan<sup>-1</sup></span>, 'π', 'e'],
+    [<span>x<sup>y</sup></span>, <span>x<sup>3</sup></span>, <span>x<sup>2</sup></span>, <span>e<sup>x</sup></span>, <span>10<sup>x</sup></span>],
+    [<span><sup>y</sup>√x</span>, <span><sup>3</sup>√x</span>, '√', 'ln', 'log'],
+    ['(', ')', '1/x', '%', 'n!'],
+    ['7', '8', '9', '+', <Trash2 key="backspace" />],
+    ['4', '5', '6', '−', 'Ans'],
+    ['1', '2', '3', '×', 'M+'],
+    ['0', '.', 'EXP', '÷', 'M-'],
+    ['±', 'RND', 'AC', '=', 'MR'],
 ];
 
 const factorial = (n: number): number => {
@@ -48,19 +40,6 @@ const ScientificCalculator = () => {
     const [ans, setAns] = useState(0);
     const [expression, setExpression] = useState('');
     const [isResult, setIsResult] = useState(false);
-
-    const renderButtonWithIndicator = (label: 'Deg' | 'Rad') => (
-        <Button
-            variant={isDeg === (label === 'Deg') ? 'default' : 'outline'}
-            className={cn(
-                "h-10 text-xs p-1 relative w-full",
-                isDeg === (label === 'Deg') && "bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
-            )}
-            onClick={() => setIsDeg(label === 'Deg')}
-        >
-             {label}
-        </Button>
-    );
 
     const calculate = useCallback(() => {
         try {
@@ -86,7 +65,8 @@ const ScientificCalculator = () => {
                 log: (x:number) => Math.log10(x),
                 ln: (x:number) => Math.log(x),
                 nthRoot: nthRoot,
-                factorial: factorial
+                factorial: factorial,
+                RND: Math.random()
             };
 
             const result = evaluate(finalExpression, scope);
@@ -117,7 +97,7 @@ const ScientificCalculator = () => {
           setExpression('');
         }
 
-        if (isResult && !['+', '−', '×', '÷', '^', '%'].includes(value) && value !== '=') {
+        if (isResult && !['+', '−', '×', '÷', '^', '%', '=', 'M+', 'M-'].includes(value)) {
             setExpression('');
             setIsResult(false);
         } else {
@@ -125,71 +105,56 @@ const ScientificCalculator = () => {
         }
         
         switch (value) {
-            case 'AC':
-                setExpression('');
-                setMemory(0);
-                break;
-            case 'backspace':
-                setExpression(prev => prev.slice(0, -1));
-                break;
-            case '=':
-                calculate();
-                break;
+            case 'AC': setExpression(''); setMemory(0); break;
+            case 'backspace': setExpression(prev => prev.slice(0, -1)); break;
+            case '=': calculate(); break;
             case 'sin': case 'cos': case 'tan': case 'log': case 'ln': case '√':
                 setExpression(prev => prev + value + '(');
                 break;
             case 'sin-1': setExpression(prev => prev + 'asin('); break;
             case 'cos-1': setExpression(prev => prev + 'acos('); break;
             case 'tan-1': setExpression(prev => prev + 'atan('); break;
-            case '1/x':
-                setExpression(prev => `1/(${prev || '0'})`);
-                break;
-            case 'n!':
-                setExpression(prev => `(${prev || '0'})!`);
-                break;
-            case 'π':
-                setExpression(prev => prev + 'pi');
-                break;
-            case 'e':
-                setExpression(prev => prev + 'e');
-                break;
-             case 'x^y':
-                setExpression(prev => prev + '^');
-                break;
-            case 'x^2':
-                setExpression(prev => `(${prev || '0'})^2`);
-                break;
-            case 'x^3':
-                setExpression(prev => `(${prev || '0'})^3`);
-                break;
+            case '1/x': setExpression(prev => `1/(${prev || '0'})`); break;
+            case 'n!': setExpression(prev => `(${prev || '0'})!`); break;
+            case 'π': setExpression(prev => prev + 'pi'); break;
+            case 'e': setExpression(prev => prev + 'e'); break;
+            case 'x^y': setExpression(prev => prev + '^'); break;
+            case 'x^2': setExpression(prev => `(${prev || '0'})^2`); break;
+            case 'x^3': setExpression(prev => `(${prev || '0'})^3`); break;
+            case 'e^x': setExpression(prev => `e^(${prev || '0'})`); break;
+            case '10^x': setExpression(prev => `10^(${prev || '0'})`); break;
             case 'y√x': setExpression(prev => prev + ' nthRoot('); break;
             case '3√x': setExpression(prev => prev + 'cbrt('); break;
-            case 'Ans':
-                setExpression(prev => prev + ans.toString());
-                break;
+            case 'Ans': setExpression(prev => prev + ans.toString()); break;
             case 'M+':
                 try { 
                     const currentValue = evaluate(expression || display);
                     setMemory(mem => mem + currentValue);
                 } catch { setDisplay('Error'); setExpression(''); }
+                setIsResult(true);
                 break;
             case 'M-':
                 try { 
                     const currentValue = evaluate(expression || display);
                     setMemory(mem => mem - currentValue);
                 } catch { setDisplay('Error'); setExpression(''); }
+                setIsResult(true);
                 break;
-            case 'MR':
-                setExpression(prev => prev + memory.toString());
-                break;
+            case 'MR': setExpression(prev => prev + memory.toString()); break;
             case '±':
                 setExpression(prev => {
                     if (prev.startsWith('-(') && prev.endsWith(')')) {
                         return prev.substring(2, prev.length -1);
                     }
-                    return `-(${prev})`
+                    if (prev.length > 0 && !isNaN(Number(prev))) {
+                         return String(Number(prev) * -1);
+                    }
+                    return `-(${prev})`;
                 });
                 break;
+            case 'DegRad': setIsDeg(prev => !prev); break;
+            case 'EXP': setExpression(prev => prev + 'e+'); break;
+            case 'RND': setExpression(prev => prev + Math.random().toPrecision(8)); break;
             default:
                 if (expression === '0' && value !== '.') {
                     setExpression(value);
@@ -258,84 +223,57 @@ const ScientificCalculator = () => {
      if (typeof btn === 'string') {
         value = btn;
     } else if (React.isValidElement(btn)) {
-        if (btn.type === Trash2 || btn.key === 'backspace') {
-            return 'secondary';
-        }
-        if (btn.key) {
-            value = String(btn.key);
-        }
+        if (btn.type === Trash2) return 'secondary';
+        if (btn.key) value = String(btn.key);
     }
     
-    if (['÷', '×', '−', '+'].includes(value)) return 'secondary';
+    if (['+', '−', '×', '÷'].includes(value)) return 'secondary';
     if (value === '=') return 'default';
     if (value === 'AC') return 'destructive';
-    if (['1','2','3','4','5','6','7','8','9','0','.','±','(',')'].includes(value)) return 'outline';
+    if (['Ans', 'M+', 'M-', 'MR'].includes(value)) return 'secondary';
+
     return 'outline';
   }
 
   return (
-    <div className="bg-card border rounded-lg p-2 w-full max-w-[640px] mx-auto shadow-lg">
+    <div className="bg-card border rounded-lg p-2 sm:p-4 w-full max-w-[480px] mx-auto shadow-lg">
       <Input
         type="text"
         value={display}
         readOnly
-        className="w-full h-16 text-3xl text-right mb-2 bg-muted"
+        className="w-full h-20 text-4xl text-right mb-2 bg-muted pr-4"
         aria-label="Calculator display"
       />
-      <div className="grid grid-cols-10 gap-1">
-        <div className="col-span-1 grid grid-rows-2 gap-1">
-            {renderButtonWithIndicator('Deg')}
-            {renderButtonWithIndicator('Rad')}
-        </div>
-        
-        {/* Scientific Functions */}
-        <div className="col-span-6 grid grid-cols-3 gap-1">
-           {scientificButtons.flat().map((btn, index) => {
-             let key: string | number;
-             if (typeof btn === 'string') { key = btn; } 
-             else if (React.isValidElement(btn)) { key = (btn.key as string) || index; } 
-             else { key = index; }
+      <div className="grid grid-cols-5 gap-1">
+        {scientificButtonRows.flat().map((btn, index) => {
+            let value: string;
+            let key: string | number;
+            
+            if (typeof btn === 'string') {
+                value = btn;
+                key = btn;
+            } else if (React.isValidElement(btn)) {
+                value = (btn.key as string) || `icon-${index}`;
+                key = value;
+            } else {
+                value = `btn-${index}`;
+                key = index;
+            }
+            
+            if(value === 'DegRad') {
+                return (
+                    <Button key="deg-rad-toggle" variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick('DegRad')}>
+                       {isDeg ? 'Deg' : 'Rad'}
+                    </Button>
+                )
+            }
+            
              return (
-              <Button key={`sci-${key}-${index}`} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>
+              <Button key={key} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>
                 {btn}
               </Button>
             );
           })}
-        </div>
-        
-        {/* Main Pad */}
-        <div className="col-span-3 grid grid-cols-3 gap-1">
-            {basicButtons.slice(0,3).map(btn => (
-                <Button key={`btn-${btn}`} variant={getVariant(btn)} className="h-10 text-lg" onClick={() => handleButtonClick(btn)}>{btn}</Button>
-            ))}
-            {basicButtons.slice(3,6).map(btn => (
-                <Button key={`btn-${btn}`} variant={getVariant(btn)} className="h-10 text-lg" onClick={() => handleButtonClick(btn)}>{btn}</Button>
-            ))}
-            {basicButtons.slice(6,9).map(btn => (
-                <Button key={`btn-${btn}`} variant={getVariant(btn)} className="h-10 text-lg" onClick={() => handleButtonClick(btn)}>{btn}</Button>
-            ))}
-             {basicButtons.slice(9,12).map(btn => (
-                <Button key={`btn-${btn}`} variant={getVariant(btn)} className="h-10 text-lg" onClick={() => handleButtonClick(btn)}>{btn}</Button>
-            ))}
-             {basicButtons.slice(12).map(btn => (
-                <Button key={`btn-${btn}`} variant={getVariant(btn)} className="h-10 text-lg" onClick={() => handleButtonClick(btn)}>{btn}</Button>
-            ))}
-        </div>
-
-        {/* Operators */}
-        <div className="col-span-1 grid grid-rows-6 gap-1">
-             {operatorButtons.map((btn, index) => {
-                let key: string | number;
-                 if (typeof btn === 'string') { key = btn; }
-                 else if (React.isValidElement(btn)) { key = (btn.key as string) || index; }
-                 else { key = index; }
-                return (
-                 <Button key={`op-${key}`} variant={getVariant(btn)} className="h-10 text-lg" onClick={() => handleButtonClick(btn)}>
-                    {btn}
-                </Button>
-             );
-            })}
-        </div>
       </div>
     </div>
   );
