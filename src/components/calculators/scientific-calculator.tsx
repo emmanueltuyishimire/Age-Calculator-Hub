@@ -235,16 +235,21 @@ const ScientificCalculator = () => {
     }, [expression]);
 
     const renderButtonWithIndicator = (btn: string, isActive: boolean) => (
-        <Button
-            key={`sci-${btn}`}
-            variant={getVariant(btn)}
-            className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1 relative")}
-            onClick={() => handleButtonClick(btn)}
-        >
-            {isActive && <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-green-500"></div>}
-            {btn}
-        </Button>
-    );
+      <Button
+          key={`sci-${btn}`}
+          variant={getVariant(btn)}
+          className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1 relative")}
+          onClick={() => handleButtonClick(btn)}
+      >
+          {isActive && (
+              <div className="absolute top-1 right-1 h-3 w-3 rounded-full border border-blue-500 flex items-center justify-center">
+                  <div className="h-1.5 w-1.5 rounded-full bg-green-500"></div>
+              </div>
+          )}
+          {btn}
+      </Button>
+  );
+
 
   return (
     <div className="bg-card border rounded-lg p-2 sm:p-3 w-full max-w-2xl shadow-lg">
@@ -256,19 +261,6 @@ const ScientificCalculator = () => {
         aria-label="Calculator display"
       />
       <div className="grid grid-cols-2 gap-2 sm:gap-3">
-        {/* Basic Calculator Part */}
-        <div className="grid grid-cols-4 gap-1 sm:gap-2">
-            {basicButtons.flat().map((btn, i) => (
-                <Button
-                    key={`basic-${i}`}
-                    variant={getVariant(btn)}
-                    className="h-10 sm:h-12 text-md sm:text-xl"
-                    onClick={() => handleButtonClick(btn)}
-                >
-                    {btn}
-                </Button>
-            ))}
-        </div>
         {/* Scientific Calculator Part */}
         <div className="grid grid-cols-5 gap-1 sm:gap-2">
             {scientificButtons.flat().map((btn) => {
@@ -289,6 +281,19 @@ const ScientificCalculator = () => {
                     </Button>
                 )
             })}
+        </div>
+        {/* Basic Calculator Part */}
+        <div className="grid grid-cols-4 gap-1 sm:gap-2">
+            {basicButtons.flat().map((btn, i) => (
+                <Button
+                    key={`basic-${i}`}
+                    variant={getVariant(btn)}
+                    className="h-10 sm:h-12 text-md sm:text-xl"
+                    onClick={() => handleButtonClick(btn)}
+                >
+                    {btn}
+                </Button>
+            ))}
         </div>
       </div>
     </div>
