@@ -74,11 +74,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ptSans.variable}`} suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"
-        />
-        <Script id="gtag-init">
+          id="gtag-init"
+          strategy="afterInteractive"
+        >
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -87,7 +88,13 @@ export default function RootLayout({
           `}
         </Script>
          <Script
-          async
+          id="gtag-js"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"
+        />
+         <Script
+          id="adsense"
+          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
           crossOrigin="anonymous"
         />
