@@ -29,7 +29,7 @@ export default function CalculatorHub() {
           </p>
         </div>
         
-        <div className="max-w-2xl mx-auto mb-16">
+        <div className="max-w-3xl mx-auto mb-16">
           <SearchBar />
         </div>
 

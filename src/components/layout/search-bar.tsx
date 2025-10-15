@@ -5,6 +5,7 @@ import * as React from "react"
 import {
   Calculator,
   File,
+  Search,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -64,13 +65,13 @@ export function SearchBar() {
       <Button
         variant="outline"
         className={cn(
-          "relative h-8 w-full justify-start rounded-[0.5rem] bg-background text-sm font-normal text-muted-foreground shadow-none sm:pr-12 md:w-40 lg:w-64"
+          "relative w-full h-14 justify-start rounded-lg bg-background text-lg text-muted-foreground shadow-sm hover:shadow-md transition-shadow"
         )}
         onClick={() => setOpen(true)}
       >
-        <span className="hidden lg:inline-flex">Search...</span>
-        <span className="inline-flex lg:hidden">Search...</span>
-        <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+        <Search className="h-5 w-5 mr-4" />
+        <span className="inline-flex">Search for a calculator or article...</span>
+        <kbd className="pointer-events-none absolute right-[0.5rem] top-[0.5rem] hidden h-6 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-[10px] font-medium opacity-100 sm:flex">
           <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
