@@ -50,17 +50,12 @@ const faqs = [
     }
 ];
 
-export default function AgeCalculatorAppArticle() {
-  if (!article) {
-    notFound();
-  }
-  
-  const articleSchema = {
+const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": 'Your Complete Guide to Calculator Hub',
-    "description": article.description,
-    "datePublished": article.publishedDate,
+    "headline": "Your Complete Guide to Calculator Hub",
+    "description": "Explore our all-in-one age calculator app. From chronological and biological age to pet age and retirement planning, find the perfect tool for every need in our comprehensive guide.",
+    "datePublished": "2024-10-20",
     "author": {
         "@type": "Organization",
         "name": "Calculator Hub"
@@ -88,6 +83,12 @@ const faqSchema = {
     }))
 };
 
+export default function AgeCalculatorAppArticle() {
+
+  if (!article) {
+    notFound();
+  }
+  
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">
