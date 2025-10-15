@@ -12,9 +12,10 @@ import { evaluate } from 'mathjs';
 const scientificButtons = [
   ['sin', 'cos', 'tan'],
   [<span key="sin-1">sin<sup>-1</sup></span>, <span key="cos-1">cos<sup>-1</sup></span>, <span key="tan-1">tan<sup>-1</sup></span>],
-  [<span key="xy">x<sup>y</sup></span>, <span key="x3">x<sup>3</sup></span>, <span key="x2">x<sup>2</sup></span>],
+  [<span key="x^y">x<sup>y</sup></span>, <span key="x^3">x<sup>3</sup></span>, <span key="x^2">x<sup>2</sup></span>],
   ['ln', 'log', '√'],
   ['(', ')', '%', 'n!'],
+  ['π', 'e', '1/x', '±'],
 ];
 
 const basicButtons = [
@@ -29,13 +30,11 @@ const getVariant = (btn: any) => {
   let btnStr = '';
   if (typeof btn === 'string') {
     btnStr = btn;
-  } else if (React.isValidElement(btn)) {
+  } else if (React.isValidElement(btn) && btn.key) {
       if (btn.key === 'back') {
         btnStr = 'Backspace';
-      } else if (Array.isArray(btn.props.children)) {
-        btnStr = btn.props.children.map((c: any) => (typeof c === 'string' ? c : c.key)).join('');
       } else {
-        btnStr = btn.props.children;
+        btnStr = btn.key;
       }
   }
 
@@ -105,16 +104,11 @@ const ScientificCalculator = () => {
         if (typeof btn === 'string') {
             value = btn;
         } else if (React.isValidElement(btn)) {
-            if (btn.key) value = btn.key;
-            else if (btn.props && btn.props.children) {
-                 if (Array.isArray(btn.props.children)) {
-                    value = btn.props.children.map((c: any) => typeof c === 'string' ? c : (c.props.children || '')).join('');
-                 } else {
-                    value = btn.props.children;
-                 }
-            } else if (btn.type === Trash2) {
+             if (btn.key) {
+                value = btn.key;
+             } else if (btn.type === Trash2) {
                 value = 'Backspace';
-            }
+             }
         }
         
         if (display === 'Error') {
@@ -139,8 +133,11 @@ const ScientificCalculator = () => {
             case '=':
                 calculate();
                 break;
-            case 'Deg/Rad':
-                setIsDeg(prev => !prev);
+            case 'Deg':
+                setIsDeg(true);
+                break;
+            case 'Rad':
+                setIsDeg(false);
                 break;
             case 'sin': case 'cos': case 'tan': case 'log': case 'ln': case '√':
                 setExpression(prev => prev + value + '(');
@@ -160,19 +157,19 @@ const ScientificCalculator = () => {
             case 'e':
                 setExpression(prev => prev + 'e');
                 break;
-             case 'xy':
+             case 'x^y':
                 setExpression(prev => prev + '^');
                 break;
-            case 'x2':
+            case 'x^2':
                 setExpression(prev => `(${prev || '0'})^2`);
                 break;
-            case 'x3':
+            case 'x^3':
                 setExpression(prev => `(${prev || '0'})^3`);
                 break;
-            case '10x':
+            case '10^x':
                  setExpression(prev => `10^(${prev || '0'})`);
                 break;
-            case 'ex':
+            case 'e^x':
                  setExpression(prev => `exp(${prev || '0'})`);
                 break;
             case 'Ans':
@@ -239,7 +236,7 @@ const ScientificCalculator = () => {
                 handleButtonClick('AC');
             } else if (key === '^') {
                 event.preventDefault();
-                handleButtonClick('xy');
+                handleButtonClick('x^y');
             }
         };
 
@@ -261,24 +258,8 @@ const ScientificCalculator = () => {
         }
     }, [expression]);
 
-  
-  const renderButtonWithIndicator = () => (
-    <Button
-      variant="outline"
-      className={cn("h-10 text-xs p-1 relative w-full")}
-      onClick={() => handleButtonClick('Deg/Rad')}
-    >
-      <span className={!isDeg ? "text-muted-foreground" : ""}>Deg</span>
-      <span className="mx-1">/</span>
-      <span className={isDeg ? "text-muted-foreground" : ""}>Rad</span>
-      <div className={cn("absolute top-1/2 -translate-y-1/2 h-4 w-4 rounded-full border-2 border-blue-500 flex items-center justify-center transition-all", isDeg ? 'left-1' : 'right-1')}>
-          <div className="h-1.5 w-1.5 rounded-full bg-green-500"></div>
-      </div>
-    </Button>
-  );
-
   return (
-    <div className="bg-card border rounded-lg p-2 w-full max-w-sm sm:max-w-md md:max-w-none mx-auto shadow-lg">
+    <div className="bg-card border rounded-lg p-2 w-full max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl mx-auto shadow-lg">
       <Input
         type="text"
         value={display}
@@ -286,11 +267,13 @@ const ScientificCalculator = () => {
         className="w-full h-16 text-3xl text-right mb-2 bg-muted"
         aria-label="Calculator display"
       />
-      <div className="grid grid-cols-4 md:grid-cols-7 gap-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
         {/* Scientific Functions */}
-        <div className="col-span-4 md:col-span-3 grid grid-cols-3 gap-1">
-          {renderButtonWithIndicator()}
-          {scientificButtons.flat().map((btn, index) => {
+        <div className="grid grid-cols-4 gap-1">
+          <Button variant={isDeg ? "secondary" : "outline"} className="h-10 text-xs p-1" onClick={() => handleButtonClick('Deg')}>Deg</Button>
+          <Button variant={!isDeg ? "secondary" : "outline"} className="h-10 text-xs p-1" onClick={() => handleButtonClick('Rad')}>Rad</Button>
+          <div className="col-span-2"></div>
+           {scientificButtons.flat().map((btn, index) => {
              let key: string | number;
              if (typeof btn === 'string') { key = btn; } 
              else if (React.isValidElement(btn)) { key = (btn.key as string) || index; } 
@@ -303,7 +286,7 @@ const ScientificCalculator = () => {
           })}
         </div>
         {/* Basic Functions */}
-        <div className="col-span-4 grid grid-cols-4 gap-1">
+        <div className="grid grid-cols-4 gap-1">
             {basicButtons.map((btn, index) => {
                 let key: string | number;
                 if (typeof btn === 'string') { key = btn; } 
@@ -325,3 +308,5 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
+
+    
