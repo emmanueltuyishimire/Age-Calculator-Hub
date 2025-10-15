@@ -25,7 +25,7 @@ export const articles: Article[] = [
   {
     slug: 'understanding-chronological-age',
     title: 'Understanding Chronological Age: More Than Just a Number',
-    description: 'Dive deep into what chronological age really means and how it has been perceived throughout history. Learn the difference between chronological, biological, and social age.',
+    description: 'Dive deep into what chronological age really means, how it differs from biological age, and why it remains a critical measure in our society. Learn the science behind calculating it accurately.',
     category: 'Core Concepts',
     publishedDate: '2024-10-15',
   },
@@ -71,4 +71,13 @@ export const articles: Article[] = [
     category: 'Pregnancy',
     publishedDate: '2024-10-08',
   },
+  {
+    slug: 'what-is-chronological-age',
+    title: 'What Is Chronological Age?',
+    description: 'This article defines chronological age and explains its importance as the most common measure of how long a person has been alive.',
+    category: 'Core Concepts',
+    publishedDate: '2024-10-21',
+  },
 ];
+
+  
