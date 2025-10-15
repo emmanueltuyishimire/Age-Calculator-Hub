@@ -13,8 +13,8 @@ import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Loan Payoff Calculator – Find Your Debt-Free Date',
-    description: 'Use our free Loan Payoff Calculator to find out when you’ll pay off your mortgage, car loan, or other debts. See your payoff date and the total interest you’ll pay.',
+    title: 'Loan Payoff Calculator – Mortgage, Auto & Amortization',
+    description: 'Use our free Loan Payoff Calculator to find your debt-free date for any amortizing loan, including mortgages or auto loans. See how extra payments can save you thousands in interest.',
     alternates: {
         canonical: '/loan-payoff-calculator',
     },
@@ -23,15 +23,19 @@ export const metadata: Metadata = {
 const faqs = [
     {
         question: "How can I pay off my loan faster?",
-        answer: "The best way to pay off a loan faster is to make extra payments. Even a small additional amount each month can significantly reduce your loan term and the total interest you pay. You can also try to refinance to a lower interest rate."
+        answer: "The best way to pay off a loan faster is to make extra payments. Even a small additional amount each month goes directly to the principal, which can significantly reduce your loan term and the total interest you pay. You can also try to refinance to a lower interest rate."
     },
     {
         question: "Does this calculator work for mortgages?",
-        answer: "Yes, this calculator is perfect for mortgages, car loans, personal loans, or any other type of amortizing loan with a fixed interest rate."
+        answer: "Yes, this calculator is perfect for fixed-rate mortgages, auto loans, personal loans, or any other type of amortizing loan. It helps you see your amortization schedule and payoff date."
+    },
+    {
+        question: "What is an amortizing loan?",
+        answer: "An amortizing loan is one where you make regular payments that cover both the principal and the interest. Over time, a larger portion of your payment goes toward the principal. Mortgages and car loans are common examples."
     },
     {
         question: "What if my monthly payment is too low?",
-        answer: "If your monthly payment doesn't cover the interest accrued each month, the loan balance will actually increase, and you will never pay it off. Our calculator will show an error if this is the case, signaling that you need to increase your payment."
+        answer: "If your monthly payment doesn't cover the interest accrued each month, your loan balance will actually increase, and you will never pay it off. Our calculator will alert you if this is the case, signaling that you need to increase your payment to become debt-free."
     },
     {
         question: "How is the total interest calculated?",
@@ -68,7 +72,7 @@ export default function LoanPayoffCalculatorPage() {
             <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Loan Payoff Calculator</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
-                    Find out exactly when you'll be debt-free. Enter your loan details to calculate your payoff date and see how much total interest you'll pay.
+                    Find out exactly when you'll be debt-free from your mortgage, auto loan, or personal loan. Enter your loan details to calculate your payoff date and see how much total interest you'll pay over the life of the loan.
                 </p>
             </div>
 
@@ -81,10 +85,10 @@ export default function LoanPayoffCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Loan Amount:</strong> Input the total amount you borrowed.</li>
+                            <li><strong>Enter Loan Amount:</strong> Input the total original amount you borrowed.</li>
                             <li><strong>Set Annual Interest Rate:</strong> Provide the annual percentage rate (APR) of your loan.</li>
-                            <li><strong>Enter Monthly Payment:</strong> Input the amount you pay towards your loan each month.</li>
-                            <li><strong>Click “Calculate Payoff”:</strong> Get an instant calculation of your loan payoff date and total interest paid.</li>
+                            <li><strong>Enter Monthly Payment:</strong> Input the amount you pay towards your loan each month, including principal and interest.</li>
+                            <li><strong>Click “Calculate Payoff”:</strong> Get an instant calculation of your loan payoff date and the total interest you will pay.</li>
                         </ol>
                     </CardContent>
                 </Card>
@@ -98,6 +102,7 @@ export default function LoanPayoffCalculatorPage() {
                         <ul className="space-y-3 mt-4">
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Reduce the Principal Faster:</strong> Extra payments go directly towards reducing the loan principal, which means less interest accrues each month.</span></li>
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Save Thousands in Interest:</strong> Shaving years off your loan term can save you a significant amount of money that would have otherwise gone to interest.</span></li>
+                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Achieve Financial Goals Sooner:</strong> Paying off debt frees up your cash flow, allowing you to focus on other goals, like saving for retirement. Use our <Link href="/retirement-savings-goal-calculator" className="text-primary hover:underline">Retirement Savings Goal Calculator</Link> to see how this impacts your future.</span></li>
                              <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Experiment with the Calculator:</strong> Try increasing your monthly payment in the calculator to see how much faster you can become debt-free and how much interest you'll save.</span></li>
                         </ul>
                     </CardContent>
