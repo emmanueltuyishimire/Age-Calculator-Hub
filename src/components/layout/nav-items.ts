@@ -141,16 +141,16 @@ export const navItems: NavItem[] = [
   {
     href: '/health-assessments',
     icon: Stethoscope,
-    label: 'Health Assessments',
+    label: 'Health Metric Calculators',
     category: 'Scientific & Health Age',
-    description: 'Tools to assess BMI, BMR, body fat, and other health factors.'
+    description: 'Tools to assess BMI, BMR, Body Fat, and other key health markers.'
   },
   {
     href: '/macro-calculator',
     icon: PieChart,
-    label: 'Macro Calculator',
+    label: 'Macronutrient Calculator',
     category: 'Scientific & Health Age',
-    description: 'Get your daily protein, carb, and fat intake recommendations.'
+    description: 'Get daily protein, carb, and fat intake recommendations.'
   },
   {
     href: '/dog-age',
@@ -354,5 +354,3 @@ export const categorizedNavItems = (): NavCategory[] => {
     };
   });
 };
-
-    
