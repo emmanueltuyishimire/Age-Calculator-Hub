@@ -19,12 +19,14 @@ const scientificButtons = [
 ];
 
 const basicButtons = [
-    ['AC', <Trash2 key="backspace" />, 'Ans', '÷'],
-    ['7', '8', '9', '×'],
-    ['4', '5', '6', '−'],
-    ['1', '2', '3', '+'],
-    ['0', '.', '±', '='],
+    ['AC', 'Ans'],
+    ['7', '8', '9'],
+    ['4', '5', '6'],
+    ['1', '2', '3'],
+    ['0', '.', '±'],
 ];
+
+const operatorButtons = ['÷', '×', '−', '+', '='];
 
 const memoryButtons = ['M+', 'M-', 'MR'];
 
@@ -160,8 +162,7 @@ const ScientificCalculator = () => {
                     return `-(${prev})`;
                 });
                 break;
-            case 'Deg': setIsDeg(true); break;
-            case 'Rad': setIsDeg(false); break;
+            case 'Deg/Rad': setIsDeg(prev => !prev); break;
             case 'EXP': setExpression(prev => prev + 'e+'); break;
             case 'RND': setExpression(prev => prev + Math.random().toPrecision(8)); break;
             default:
@@ -244,58 +245,47 @@ const ScientificCalculator = () => {
     return 'outline';
   }
 
-  const renderButtonWithIndicator = (btn: string) => {
-    const isActive = (btn === 'Deg' && isDeg) || (btn === 'Rad' && !isDeg);
-    return (
-      <Button
-        key={btn}
-        variant={isActive ? 'default' : 'outline'}
-        className={cn('h-10 text-xs p-1 flex-1', isActive && 'bg-green-600 hover:bg-green-700')}
-        onClick={() => handleButtonClick(btn)}
-      >
-        {btn}
-      </Button>
-    );
-  };
 
   return (
-    <div className="bg-muted border rounded-lg p-2 sm:p-4 w-full max-w-4xl mx-auto shadow-lg">
+    <div className="bg-slate-900 dark:bg-card border rounded-lg p-2 sm:p-4 w-full max-w-4xl mx-auto shadow-lg">
       <Input
         type="text"
         value={display}
         readOnly
-        className="w-full h-20 text-4xl text-right mb-2 bg-background pr-4"
+        className="w-full h-20 text-4xl text-right mb-2 bg-slate-800 dark:bg-background pr-4 text-primary-foreground border-slate-700 dark:border-border"
         aria-label="Calculator display"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         {/* Scientific Functions Panel */}
-        <div className="grid grid-cols-3 gap-1">
-            <div className="col-span-3 flex gap-1">
-                {renderButtonWithIndicator('Deg')}
-                {renderButtonWithIndicator('Rad')}
-            </div>
-             {scientificButtons.map((row, rowIndex) => (
-               row.map((btn, btnIndex) => {
-                 let value = typeof btn === 'string' ? btn : `btn-${rowIndex}-${btnIndex}`;
+        <div className="grid grid-cols-5 gap-1">
+            {scientificButtons[0].map(btn => (<Button key={String(btn)} variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>{btn}</Button>))}
+            <Button variant="outline" className="h-10 text-xs p-1 col-span-2" onClick={() => handleButtonClick('Deg/Rad')}>
+                {isDeg ? 'Deg' : 'Rad'}
+            </Button>
+             {scientificButtons.slice(1).flat().map((btn, index) => {
+                 let value = typeof btn === 'string' ? btn : `btn-s-${index}`;
                  return <Button key={value} variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>{btn}</Button>
-               })
-             ))}
+             })}
              {memoryButtons.map(btn => (
                   <Button key={btn} variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>{btn}</Button>
              ))}
+             <Button variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick('RND')}>RND</Button>
+             <Button variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick('EXP')}>EXP</Button>
         </div>
+
         {/* Basic Keypad Panel */}
-        <div className="grid grid-cols-4 gap-1">
-            {basicButtons.map(row => (
-                row.map(btn => {
-                    let value = typeof btn === 'string' ? btn : (btn.key || 'backspace');
-                    return (
-                        <Button key={value} variant={getVariant(btn)} className={cn("h-10 text-xs p-1 text-base", value === '0' && 'col-span-2')} onClick={() => handleButtonClick(btn)}>
-                            {btn}
-                        </Button>
-                    );
-                })
-            ))}
+        <div className="grid grid-cols-5 gap-1">
+          {basicButtons[0].map(btn => <Button key={String(btn)} variant={getVariant(btn)} className="h-10 text-xs p-1 text-base" onClick={() => handleButtonClick(btn)}>{btn}</Button>)}
+          <Button variant="outline" className="h-10 text-xs p-1 text-base" onClick={() => handleButtonClick('backspace')}><Trash2 /></Button>
+          {operatorButtons.slice(0, 3).map((op, i) => (
+            <React.Fragment key={op}>
+              {basicButtons[i + 1].map(btn => <Button key={String(btn)} variant="outline" className="h-10 text-xs p-1 text-base" onClick={() => handleButtonClick(btn)}>{btn}</Button>)}
+              <Button variant="secondary" className="h-10 text-xs p-1 text-base" onClick={() => handleButtonClick(op)}>{op}</Button>
+            </React.Fragment>
+          ))}
+          {basicButtons[4].map(btn => <Button key={String(btn)} variant="outline" className="h-10 text-xs p-1 text-base" onClick={() => handleButtonClick(btn)}>{btn}</Button>)}
+          <Button variant="secondary" className="h-10 text-xs p-1 text-base" onClick={() => handleButtonClick(operatorButtons[3])}>{operatorButtons[3]}</Button>
+          <Button variant="default" className="h-10 text-xs p-1 text-base col-span-2" onClick={() => handleButtonClick(operatorButtons[4])}>{operatorButtons[4]}</Button>
         </div>
       </div>
     </div>
@@ -303,3 +293,5 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
+
+    
