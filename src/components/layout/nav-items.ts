@@ -1,3 +1,4 @@
+
 import {
   Baby,
   Briefcase,
@@ -34,6 +35,7 @@ import {
   PiggyBank,
   Target,
   Goal,
+  Landmark,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -168,7 +170,14 @@ export const navItems: NavItem[] = [
     icon: Goal,
     label: 'Savings Goal Calculator',
     category: 'Financial Planning',
-    description: 'Find out how long it will take to reach any savings goal.'
+    description: 'Find out how much you need to save to reach your goal.'
+  },
+  {
+    href: '/loan-payoff-calculator',
+    icon: Landmark,
+    label: 'Loan Payoff Calculator',
+    category: 'Financial Planning',
+    description: 'Calculate how long it will take to pay off a loan.'
   },
   {
     href: '/retirement',
