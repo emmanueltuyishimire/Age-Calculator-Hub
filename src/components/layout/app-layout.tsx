@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { TopNav } from './top-nav';
 import { ThemeToggle } from './theme-toggle';
 import { Footer } from './footer';
-import { SearchBar } from './search-bar';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -23,7 +22,6 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
           
           <div className="flex flex-1 items-center justify-end space-x-2">
-            <SearchBar />
             <ThemeToggle />
           </div>
         </div>
