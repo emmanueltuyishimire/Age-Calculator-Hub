@@ -42,6 +42,7 @@ import {
   BookOpen,
   Hash,
   DollarSign,
+  Car,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -89,6 +90,13 @@ export const navItems: NavItem[] = [
     label: 'Mortgage Calculator',
     category: 'Financial Calculators',
     description: 'Estimate your monthly mortgage payment with PITI.'
+  },
+  {
+    href: '/auto-loan-calculator',
+    icon: Car,
+    label: 'Auto Loan Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate your monthly car payment and total loan cost.'
   },
   {
     href: '/life-insurance-calculator',
