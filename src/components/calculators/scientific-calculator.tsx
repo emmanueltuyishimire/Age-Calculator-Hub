@@ -260,10 +260,9 @@ const ScientificCalculator = () => {
         }
     }
     
-    if (['÷', '×', '−', '+'].includes(value)) return 'secondary';
-    if (value === '=') return 'default';
+    if (['÷', '×', '−', '+', '='].includes(value)) return 'secondary';
     if (value === 'AC') return 'destructive';
-    if (['1','2','3','4','5','6','7','8','9','0','.'].includes(value)) return 'outline';
+    if (['1','2','3','4','5','6','7','8','9','0','.','±'].includes(value)) return 'outline';
     return 'outline';
   }
 
@@ -290,7 +289,7 @@ const ScientificCalculator = () => {
              else if (React.isValidElement(btn)) { key = (btn.key as string) || index; } 
              else { key = index; }
              return (
-              <Button key={`sci-${key}-${index}`} variant="outline" className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>
+              <Button key={`sci-${key}-${index}`} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)}>
                 {btn}
               </Button>
             );
