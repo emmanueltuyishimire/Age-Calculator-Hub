@@ -17,12 +17,8 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
 
   // Filter out the current page and the main category hub page
   let relatedItems = category.items.filter(item => 
-    item.href !== currentHref
+    item.href !== currentHref && item.href !== category.href
   );
-  
-  if(category.href) {
-    relatedItems = relatedItems.filter(item => item.href !== category.href);
-  }
 
   if (relatedItems.length === 0) return null;
 

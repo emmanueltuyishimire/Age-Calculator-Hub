@@ -207,6 +207,22 @@ export const navItems: NavItem[] = [
     category: 'Fitness & Health Calculators',
     description: 'Calculate your baby\'s age in weeks, months, and days.'
   },
+  
+  // Retirement & Social Security
+  {
+    href: '/retirement-calculators',
+    icon: PiggyBank,
+    label: 'Retirement & Social Security',
+    category: 'Retirement & Social Security',
+    description: 'A hub for retirement planning and Social Security tools.'
+  },
+  {
+    href: '/social-security-retirement-age-calculator',
+    icon: PiggyBank,
+    label: 'Social Security Retirement Age',
+    category: 'Retirement & Social Security',
+    description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
+  },
 
   // Financial Calculators
    {
@@ -257,13 +273,6 @@ export const navItems: NavItem[] = [
     label: 'Loan Payoff Calculator',
     category: 'Financial Calculators',
     description: 'Calculate how long it will take to pay off a loan.'
-  },
-  {
-    href: '/social-security-retirement-age-calculator',
-    icon: PiggyBank,
-    label: 'Social Security Retirement Age',
-    category: 'Financial Calculators',
-    description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
   },
   
   // Math Calculators
@@ -377,6 +386,7 @@ const categoryHubs: Record<string, string> = {
   'Core Age Calculators': '/core-age-calculators',
   'Math Calculators': '/math-calculators',
   'Other Calculators': '/other-calculators',
+  'Retirement & Social Security': '/retirement-calculators',
 };
 
 
@@ -397,6 +407,7 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Navigation',
     'Core Age Calculators',
     'Financial Calculators',
+    'Retirement & Social Security',
     'Fitness & Health Calculators',
     'Math Calculators',
     'Other Calculators',
