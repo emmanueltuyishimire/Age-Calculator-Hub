@@ -18,31 +18,6 @@ const scientificButtons = [
     ['(', ')', '%', 'n!'],
 ];
 
-const basicButtons = [
-    'AC', <Trash2 key="back" />, '÷', '7', '8', '9',
-    '×', '4', '5', '6',
-    '−', '1', '2', '3',
-    '+', '0', '.', '=',
-];
-
-const getVariant = (btn: any) => {
-  let btnStr = '';
-  if (typeof btn === 'string') {
-    btnStr = btn;
-  } else if (React.isValidElement(btn) && btn.key) {
-      if (btn.key === 'back') {
-        btnStr = 'Backspace';
-      } else {
-        btnStr = btn.key;
-      }
-  }
-
-  if (['AC'].includes(btnStr) || btnStr === 'Backspace') return 'destructive';
-  if (['+', '−', '×', '÷', '='].includes(btnStr)) return 'secondary';
-  
-  return 'outline';
-};
-
 const factorial = (n: number): number => {
     if (n < 0 || n !== Math.floor(n)) return NaN;
     if (n > 170) return Infinity;
@@ -70,7 +45,7 @@ const ScientificCalculator = () => {
             onClick={() => setIsDeg(label === 'Deg')}
         >
             {isDeg === (label === 'Deg') && (
-                <div className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-blue-500 flex items-center justify-center">
+                 <div className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-blue-500 flex items-center justify-center">
                     <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
                 </div>
             )}
@@ -276,6 +251,24 @@ const ScientificCalculator = () => {
         }
     }, [expression]);
 
+  const renderButtons = (buttons: (string | React.ReactNode)[], getVariant: (btn: any) => "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined, className: string = 'h-10 text-lg') => {
+      return buttons.map((btn, index) => {
+          let key: string | number;
+          if (typeof btn === 'string') { key = btn; } 
+          else if (React.isValidElement(btn)) { key = (btn.key as string) || index; } 
+          else { key = index; }
+          
+          let colSpan = 'col-span-1';
+          if (btn === '0') colSpan = 'col-span-2';
+          
+          return (
+              <Button key={`btn-${key}-${index}`} variant={getVariant(btn)} className={cn(className, colSpan)} onClick={() => handleButtonClick(btn)}>
+                  {btn}
+              </Button>
+          )
+      });
+  }
+
   return (
     <div className="bg-card border rounded-lg p-2 w-full max-w-sm sm:max-w-md md:max-w-xl mx-auto shadow-lg">
       <Input
@@ -305,34 +298,19 @@ const ScientificCalculator = () => {
             );
           })}
         </div>
+
         {/* Basic Functions */}
         <div className="grid grid-cols-4 gap-1">
-            {['AC', <Trash2 key="back" />].map((btn, index) => (
-                <Button key={`special-${index}`} variant={getVariant(btn)} className="h-10 text-lg" onClick={() => handleButtonClick(btn)}>
-                    {btn}
-                </Button>
-            ))}
-            
-            <Button variant="secondary" className="h-10 text-lg" onClick={() => handleButtonClick('÷')}>÷</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('7')}>7</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('8')}>8</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('9')}>9</Button>
-
-            <Button variant="secondary" className="h-10 text-lg" onClick={() => handleButtonClick('×')}>×</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('4')}>4</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('5')}>5</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('6')}>6</Button>
-
-            <Button variant="secondary" className="h-10 text-lg" onClick={() => handleButtonClick('−')}>−</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('1')}>1</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('2')}>2</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('3')}>3</Button>
-
-            <Button variant="secondary" className="h-10 text-lg" onClick={() => handleButtonClick('+')}>+</Button>
-            <Button variant="default" className="h-10 text-lg col-span-2" onClick={() => handleButtonClick('0')}>0</Button>
-            <Button variant="default" className="h-10 text-lg" onClick={() => handleButtonClick('.')}>.</Button>
-            
-            <Button variant="secondary" className="h-10 text-lg col-start-4 row-start-5" onClick={() => handleButtonClick('=')}>=</Button>
+            {/* Number Pad */}
+            <div className="col-span-3 grid grid-cols-3 gap-1">
+                {renderButtons(['AC', '%', <Trash2 key="back" />], () => 'outline')}
+                {renderButtons(['7','8','9','4','5','6','1','2','3'], () => 'default')}
+                {renderButtons(['0', '.'], () => 'default')}
+            </div>
+            {/* Operators Column */}
+            <div className="col-span-1 grid grid-rows-5 gap-1">
+                {renderButtons(['÷', '×', '−', '+', '='], () => 'secondary')}
+            </div>
         </div>
       </div>
     </div>
