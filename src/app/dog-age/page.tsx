@@ -39,13 +39,17 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-    { question: "What is my age in dog years?", answer: "This is a fun way of asking what a dog's equivalent age is in human years. For example, if you are 36, that's roughly the 'human age' of a 5-year-old small dog. Our calculator does the reverse: converting your dog's age to a human equivalent." },
+    { question: "How do you calculate a dog's age?", answer: "Modern methods are more complex than the old 'multiply by 7' rule. A dog's first year is roughly equivalent to 15 human years. The second year adds about 9 years. After that, each year's equivalent in human years depends heavily on the dog's size, with larger dogs aging faster. Our calculator uses this science-based model." },
+    { question: "Is 1 dog year really 7 human years?", answer: "No, that’s an outdated and inaccurate myth. Dogs age very rapidly in their first two years and then the rate slows. Furthermore, aging varies dramatically by size. A 7-year-old small dog might be 44 in human years, while a 7-year-old giant breed could be closer to 62." },
+    { question: "Is a 1-year-old dog still a puppy?", answer: "A 1-year-old dog is generally considered a 'young adult,' equivalent to a 15-year-old human. While they may still have some puppy-like energy, they have reached physical maturity." },
+    { question: "When is a dog considered a senior?", answer: "It depends on the size. Giant breeds are often considered senior around age 6-7, large breeds around 7-8, medium breeds at 8-9, and small breeds enter their senior years around age 9 or 10. Knowing this helps you adjust their care, diet, and exercise." },
+    { question: "How old is a 10-year-old dog in human years?", answer: "A 10-year-old small dog is about 56 in human years. A medium dog is about 60, a large dog is about 75, and a giant breed is about 88. Use our calculator for a precise number." },
     { question: "How do I calculate the age of my mixed-breed dog?", answer: "This calculator is perfect for mixed-breed dogs. The most important factor for determining a dog's age in human years is its size, not its breed. Simply choose the size category (Small, Medium, Large, or Giant) that best fits your mixed-breed dog to get an accurate estimate." },
-    { question: "Why do large dogs age faster?", answer: "The leading theory is that the rapid growth of large breeds from puppy to adult puts significant strain on their bodies, leading to faster cellular aging and a higher incidence of age-related diseases like cancer and arthritis." },
-    { question: "Is the '1 dog year = 7 human years' rule accurate?", answer: "No, that’s an outdated myth. Modern veterinary research shows that dog aging is non-linear—they age very quickly in their first two years, and then the rate slows. Furthermore, aging varies dramatically by size." },
-    { question: "How old was the oldest dog?", answer: "The official record for the oldest dog ever is held by Bobi, a Rafeiro do Alentejo from Portugal, who lived to be 31 years and 165 days old. This is highly exceptional." },
-    { question: "When is a dog considered old or a senior?", answer: "Generally, giant breeds are considered 'senior' around age 6-7, large breeds around 7-8, medium breeds at 8-9, and small breeds enter their senior years around age 9 or 10. Knowing this helps you adjust their care accordingly." }
+    { question: "Why do large dogs age faster than humans?", answer: "The leading theory is that the rapid growth of large breeds from puppy to adult puts significant strain on their bodies, leading to faster cellular aging and a higher incidence of age-related diseases like cancer and arthritis." },
+    { question: "How long are dogs pregnant?", answer: "A dog's gestation period is much shorter than a human's, typically lasting about 63 days, or nine weeks." },
+    { question: "What was the oldest dog ever?", answer: "The official record for the oldest dog ever is held by Bobi, a Rafeiro do Alentejo from Portugal, who lived to be 31 years and 165 days old. This is highly exceptional and not typical for most breeds." }
 ];
+
 
 const faqSchema = {
     "@context": "https://schema.org",
@@ -72,11 +76,11 @@ const ageChart = [
 ];
 
 const lifeStages = [
-    { stage: "Puppy (0–1 year)", description: "This is a phase of rapid growth, learning, and socialization. Focus on high-quality puppy food, completing vaccinations, starting basic training, and positive exposure to new sights and sounds." },
-    { stage: "Young Adult (1–4 years)", description: "Your dog is energetic, has reached physical maturity, and is in its prime. Regular exercise, consistent training reinforcement, and yearly vet check-ups are key during this stage." },
-    { stage: "Mature (5–8 years)", description: "Energy levels may start to even out, and your dog is a full adult. It's important to monitor their weight to prevent obesity and watch for early signs of common issues like joint or dental problems." },
-    { stage: "Senior (9–12 years)", description: "Mobility, eyesight, or hearing may begin to decline. Prioritize their comfort, switch to twice-yearly vet visits for senior wellness checks, and adapt exercise to be more gentle (like swimming or shorter walks)." },
-    { stage: "Geriatric (13+ years)", description: "Older dogs need extra care and attention. Ensure they have a warm, comfortable resting place, easy access to food and water, and a diet formulated for their specific senior needs. Cherish this special time." },
+    { stage: "Puppy (0–1 year / ~0-15 human years)", description: "This is a phase of rapid growth, learning, and socialization. Focus on high-quality puppy food, completing vaccinations, starting basic training, and positive exposure to new sights and sounds." },
+    { stage: "Young Adult (1–4 years / ~15-40 human years)", description: "Your dog is energetic, has reached physical maturity, and is in its prime. Regular exercise, consistent training reinforcement, and yearly vet check-ups are key during this stage." },
+    { stage: "Mature (5–8 years / ~40-60 human years)", description: "Energy levels may start to even out, and your dog is a full adult. It's important to monitor their weight to prevent obesity and watch for early signs of common issues like joint or dental problems." },
+    { stage: "Senior (9–12 years / ~56-86 human years)", description: "Mobility, eyesight, or hearing may begin to decline. Prioritize their comfort, switch to twice-yearly vet visits for senior wellness checks, and adapt exercise to be more gentle (like swimming or shorter walks)." },
+    { stage: "Geriatric (13+ years / 80+ human years)", description: "Older dogs need extra care and attention. Ensure they have a warm, comfortable resting place, easy access to food and water, and a diet formulated for their specific senior needs. Cherish this special time." },
 ];
 
 export default function DogAgePage() {
@@ -102,7 +106,7 @@ export default function DogAgePage() {
                     <CardHeader><CardTitle>How to Use the Dog Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Dog's Age:</strong> Input your dog's current age in years.</li>
+                            <li><strong>Enter Your Dog's Age:</strong> Input your dog's current age in years and, for puppies, add months for better precision.</li>
                             <li><strong>Select Dog Size:</strong> This is the most important step for an accurate result. Since aging speed is tied to size, choose the category that best fits your dog, whether they are a purebred or a mixed-breed.</li>
                             <li><strong>Click “Calculate”:</strong> Get an instant conversion to human years, along with your dog's current life stage and a relevant care tip.</li>
                         </ol>

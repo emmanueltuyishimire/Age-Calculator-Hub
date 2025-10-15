@@ -33,7 +33,8 @@ import { RefreshCcw } from 'lucide-react';
 import ShareButton from '../share-button';
 
 const formSchema = z.object({
-  dogAge: z.coerce.number().min(0, "Age must be 0 or more").max(30, "Age seems too high!"),
+  dogAgeYears: z.coerce.number().min(0, "Years must be 0 or more").max(30, "Age seems too high!"),
+  dogAgeMonths: z.coerce.number().min(0).max(11).optional(),
   dogSize: z.enum(['small', 'medium', 'large', 'giant']),
 });
 
@@ -46,33 +47,35 @@ interface Result {
     tip: string;
 }
 
-const calculateDogAge = (age: number, size: DogSize): number => {
-    if (age <= 0) return 0;
-    // Using the 16 * ln(dogAge) + 31 formula for more nuanced calculation after year 1
-    if (age === 1) return 15;
-    
-    // Simplified table-based approach for consistency with the chart
-    const ageMap: Record<DogSize, number[]> = {
-        small: [0, 15, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76],
-        medium: [0, 15, 24, 28, 32, 42, 49, 56, 63, 70, 77, 84, 91, 98, 105, 112],
-        large: [0, 14, 22, 31, 40, 49, 58, 67, 76, 85, 94, 103, 112, 121, 130, 139],
-        giant: [0, 14, 20, 28, 37, 49, 61, 73, 85, 97, 109, 121, 133, 145, 157, 169],
-    };
+const calculateDogAge = (years: number, months: number = 0, size: DogSize): number => {
+    const totalMonths = years * 12 + months;
+    if (totalMonths <= 0) return 0;
 
-    if (age < ageMap[size].length) {
-        return ageMap[size][Math.floor(age)];
+    // First 2 years have a faster, more size-dependent progression
+    if (totalMonths <= 24) {
+        if (size === 'giant') {
+            if (totalMonths <= 12) return Math.round((totalMonths / 12) * 12);
+            return 12 + Math.round(((totalMonths - 12) / 12) * 8);
+        }
+        if (size === 'large') {
+             if (totalMonths <= 12) return Math.round((totalMonths / 12) * 14);
+            return 14 + Math.round(((totalMonths - 12) / 12) * 8);
+        }
+        // Small and Medium are similar for first 2 years
+        if (totalMonths <= 12) return Math.round((totalMonths / 12) * 15);
+        return 15 + Math.round(((totalMonths - 12) / 12) * 9);
     }
+    
+    // After 2 years, use a linear approximation per size
+    const ageAtTwoYears = calculateDogAge(2, 0, size);
+    const yearsAfterTwo = (totalMonths - 24) / 12;
 
-    // Fallback for older dogs
-    const lastKnownAge = ageMap[size][ageMap[size].length -1];
-    const yearsAfter = age - (ageMap[size].length - 1);
-    
-    let multiplier = 5;
-    if (size === 'medium') multiplier = 6;
+    let multiplier = 4; // Small
+    if (size === 'medium') multiplier = 5;
     if (size === 'large') multiplier = 7;
-    if (size === 'giant') multiplier = 8;
-    
-    return lastKnownAge + (yearsAfter * multiplier);
+    if (size === 'giant') multiplier = 9;
+
+    return Math.round(ageAtTwoYears + (yearsAfterTwo * multiplier));
 };
 
 const getLifeStageAndTip = (humanAge: number): { lifeStage: DogLifeStage, tip: string } => {
@@ -89,7 +92,8 @@ export default function DogAgeCalculator() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      dogAge: 1,
+      dogAgeYears: 1,
+      dogAgeMonths: 0,
       dogSize: 'medium',
     },
   });
@@ -109,13 +113,13 @@ export default function DogAgeCalculator() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     localStorage.setItem('dogAgeCalculator', JSON.stringify(values));
-    const humanAge = calculateDogAge(values.dogAge, values.dogSize as DogSize);
+    const humanAge = calculateDogAge(values.dogAgeYears, values.dogAgeMonths, values.dogSize as DogSize);
     const { lifeStage, tip } = getLifeStageAndTip(humanAge);
     setResult({ humanAge, lifeStage, tip });
   }
 
   function handleReset() {
-      form.reset({ dogAge: 0, dogSize: 'medium' });
+      form.reset({ dogAgeYears: 0, dogAgeMonths: 0, dogSize: 'medium' });
       setResult(null);
       localStorage.removeItem('dogAgeCalculator');
   }
@@ -130,25 +134,40 @@ export default function DogAgeCalculator() {
         <CardContent className="space-y-4">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="dogAge"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Your Dog's Age (years)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="e.g., 5" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+               <div className="flex gap-4">
+                <FormField
+                    control={form.control}
+                    name="dogAgeYears"
+                    render={({ field }) => (
+                    <FormItem className="w-1/2">
+                        <FormLabel>Years</FormLabel>
+                        <FormControl>
+                        <Input type="number" placeholder="e.g., 5" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="dogAgeMonths"
+                    render={({ field }) => (
+                    <FormItem className="w-1/2">
+                        <FormLabel>Months</FormLabel>
+                        <FormControl>
+                        <Input type="number" placeholder="e.g., 6" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                />
+              </div>
                <FormField
                   control={form.control}
                   name="dogSize"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Dog Size</FormLabel>
+                      <FormLabel>Dog Size (best estimate by weight)</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
@@ -156,10 +175,10 @@ export default function DogAgeCalculator() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="small">Small (up to 20 lbs)</SelectItem>
-                          <SelectItem value="medium">Medium (21-50 lbs)</SelectItem>
-                          <SelectItem value="large">Large (51-100 lbs)</SelectItem>
-                          <SelectItem value="giant">Giant (100+ lbs)</SelectItem>
+                          <SelectItem value="small">Small (up to 20 lbs / 9 kg)</SelectItem>
+                          <SelectItem value="medium">Medium (21-50 lbs / 9.5-23 kg)</SelectItem>
+                          <SelectItem value="large">Large (51-100 lbs / 23-45 kg)</SelectItem>
+                          <SelectItem value="giant">Giant (100+ lbs / 45+ kg)</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
