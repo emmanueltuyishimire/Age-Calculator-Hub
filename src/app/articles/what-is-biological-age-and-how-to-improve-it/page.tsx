@@ -66,6 +66,30 @@ const faqs = [
     }
 ];
 
+const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article?.title,
+    "description": article?.description,
+    "datePublished": article?.publishedDate,
+    "author": {
+        "@type": "Organization",
+        "name": "Age Calculator Hub"
+    }
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+        }
+    }))
+};
 
 export default function BiologicalAgeArticlePage() {
   if (!article) {
@@ -74,6 +98,14 @@ export default function BiologicalAgeArticlePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <main role="main" className="max-w-4xl mx-auto">
         <article className="prose dark:prose-invert lg:prose-xl max-w-none">
           <div className="text-center mb-12">
@@ -117,7 +149,7 @@ export default function BiologicalAgeArticlePage() {
 
           <h2>What is Biological Age, and Why Does it Matter?</h2>
           <p>
-            While <Link href="/articles/understanding-chronological-age">chronological age</Link> is a simple count of your time on Earth, <strong>biological age</strong> is a dynamic measure of your body's functional and cellular decline. Think of it as your "health age." Two people who are both 40 years old chronologically can have vastly different biological ages. One might have the physiology of a 30-year-old due to a healthy lifestyle, while the other might have the internal wear and tear of a 50-year-old.
+            While <Link href="/articles/understanding-chronological-age" className="text-primary hover:underline">chronological age</Link> is a simple count of your time on Earth, <strong>biological age</strong> is a dynamic measure of your body's functional and cellular decline. Think of it as your "health age." Two people who are both 40 years old chronologically can have vastly different biological ages. One might have the physiology of a 30-year-old due to a healthy lifestyle, while the other might have the internal wear and tear of a 50-year-old.
           </p>
           <p>
             This distinction is critical because biological age is a far better predictor of:
@@ -134,7 +166,7 @@ export default function BiologicalAgeArticlePage() {
 
           <h2 id="science">The Science Behind Biological Age: How Is It Measured?</h2>
           <p>
-            Calculating biological age isn't guesswork; it's a science rooted in measurable biomarkers. While our <Link href="/biological-age">Biological Age Calculator</Link> uses lifestyle factors to provide a strong estimate, clinical measurements offer a deeper look. The most advanced methods include:
+            Calculating biological age isn't guesswork; it's a science rooted in measurable biomarkers. While our <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link> uses lifestyle factors to provide a strong estimate, clinical measurements offer a deeper look. The most advanced methods include:
           </p>
           
           <h3>1. Epigenetic Clocks (DNA Methylation)</h3>
@@ -161,6 +193,8 @@ export default function BiologicalAgeArticlePage() {
           <p>
             The most empowering aspect of biological age is that you have significant control over it. Research suggests that genetics only accounts for about 20-30% of your aging process. The rest is up to your lifestyle. Here are the most effective, evidence-based strategies to lower your biological age.
           </p>
+          <p>For a detailed breakdown, read our <Link href="/articles/how-to-improve-biological-age" className="text-primary hover:underline">5 Actionable Tips to Lower Your Biological Age</Link>.</p>
+          
 
           <h3>1. Optimize Your Diet: Food as Medicine</h3>
           <p>
@@ -228,5 +262,3 @@ export default function BiologicalAgeArticlePage() {
     </div>
   );
 }
-
-    

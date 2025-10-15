@@ -18,14 +18,14 @@ export function generateMetadata(): Metadata {
     title: 'Your Complete Guide to Age Calculator Hub',
     description: article.description,
     alternates: {
-        canonical: `https://innerpeacejournals.com/articles/${article.slug}`,
+        canonical: `/articles/${article.slug}`,
     },
     openGraph: {
         title: article.title,
         description: article.description,
         type: 'article',
         publishedTime: article.publishedDate,
-        url: `https://innerpeacejournals.com/articles/${article.slug}`,
+        url: `/articles/${article.slug}`,
     },
   };
 }
@@ -50,7 +50,6 @@ const faqs = [
 ];
 
 export default function AgeCalculatorAppArticle() {
-
   if (!article) {
     notFound();
   }
@@ -75,11 +74,28 @@ export default function AgeCalculatorAppArticle() {
     }
 };
 
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+        }
+    }))
+};
+
   return (
     <div className="container mx-auto px-4 py-8">
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <main role="main" className="max-w-4xl mx-auto">
         <article className="prose dark:prose-invert lg:prose-xl max-w-none">
@@ -218,5 +234,3 @@ export default function AgeCalculatorAppArticle() {
     </div>
   );
 }
-
-    

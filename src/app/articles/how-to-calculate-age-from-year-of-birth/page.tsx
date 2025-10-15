@@ -46,6 +46,43 @@ const faqs = [
     }
 ];
 
+const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article?.title,
+    "description": article?.description,
+    "datePublished": article?.publishedDate,
+    "author": {
+        "@type": "Organization",
+        "name": "Age Calculator Hub"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Age Calculator Hub",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://innerpeacejournals.com/logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://innerpeacejournals.com/articles/${article?.slug}`
+    }
+};
+
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+        }
+    }))
+};
+
 export default function AgeByYearArticlePage() {
   if (!article) {
     notFound();
@@ -53,6 +90,14 @@ export default function AgeByYearArticlePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
       <main role="main" className="max-w-4xl mx-auto">
         <article className="prose dark:prose-invert lg:prose-xl max-w-none">
           <div className="text-center mb-12">
@@ -128,7 +173,7 @@ export default function AgeByYearArticlePage() {
                 <p>While an estimate is fine for casual use, many official and legal scenarios demand absolute accuracy. In these cases, using only the birth year is inadequate.</p>
                 <ul className="space-y-3">
                     <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Legal Documents:</strong> Passport applications, driver's licenses, and voter registration require an exact date of birth to verify identity and eligibility.</span></li>
-                    <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Financial and Insurance Products:</strong> Life insurance premiums, annuity calculations, and retirement benefit eligibility (<Link href="/retirement-calculators" className="text-primary hover:underline">like Social Security</Link>) are all based on precise age.</span></li>
+                    <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Financial and Insurance Products:</strong> Life insurance premiums, annuity calculations, and retirement benefit eligibility (<Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">like Social Security</Link>) are all based on precise age.</span></li>
                     <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Medical and Health Contexts:</strong> Developmental milestones, vaccination schedules, and risk assessments for age-related diseases are all tied to a precise chronological age.</span></li>
                     <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Contracts and Agreements:</strong> Any legally binding contract where age is a condition (e.g., entering a contest, age-restricted purchases) requires an exact age.</span></li>
                 </ul>
@@ -146,7 +191,7 @@ export default function AgeByYearArticlePage() {
                 <strong>Historical Analysis:</strong> Quickly determine the age of a historical figure during a significant event. For instance, how old was Albert Einstein (born 1879) when he published his theory of general relativity in 1915? (1915 - 1879 = 36).
             </li>
             <li>
-                <strong>Demographic Research:</strong> When analyzing large datasets where only birth years are available, this formula is invaluable for segmenting populations into age brackets (e.g., Millennials, Gen X, Baby Boomers).
+                <strong>Demographic Research:</strong> When analyzing large datasets where only birth years are available, this formula is invaluable for segmenting populations into age brackets (e.g., <Link href="/articles/what-generation-am-i" className="text-primary hover:underline">Millennials, Gen X, Baby Boomers</Link>).
             </li>
             <li>
                 <strong>Casual Conversations:</strong> When someone mentions they were born in a certain year, you can do the quick mental math to get a good idea of their age without needing to ask for their full birthday.
@@ -211,5 +256,3 @@ export default function AgeByYearArticlePage() {
     </div>
   );
 }
-
-    
