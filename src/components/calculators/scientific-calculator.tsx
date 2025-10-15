@@ -25,12 +25,11 @@ const scientificButtons = [
   ['M+', 'M-', 'MR', 'RND', 'E'],
 ];
 
-const getVariant = (btn: any, isDeg?: boolean) => {
+const getVariant = (btn: any) => {
   const btnStr = typeof btn === 'string' ? btn : 'Backspace';
 
   if (btnStr === 'Backspace' || btnStr === 'AC') return 'destructive';
   if (['+', '−', '×', '÷', '='].includes(btnStr)) return 'secondary';
-  if ((isDeg && btnStr === 'Deg') || (!isDeg && btnStr === 'Rad')) return 'default';
   if (typeof btn !== 'string') return 'secondary';
 
   const scientificOps = ['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e', '(', ')', '^', '√', 'ln', 'Ans', 'exp', 'log', 'n!', '1/x', 'M+', 'M-', 'MR', 'RND', 'E', 'Deg', 'Rad'];
@@ -235,6 +234,18 @@ const ScientificCalculator = () => {
         }
     }, [expression]);
 
+    const renderButtonWithIndicator = (btn: string, isActive: boolean) => (
+        <Button
+            key={`sci-${btn}`}
+            variant={getVariant(btn)}
+            className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1 relative")}
+            onClick={() => handleButtonClick(btn)}
+        >
+            {isActive && <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-green-500"></div>}
+            {btn}
+        </Button>
+    );
+
   return (
     <div className="bg-card border rounded-lg p-2 sm:p-3 w-full max-w-2xl shadow-lg">
       <Input
@@ -260,18 +271,24 @@ const ScientificCalculator = () => {
         </div>
         {/* Scientific Calculator Part */}
         <div className="grid grid-cols-5 gap-1 sm:gap-2">
-            {scientificButtons.flat().map((btn, i) => (
-                <Button
-                    key={`sci-${i}`}
-                    variant={getVariant(btn, isDeg)}
-                    className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1", {
-                        'bg-primary text-primary-foreground': (isDeg && btn === 'Deg') || (!isDeg && btn === 'Rad')
-                    })}
-                    onClick={() => handleButtonClick(btn)}
-                >
-                    {btn}
-                </Button>
-            ))}
+            {scientificButtons.flat().map((btn) => {
+                if (btn === 'Deg') {
+                    return renderButtonWithIndicator(btn, isDeg);
+                }
+                if (btn === 'Rad') {
+                    return renderButtonWithIndicator(btn, !isDeg);
+                }
+                return (
+                    <Button
+                        key={`sci-${btn}`}
+                        variant={getVariant(btn)}
+                        className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1")}
+                        onClick={() => handleButtonClick(btn)}
+                    >
+                        {btn}
+                    </Button>
+                )
+            })}
         </div>
       </div>
     </div>
