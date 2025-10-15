@@ -2,11 +2,9 @@
 "use client"
 
 import * as React from "react"
-import {
-  Calculator,
-  File,
-  Search,
-} from "lucide-react"
+import { Calculator, File, Search } from "lucide-react"
+import Fuse from "fuse.js"
+import { useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -27,11 +25,53 @@ import {
 } from "@/components/ui/dialog"
 import { navItems } from "./nav-items"
 import { articles } from "@/lib/articles"
-import { useRouter } from "next/navigation"
+
+interface SearchableItem {
+  title: string;
+  href: string;
+  type: 'calculator' | 'article';
+  icon: React.ElementType;
+}
 
 export function SearchBar() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
+  const [query, setQuery] = React.useState('');
   const router = useRouter();
+
+  const searchableItems: SearchableItem[] = React.useMemo(() => {
+    const calculatorItems = navItems
+      .filter(item => item.href.startsWith('/') && !['/articles', '/about', '/contact', '/privacy', '/terms', '/disclaimer', '/faq'].includes(item.href) && !item.href.includes('calculators'))
+      .map(item => ({
+        title: item.label,
+        href: item.href,
+        type: 'calculator' as const,
+        icon: item.icon,
+      }));
+
+    const articleItems = articles.map(article => ({
+      title: article.title,
+      href: `/articles/${article.slug}`,
+      type: 'article' as const,
+      icon: File,
+    }));
+    return [...calculatorItems, ...articleItems];
+  }, []);
+  
+  const fuse = React.useMemo(() => new Fuse(searchableItems, {
+    keys: ['title'],
+    includeScore: true,
+    threshold: 0.4,
+  }), [searchableItems]);
+
+  const results = React.useMemo(() => {
+    if (!query) {
+      return { calculators: searchableItems.filter(i => i.type === 'calculator').slice(0, 5), articles: searchableItems.filter(i => i.type === 'article').slice(0, 5) };
+    }
+    const searchResults = fuse.search(query);
+    const calculators = searchResults.filter(r => r.item.type === 'calculator').map(r => r.item);
+    const articles = searchResults.filter(r => r.item.type === 'article').map(r => r.item);
+    return { calculators, articles };
+  }, [query, fuse, searchableItems]);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -44,7 +84,6 @@ export function SearchBar() {
         ) {
           return
         }
-
         e.preventDefault()
         setOpen((open) => !open)
       }
@@ -58,10 +97,6 @@ export function SearchBar() {
     setOpen(false)
     command()
   }, [])
-
-  const searchableNavItems = navItems.filter(
-      item => item.href.startsWith('/') && !['/','/articles', '/about', '/contact', '/privacy', '/terms', '/disclaimer', '/faq'].includes(item.href) && !item.href.includes('calculators')
-  );
 
   return (
     <>
@@ -80,46 +115,54 @@ export function SearchBar() {
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="overflow-hidden p-0 shadow-lg">
-           <DialogHeader className="sr-only">
+          <DialogHeader className="sr-only">
             <DialogTitle>Search Calculators and Articles</DialogTitle>
             <DialogDescription>Type to search for a specific calculator or article on the site.</DialogDescription>
           </DialogHeader>
           <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-            <CommandInput placeholder="Type a command or search..." />
+            <CommandInput
+              placeholder="Type to search..."
+              value={query}
+              onValueChange={setQuery}
+            />
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading="Calculators">
-                {searchableNavItems.map((navItem) => (
-                  <CommandItem
-                    key={navItem.href}
-                    value={navItem.label}
-                    onSelect={() => {
-                      runCommand(() => router.push(navItem.href as string))
-                    }}
-                  >
-                    <div className="mr-2 flex h-4 w-4 items-center justify-center">
-                      <Calculator className="h-4 w-4" />
-                    </div>
-                    {navItem.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-              <CommandGroup heading="Articles">
-                {articles.map((article) => (
+              {results.calculators.length > 0 && (
+                 <CommandGroup heading="Calculators">
+                    {results.calculators.map((item) => (
                     <CommandItem
-                        key={article.slug}
-                        value={article.title}
+                        key={item.href}
+                        value={item.title}
                         onSelect={() => {
-                            runCommand(() => router.push(`/articles/${article.slug}`))
+                        runCommand(() => router.push(item.href))
                         }}
                     >
-                         <div className="mr-2 flex h-4 w-4 items-center justify-center">
-                            <File className="h-4 w-4" />
+                        <div className="mr-2 flex h-4 w-4 items-center justify-center">
+                          <item.icon className="h-4 w-4" />
                         </div>
-                        {article.title}
+                        {item.title}
                     </CommandItem>
-                ))}
-              </CommandGroup>
+                    ))}
+                </CommandGroup>
+              )}
+              {results.articles.length > 0 && (
+                <CommandGroup heading="Articles">
+                    {results.articles.map((item) => (
+                        <CommandItem
+                            key={item.href}
+                            value={item.title}
+                            onSelect={() => {
+                                runCommand(() => router.push(item.href))
+                            }}
+                        >
+                            <div className="mr-2 flex h-4 w-4 items-center justify-center">
+                                <item.icon className="h-4 w-4" />
+                            </div>
+                            {item.title}
+                        </CommandItem>
+                    ))}
+                </CommandGroup>
+              )}
             </CommandList>
           </Command>
         </DialogContent>
