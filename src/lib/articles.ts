@@ -183,4 +183,25 @@ export const articles: Article[] = [
     category: 'Pet Health',
     publishedDate: '2024-11-06',
   },
+  {
+    slug: 'understanding-life-insurance',
+    title: "A Beginner's Guide to Life Insurance: Term vs. Whole Life",
+    description: 'Demystify life insurance with our simple guide. Understand the crucial differences between term and whole life policies and find out which is right for you.',
+    category: 'Financial Planning',
+    publishedDate: '2024-11-07',
+  },
+  {
+    slug: 'how-to-pay-off-debt-faster',
+    title: 'The Power of Extra Payments: How to Pay Off Your Loans Faster',
+    description: 'Discover how making extra payments on your loans can save you thousands in interest and shave years off your debt. A guide to accelerating your financial freedom.',
+    category: 'Financial Planning',
+    publishedDate: '2024-11-08',
+  },
+  {
+    slug: 'guide-to-retirement-savings',
+    title: 'A Guide to Retirement Savings: How Much Do You Really Need?',
+    description: 'From the 4% rule to savings benchmarks by age, this guide helps you understand how to set a realistic retirement savings goal for a secure future.',
+    category: 'Financial Planning',
+    publishedDate: '2024-11-09',
+  },
 ];
