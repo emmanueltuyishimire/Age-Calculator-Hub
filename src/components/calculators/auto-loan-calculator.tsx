@@ -174,11 +174,9 @@ export default function AutoLoanCalculator() {
         ? monthlyPayment * (Math.pow(1 + monthlyRate, n) - 1) / (monthlyRate * Math.pow(1 + monthlyRate, n))
         : monthlyPayment * n;
     
-    // P = autoPrice * (1 + salesTax/100) + otherFees - cashIncentives - downPayment - netTradeIn
-    // autoPrice * (1 + salesTax/100) = P - otherFees + cashIncentives + downPayment + netTradeIn
     const netTradeIn = tradeInValue - owedOnTrade;
-    const rightSide = totalLoanAmount - otherFees + cashIncentives + downPayment + netTradeIn;
-    const affordablePrice = rightSide / (1 + salesTax/100);
+    const affordablePrice = (totalLoanAmount + downPayment + cashIncentives + netTradeIn - otherFees) / (1 + salesTax/100);
+
 
     const saleTaxAmount = affordablePrice * (salesTax / 100);
     const totalPayments = monthlyPayment * n;

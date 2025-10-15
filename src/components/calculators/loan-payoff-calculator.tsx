@@ -68,13 +68,20 @@ export default function LoanPayoffCalculator() {
 
     const monthlyRate = interestRate / 100 / 12;
 
-    if (monthlyPayment <= loanAmount * monthlyRate) {
+    if (monthlyRate > 0 && monthlyPayment <= loanAmount * monthlyRate) {
       setError("Your monthly payment is too low to cover the interest. The loan will never be paid off. Please increase your payment.");
       return;
     }
 
-    // Loan payoff formula: n = -log(1 - (r * P) / M) / log(1 + r)
-    const numberOfMonths = -(Math.log(1 - (monthlyRate * loanAmount) / monthlyPayment) / Math.log(1 + monthlyRate));
+    let numberOfMonths;
+    if (monthlyRate > 0) {
+      // Loan payoff formula: n = -log(1 - (r * P) / M) / log(1 + r)
+      numberOfMonths = -(Math.log(1 - (monthlyRate * loanAmount) / monthlyPayment) / Math.log(1 + monthlyRate));
+    } else {
+      // 0% interest rate
+      numberOfMonths = loanAmount / monthlyPayment;
+    }
+    
     const totalMonths = Math.ceil(numberOfMonths);
     const payoffDate = addMonths(new Date(), totalMonths);
     const totalPaid = monthlyPayment * totalMonths;
