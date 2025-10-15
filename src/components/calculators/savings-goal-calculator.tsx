@@ -70,7 +70,9 @@ export default function SavingsGoalCalculator() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       currency: 'USD',
+      goalAmount: 0,
       initialSavings: 0,
+      targetDate: undefined,
       interestRate: 4,
     },
   });
@@ -117,7 +119,7 @@ export default function SavingsGoalCalculator() {
   function handleReset() {
     form.reset({
       currency: 'USD',
-      goalAmount: undefined,
+      goalAmount: 0,
       initialSavings: 0,
       targetDate: undefined,
       interestRate: 4,
