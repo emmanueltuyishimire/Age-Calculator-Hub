@@ -1,5 +1,5 @@
 
-import AgeCalculator from '@/components/calculators/age-calculator';
+import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
 import { type Metadata } from 'next';
 import {
   Accordion,
@@ -88,7 +88,7 @@ export default function AgeCalculatorPage() {
                 </p>
             </div>
 
-            <AgeCalculator />
+            <ChronologicalAgeCalculatorForm />
 
             <div className="my-8">
               <AdBanner />

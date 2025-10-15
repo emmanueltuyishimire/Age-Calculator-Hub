@@ -66,7 +66,7 @@ export default function AgeCalculatorByDateOfBirthPage() {
       <div className="max-w-4xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Age Calculator by Date of Birth</h1>
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Online Age Calculator by Date of Birth</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
                     Use our free age calculator to instantly find your exact age from your date of birth. This real-time tool provides precise results in years, months, days, hours, minutes, and seconds, updating live before your eyes.
                 </p>

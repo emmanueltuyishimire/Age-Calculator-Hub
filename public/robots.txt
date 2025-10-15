@@ -1,4 +1,8 @@
+# See https://www.robotstxt.org/robotstxt.html for syntax and more information
+
 User-agent: *
 Allow: /
+Disallow: /_next/
+Disallow: /api/
 
-Sitemap: https://age-calculator-hub.com/sitemap.xml
+Sitemap: https://innerpeacejournals.com/sitemap.xml

@@ -34,7 +34,7 @@ interface Age {
   totalSeconds: number;
 }
 
-export default function AgeCalculator() {
+export default function ChronologicalAgeCalculatorForm() {
   const [dob, setDob] = useState<Date | undefined>();
   const [ageAt, setAgeAt] = useState<Date | undefined>(new Date());
   const [age, setAge] = useState<Age | undefined>();
@@ -178,6 +178,7 @@ export default function AgeCalculator() {
                 <Button
                   id="dob-picker"
                   variant={"outline"}
+                  aria-label="Pick a date of birth"
                   className={cn(
                     "w-full justify-start text-left font-normal",
                     !dob && "text-muted-foreground"
@@ -207,6 +208,7 @@ export default function AgeCalculator() {
                 <Button
                   id="age-at-picker"
                   variant={"outline"}
+                  aria-label="Pick an end date for age calculation"
                   className={cn(
                     "w-full justify-start text-left font-normal",
                     !ageAt && "text-muted-foreground"
@@ -232,7 +234,7 @@ export default function AgeCalculator() {
         </div>
 
         <div className="flex flex-col md:flex-row gap-2">
-            <Button onClick={handleCalculate} className="w-full">Calculate Your Age Now Online</Button>
+            <Button onClick={handleCalculate} className="w-full">Calculate Age</Button>
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>

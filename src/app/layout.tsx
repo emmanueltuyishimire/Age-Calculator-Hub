@@ -44,6 +44,14 @@ export const metadata: Metadata = {
     description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
     type: 'website',
     url: 'https://innerpeacejournals.com',
+    images: [
+      {
+        url: '/logo.png',
+        width: 512,
+        height: 512,
+        alt: 'Calculator Hub Logo',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -54,6 +62,7 @@ export const metadata: Metadata = {
     icon: '/logo.png',
     apple: '/logo.png',
   },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
