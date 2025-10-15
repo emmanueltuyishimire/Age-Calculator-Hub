@@ -12,9 +12,9 @@ export default function CalculatorHub() {
   const categories = categorizedNavItems().filter(cat => cat.name !== 'Company' && cat.name !== 'Legal' && cat.name !== 'Navigation');
 
   return (
-    <div className="container mx-auto px-4 py-12 sm:py-16">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">The Ultimate Calculator Hub</h1>
+    <div className="container mx-auto px-4 pt-12 pb-16 sm:pt-16 sm:pb-20">
+      <div className="text-center mb-16">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 bg-gradient-to-r from-primary to-foreground/70 text-transparent bg-clip-text">The Ultimate Calculator Hub</h1>
          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto">
             Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
         </p>
@@ -35,14 +35,18 @@ export default function CalculatorHub() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {category.items.map((item) => (
                 <Link href={item.href} key={item.href} className="block hover:no-underline group">
-                    <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary">
+                    <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary/50 group-hover:bg-accent">
                         <CardHeader>
-                          <div className="flex items-center gap-4 mb-2">
-                              <item.icon className="h-8 w-8 text-primary" aria-hidden="true" />
-                               <CardTitle className="text-xl group-hover:text-primary">{item.label}</CardTitle>
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 bg-primary/10 rounded-lg">
+                                    <item.icon className="h-6 w-6 text-primary" aria-hidden="true" />
+                                </div>
+                               <CardTitle className="text-lg">{item.label}</CardTitle>
                           </div>
-                          <CardDescription>{item.description}</CardDescription>
                         </CardHeader>
+                        <CardContent className="pt-0">
+                          <CardDescription>{item.description}</CardDescription>
+                        </CardContent>
                     </Card>
                 </Link>
               ))}
