@@ -10,7 +10,7 @@ export default function AboutPage() {
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">About Calculator Hub</h1>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">About Calculators</h1>
           <p className="text-md md:text-lg text-muted-foreground">
             Your trusted resource for accurate and easy-to-use calculation tools.
           </p>
@@ -18,7 +18,7 @@ export default function AboutPage() {
 
         <section className="space-y-6 text-muted-foreground">
           <p>
-            Welcome to Calculator Hub, your premier online destination for a wide array of free, accurate, and intuitive calculators. Our mission is to provide accessible tools that help you make sense of the numbers in your life, whether you're calculating finances, health metrics, or mathematical equations.
+            Welcome to Calculators, your premier online destination for a wide array of free, accurate, and intuitive calculators. Our mission is to provide accessible tools that help you make sense of the numbers in your life, whether you're calculating finances, health metrics, or mathematical equations.
           </p>
           
           <h2 className="text-2xl font-bold text-foreground pt-4">Our Mission</h2>
@@ -28,7 +28,7 @@ export default function AboutPage() {
           
           <h2 className="text-2xl font-bold text-foreground pt-4">What We Offer</h2>
           <p>
-            Calculator Hub provides a comprehensive suite of tools, including:
+            Calculators provides a comprehensive suite of tools, including:
           </p>
           <ul className="list-disc list-inside space-y-2">
             <li><strong>Financial Calculators:</strong> Plan for loans, investments, retirement, and manage your budget with confidence.</li>
@@ -48,7 +48,7 @@ export default function AboutPage() {
           </p>
           
           <p>
-            Thank you for choosing Calculator Hub. We hope our tools provide you with the insights and information you're looking for.
+            Thank you for choosing Calculators. We hope our tools provide you with the insights and information you're looking for.
           </p>
         </section>
       </main>

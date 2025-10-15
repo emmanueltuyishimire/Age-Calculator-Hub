@@ -17,7 +17,7 @@ const ptSans = PT_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://innerpeacejournals.com'),
   title: {
-    default: 'Calculator Hub – Free Online Financial, Health & Math Calculators',
+    default: 'Calculators – Free Online Financial, Health & Math Calculators',
     template: '%s',
   },
   description:
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     canonical: 'https://innerpeacejournals.com',
   },
   openGraph: {
-    title: 'Calculator Hub – Free Online Financial, Health & Math Calculators',
+    title: 'Calculators – Free Online Financial, Health & Math Calculators',
     description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
     type: 'website',
     url: 'https://innerpeacejournals.com',
@@ -50,13 +50,13 @@ export const metadata: Metadata = {
         url: '/logo.png',
         width: 512,
         height: 512,
-        alt: 'Calculator Hub Logo',
+        alt: 'Calculators Logo',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Calculator Hub – Free Online Financial, Health & Math Calculators',
+    title: 'Calculators – Free Online Financial, Health & Math Calculators',
     description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
   },
   icons: {
@@ -86,12 +86,6 @@ export default function RootLayout({
             gtag('config', 'G-7XVG2YF7MY');
           `}
         </Script>
-        {/* AdSense Auto Ads - Use a standard script tag to avoid Next.js added attributes */}
-        <script 
-          async 
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811" 
-          crossOrigin="anonymous"
-        ></script>
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider

@@ -23,7 +23,7 @@ export function ClientPage() {
 
                 <section className="space-y-6 text-muted-foreground">
                     <p className="lead">
-                        Welcome to Calculator Hub ("we," "our," or "us"). We are committed to protecting your privacy and providing transparency about how we handle information. This Privacy Policy details our practices concerning the information we collect and process when you use our website, https://innerpeacejournals.com (the "Website").
+                        Welcome to Calculators ("we," "our," or "us"). We are committed to protecting your privacy and providing transparency about how we handle information. This Privacy Policy details our practices concerning the information we collect and process when you use our website, https://innerpeacejournals.com (the "Website").
                     </p>
                 
                     <h2 className="text-2xl font-bold text-foreground pt-4">1. Our Core Privacy Principle: Your Data is Your Own</h2>

@@ -53,8 +53,8 @@ export function Footer() {
             </div>
             <div>
               <Link href="/" className="flex items-center space-x-2">
-                  <Image src="/logo.png" alt="Calculator Hub Logo" width={24} height={24} className="h-6 w-6" />
-                  <span className="font-bold">Calculator Hub</span>
+                  <Image src="/logo.png" alt="Calculators Logo" width={24} height={24} className="h-6 w-6" />
+                  <span className="font-bold">Calculators</span>
               </Link>
               <p className="text-sm text-muted-foreground mt-2">
                 Your go-to source for a wide variety of free and accurate online calculators.
@@ -62,7 +62,7 @@ export function Footer() {
             </div>
           </div>
           <div className="mt-8 border-t pt-6 text-center text-xs text-muted-foreground">
-             © {year} Calculator Hub. All Rights Reserved.
+             © {year} Calculators. All Rights Reserved.
           </div>
         </div>
       </footer>

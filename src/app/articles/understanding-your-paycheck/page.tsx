@@ -58,7 +58,7 @@ const articleSchema = article ? {
     "datePublished": article.publishedDate,
     "author": {
         "@type": "Organization",
-        "name": "Calculator Hub"
+        "name": "Calculators"
     }
 } : null;
 

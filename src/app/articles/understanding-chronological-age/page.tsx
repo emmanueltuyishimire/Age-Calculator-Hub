@@ -61,11 +61,11 @@ const articleSchema = {
     "datePublished": article?.publishedDate,
     "author": {
         "@type": "Organization",
-        "name": "Calculator Hub"
+        "name": "Calculators"
     },
     "publisher": {
         "@type": "Organization",
-        "name": "Calculator Hub",
+        "name": "Calculators",
         "logo": {
             "@type": "ImageObject",
             "url": "https://innerpeacejournals.com/logo.png"
@@ -143,7 +143,7 @@ export default function ChronologicalAgeArticlePage() {
                     <CardTitle>Social Age: Your "Cultural Age"</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p>This concept relates to societal expectations of how people should act and what roles they should occupy at certain ages. It includes cultural milestones like graduating from college, getting married, buying a home, or retiring. Social age can vary dramatically between different cultures and generations.</p>
+                    <p>This concept relates to societal expectations of how people should act and what roles they should occupy at certain ages. It includes cultural milestones like graduating from college, getting married, buying a home, or retiring.</p>
                 </CardContent>
             </Card>
           </div>

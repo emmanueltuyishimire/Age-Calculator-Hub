@@ -48,7 +48,7 @@ export default function ContactPage() {
                   norababysleep@gmail.com
               </a>
               <p className="text-xs text-muted-foreground mt-4">
-                Thank you for your interest in Calculator Hub!
+                Thank you for your interest in Calculators!
               </p>
             </div>
           </CardContent>

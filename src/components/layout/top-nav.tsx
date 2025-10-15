@@ -98,10 +98,10 @@ export function TopNav() {
           <SheetContent side="left">
              <SheetHeader className="px-2 py-6">
                 <SheetTitle className="sr-only">Main Menu</SheetTitle>
-                <SheetDescription className="sr-only">Main navigation menu for Calculator Hub, including links to all calculators.</SheetDescription>
+                <SheetDescription className="sr-only">Main navigation menu for Calculators, including links to all calculators.</SheetDescription>
                  <Link href="/" className="flex items-center space-x-2 mb-6" onClick={() => setIsOpen(false)}>
-                    <Image src="/logo.png" alt="Calculator Hub Logo" width={24} height={24} className="h-6 w-6" priority />
-                    <span className="font-bold">Calculator Hub</span>
+                    <Image src="/logo.png" alt="Calculators Logo" width={24} height={24} className="h-6 w-6" priority />
+                    <span className="font-bold">Calculators</span>
                 </Link>
             </SheetHeader>
             <nav role="navigation" aria-label="Mobile menu">

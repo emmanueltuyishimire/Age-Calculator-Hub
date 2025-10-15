@@ -23,7 +23,7 @@ export function ClientPage() {
 
                 <section className="space-y-6 text-muted-foreground">
                 <p>
-                    The information provided by the calculators on Calculator Hub (the "Website") is for general informational purposes only. All information on the Website is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the Website.
+                    The information provided by the calculators on Calculators (the "Website") is for general informational purposes only. All information on the Website is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the Website.
                 </p>
                 
                 <h2 className="text-2xl font-bold text-foreground pt-4">For Educational and Informational Purposes Only</h2>
@@ -42,7 +42,7 @@ export function ClientPage() {
 
                 <h2 className="text-2xl font-bold text-foreground pt-4">Limitation of Liability</h2>
                 <p>
-                    Under no circumstance shall Calculator Hub or its owners be liable for any direct, indirect, incidental, special, consequential, or exemplary damages, including but not limited to, damages for loss of profits, goodwill, use, data, or other intangible losses, resulting from the use or the inability to use the tools and information provided on the Website. Your use of the Website and your reliance on any information on the site is solely at your own risk.
+                    Under no circumstance shall Calculators or its owners be liable for any direct, indirect, incidental, special, consequential, or exemplary damages, including but not limited to, damages for loss of profits, goodwill, use, data, or other intangible losses, resulting from the use or the inability to use the tools and information provided on the Website. Your use of the Website and your reliance on any information on the site is solely at your own risk.
                 </p>
                 
                 <h2 className="text-2xl font-bold text-foreground pt-4">External Links Disclaimer</h2>

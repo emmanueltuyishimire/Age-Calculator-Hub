@@ -23,7 +23,7 @@ export function ClientPage() {
 
                 <section className="space-y-6 text-muted-foreground">
                 <p className="lead">
-                    Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the https://innerpeacejournals.com website (the "Service") operated by Calculator Hub ("us", "we", or "our").
+                    Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the https://innerpeacejournals.com website (the "Service") operated by Calculators ("us", "we", or "our").
                 </p>
                 <p>
                     Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who access or use the Service. By accessing or using the Service, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the Service.
@@ -31,7 +31,7 @@ export function ClientPage() {
                 
                 <h2 className="text-2xl font-bold text-foreground pt-4">1. Use of Service</h2>
                 <p>
-                    Calculator Hub provides a collection of online calculators and informational articles for general informational and educational purposes only. You agree to use the Service in compliance with all applicable laws and regulations and not for any purpose that is unlawful or prohibited by these Terms.
+                    Calculators provides a collection of online calculators and informational articles for general informational and educational purposes only. You agree to use the Service in compliance with all applicable laws and regulations and not for any purpose that is unlawful or prohibited by these Terms.
                 </p>
                 <p>
                     You are granted a limited, non-exclusive, non-transferable license to access and use the Service for your personal, non-commercial use.
@@ -39,7 +39,7 @@ export function ClientPage() {
 
                 <h2 className="text-2xl font-bold text-foreground pt-4">2. Intellectual Property</h2>
                 <p>
-                    The Service and its original content, features, and functionality (including but not limited to all information, text, graphics, logos, and the calculators themselves) are and will remain the exclusive property of Calculator Hub and its licensors. The Service is protected by copyright, trademark, and other laws of both the United States and foreign countries. Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of Calculator Hub.
+                    The Service and its original content, features, and functionality (including but not limited to all information, text, graphics, logos, and the calculators themselves) are and will remain the exclusive property of Calculators and its licensors. The Service is protected by copyright, trademark, and other laws of both the United States and foreign countries. Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of Calculators.
                 </p>
 
                 <h2 className="text-2xl font-bold text-foreground pt-4">3. Disclaimer of Warranties and Limitation of Liability</h2>
@@ -52,10 +52,10 @@ export function ClientPage() {
 
                 <h2 className="text-2xl font-bold text-foreground pt-4">4. Third-Party Links and Advertising</h2>
                 <p>
-                    Our Service may contain links to third-party web sites or services that are not owned or controlled by Calculator Hub. We use third-party advertising, such as Google AdSense, to support our Service. These third parties may use cookies to serve ads based on a user's prior visits to our website or other websites.
+                    Our Service may contain links to third-party web sites or services that are not owned or controlled by Calculators. We use third-party advertising, such as Google AdSense, to support our Service. These third parties may use cookies to serve ads based on a user's prior visits to our website or other websites.
                 </p>
                 <p>
-                     Calculator Hub has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third-party web sites or services. You further acknowledge and agree that Calculator Hub shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such web sites or services.
+                     Calculators has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third-party web sites or services. You further acknowledge and agree that Calculators shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such web sites or services.
                 </p>
 
                 <h2 className="text-2xl font-bold text-foreground pt-4">5. Governing Law</h2>
