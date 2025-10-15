@@ -309,7 +309,8 @@ const ScientificCalculator = () => {
             key={value + index} 
             variant={getVariant(btn)} 
             className={cn("h-10 text-xs p-1 text-base", style, {
-                'bg-green-700 hover:bg-green-800 text-white': (value === 'Deg' && isDeg) || (value === 'Rad' && !isDeg),
+                'bg-primary hover:bg-primary/90 text-primary-foreground': (value === 'Deg' && isDeg) || (value === 'Rad' && !isDeg),
+                'bg-red-800 hover:bg-red-900 text-white': value === 'AC'
             })}
             onClick={() => handleButtonClick(btn)}
             aria-label={value}
@@ -320,12 +321,12 @@ const ScientificCalculator = () => {
   }
 
   return (
-    <div className="bg-slate-900 dark:bg-slate-900 border rounded-lg p-2 sm:p-4 w-full max-w-[700px] mx-auto shadow-lg">
+    <div className="bg-slate-800 dark:bg-slate-900 border rounded-lg p-2 sm:p-4 w-full max-w-[700px] mx-auto shadow-lg">
       <Input
         type="text"
         value={display}
         readOnly
-        className="w-full h-20 text-4xl text-right mb-2 bg-slate-800 dark:bg-slate-800 pr-4 text-white border-slate-700 dark:border-slate-700"
+        className="w-full h-20 text-4xl text-right mb-2 bg-slate-700 dark:bg-slate-800 pr-4 text-white border-slate-600 dark:border-slate-700"
         aria-label="Calculator display"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
