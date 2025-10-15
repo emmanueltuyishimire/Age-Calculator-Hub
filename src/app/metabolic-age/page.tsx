@@ -154,7 +154,7 @@ export default function MetabolicAgePage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Scientific & Health Age" currentHref="/metabolic-age" />
+        <RelatedCalculators currentCategory="Scientific &amp; Health Age" currentHref="/metabolic-age" />
       </div>
     </div>
   );

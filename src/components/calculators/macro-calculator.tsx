@@ -171,17 +171,15 @@ export default function MacroCalculator() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="h-[250px]">
-                    <ChartContainer config={chartConfig}>
-                        <ResponsiveContainer width="100%" height="100%">
-                            <PieChart>
-                                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                                <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60} outerRadius={80} strokeWidth={5}>
-                                    {chartData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={entry.fill} />
-                                    ))}
-                                </Pie>
-                            </PieChart>
-                        </ResponsiveContainer>
+                    <ChartContainer config={chartConfig} className="mx-auto aspect-square h-full">
+                        <PieChart>
+                            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                            <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60} outerRadius={80} strokeWidth={5}>
+                                {chartData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                                ))}
+                            </Pie>
+                        </PieChart>
                     </ChartContainer>
                 </div>
                  <div className="flex flex-col justify-center space-y-2">

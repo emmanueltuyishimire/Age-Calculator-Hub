@@ -27,7 +27,7 @@ const faqs = [
     },
     {
         question: "How are my daily calories calculated?",
-        answer: "First, we calculate your Basal Metabolic Rate (BMR) using the Mifflin-St Jeor formula. Then, we multiply your BMR by an activity multiplier to get your Total Daily Energy Expenditure (TDEE). Finally, we adjust this TDEE based on your goal (e.g., subtracting calories for weight loss)."
+        answer: "First, we calculate your Basal Metabolic Rate (BMR) using the Mifflin-St Jeor equation. Then, we multiply your BMR by an activity multiplier to get your Total Daily Energy Expenditure (TDEE). Finally, we adjust this TDEE based on your goal (e.g., subtracting calories for weight loss)."
     },
     {
         question: "Why do different goals have different macro ratios?",
@@ -165,7 +165,7 @@ export default function MacroCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Scientific & Health Age" currentHref="/macro-calculator" />
+        <RelatedCalculators currentCategory="Scientific &amp; Health Age" currentHref="/macro-calculator" />
       </div>
     </div>
   );

@@ -188,7 +188,7 @@ export default function TargetHeartRateCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Scientific & Health Age" currentHref="/target-heart-rate-calculator" />
+        <RelatedCalculators currentCategory="Scientific &amp; Health Age" currentHref="/target-heart-rate-calculator" />
       </div>
     </div>
   );
