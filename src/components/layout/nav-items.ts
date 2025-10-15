@@ -121,8 +121,15 @@ export const navItems: NavItem[] = [
     description: 'Emphasize birthdays and countdown to next birthday.'
   },
   {
-    href: '/biological-age',
+    href: '/health-assessments',
     icon: HeartPulse,
+    label: 'Scientific & Health Calculators',
+    category: 'Scientific & Health Age',
+    description: 'A hub for all health and scientific calculators.'
+  },
+  {
+    href: '/biological-age',
+    icon: TestTube,
     label: 'Biological Age Calculator',
     category: 'Scientific & Health Age',
     description: 'Estimates body’s biological age based on health/lifestyle inputs.'

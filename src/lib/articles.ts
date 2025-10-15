@@ -267,4 +267,25 @@ export const articles: Article[] = [
     category: 'Financial Planning',
     publishedDate: '2024-11-18',
   },
+  {
+    slug: 'understanding-bmi',
+    title: "A Guide to BMI: What It Is and What It Isn't",
+    description: 'Body Mass Index (BMI) is a common health metric, but what does it really mean? Learn how to calculate it, what the categories signify, and its important limitations.',
+    category: 'Health & Wellness',
+    publishedDate: '2024-11-19',
+  },
+  {
+    slug: 'understanding-bmr',
+    title: "Understanding Your BMR: The Body's Baseline Calorie Burn",
+    description: 'Your Basal Metabolic Rate (BMR) is the key to understanding your metabolism. This guide explains what BMR is, how it’s calculated, and how you can boost it.',
+    category: 'Health & Wellness',
+    publishedDate: '2024-11-20',
+  },
+  {
+    slug: 'understanding-body-fat',
+    title: "A Guide to Body Fat Percentage: A Better Metric Than Weight",
+    description: 'Move beyond the scale. Learn why body fat percentage is a more accurate measure of health, what the healthy ranges are, and how you can measure and improve it.',
+    category: 'Health & Wellness',
+    publishedDate: '2024-11-21',
+  },
 ];
