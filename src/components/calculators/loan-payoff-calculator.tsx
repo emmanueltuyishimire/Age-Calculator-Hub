@@ -23,10 +23,10 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { RefreshCcw, Landmark } from 'lucide-react';
+import { RefreshCcw, Landmark, AlertCircle } from 'lucide-react';
 import ShareButton from '../share-button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Alert, AlertCircle, AlertDescription, AlertTitle } from '../ui/alert';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
 const formSchema = z.object({
   currency: z.string().default('USD'),
