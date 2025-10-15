@@ -2,7 +2,6 @@
 "use client";
 
 import Link from 'next/link';
-import AdBanner from '@/components/layout/ad-banner';
 import { usePathname } from 'next/navigation';
 
 export default function AboutPage() {
@@ -22,10 +21,6 @@ export default function AboutPage() {
             Welcome to Calculator Hub, your premier online destination for a wide array of free, accurate, and intuitive calculators. Our mission is to provide accessible tools that help you make sense of the numbers in your life, whether you're calculating finances, health metrics, or mathematical equations.
           </p>
           
-          <div className="my-8">
-            <AdBanner key={pathname} />
-          </div>
-
           <h2 className="text-2xl font-bold text-foreground pt-4">Our Mission</h2>
           <p>
             In a world driven by data, we believe that making informed decisions should be simple and accessible to everyone. Our mission is to empower you with high-quality, reliable calculators that are not only functional but also easy to understand. We strive to cover every aspect of calculation—from the complex to the everyday—ensuring you have a trustworthy tool for every need.

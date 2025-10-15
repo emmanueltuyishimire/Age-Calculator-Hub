@@ -8,7 +8,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Check } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { notFound } from 'next/navigation';
-import AdBanner from '@/components/layout/ad-banner';
 import { usePathname } from 'next/navigation';
 
 const article = articles.find(a => a.slug === 'your-complete-guide-to-age-calculators');
@@ -106,10 +105,6 @@ export default function AgeCalculatorAppArticle() {
             This guide will walk you through the different categories of calculators available on our site, explaining what they do, who they're for, and how they can provide valuable insights into your life and the lives of your loved ones.
           </p>
           
-          <div className="my-8">
-            <AdBanner key={pathname} />
-          </div>
-
           <h2 className="text-3xl font-bold">Core Age Calculators: The Foundation of Time</h2>
           <p>
             This is the heart of our site, designed for one primary purpose: to tell you exactly how old you are with unerring precision. These tools are essential for everything from official paperwork to satisfying simple curiosity.

@@ -12,7 +12,6 @@ import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
-import AdBanner from '@/components/layout/ad-banner';
 import { usePathname } from 'next/navigation';
 
 const faqs = [
@@ -73,10 +72,6 @@ export default function AgeCalculatorPage() {
             </div>
 
             <ChronologicalAgeCalculatorForm />
-
-            <div className="my-8">
-              <AdBanner key={pathname} />
-            </div>
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>

@@ -3,7 +3,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, MessageSquare, Lightbulb } from 'lucide-react';
-import AdBanner from '@/components/layout/ad-banner';
 import { usePathname } from 'next/navigation';
 
 export default function ContactPage() {
@@ -16,10 +15,6 @@ export default function ContactPage() {
           <p className="text-md md:text-lg text-muted-foreground">
             We're here to help and eager to hear from you.
           </p>
-        </div>
-
-        <div className="my-8">
-          <AdBanner key={pathname} />
         </div>
 
         <Card className="shadow-lg">

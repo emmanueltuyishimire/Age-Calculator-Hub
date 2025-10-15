@@ -11,7 +11,6 @@ import {
 import RelatedCalculators from "@/components/layout/related-calculators";
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import AdBanner from "@/components/layout/ad-banner";
 import { usePathname } from "next/navigation";
 
 const faqs = [
@@ -72,10 +71,6 @@ export default function DueDateCalculatorPage() {
             </div>
 
             <DueDateCalculator />
-
-            <div className="my-8">
-              <AdBanner key={pathname} />
-            </div>
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
