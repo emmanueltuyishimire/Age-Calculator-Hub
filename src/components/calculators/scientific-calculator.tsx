@@ -10,7 +10,7 @@ import { Trash2, Circle } from 'lucide-react';
 import { evaluate } from 'mathjs';
 
 const scientificButtons = [
-    [<span key="sin">sin</span>, <span key="cos">cos</span>, <span key="tan">tan</span>],
+    [<span>sin</span>, <span>cos</span>, <span>tan</span>],
     [<span key="sin-1">sin<sup>-1</sup></span>, <span key="cos-1">cos<sup>-1</sup></span>, <span key="tan-1">tan<sup>-1</sup></span>],
     [<span key="x^y">x<sup>y</sup></span>, <span key="x^3">x<sup>3</sup></span>, <span key="x^2">x<sup>2</sup></span>],
     [<span key="y√x"><sup>y</sup>√x</span>, <span key="3√x"><sup>3</sup>√x</span>, '√'],
@@ -29,7 +29,6 @@ const factorial = (n: number): number => {
 
 const nthRoot = (base: number, root: number) => Math.pow(base, 1 / root);
 
-
 const ScientificCalculator = () => {
     const [display, setDisplay] = useState('0');
     const [isDeg, setIsDeg] = useState(true);
@@ -40,16 +39,11 @@ const ScientificCalculator = () => {
 
     const renderButtonWithIndicator = (label: 'Deg' | 'Rad') => (
         <Button
-            variant="outline"
-            className="h-10 text-xs p-1 relative"
+            variant={isDeg === (label === 'Deg') ? 'secondary' : 'outline'}
+            className="h-10 text-xs p-1 relative w-full"
             onClick={() => setIsDeg(label === 'Deg')}
         >
-            {isDeg === (label === 'Deg') && (
-                 <div className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-blue-500 flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                </div>
-            )}
-            {label}
+             {label}
         </Button>
     );
 
@@ -63,7 +57,6 @@ const ScientificCalculator = () => {
                 .replace(/(\d+)!/g, 'factorial($1)')
                 .replace(/π/g, 'pi');
             
-            // Handle implicit multiplication
             finalExpression = finalExpression.replace(/(\d)\(/g, '$1*(');
             finalExpression = finalExpression.replace(/\)(\d)/g, ')*$1');
             finalExpression = finalExpression.replace(/\)\(/g, ')*(');
@@ -251,26 +244,18 @@ const ScientificCalculator = () => {
         }
     }, [expression]);
 
-  const renderButtons = (buttons: (string | React.ReactNode)[], getVariant: (btn: any) => "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined, className: string = 'h-10 text-lg') => {
-      return buttons.map((btn, index) => {
-          let key: string | number;
-          if (typeof btn === 'string') { key = btn; } 
-          else if (React.isValidElement(btn)) { key = (btn.key as string) || index; } 
-          else { key = index; }
-          
-          let colSpan = 'col-span-1';
-          if (btn === '0') colSpan = 'col-span-2';
-          
-          return (
-              <Button key={`btn-${key}-${index}`} variant={getVariant(btn)} className={cn(className, colSpan)} onClick={() => handleButtonClick(btn)}>
-                  {btn}
-              </Button>
-          )
-      });
+  const getVariant = (btn: any): "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined => {
+    const value = typeof btn === 'string' ? btn : btn.key;
+    if (['÷', '×', '−', '+'].includes(value)) return 'secondary';
+    if (value === '=') return 'default';
+    if (value === 'AC') return 'destructive';
+    if (['1','2','3','4','5','6','7','8','9','0','.'].includes(value)) return 'secondary';
+    return 'outline';
   }
 
+
   return (
-    <div className="bg-card border rounded-lg p-2 w-full max-w-sm sm:max-w-md md:max-w-xl mx-auto shadow-lg">
+    <div className="bg-card border rounded-lg p-2 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto shadow-lg">
       <Input
         type="text"
         value={display}
@@ -278,14 +263,14 @@ const ScientificCalculator = () => {
         className="w-full h-16 text-3xl text-right mb-2 bg-muted"
         aria-label="Calculator display"
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
+        
         {/* Scientific Functions */}
-        <div className="grid grid-cols-4 gap-1">
-           <div className="col-span-2 flex gap-1">
+        <div className="hidden md:grid grid-cols-3 gap-1">
+           <div className="col-span-3 flex gap-1">
                 {renderButtonWithIndicator('Deg')}
                 {renderButtonWithIndicator('Rad')}
             </div>
-           <div className="col-span-2"></div>
            {scientificButtons.flat().map((btn, index) => {
              let key: string | number;
              if (typeof btn === 'string') { key = btn; } 
@@ -299,18 +284,23 @@ const ScientificCalculator = () => {
           })}
         </div>
 
-        {/* Basic Functions */}
-        <div className="grid grid-cols-4 gap-1">
-            {/* Number Pad */}
-            <div className="col-span-3 grid grid-cols-3 gap-1">
-                {renderButtons(['AC', '%', <Trash2 key="back" />], () => 'outline')}
-                {renderButtons(['7','8','9','4','5','6','1','2','3'], () => 'default')}
-                {renderButtons(['0', '.'], () => 'default')}
-            </div>
-            {/* Operators Column */}
-            <div className="col-span-1 grid grid-rows-5 gap-1">
-                {renderButtons(['÷', '×', '−', '+', '='], () => 'secondary')}
-            </div>
+        {/* Main Pad */}
+        <div className="col-span-2 grid grid-cols-4 gap-1">
+            {/* Top row functions */}
+            <Button variant={getVariant('AC')} className="h-10 text-lg" onClick={() => handleButtonClick('AC')}>AC</Button>
+            <Button variant="outline" className="h-10 text-lg" onClick={() => handleButtonClick('(')}>(</Button>
+            <Button variant="outline" className="h-10 text-lg" onClick={() => handleButtonClick(')')}>)</Button>
+            <Button variant={getVariant('÷')} className="h-10 text-lg" onClick={() => handleButtonClick('÷')}>÷</Button>
+            
+            {/* Number Pad & Right Operators */}
+            {['7','8','9','×','4','5','6','−','1','2','3','+'].map(btn => (
+                 <Button key={`btn-${btn}`} variant={getVariant(btn)} className="h-10 text-lg" onClick={() => handleButtonClick(btn)}>{btn}</Button>
+            ))}
+
+             {/* Bottom row */}
+             <Button variant={getVariant('0')} className="h-10 text-lg col-span-2" onClick={() => handleButtonClick('0')}>0</Button>
+             <Button variant={getVariant('.')} className="h-10 text-lg" onClick={() => handleButtonClick('.')}>.</Button>
+             <Button variant={getVariant('=')} className="h-10 text-lg" onClick={() => handleButtonClick('=')}>=</Button>
         </div>
       </div>
     </div>
