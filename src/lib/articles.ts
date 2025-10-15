@@ -274,4 +274,39 @@ export const articles: Article[] = [
     category: 'Legal',
     publishedDate: '2024-11-28',
   },
-];
+  {
+    slug: 'understanding-your-credit-score',
+    title: "Understanding Your Credit Score: The 5 Key Factors",
+    description: 'Your credit score is crucial for getting a good loan. This guide breaks down the five factors that determine your score, from payment history to credit utilization.',
+    category: 'Financial Planning',
+    publishedDate: '2024-11-29',
+  },
+  {
+    slug: 'guide-to-retirement-accounts',
+    title: "A Beginner's Guide to Retirement Accounts: 401(k) vs. IRA",
+    description: 'Learn the differences between the most common retirement accounts, 401(k)s and IRAs, and understand the power of Traditional vs. Roth contributions.',
+    category: 'Financial Planning',
+    publishedDate: '2024-11-30',
+  },
+  {
+    slug: 'high-yield-savings-vs-stocks',
+    title: "Where to Save: High-Yield Savings Accounts vs. The Stock Market",
+    description: 'Saving for a down payment? Or for retirement? This guide explains the difference between safe HYSA and growth-oriented stock market investing.',
+    category: 'Financial Planning',
+    publishedDate: '2024-12-01',
+  },
+  {
+    slug: 'understanding-asset-allocation',
+    title: "Investing 101: Understanding Asset Allocation",
+    description: 'Learn the most important principle of investing: how to balance risk and reward by allocating your portfolio between stocks and bonds.',
+    category: 'Financial Planning',
+    publishedDate: '2024-12-02',
+  },
+  {
+    slug: 'the-power-of-compound-interest',
+    title: "The Power of Compound Interest: The '8th Wonder of the World'",
+    description: 'This guide explains the single most powerful concept in finance. Learn how compound interest works and why starting to save early is so critical.',
+    category: 'Financial Planning',
+    publishedDate: '2024-12-03',
+  },
+].sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
