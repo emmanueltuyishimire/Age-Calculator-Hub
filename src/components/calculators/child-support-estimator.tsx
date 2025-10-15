@@ -28,8 +28,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
 const formSchema = z.object({
-  parent1Name: z.string().default('Parent 1'),
-  parent2Name: z.string().default('Parent 2'),
+  parent1Name: z.string().optional(),
+  parent2Name: z.string().optional(),
   parent1Income: z.coerce.number().min(0, "Income cannot be negative."),
   parent2Income: z.coerce.number().min(0, "Income cannot be negative."),
   numChildren: z.coerce.number().min(1, "Must be at least 1 child.").max(10),
@@ -59,8 +59,8 @@ export default function ChildSupportEstimator() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      parent1Name: 'Parent 1',
-      parent2Name: 'Parent 2',
+      parent1Name: '',
+      parent2Name: '',
       parent1Income: undefined,
       parent2Income: undefined,
       numChildren: 1,
@@ -106,8 +106,8 @@ export default function ChildSupportEstimator() {
 
   function handleReset() {
     form.reset({
-      parent1Name: 'Parent 1',
-      parent2Name: 'Parent 2',
+      parent1Name: '',
+      parent2Name: '',
       parent1Income: undefined,
       parent2Income: undefined,
       numChildren: 1,
