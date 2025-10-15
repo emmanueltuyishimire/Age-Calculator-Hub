@@ -121,7 +121,7 @@ export default function WhatGenerationAmIPage() {
                 <CardContent>
                     <p className="text-muted-foreground">
                         {
-                            gen.name === 'The Silent Generation' ? 'Shaped by the Great Depression and World War II, this generation is known for its resilience, conformity, and traditional values. They grew up in a time before rock 'n' roll and the digital age.' :
+                            gen.name === 'The Silent Generation' ? 'Shaped by the Great Depression and World War II, this generation is known for its resilience, conformity, and traditional values. They grew up in a time before rock \'n\' roll and the digital age.' :
                             gen.name === 'Baby Boomers' ? 'This large generation grew up during a period of post-war prosperity. They were defined by major cultural shifts, from the Civil Rights Movement to the Vietnam War, and are often seen as a competitive and optimistic group.' :
                             gen.name === 'Generation X' ? 'Often called the "latchkey generation," Gen X grew up with rising divorce rates and more mothers entering the workforce. They are known for their independence, skepticism, and embrace of work-life balance. They were the first generation to grow up with personal computers.' :
                             gen.name === 'Millennials (Gen Y)' ? 'The first generation to come of age in the new millennium. They were shaped by the internet, the 9/11 attacks, and the 2008 financial crisis. Millennials are known for being digitally native, collaborative, and socially conscious.' :
