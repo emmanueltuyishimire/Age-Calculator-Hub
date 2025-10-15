@@ -111,7 +111,7 @@ export default function LoanPayoffCalculatorPage() {
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
                             <li><strong>Enter Loan Amount:</strong> Input the total original amount you borrowed.</li>
                             <li><strong>Set Annual Interest Rate:</strong> Provide the annual percentage rate (APR) of your loan.</li>
-                            <li><strong>Enter Monthly Payment:</strong> Input the amount you pay towards your loan each month, including principal and interest.</li>
+                            <li><strong>Enter Monthly Payment:</strong> Input the amount you pay towards your loan each month, including principal and interest. You can add an extra amount to this field to see how it accelerates your payoff date.</li>
                             <li><strong>Click “Calculate Payoff”:</strong> Get an instant calculation of your loan payoff date and the total interest you will pay.</li>
                         </ol>
                     </CardContent>
@@ -119,7 +119,7 @@ export default function LoanPayoffCalculatorPage() {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>The Power of Extra Payments</CardTitle>
+                        <CardTitle>The Power of Extra Payments: Tips to Get Debt-Free Faster</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <p className="text-muted-foreground">The single most effective way to shorten the life of your loan and save money on interest is to make extra payments. Even a small amount added to your monthly payment can have a huge impact over time.</p>
@@ -127,7 +127,7 @@ export default function LoanPayoffCalculatorPage() {
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Reduce the Principal Faster:</strong> Extra payments go directly towards reducing the loan principal, which means less interest accrues each month.</span></li>
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Save Thousands in Interest:</strong> Shaving years off your loan term can save you a significant amount of money that would have otherwise gone to interest.</span></li>
                              <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Achieve Financial Goals Sooner:</strong> Paying off debt frees up your cash flow, allowing you to focus on other goals, like saving for retirement. Use our <Link href="/retirement-savings-goal-calculator" className="text-primary hover:underline">Retirement Savings Goal Calculator</Link> to see how this impacts your future.</span></li>
-                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Experiment with the Calculator:</strong> Try increasing your monthly payment in the calculator to see how much faster you can become debt-free and how much interest you'll save.</span></li>
+                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Experiment with the Calculator:</strong> Try increasing your monthly payment in the calculator to see how much faster you can become debt-free and how much interest you'll save. It's a powerful motivator!</span></li>
                         </ul>
                     </CardContent>
                 </Card>
