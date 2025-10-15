@@ -43,9 +43,26 @@ const faqs = [
     }
 ];
 
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+        }
+    }))
+};
+
 export default function RetirementSavingsGoalCalculatorPage() {
   return (
     <div className="container mx-auto px-4 py-8">
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="max-w-4xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
@@ -93,7 +110,7 @@ export default function RetirementSavingsGoalCalculatorPage() {
                         <ul className="space-y-3 mt-4">
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Increase Contributions:</strong> Even a small increase in your annual savings can make a huge difference over time due to compound interest.</span></li>
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Review Your Investments:</strong> Ensure your investment strategy aligns with your risk tolerance and time horizon. Younger investors can typically afford to take on more risk for potentially higher returns.</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Adjust Your Timeline:</strong> Working a few extra years can dramatically increase your projected savings and reduce the number of years you need to fund. First, find your official <Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">Social Security retirement age</Link>.</li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Adjust Your Timeline:</strong> Working a few extra years can dramatically increase your projected savings and reduce the number of years you need to fund. First, find your official <Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">Social Security retirement age</Link>.</span></li>
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Re-evaluate Your Goal:</strong> Consider if you can live comfortably on a slightly lower annual income in retirement.</span></li>
                             <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Consult a Professional:</strong> A financial advisor can provide personalized strategies to help you reach your goals.</span></li>
                         </ul>
