@@ -20,17 +20,17 @@ import {
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Baby Age Calculator: Weeks to Months, Corrected Age Info',
+    title: 'Baby Age Calculator: Weeks, Months & Days from Birth',
     description: 'Free Baby Age Calculator to find your baby\'s age in weeks, months, and days from their date of birth. Includes a baby age chart and info on corrected age for premature babies.',
     openGraph: {
-        title: 'Baby Age Calculator: Weeks to Months, Corrected Age Info',
+        title: 'Baby Age Calculator: Weeks, Months & Days from Birth',
         description: 'A free tool to calculate your baby\'s age in weeks and months after birth. Track your baby\'s growth and developmental milestones easily. Includes info for preterm babies.',
         type: 'website',
         url: '/baby-age-calculator',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Baby Age Calculator: Weeks to Months, Corrected Age Info',
+        title: 'Baby Age Calculator: Weeks, Months & Days from Birth',
         description: 'A free tool to calculate your baby\'s age in weeks and months after birth. Track your baby\'s growth and developmental milestones easily. Includes info for preterm babies.',
     },
     alternates: {
@@ -62,14 +62,14 @@ const faqSchema = {
 };
 
 const babyAgeChart = [
-    { weeks: 4, months: "Approx. 1 month" },
-    { weeks: 8, months: "Approx. 2 months" },
-    { weeks: 12, months: "Approx. 3 months" },
-    { weeks: 16, months: "Approx. 4 months" },
-    { weeks: 20, months: "Approx. 5 months" },
-    { weeks: 24, months: "Approx. 6 months" },
-    { weeks: 36, months: "Approx. 9 months" },
-    { weeks: 52, months: "1 year" },
+    { weeks: 4, months: "Approx. 1 month", days: "28 days" },
+    { weeks: 8, months: "Approx. 2 months", days: "56 days" },
+    { weeks: 12, months: "Approx. 3 months", days: "84 days" },
+    { weeks: 16, months: "Approx. 4 months", days: "112 days" },
+    { weeks: 20, months: "Approx. 5 months", days: "140 days" },
+    { weeks: 24, months: "Approx. 6 months", days: "168 days" },
+    { weeks: 36, months: "Approx. 9 months", days: "252 days" },
+    { weeks: 52, months: "1 year", days: "364 days" },
 ];
 
 
@@ -108,7 +108,7 @@ export default function BabyAgeCalculatorPage() {
                 </Card>
                 
                 <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Baby Age Chart: Weeks to Months</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Baby Age Chart: Weeks to Months and Days</h2>
                     <p className="text-muted-foreground mb-4">
                         This baby age chart provides a quick conversion from weeks to months to help you visualize your baby's growth.
                     </p>
@@ -117,6 +117,7 @@ export default function BabyAgeCalculatorPage() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Age in Weeks</TableHead>
+                                    <TableHead>Equivalent Age in Days</TableHead>
                                     <TableHead>Equivalent Age in Months</TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -124,6 +125,7 @@ export default function BabyAgeCalculatorPage() {
                                 {babyAgeChart.map((row) => (
                                     <TableRow key={row.weeks}>
                                         <TableCell className="font-medium">{row.weeks} weeks</TableCell>
+                                        <TableCell>{row.days}</TableCell>
                                         <TableCell>{row.months}</TableCell>
                                     </TableRow>
                                 ))}
@@ -167,5 +169,3 @@ export default function BabyAgeCalculatorPage() {
     </div>
   );
 }
-
-    
