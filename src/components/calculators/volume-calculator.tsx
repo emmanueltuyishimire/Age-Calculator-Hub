@@ -31,7 +31,7 @@ const CalculatorLayout = ({ inputs, svg, onCalculate, result }: { inputs: React.
     <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div className="space-y-4">{inputs}</div>
-            <div className="flex justify-center items-center h-full">{svg}</div>
+            <div className="flex justify-center items-center h-full p-4 bg-muted/50 rounded-lg">{svg}</div>
         </div>
         <Button onClick={onCalculate} className="w-full">Calculate</Button>
         {result && <ResultDisplay result={result} />}
@@ -63,8 +63,8 @@ const SphereCalculator = () => {
     );
 
     const svg = (
-        <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
-            <circle cx="50" cy="50" r="40" strokeWidth="2"/>
+        <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
+            <circle cx="50" cy="50" r="40" strokeWidth="2" className="fill-primary/20"/>
             <line x1="50" y1="50" x2="90" y2="50" strokeWidth="1" strokeDasharray="2,2" />
             <text x="68" y="45" fontSize="10" className="fill-foreground stroke-none">r</text>
         </svg>
@@ -101,8 +101,8 @@ const ConeCalculator = () => {
     );
     
     const svg = (
-        <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
-            <path d="M 20 80 L 50 10 L 80 80 Z" strokeWidth="2" className="fill-muted"/>
+        <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
+            <path d="M 20 80 L 50 10 L 80 80 Z" strokeWidth="2" className="fill-primary/20"/>
             <ellipse cx="50" cy="80" rx="30" ry="8" strokeWidth="2"/>
             <line x1="50" y1="10" x2="50" y2="80" strokeWidth="1" strokeDasharray="2,2"/>
             <line x1="50" y1="80" x2="80" y2="80" strokeWidth="1" strokeDasharray="2,2"/>
@@ -137,9 +137,9 @@ const CubeCalculator = () => {
     );
     
     const svg = (
-        <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
-            <rect x="20" y="30" width="50" height="50" strokeWidth="2" className="fill-muted opacity-50"/>
-            <path d="M 20 30 L 40 10 L 90 10 L 70 30" strokeWidth="2" className="fill-muted opacity-50"/>
+        <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
+            <rect x="20" y="30" width="50" height="50" strokeWidth="2" className="fill-primary/20"/>
+            <path d="M 20 30 L 40 10 L 90 10 L 70 30" strokeWidth="2" className="fill-primary/20"/>
             <path d="M 90 10 L 90 60 L 70 80" strokeWidth="2"/>
             <text x="40" y="85" fontSize="10" className="fill-foreground stroke-none">a</text>
         </svg>
@@ -176,11 +176,11 @@ const CylinderCalculator = () => {
     );
     
     const svg = (
-         <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
-            <ellipse cx="50" cy="20" rx="30" ry="8" strokeWidth="2" className="fill-muted"/>
+         <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
+            <ellipse cx="50" cy="20" rx="30" ry="8" strokeWidth="2" className="fill-primary/20"/>
             <line x1="20" y1="20" x2="20" y2="80" strokeWidth="2"/>
             <line x1="80" y1="20" x2="80" y2="80" strokeWidth="2"/>
-            <ellipse cx="50" cy="80" rx="30" ry="8" strokeWidth="2"/>
+            <ellipse cx="50" cy="80" rx="30" ry="8" strokeWidth="2" className="fill-primary/20"/>
             <line x1="50" y1="20" x2="50" y2="80" strokeWidth="1" strokeDasharray="2,2"/>
             <line x1="50" y1="80" x2="80" y2="80" strokeWidth="1" strokeDasharray="2,2"/>
             <text x="52" y="50" fontSize="10" className="fill-foreground stroke-none">h</text>
@@ -222,9 +222,9 @@ const RectangularTankCalculator = () => {
     );
 
     const svg = (
-        <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
-            <rect x="10" y="40" width="70" height="40" strokeWidth="2" className="fill-muted opacity-50" />
-            <path d="M 10 40 L 30 20 L 100 20 L 80 40" strokeWidth="2" className="fill-muted opacity-50" />
+        <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
+            <rect x="10" y="40" width="70" height="40" strokeWidth="2" className="fill-primary/20" />
+            <path d="M 10 40 L 30 20 L 100 20 L 80 40" strokeWidth="2" className="fill-primary/20" />
             <path d="M 100 20 L 100 60 L 80 80" strokeWidth="2" />
             <text x="40" y="85" fontSize="10" className="fill-foreground stroke-none">l</text>
             <text x="85" y="65" fontSize="10" className="fill-foreground stroke-none">w</text>
@@ -265,9 +265,9 @@ const CapsuleCalculator = () => {
     );
 
     const svg = (
-        <svg viewBox="0 0 100 100" width="120" height="100" className="stroke-foreground fill-transparent">
-            <path d="M 30 20 A 20 20 0 0 0 30 80" strokeWidth="2" className="fill-muted"/>
-            <path d="M 70 20 A 20 20 0 0 1 70 80" strokeWidth="2" className="fill-muted"/>
+        <svg viewBox="0 0 100 100" width="140" height="120" className="stroke-foreground fill-transparent">
+            <path d="M 30 20 A 20 20 0 0 0 30 80" strokeWidth="2" className="fill-primary/20"/>
+            <path d="M 70 20 A 20 20 0 0 1 70 80" strokeWidth="2" className="fill-primary/20"/>
             <line x1="30" y1="20" x2="70" y2="20" strokeWidth="2" />
             <line x1="30" y1="80" x2="70" y2="80" strokeWidth="2" />
             <line x1="10" y1="50" x2="30" y2="50" strokeWidth="1" strokeDasharray="2,2"/>
@@ -334,9 +334,9 @@ const SphericalCapCalculator = () => {
     );
     
     const svg = (
-         <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
+         <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
             <path d="M 50 10 A 40 40 0 0 1 50 90" strokeWidth="2" strokeDasharray="3,3" />
-            <path d="M 25 30 A 40 40 0 0 1 75 30" strokeWidth="2" className="fill-muted" />
+            <path d="M 25 30 A 40 40 0 0 1 75 30" strokeWidth="2" className="fill-primary/20" />
             <line x1="25" y1="30" x2="75" y2="30" strokeWidth="2" />
             <line x1="50" y1="10" x2="50" y2="30" strokeWidth="1" strokeDasharray="2,2"/>
             <text x="52" y="22" fontSize="10" className="fill-foreground stroke-none">h</text>
@@ -381,8 +381,8 @@ const ConicalFrustumCalculator = () => {
     );
 
     const svg = (
-        <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
-            <path d="M 30 30 L 10 80 L 90 80 L 70 30 Z" strokeWidth="2" className="fill-muted"/>
+        <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
+            <path d="M 30 30 L 10 80 L 90 80 L 70 30 Z" strokeWidth="2" className="fill-primary/20"/>
             <ellipse cx="50" cy="30" rx="20" ry="5" strokeWidth="2"/>
             <ellipse cx="50" cy="80" rx="40" ry="8" strokeWidth="2"/>
             <line x1="50" y1="30" x2="50" y2="80" strokeWidth="1" strokeDasharray="2,2"/>
@@ -428,8 +428,8 @@ const EllipsoidCalculator = () => {
     );
     
     const svg = (
-        <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
-            <ellipse cx="50" cy="50" rx="45" ry="30" strokeWidth="2" className="fill-muted"/>
+        <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
+            <ellipse cx="50" cy="50" rx="45" ry="30" strokeWidth="2" className="fill-primary/20"/>
             <line x1="50" y1="50" x2="95" y2="50" strokeWidth="1" strokeDasharray="2,2"/>
             <line x1="50" y1="50" x2="50" y2="20" strokeWidth="1" strokeDasharray="2,2"/>
             <text x="70" y="45" fontSize="10" className="fill-foreground stroke-none">a</text>
@@ -469,8 +469,8 @@ const SquarePyramidCalculator = () => {
     );
     
     const svg = (
-         <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
-            <path d="M 15 80 L 45 70 L 95 70 L 65 80 Z" strokeWidth="2" className="fill-muted"/>
+         <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
+            <path d="M 15 80 L 45 70 L 95 70 L 65 80 Z" strokeWidth="2" className="fill-primary/20"/>
             <path d="M 15 80 L 55 10 L 95 70" strokeWidth="2"/>
             <path d="M 55 10 L 45 70" strokeWidth="2" strokeDasharray="2,2"/>
             <line x1="55" y1="10" x2="55" y2="75" strokeWidth="1" strokeDasharray="2,2"/>
@@ -519,8 +519,8 @@ const TubeCalculator = () => {
     );
     
     const svg = (
-        <svg viewBox="0 0 100 100" width="100" height="100" className="stroke-foreground fill-transparent">
-            <ellipse cx="50" cy="50" rx="40" ry="15" strokeWidth="2" className="fill-muted opacity-50"/>
+        <svg viewBox="0 0 100 100" width="120" height="120" className="stroke-foreground fill-transparent">
+            <ellipse cx="50" cy="50" rx="40" ry="15" strokeWidth="2" className="fill-primary/20"/>
             <ellipse cx="50" cy="50" rx="25" ry="10" strokeWidth="2" className="fill-background"/>
              <line x1="50" y1="50" x2="90" y2="50" strokeWidth="1" strokeDasharray="2,2"/>
              <line x1="50" y1="50" x2="75" y2="50" strokeWidth="1" strokeDasharray="2,2"/>
