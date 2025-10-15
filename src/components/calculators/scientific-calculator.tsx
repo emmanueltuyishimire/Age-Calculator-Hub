@@ -9,33 +9,32 @@ import { cn } from '@/lib/utils';
 import { Trash2 } from 'lucide-react';
 import { evaluate } from 'mathjs';
 
-const basicButtons = [
-  ['AC', '±', '%', '÷'],
-  ['7', '8', '9', '×'],
-  ['4', '5', '6', '−'],
-  ['1', '2', '3', '+'],
-  ['0', '.', '=', <Trash2 key="back" />],
-];
-
 const scientificButtons = [
   ['sin', 'cos', 'tan', 'Deg/Rad'],
   ['asin', 'acos', 'atan', 'π', 'e'],
-  ['x^y', 'x^3', 'x^2', 'exp', '10^x'],
+  [<span key="xy">x<sup>y</sup></span>, <span key="x3">x<sup>3</sup></span>, <span key="x2">x<sup>2</sup></span>, <span key="ex">e<sup>x</sup></span>, <span key="10x">10<sup>x</sup></span>],
   ['y√x', '3√x', '√', 'ln', 'log'],
-  ['(', ')', '1/x', 'n!'],
+  ['(', ')', '1/x', '%', 'n!'],
 ];
 
 
 const getVariant = (btn: any) => {
-  const btnStr = typeof btn === 'string' ? btn : 'Backspace';
+  let btnStr = '';
+  if (typeof btn === 'string') {
+    btnStr = btn;
+  } else if (React.isValidElement(btn) && btn.key) {
+    btnStr = btn.key;
+  } else if (btn.type === Trash2) {
+    btnStr = 'Backspace';
+  }
+
 
   if (btnStr === 'Backspace' || btnStr === 'AC') return 'destructive';
   if (['+', '−', '×', '÷', '='].includes(btnStr)) return 'secondary';
-  if (typeof btn !== 'string') return 'secondary';
-
+  
   const scientificOps = [
-    'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e', 'x^y', 'x^3', 'x^2',
-    'exp', '10^x', 'y√x', '3√x', '√', 'ln', 'log', '(', ')', '1/x', 'n!',
+    'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e', 'xy', 'x3', 'x2',
+    'ex', '10x', 'y√x', '3√x', '√', 'ln', 'log', '(', ')', '1/x', '%', 'n!',
     'Deg/Rad', 'Ans', 'M+', 'M-', 'MR', 'RND', 'E'
   ];
   if (scientificOps.includes(btnStr)) return 'outline';
@@ -104,6 +103,8 @@ const ScientificCalculator = () => {
         if (typeof btn === 'string') {
             value = btn;
         } else if (React.isValidElement(btn) && btn.key) {
+            value = btn.key as string;
+        } else if (React.isValidElement(btn) && btn.type === Trash2) {
             value = 'Backspace';
         }
         
@@ -147,22 +148,22 @@ const ScientificCalculator = () => {
             case 'e':
                 setExpression(prev => prev + 'e');
                 break;
-             case 'x^y':
+             case 'xy':
                 setExpression(prev => prev + '^');
                 break;
-            case 'x^2':
+            case 'x2':
                 setExpression(prev => `(${prev || '0'})^2`);
                 break;
-            case 'x^3':
+            case 'x3':
                 setExpression(prev => `(${prev || '0'})^3`);
                 break;
-            case '10^x':
+            case '10x':
                 setExpression(prev => `10^(${prev || '0'})`);
                 break;
+            case 'ex':
+                 setExpression(prev => `e^(${prev || '0'})`);
+                break;
             case 'y√x':
-                // This is more complex, might require two inputs. For simplicity, let's treat it as nth root.
-                // e.g. nthRoot(value, root)
-                // This will be tricky with current input method. Let's make it a power for now.
                 setExpression(prev => prev + '^(1/');
                 break;
             case 'Ans':
@@ -233,6 +234,9 @@ const ScientificCalculator = () => {
             } else if (key === 'Escape') {
                 event.preventDefault();
                 handleButtonClick('AC');
+            } else if (key === '^') {
+                event.preventDefault();
+                handleButtonClick('xy');
             }
         };
 
@@ -254,6 +258,30 @@ const ScientificCalculator = () => {
         }
     }, [expression]);
 
+  const basicButtons = [
+    ['AC', '±', '%', '÷'],
+    ['7', '8', '9', '×'],
+    ['4', '5', '6', '−'],
+    ['1', '2', '3', '+'],
+    ['0', '.', '=', <Trash2 key="back" />],
+  ];
+
+  const renderButtonWithIndicator = (btn: string, active: boolean) => (
+    <Button
+      key={`sci-${btn}`}
+      variant="outline"
+      className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1 relative")}
+      onClick={() => handleButtonClick('Deg/Rad')}
+    >
+      {btn}
+      {active && (
+        <div className="absolute top-1 right-1 h-3 w-3 rounded-full border border-blue-500 flex items-center justify-center">
+            <div className="h-1.5 w-1.5 rounded-full bg-green-500"></div>
+        </div>
+      )}
+    </Button>
+  );
+  
   return (
     <div className="bg-card border rounded-lg p-2 sm:p-3 w-full max-w-2xl shadow-lg">
       <Input
@@ -265,22 +293,28 @@ const ScientificCalculator = () => {
       />
       <div className="grid grid-cols-2 gap-2 sm:gap-3">
         {/* Scientific Calculator Part */}
-        <div className="grid grid-cols-4 gap-1 sm:gap-2">
-            {scientificButtons.flat().map((btn, index) => (
-                <Button
-                    key={`sci-${index}-${btn}`}
-                    variant={getVariant(btn)}
-                    className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1 relative")}
-                    onClick={() => handleButtonClick(btn)}
-                >
-                    {btn === 'Deg/Rad' ? (isDeg ? 'Deg' : 'Rad') : btn}
-                     {btn === 'Deg/Rad' && (
-                        <div className="absolute top-1 right-1 h-3 w-3 rounded-full border border-blue-500 flex items-center justify-center">
-                            <div className="h-1.5 w-1.5 rounded-full bg-green-500"></div>
-                        </div>
-                    )}
-                </Button>
-            ))}
+        <div className="grid grid-cols-5 gap-1 sm:gap-2">
+            {scientificButtons.flat().map((btn, index) => {
+              if (btn === 'Deg/Rad') {
+                return (
+                  <React.Fragment key="deg-rad-buttons">
+                    {renderButtonWithIndicator('Deg', isDeg)}
+                    {renderButtonWithIndicator('Rad', !isDeg)}
+                  </React.Fragment>
+                )
+              }
+              const key = typeof btn === 'string' ? btn : (btn as React.ReactElement).key;
+              return (
+                  <Button
+                      key={`sci-${index}-${key}`}
+                      variant={getVariant(btn)}
+                      className={cn("h-10 sm:h-12 text-xs sm:text-sm p-1 relative")}
+                      onClick={() => handleButtonClick(btn)}
+                  >
+                      {btn}
+                  </Button>
+              )
+            })}
         </div>
         {/* Basic Calculator Part */}
         <div className="grid grid-cols-4 gap-1 sm:gap-2">
