@@ -1,13 +1,12 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { RefreshCcw } from 'lucide-react';
 
 const unitOptions = [
     { value: 'meters', label: 'meters' },
@@ -20,7 +19,7 @@ const unitOptions = [
     { value: 'inches', label: 'inches' },
 ];
 
-const ShapeCalculatorCard = ({ title, formula, children }: { title: string, formula: string, children: React.ReactNode }) => (
+const ShapeCalculatorCard = ({ title, formula, children }: { title: string, formula: React.ReactNode, children: React.ReactNode }) => (
     <Card>
         <CardHeader>
             <CardTitle>{title}</CardTitle>
@@ -36,7 +35,7 @@ const CalculatorLayout = ({ inputs, svg, onCalculate, result }: { inputs: React.
     <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div className="space-y-4">{inputs}</div>
-            <div className="flex justify-center items-center h-full p-4 bg-muted/50 rounded-lg">{svg}</div>
+            <div className="flex justify-center items-center h-full p-4 bg-muted/50 rounded-lg min-h-[140px]">{svg}</div>
         </div>
         <Button onClick={onCalculate} className="w-full">Calculate</Button>
         {result && <ResultDisplay result={result} />}
@@ -50,7 +49,7 @@ const SphereCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const r = parseFloat(radius);
         if (isNaN(r) || r <= 0) {
             setResult('Invalid input');
@@ -58,7 +57,7 @@ const SphereCalculator = () => {
         }
         const volume = (4 / 3) * Math.PI * Math.pow(r, 3);
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [radius, unit]);
 
     const inputs = (
         <div className="flex gap-2">
@@ -75,7 +74,7 @@ const SphereCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Sphere Volume" formula="V = (4/3)πr³"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Sphere Volume" formula={<>V = (4/3)πr<sup>3</sup></>}><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const ConeCalculator = () => {
@@ -84,7 +83,7 @@ const ConeCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const r = parseFloat(radius);
         const h = parseFloat(height);
         if (isNaN(r) || isNaN(h) || r <= 0 || h <= 0) {
@@ -93,7 +92,7 @@ const ConeCalculator = () => {
         }
         const volume = (1 / 3) * Math.PI * Math.pow(r, 2) * h;
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [radius, height, unit]);
     
     const inputs = (
         <>
@@ -116,7 +115,7 @@ const ConeCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Cone Volume" formula="V = (1/3)πr²h"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Cone Volume" formula={<>V = (1/3)πr<sup>2</sup>h</>}><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const CubeCalculator = () => {
@@ -124,7 +123,7 @@ const CubeCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const a = parseFloat(edge);
         if (isNaN(a) || a <= 0) {
             setResult('Invalid input');
@@ -132,7 +131,7 @@ const CubeCalculator = () => {
         }
         const volume = Math.pow(a, 3);
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [edge, unit]);
 
     const inputs = (
         <div className="flex gap-2">
@@ -150,7 +149,7 @@ const CubeCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Cube Volume" formula="V = a³"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Cube Volume" formula={<>V = a<sup>3</sup></>}><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const CylinderCalculator = () => {
@@ -159,7 +158,7 @@ const CylinderCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const r = parseFloat(radius);
         const h = parseFloat(height);
         if (isNaN(r) || isNaN(h) || r <= 0 || h <= 0) {
@@ -168,7 +167,7 @@ const CylinderCalculator = () => {
         }
         const volume = Math.PI * Math.pow(r, 2) * h;
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [radius, height, unit]);
 
     const inputs = (
         <>
@@ -193,7 +192,7 @@ const CylinderCalculator = () => {
         </svg>
     );
     
-    return <ShapeCalculatorCard title="Cylinder Volume" formula="V = πr²h"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Cylinder Volume" formula={<>V = πr<sup>2</sup>h</>}><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const RectangularTankCalculator = () => {
@@ -203,7 +202,7 @@ const RectangularTankCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const l = parseFloat(length);
         const w = parseFloat(width);
         const h = parseFloat(height);
@@ -213,7 +212,7 @@ const RectangularTankCalculator = () => {
         }
         const volume = l * w * h;
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [length, width, height, unit]);
 
     const inputs = (
          <>
@@ -246,7 +245,7 @@ const CapsuleCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const r = parseFloat(radius);
         const a = parseFloat(height); // height of cylinder part
         if (isNaN(r) || isNaN(a) || r <= 0 || a <= 0) {
@@ -257,7 +256,7 @@ const CapsuleCalculator = () => {
         const cylinderVolume = Math.PI * Math.pow(r, 2) * a;
         const volume = sphereVolume + cylinderVolume;
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [radius, height, unit]);
 
     const inputs = (
         <>
@@ -282,7 +281,7 @@ const CapsuleCalculator = () => {
         </svg>
     );
     
-    return <ShapeCalculatorCard title="Capsule Volume" formula="V = πr²a + (4/3)πr³"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Capsule Volume" formula={<>V = πr<sup>2</sup>a + (4/3)πr<sup>3</sup></>}><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const SphericalCapCalculator = () => {
@@ -292,7 +291,7 @@ const SphericalCapCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const r = parseFloat(baseRadius);
         const R = parseFloat(ballRadius);
         const h = parseFloat(height);
@@ -325,7 +324,7 @@ const SphericalCapCalculator = () => {
         }
         
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [baseRadius, ballRadius, height, unit]);
 
     const inputs = (
         <>
@@ -352,7 +351,7 @@ const SphericalCapCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Spherical Cap Volume (Provide 2 of 3 values)" formula="V = (1/3)πh²(3R-h)"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Spherical Cap Volume (Provide 2 of 3 values)" formula={<>V = (1/3)πh<sup>2</sup>(3R-h)</>}><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const ConicalFrustumCalculator = () => {
@@ -362,7 +361,7 @@ const ConicalFrustumCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const topR = parseFloat(r1);
         const bottomR = parseFloat(r2);
         const h = parseFloat(height);
@@ -372,7 +371,7 @@ const ConicalFrustumCalculator = () => {
         }
         const volume = (1 / 3) * Math.PI * h * (topR * topR + bottomR * bottomR + topR * bottomR);
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [r1, r2, height, unit]);
     
      const inputs = (
          <>
@@ -399,7 +398,7 @@ const ConicalFrustumCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Conical Frustum Volume" formula="V = (1/3)πh(r² + R² + rR)"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Conical Frustum Volume" formula={<>V = (1/3)πh(r<sup>2</sup> + R<sup>2</sup> + rR)</>}><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const EllipsoidCalculator = () => {
@@ -409,7 +408,7 @@ const EllipsoidCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const axisA = parseFloat(a);
         const axisB = parseFloat(b);
         const axisC = parseFloat(c);
@@ -419,7 +418,7 @@ const EllipsoidCalculator = () => {
         }
         const volume = (4 / 3) * Math.PI * axisA * axisB * axisC;
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [a, b, c, unit]);
 
     const inputs = (
          <>
@@ -452,7 +451,7 @@ const SquarePyramidCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const a = parseFloat(baseEdge);
         const h = parseFloat(height);
         if (isNaN(a) || isNaN(h) || a <= 0 || h <= 0) {
@@ -461,7 +460,7 @@ const SquarePyramidCalculator = () => {
         }
         const volume = (1 / 3) * a * a * h;
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [baseEdge, height, unit]);
     
     const inputs = (
          <>
@@ -484,7 +483,7 @@ const SquarePyramidCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Square Pyramid Volume" formula="V = (1/3)a²h"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Square Pyramid Volume" formula={<>V = (1/3)a<sup>2</sup>h</>}><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 const TubeCalculator = () => {
@@ -494,7 +493,7 @@ const TubeCalculator = () => {
     const [unit, setUnit] = useState('meters');
     const [result, setResult] = useState<string | null>(null);
 
-    const calculate = () => {
+    const calculate = useCallback(() => {
         const outerD = parseFloat(d1);
         const innerD = parseFloat(d2);
         const l = parseFloat(length);
@@ -510,7 +509,7 @@ const TubeCalculator = () => {
         const innerR = innerD / 2;
         const volume = Math.PI * (outerR * outerR - innerR * innerR) * l;
         setResult(`${volume.toLocaleString(undefined, { maximumFractionDigits: 4 })} cubic ${unit}`);
-    };
+    }, [d1, d2, length, unit]);
 
     const inputs = (
          <>
@@ -535,7 +534,7 @@ const TubeCalculator = () => {
         </svg>
     );
 
-    return <ShapeCalculatorCard title="Tube Volume" formula="V = π(r₁² - r₂²)l"><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
+    return <ShapeCalculatorCard title="Tube Volume" formula={<>V = π(r₁<sup>2</sup> - r₂<sup>2</sup>)l</>}><CalculatorLayout inputs={inputs} svg={svg} onCalculate={calculate} result={result} /></ShapeCalculatorCard>;
 };
 
 

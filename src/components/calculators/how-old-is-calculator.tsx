@@ -101,8 +101,9 @@ export default function HowOldIsCalculator() {
       setError(null);
   }, []);
 
-  const handleDobChange = (field: 'day' | 'month' | 'year', value: string) => {
-    setDob(prev => ({...prev, [field]: value}));
+  const handleDobChange = useCallback((field: 'day' | 'month' | 'year', value: string) => {
+    setDob(prev => ({...prev, [field]: value.replace(/\D/g, '')}));
+    setAgeResult(undefined);
     
     if (mode === 'full') {
         if (field === 'day' && value.length === 2) fullMonthRef.current?.focus();
@@ -110,9 +111,7 @@ export default function HowOldIsCalculator() {
     } else if (mode === 'monthYear') {
         if (field === 'month' && value.length === 2) monthYearYearRef.current?.focus();
     }
-    
-    setAgeResult(undefined);
-  };
+  }, [mode]);
   
   const renderInputs = useCallback(() => {
     switch(mode) {
@@ -139,7 +138,7 @@ export default function HowOldIsCalculator() {
           </div>
         );
     }
-  }, [mode, dob]);
+  }, [mode, dob, handleDobChange]);
 
   useEffect(() => {
     handleReset();

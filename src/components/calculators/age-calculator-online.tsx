@@ -185,10 +185,10 @@ export default function AgeCalculatorOnline() {
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
-            <ShareButton title="Age Calculator by Date of Birth" text="Find out your exact age with this online calculator!" />
+            <ShareButton title="Age Calculator by Date of Birth" text="Find out your exact age with this online calculator!" url="/age-calculator-by-date-of-birth" />
           </div>
 
-          {age && (
+          {age && isCalculating && (
             
             <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 animate-fade-in">
               <div>
