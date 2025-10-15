@@ -45,6 +45,7 @@ import {
   Car,
   FlaskConical,
   Percent,
+  Boxes,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -257,6 +258,13 @@ export const navItems: NavItem[] = [
     label: 'Percentage Calculator',
     category: 'Math Calculators',
     description: 'A suite of tools for all your percentage calculation needs.'
+  },
+   {
+    href: '/volume-calculator',
+    icon: Boxes,
+    label: 'Volume Calculator',
+    category: 'Math Calculators',
+    description: 'Calculate the volume of common shapes like spheres, cones, and cubes.'
   },
   
   // Other Calculators (Pet, Legal, etc. might go here or their own categories)
