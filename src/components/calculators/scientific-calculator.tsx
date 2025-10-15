@@ -7,31 +7,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Trash2 } from 'lucide-react';
-import { evaluate } from 'mathjs';
+import { evaluate, format as mathFormat } from 'mathjs';
 
-const scientificButtons: (string | React.ReactNode)[][] = [
-    ['sin', 'cos', 'tan'],
-    [<span key="asin">sin<sup>-1</sup></span>, <span key="acos">cos<sup>-1</sup></span>, <span key="atan">tan<sup>-1</sup></span>],
-    [<span key="powy">x<sup>y</sup></span>, <span key="pow3">x<sup>3</sup></span>, <span key="pow2">x<sup>2</sup></span>],
-    [<span key="yroot">y√x</span>, <span key="cuberoot">³√x</span>, <span key="sqrt">√x</span>],
-    ['(', ')', <span key="reciprocal">1/x</span>],
-    ['π', 'e'],
-    [<span key="ex">e<sup>x</sup></span>, <span key="10x">10<sup>x</sup></span>],
-    ['ln', 'log'],
-    ['n!'],
+const scientificButtonsFirstPanel: (string | React.ReactNode)[][] = [
+    ['sin', 'cos', 'tan', <span key="powy">x<sup>y</sup></span>, '√x'],
+    [<span key="asin">sin<sup>-1</sup></span>, <span key="acos">cos<sup>-1</sup></span>, <span key="atan">tan<sup>-1</sup></span>, <span key="pow2">x<sup>2</sup></span>, '³√x'],
+    ['ln', 'log', 'n!', <span key="ex">e<sup>x</sup></span>, 'y√x'],
+    ['(', ')', <span key="reciprocal">1/x</span>, <span key="10x">10<sup>x</sup></span>, 'e'],
+    ['Deg/Rad', 'π', 'EXP', 'RND', '%']
 ];
 
-const basicButtons: (string | React.ReactNode)[][] = [
-    ['7', '8', '9'],
-    ['4', '5', '6'],
-    ['1', '2', '3'],
-    ['0', '.', '±']
+const basicButtonsSecondPanel: (string | React.ReactNode)[][] = [
+    ['AC', <Trash2 key="backspace" className="h-5 w-5 mx-auto"/>, 'Ans', 'M+', 'MR'],
+    ['7', '8', '9', '÷', 'M-'],
+    ['4', '5', '6', '×'],
+    ['1', '2', '3', '−'],
+    ['0', '.', '±', '+']
 ];
 
-const operatorButtons: (string | React.ReactNode)[] = ['÷', '×', '−', '+', '='];
-
-const memoryButtons = ['Ans', 'M+', 'M-', 'MR'];
-
+const memoryButtons = ['M+', 'M-', 'MR'];
 
 const factorial = (n: number): number => {
     if (n < 0 || n !== Math.floor(n)) return NaN;
@@ -50,9 +44,11 @@ const ScientificCalculator = () => {
     const [memory, setMemory] = useState(0);
     const [ans, setAns] = useState(0);
     const [expression, setExpression] = useState('');
+    const [isError, setIsError] = useState(false);
     const [isResult, setIsResult] = useState(false);
 
     const calculate = useCallback(() => {
+        if (!expression) return;
         try {
             let finalExpression = expression
                 .replace(/×/g, '*')
@@ -81,14 +77,16 @@ const ScientificCalculator = () => {
             };
 
             const result = evaluate(finalExpression, scope);
-            const resultString = Number(result.toFixed(10)).toString();
+            const resultString = mathFormat(result, { precision: 10 });
             setAns(result);
+            setDisplay(resultString);
             setExpression(resultString);
             setIsResult(true);
 
         } catch (error) {
-            setExpression('');
             setDisplay('Error');
+            setIsError(true);
+            setExpression('');
         }
     }, [expression, isDeg]);
 
@@ -106,8 +104,11 @@ const ScientificCalculator = () => {
              }
         }
         
-        if (display === 'Error') {
+        if (isError) {
           setExpression('');
+          setDisplay('0');
+          setIsError(false);
+          if (value === 'AC') return;
         }
 
         if (isResult && !['+', '−', '×', '÷', '^', '%', '=', 'M+', 'M-'].includes(value)) {
@@ -117,19 +118,47 @@ const ScientificCalculator = () => {
             setIsResult(false);
         }
         
+        const lastChar = expression.slice(-1);
+        const isOperator = ['+', '−', '×', '÷'].includes(lastChar);
+        
+        const handleOperator = (op: string) => {
+            if (isOperator) {
+                setExpression(prev => prev.slice(0, -1) + op);
+            } else if (expression !== '') {
+                setExpression(prev => prev + op);
+            }
+        };
+
+        const getLastNumber = (expr: string): string => {
+            const match = expr.match(/(-?\d+\.?\d*|pi|e)$/);
+            return match ? match[0] : '';
+        };
+
         switch (value) {
             case 'AC': setExpression(''); setMemory(0); break;
             case 'backspace': setExpression(prev => prev.slice(0, -1)); break;
             case '=': calculate(); break;
-            case 'sin': case 'cos': case 'tan': case 'log': case 'ln':
+            case '+': handleOperator('+'); break;
+            case '−': handleOperator('−'); break;
+            case '×': handleOperator('×'); break;
+            case '÷': handleOperator('÷'); break;
+            case 'sin': case 'cos': case 'tan': case 'log': case 'ln': case 'asin': case 'acos': case 'atan':
                 setExpression(prev => prev + value + '(');
                 break;
-            case '√': setExpression(prev => prev + 'sqrt('); break;
-            case '³√': setExpression(prev => prev + 'cbrt('); break;
+            case '√x': setExpression(prev => prev + 'sqrt('); break;
+            case '³√x': setExpression(prev => prev + 'cbrt('); break;
             case 'sin-1': setExpression(prev => prev + 'asin('); break;
             case 'cos-1': setExpression(prev => prev + 'acos('); break;
             case 'tan-1': setExpression(prev => prev + 'atan('); break;
-            case '1/x': setExpression(prev => `1/(${prev || '0'})`); break;
+            case '1/x': 
+                setExpression(prev => {
+                    const lastNum = getLastNumber(prev);
+                    if (lastNum) {
+                        return prev.slice(0, -lastNum.length) + `(1/${lastNum})`;
+                    }
+                    return `(1/${prev || '1'})`;
+                });
+                break;
             case 'n!': setExpression(prev => `(${prev || '0'})!`); break;
             case 'π': setExpression(prev => prev + 'pi'); break;
             case 'e': setExpression(prev => prev + 'e'); break;
@@ -142,47 +171,46 @@ const ScientificCalculator = () => {
             case 'Ans': setExpression(prev => prev + ans.toString()); break;
             case 'M+':
                 try { 
-                    const currentValue = evaluate(expression || display);
+                    const currentValue = evaluate(getLastNumber(expression) || display);
                     setMemory(mem => mem + currentValue);
-                } catch { setDisplay('Error'); setExpression(''); }
+                } catch {}
                 setIsResult(true);
                 break;
             case 'M-':
                 try { 
-                    const currentValue = evaluate(expression || display);
+                    const currentValue = evaluate(getLastNumber(expression) || display);
                     setMemory(mem => mem - currentValue);
-                } catch { setDisplay('Error'); setExpression(''); }
+                } catch {}
                 setIsResult(true);
                 break;
             case 'MR': setExpression(prev => prev + memory.toString()); break;
             case '±':
                 setExpression(prev => {
-                    if (prev.startsWith('-(') && prev.endsWith(')')) {
-                        return prev.substring(2, prev.length -1);
+                    const lastNum = getLastNumber(prev);
+                    if (lastNum) {
+                         const newNum = lastNum.startsWith('-') ? lastNum.substring(1) : `(-${lastNum})`;
+                         return prev.slice(0, -lastNum.length) + newNum;
                     }
-                    if (prev.length > 0 && !isNaN(Number(prev))) {
-                         return String(Number(prev) * -1);
-                    }
-                    return `-(${prev})`;
+                    return prev;
                 });
                 break;
             case 'Deg/Rad': setIsDeg(prev => !prev); break;
             case 'EXP': setExpression(prev => prev + 'e+'); break;
             case 'RND': setExpression(prev => prev + Math.random().toPrecision(8)); break;
             default:
-                if (expression === '0' && value !== '.') {
-                    setExpression(value);
-                } else {
-                    setExpression(prev => prev + value);
-                }
+                setExpression(prev => {
+                    if (isResult && /[\d.]/.test(value)) return value;
+                    if (prev === '0' && value !== '.') return value;
+                    return prev + value;
+                });
         }
-    }, [isResult, calculate, expression, display, ans, memory]);
+    }, [isResult, calculate, expression, display, ans, memory, isError]);
     
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             event.preventDefault();
             const { key } = event;
-             if (/[\d.]/.test(key) || ['(', ')'].includes(key)) {
+             if (/[\d.]/.test(key) || ['(', ')', '%'].includes(key)) {
                 handleButtonClick(key);
             } else if (key === '+') {
                 handleButtonClick('+');
@@ -200,8 +228,6 @@ const ScientificCalculator = () => {
                 handleButtonClick('AC');
             } else if (key === '^') {
                 handleButtonClick('xy');
-            } else if (key === '%') {
-                handleButtonClick('%');
             }
         };
 
@@ -212,6 +238,7 @@ const ScientificCalculator = () => {
     }, [handleButtonClick, calculate]);
     
     useEffect(() => {
+        if(isError) return;
         if (expression === '') {
             setDisplay('0');
         } else {
@@ -221,7 +248,7 @@ const ScientificCalculator = () => {
                 .replace(/-/g, '−');
             setDisplay(formattedDisplay);
         }
-    }, [expression]);
+    }, [expression, isError]);
 
   const getVariant = (btn: any): "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined => {
     let value = '';
@@ -260,7 +287,7 @@ const ScientificCalculator = () => {
             variant={getVariant(btn)} 
             className={cn("h-10 text-xs p-1 text-base", style, {
                 'bg-green-700 hover:bg-green-800 text-white': value === 'Deg/Rad' && isDeg,
-                'bg-green-700 hover:bg-green-800 text-white': value === 'Rad' && !isDeg,
+                'bg-green-600 hover:bg-green-700 text-white': value === 'Deg/Rad' && !isDeg,
             })}
             onClick={() => handleButtonClick(btn)}
         >
@@ -281,46 +308,19 @@ const ScientificCalculator = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Scientific Panel */}
         <div className="grid grid-cols-5 gap-1">
-            {['sin', 'cos', 'tan', 'π', 'e'].map((btn, i) => renderButton(btn, i))}
-            {[<span key="asin">sin<sup>-1</sup></span>, <span key="acos">cos<sup>-1</sup></span>, <span key="atan">tan<sup>-1</sup></span>, 'n!', '('].map((btn, i) => renderButton(btn, i+5))}
-            {[<span key="powy">x<sup>y</sup></span>, <span key="pow3">x<sup>3</sup></span>, <span key="pow2">x<sup>2</sup></span>, <span key="ex">e<sup>x</sup></span>, ')'].map((btn, i) => renderButton(btn, i+10))}
-            {[<span key="yroot">y√x</span>, <span key="cuberoot">³√x</span>, '√', <span key="10x">10<sup>x</sup></span>, '%'].map((btn, i) => renderButton(btn, i+15))}
-            {['ln', 'log', <span key="reciprocal">1/x</span>, 'EXP', 'RND'].map((btn, i) => renderButton(btn, i+20))}
+            {scientificButtonsFirstPanel.flat().map((btn, i) => renderButton(btn, i))}
         </div>
 
         {/* Basic Panel */}
         <div className="grid grid-cols-5 gap-1">
-            {renderButton('AC', 25, 'col-span-2')}
-            {renderButton(<Trash2 key="backspace" className="h-5 w-5 mx-auto"/>, 26)}
-            {renderButton('÷', 27)}
-            {renderButton('×', 28)}
-
-            {renderButton('7', 29)}
-            {renderButton('8', 30)}
-            {renderButton('9', 31)}
-            {renderButton('−', 32)}
-            {renderButton('M+', 33)}
-
-            {renderButton('4', 34)}
-            {renderButton('5', 35)}
-            {renderButton('6', 36)}
-            {renderButton('+', 37)}
-            {renderButton('M-', 38)}
-
-            {renderButton('1', 39)}
-            {renderButton('2', 40)}
-            {renderButton('3', 41)}
-            {renderButton('=', 42, 'row-span-2 h-auto')}
-            {renderButton('MR', 43)}
-            
-            {renderButton('0', 44, 'col-span-2')}
-            {renderButton('.', 45)}
-            {renderButton('Ans', 46)}
+             {basicButtonsSecondPanel.slice(0,1).flat().map((btn, i) => renderButton(btn, i + 25))}
+             {basicButtonsSecondPanel.slice(1,2).flat().map((btn, i) => renderButton(btn, i + 30))}
+             {renderButton('=', 33, 'row-span-3 h-auto')}
+             {basicButtonsSecondPanel.slice(2,3).flat().map((btn, i) => renderButton(btn, i + 34))}
+             {basicButtonsSecondPanel.slice(3,4).flat().map((btn, i) => renderButton(btn, i + 37))}
+             {basicButtonsSecondPanel.slice(4).flat().map((btn, i) => renderButton(btn, i + 40))}
         </div>
       </div>
-       <Button variant="outline" className="w-full h-10 text-xs p-1 text-base mt-2" onClick={() => setIsDeg(prev => !prev)}>
-            Mode: {isDeg ? 'Degrees' : 'Radians'}
-       </Button>
     </div>
   );
 };
