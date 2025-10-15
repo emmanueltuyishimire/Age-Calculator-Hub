@@ -31,7 +31,7 @@ export default function HowOldIsCalculator() {
   const [dob, setDob] = useState({ day: '', month: '', year: '' });
   const [ageResult, setAgeResult] = useState<AgeResult | undefined>();
   const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<InputMode>("full");
+  const [mode, setMode] = useState<InputMode>("year");
 
   const monthRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
@@ -143,9 +143,9 @@ export default function HowOldIsCalculator() {
       <CardContent className="space-y-4">
         <Tabs value={mode} onValueChange={(value) => setMode(value as InputMode)} className="w-full">
             <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="full">Full Date</TabsTrigger>
-                <TabsTrigger value="monthYear">Month & Year</TabsTrigger>
                 <TabsTrigger value="year">Year Only</TabsTrigger>
+                <TabsTrigger value="monthYear">Month & Year</TabsTrigger>
+                <TabsTrigger value="full">Full Date</TabsTrigger>
             </TabsList>
             <TabsContent value="full" className="mt-4">
                 {renderInputs()}
