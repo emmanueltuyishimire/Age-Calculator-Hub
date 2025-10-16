@@ -233,6 +233,13 @@ export const navItems: NavItem[] = [
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
   {
+    href: '/finance-calculator',
+    icon: Briefcase,
+    label: 'Finance Calculator',
+    category: 'Financial Calculators',
+    description: 'A TVM calculator to solve for FV, PV, PMT, N, or I/Y.'
+  },
+  {
     href: '/payment-calculator',
     icon: DollarSign,
     label: 'Payment Calculator',
