@@ -73,6 +73,29 @@ const babyAgeChart = [
     { weeks: 52, months: "1 year", days: "364 days" },
 ];
 
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Use the Baby Age Calculator",
+    "step": [
+        {
+            "@type": "HowToStep",
+            "name": "Enter Date of Birth",
+            "text": "Use the calendar to enter your baby's exact birthday."
+        },
+        {
+            "@type": "HowToStep",
+            "name": "Calculate Age",
+            "text": "Click the 'Calculate Baby's Age' button."
+        },
+        {
+            "@type": "HowToStep",
+            "name": "View Results",
+            "text": "Instantly see your baby's age in multiple formats: total weeks, total months, and a standard years/months/days breakdown."
+        }
+    ]
+};
+
 
 export default function BabyAgeCalculatorPage() {
   return (
@@ -80,6 +103,10 @@ export default function BabyAgeCalculatorPage() {
        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+       <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
       <div className="max-w-4xl mx-auto">
         <main role="main">
@@ -130,6 +157,7 @@ export default function BabyAgeCalculatorPage() {
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                             <li><Link href="/articles/navigating-pregnancy-milestones" className="text-primary hover:underline">Navigating Your Pregnancy: A Trimester-by-Trimester Milestone Guide</Link></li>
+                            <li>Trying to conceive? Use our <Link href="/ovulation-calculator" className="text-primary hover:underline">Ovulation Calculator</Link> to find your fertile window.</li>
                         </ul>
                     </CardContent>
                 </Card>
@@ -191,7 +219,7 @@ export default function BabyAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/baby-age-calculator" />
+        <RelatedCalculators currentCategory="Fitness & Health Calculators" currentHref="/baby-age-calculator" />
       </div>
     </div>
   );

@@ -217,12 +217,21 @@ export const navItems: NavItem[] = [
     description: 'Calculate your baby\'s age in weeks, months, and days.'
   },
   
+  // Financial Calculators Hub
+  {
+    href: '/financial-calculators',
+    icon: Briefcase,
+    label: 'Financial Calculators',
+    category: 'Financial Calculators',
+    description: 'A hub for all financial, investment, and retirement tools.'
+  },
+
   // Retirement
   {
     href: '/retirement-calculators',
     icon: PiggyBank,
     label: 'Retirement & Social Security',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'A hub for retirement planning and Social Security tools.'
   },
   {
@@ -298,6 +307,13 @@ export const navItems: NavItem[] = [
 
   // Mortgage & Real Estate
   {
+    href: '/mortgage-real-estate',
+    icon: Home,
+    label: 'Mortgage & Real Estate',
+    category: 'Mortgage & Real Estate',
+    description: 'A hub for mortgage and property investment calculators.'
+  },
+  {
     href: '/mortgage-calculator',
     icon: Landmark,
     label: 'Mortgage Calculator',
@@ -370,6 +386,13 @@ export const navItems: NavItem[] = [
   
   // Auto
   {
+    href: '/auto',
+    icon: Car,
+    label: 'Auto',
+    category: 'Auto',
+    description: 'A hub for all car loan and lease calculators.'
+  },
+  {
     href: '/auto-loan-calculator',
     icon: Car,
     label: 'Auto Loan Calculator',
@@ -392,6 +415,13 @@ export const navItems: NavItem[] = [
   },
 
   // Investment
+  {
+    href: '/investment',
+    icon: TrendingUp,
+    label: 'Investment Calculators',
+    category: 'Investment',
+    description: 'A hub for investment return and growth calculators.'
+  },
    {
     href: '/finance-calculator',
     icon: Briefcase,
@@ -462,8 +492,22 @@ export const navItems: NavItem[] = [
     category: 'Investment',
     description: 'Measure the profitability of an investment with simple and annualized ROI.'
   },
+   {
+    href: '/cd-calculator',
+    icon: Wallet,
+    label: 'CD Calculator',
+    category: 'Investment',
+    description: 'Estimate the future value of a Certificate of Deposit.'
+  },
 
   // Tax & Salary
+  {
+    href: '/tax-salary',
+    icon: DollarSign,
+    label: 'Tax & Salary Calculators',
+    category: 'Tax & Salary',
+    description: 'A hub for tax and salary estimation tools.'
+  },
   {
     href: '/salary-calculator',
     icon: Briefcase,
@@ -695,7 +739,12 @@ const categoryHubs: Record<string, string> = {
   'Core Age Calculators': '/core-age-calculators',
   'Math Calculators': '/math-calculators',
   'Other Calculators': '/other-calculators',
-  'Retirement & Social Security': '/retirement-calculators',
+  'Retirement': '/retirement-calculators',
+  'Mortgage & Real Estate': '/mortgage-real-estate',
+  'Auto': '/auto',
+  'Investment': '/investment',
+  'Tax & Salary': '/tax-salary',
+  'Other': '/other',
 };
 
 

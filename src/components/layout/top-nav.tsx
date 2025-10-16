@@ -50,6 +50,8 @@ export function TopNav() {
     ].includes(cat.name)
   );
 
+  const nonFinancialCategories = mainCategories.filter(c => !financialSubCategories.some(fc => fc.name === c.name));
+
 
   return (
     <>
@@ -73,9 +75,9 @@ export function TopNav() {
                   <div className="grid w-[600px] grid-cols-2 gap-x-8 gap-y-4 p-4 lg:w-[700px]">
                     {financialSubCategories.map((subCategory) => (
                       <div key={subCategory.name}>
-                        <p className="font-bold text-primary mb-2">{subCategory.name}</p>
+                        <Link href={subCategory.href || '#'} className="font-bold text-primary hover:underline mb-2 block">{subCategory.name}</Link>
                         <ul className="space-y-1">
-                          {subCategory.items.map((item) => (
+                          {subCategory.items.slice(0,5).map((item) => (
                             <li key={item.href}>
                               <ListItem href={item.href} title={item.label} className="text-xs">
                                 {item.description}
@@ -88,7 +90,7 @@ export function TopNav() {
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-              {mainCategories.filter(c => !financialSubCategories.some(fc => fc.name === c.name)).map(category => (
+              {nonFinancialCategories.map(category => (
                  <NavigationMenuItem key={category.name}>
                   <NavigationMenuTrigger aria-label={`Open ${category.name} menu`}>{category.name}</NavigationMenuTrigger>
                   <NavigationMenuContent>

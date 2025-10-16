@@ -33,7 +33,9 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
             <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary/50">
               <CardHeader>
                 <div className="flex items-center gap-4 mb-2">
-                  <item.icon className="h-6 w-6 text-primary" aria-hidden="true" />
+                  <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition-colors">
+                    <item.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                  </div>
                   <CardTitle className="text-lg group-hover:text-primary">{item.label}</CardTitle>
                 </div>
                 <CardDescription className="text-sm">{item.description}</CardDescription>

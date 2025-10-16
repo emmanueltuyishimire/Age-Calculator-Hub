@@ -18,6 +18,15 @@ export const metadata: Metadata = {
     alternates: {
         canonical: '/auto-loan-calculator',
     },
+    openGraph: {
+        title: 'Auto Loan Calculator – Estimate Your Monthly Car Payment',
+        description: 'Use our free Auto Loan Calculator to estimate your monthly car payments. Factor in vehicle price, down payment, trade-in, interest rate, and sales tax.',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Auto Loan Calculator – Estimate Your Monthly Car Payment',
+        description: 'Use our free Auto Loan Calculator to estimate your monthly car payments. Factor in vehicle price, down payment, trade-in, interest rate, and sales tax.',
+    },
 };
 
 const faqs = [
@@ -56,12 +65,49 @@ const faqSchema = {
     }))
 };
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Use the Auto Loan Calculator",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Select Calculation Mode",
+      "text": "Choose to calculate 'By Total Price' if you know the car's cost, or 'By Monthly Payment' if you have a budget in mind."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Enter Vehicle & Trade-in Details",
+      "text": "Input the vehicle price, plus any cash incentives, your down payment, and trade-in details."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Define Loan Parameters",
+      "text": "Set your desired loan term (in months) and the interest rate (APR) you expect."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Include Taxes & Fees",
+      "text": "Add your state sales tax and any title or registration fees to get a true total loan amount."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Calculate & Review",
+      "text": "Click 'Calculate' to see your estimated monthly payment, a full cost breakdown, and a year-by-year amortization schedule."
+    }
+  ]
+};
+
 export default function AutoLoanCalculatorPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
       <div className="max-w-5xl mx-auto">
         <main role="main">
@@ -83,6 +129,7 @@ export default function AutoLoanCalculatorPage() {
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                             <li><Link href="/articles/understanding-your-credit-score" className="text-primary hover:underline">Understanding Your Credit Score: The 5 Key Factors</Link></li>
                             <li><Link href="/articles/how-to-pay-off-debt-faster" className="text-primary hover:underline">The Power of Extra Payments: How to Pay Off Your Loans Faster</Link></li>
+                            <li>Compare financing offers with our <Link href="/cash-back-or-low-interest-calculator" className="text-primary hover:underline">Cash Back vs. Low Interest Calculator</Link>.</li>
                         </ul>
                     </CardContent>
                 </Card>
@@ -131,10 +178,8 @@ export default function AutoLoanCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Financial Calculators" currentHref="/auto-loan-calculator" />
+        <RelatedCalculators currentCategory="Auto" currentHref="/auto-loan-calculator" />
       </div>
     </div>
   );
 }
-
-    

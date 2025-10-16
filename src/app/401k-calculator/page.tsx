@@ -76,7 +76,7 @@ export default function FourOhOneKCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
-                            A 401(k) is a form of retirement savings plan in the U.S. with tax benefits that are mainly available through an employer. It is named after subsection 401(k) in the Internal Revenue Code, which was made possible by the Revenue Act of 1978. Contributions to a 401(k) are made as pre-tax deductions during payroll, and the dividends, interest, and capital gains of the 401(k) all benefit from tax deferment. This means that assets in a 401(k) grow tax-free and won't be taxed until a later point, usually during retirement.
+                            A 401(k) is a form of retirement savings plan in the U.S. with tax benefits that are mainly available through an employer. It is named after subsection 401(k) in the Internal Revenue Code, which was made possible by the Revenue Act of 1978. Contributions to a 401(k) are made as pre-tax deductions during payroll, and the dividends, interest, and capital gains of the 401(k) all benefit from tax deferment. This means that assets in a 401(k) grow tax-free and won't be taxed until a later point, usually during retirement. For more details on different account types, see our <Link href="/articles/guide-to-retirement-accounts" className="text-primary hover:underline">guide to retirement accounts</Link>.
                         </p>
                     </CardContent>
                 </Card>
@@ -113,7 +113,7 @@ export default function FourOhOneKCalculatorPage() {
                     <CardHeader><CardTitle>401(k) Distributions in Retirement</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
-                            Between the ages of 59 ½ and 73, participants have several options: receive distributions as a lump sum or installments, roll over the funds to an IRA or another plan, convert to an annuity, or do nothing until required minimum distributions (RMDs) begin at age 73.
+                            Between the ages of 59 ½ and 73, participants have several options: receive distributions as a lump sum or installments, roll over the funds to an IRA or another plan, convert to an annuity, or do nothing until required minimum distributions (RMDs) begin at age 73. Use our <Link href="/rmd-calculator" className="text-primary hover:underline">RMD Calculator</Link> to estimate your required withdrawals.
                         </p>
                     </CardContent>
                 </Card>
@@ -133,7 +133,7 @@ export default function FourOhOneKCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social Security" currentHref="/401k-calculator" />
+        <RelatedCalculators currentCategory="Retirement" currentHref="/401k-calculator" />
       </div>
     </div>
   );
