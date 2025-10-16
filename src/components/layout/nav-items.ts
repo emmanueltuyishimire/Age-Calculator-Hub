@@ -255,6 +255,13 @@ export const navItems: NavItem[] = [
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
   {
+    href: '/compound-interest-calculator',
+    icon: PieChart,
+    label: 'Compound Interest Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate the future value of an investment with contributions.'
+  },
+  {
     href: '/future-value-calculator',
     icon: TrendingUp,
     label: 'Future Value Calculator',

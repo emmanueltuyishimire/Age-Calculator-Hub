@@ -38,7 +38,7 @@ const faqs = [
     },
     {
         question: "How can I see the effect of compound interest on my savings?",
-        answer: "Our <a href='/savings-goal-calculator' class='text-primary hover:underline'>Savings Goal Calculator</a> and <a href='/retirement-savings-goal-calculator' class='text-primary hover:underline'>Retirement Savings Calculator</a> are perfect for this. You can input your savings, contribution, and interest rate to see how your money can grow over time."
+        answer: "Our <a href='/compound-interest-calculator' class='text-primary hover:underline'>Compound Interest Calculator</a> and <a href='/retirement-savings-goal-calculator' class='text-primary hover:underline'>Retirement Savings Calculator</a> are perfect for this. You can input your savings, contribution, and interest rate to see how your money can grow over time."
     }
 ];
 
@@ -96,10 +96,10 @@ export default function CompoundInterestPage() {
             <p className="text-center text-3xl font-bold my-4">Saver A, the early starter, ends up with more money despite contributing only a third of the amount. That's the power of giving your money more time to compound.</p>
 
             <div className="my-10 text-center">
-                <Link href="/retirement-savings-goal-calculator">
+                <Link href="/compound-interest-calculator">
                     <Button size="lg" className="text-lg">See Your Own Growth Potential</Button>
                 </Link>
-                <p className="text-sm text-muted-foreground mt-2">Model your retirement savings with our calculator.</p>
+                <p className="text-sm text-muted-foreground mt-2">Model your savings with our calculator.</p>
             </div>
 
            <h2 className="text-3xl font-bold text-center mt-12 mb-6">Frequently Asked Questions</h2>
