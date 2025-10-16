@@ -292,6 +292,13 @@ export const navItems: NavItem[] = [
     description: 'A TVM calculator to solve for FV, PV, PMT, N, or I/Y.'
   },
   {
+    href: '/simple-interest-calculator',
+    icon: DollarSign,
+    label: 'Simple Interest Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate simple interest on a loan or investment.'
+  },
+  {
     href: '/payment-calculator',
     icon: DollarSign,
     label: 'Payment Calculator',
