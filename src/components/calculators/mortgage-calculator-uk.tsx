@@ -163,10 +163,10 @@ export default function MortgageCalculatorUk() {
   }
 
   const chartData = result ? [
-    { name: 'Mortgage', value: result.principalAndInterest, fill: 'hsl(var(--chart-1))' },
+    { name: 'P&I', value: result.principalAndInterest, fill: 'hsl(var(--chart-1))' },
     { name: 'Taxes', value: result.monthlyTax, fill: 'hsl(var(--chart-2))' },
     { name: 'Insurance', value: result.monthlyInsurance, fill: 'hsl(var(--chart-3))' },
-    { name: 'Other', value: result.monthlyOther, fill: 'hsl(var(--chart-4))' }
+    { name: 'Other', value: result.monthlyOther, fill: 'hsl(var(--chart-4))' },
   ].filter(item => item.value > 0) : [];
 
   return (
