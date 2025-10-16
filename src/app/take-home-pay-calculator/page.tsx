@@ -43,6 +43,30 @@ const faqs = [
     }
 ];
 
+const terminologies = [
+    {
+        term: "Gross Pay",
+        definition: "The total amount of money you earn before any taxes or other deductions are taken out. This is your salary figure."
+    },
+    {
+        term: "Net Pay (Take-Home Pay)",
+        definition: "The amount of money you actually receive in your paycheck after all deductions (taxes, 401(k), health insurance, etc.) have been subtracted from your gross pay."
+    },
+    {
+        term: "FICA Taxes",
+        definition: "Taxes mandated by the Federal Insurance Contributions Act, which fund Social Security and Medicare. These are separate from your federal income tax."
+    },
+    {
+        term: "Pre-Tax Deductions",
+        definition: "Expenses that are taken out of your paycheck before income taxes are calculated. These deductions, such as contributions to a traditional 401(k) or health insurance premiums, lower your taxable income."
+    },
+    {
+        term: "Tax Withholding",
+        definition: "The amount of income tax that your employer withholds from your paycheck and pays directly to the government on your behalf. It's an estimated payment toward your annual tax liability."
+    }
+];
+
+
 const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -87,6 +111,22 @@ export default function TakeHomePayCalculatorPage() {
                 </Card>
                 <Card>
                     <CardHeader>
+                        <CardTitle>How to Use the Paycheck Calculator</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Enter Your Gross Pay:</strong> Input your total annual salary before any deductions.</li>
+                            <li><strong>Set Pay Frequency:</strong> Select how often you get paid (e.g., weekly, bi-weekly, monthly).</li>
+                            <li><strong>Filing Status:</strong> Choose your tax filing status (e.g., Single, Married Filing Jointly) and the relevant tax year.</li>
+                            <li><strong>Dependents:</strong> Enter the number of dependents you will claim for tax credits.</li>
+                            <li><strong>Deductions:</strong> Input your annual pre-tax deductions, such as 401(k) or health insurance contributions. Use the advanced section for more specific deductions if needed.</li>
+                             <li><strong>State Tax:</strong> Add your state's income tax rate for a more accurate estimate.</li>
+                            <li><strong>Click “Calculate Paycheck”:</strong> Get an instant breakdown of your estimated take-home pay per pay period.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
                         <CardTitle>Learn More About Your Pay & Taxes</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -96,6 +136,17 @@ export default function TakeHomePayCalculatorPage() {
                         </ul>
                     </CardContent>
                 </Card>
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Understanding Key Paycheck Terms</h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        {terminologies.map((item, index) => (
+                             <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{item.term}</AccordionTrigger>
+                                <AccordionContent>{item.definition}</AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
                     <Accordion type="single" collapsible className="w-full">
