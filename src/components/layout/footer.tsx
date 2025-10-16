@@ -14,14 +14,18 @@ export function Footer() {
   }, []);
 
   const categories = categorizedNavItems().filter(cat => 
-    !['Navigation', 'Company', 'Legal'].includes(cat.name)
+    !['Navigation'].includes(cat.name)
   );
+  
+  const mainCategories = categories.filter(cat => !['Company', 'Legal'].includes(cat.name));
+  const companyCategory = categories.find(cat => cat.name === 'Company');
+
 
   return (
     <footer className="py-8 md:py-12 bg-background border-t">
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {categories.map(category => {
+            {mainCategories.map(category => {
               return (
                 <div key={category.name}>
                     <h3 className="font-bold mb-4">
@@ -41,16 +45,20 @@ export function Footer() {
                 </div>
               );
             })}
-            <div>
-              <h3 className="font-bold mb-4">Company</h3>
-              <ul className="space-y-2">
-                <li><Link href="/about" className="text-sm text-muted-foreground hover:text-primary">About Us</Link></li>
-                <li><Link href="/contact" className="text-sm text-muted-foreground hover:text-primary">Contact</Link></li>
-                <li><Link href="/privacy" className="text-sm text-muted-foreground hover:text-primary">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-sm text-muted-foreground hover:text-primary">Terms of Service</Link></li>
-                <li><Link href="/disclaimer" className="text-sm text-muted-foreground hover:text-primary">Disclaimer</Link></li>
-              </ul>
-            </div>
+            {companyCategory && (
+                <div>
+                  <h3 className="font-bold mb-4">{companyCategory.name}</h3>
+                  <ul className="space-y-2">
+                    {companyCategory.items.map(item => (
+                       <li key={item.href}>
+                            <Link href={item.href} className="text-sm text-muted-foreground hover:text-primary">
+                            {item.label}
+                            </Link>
+                        </li>
+                    ))}
+                  </ul>
+                </div>
+            )}
           </div>
           <div className="mt-12 border-t pt-8 flex flex-col sm:flex-row items-center justify-between">
             <div className="flex items-center space-x-2">

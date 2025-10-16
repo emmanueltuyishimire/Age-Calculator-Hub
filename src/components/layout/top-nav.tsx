@@ -29,7 +29,8 @@ export function TopNav() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const categories = categorizedNavItems();
-  const mainCategories = categories.filter(cat => cat.name !== 'Company' && cat.name !== 'Legal' && cat.name !== 'Navigation');
+  const mainCategories = categories.filter(cat => cat.href && !['/', '/articles'].includes(cat.href) && !cat.name.includes('Company') && !cat.name.includes('Legal'));
+  const navigationLinks = categories.find(c => c.name === 'Navigation')?.items || [];
   
   const navLinkStyle = "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50";
   
@@ -37,14 +38,17 @@ export function TopNav() {
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-1 text-sm" aria-label="Main navigation">
-        <Link
-          href="/"
-          className={cn(navLinkStyle, 'font-semibold', {
-            'bg-accent/50': pathname === '/',
-          })}
-        >
-          Home
-        </Link>
+        {navigationLinks.map(link => (
+           <Link
+            key={link.href}
+            href={link.href}
+            className={cn(navLinkStyle, 'font-semibold', {
+              'bg-accent/50': pathname === link.href,
+            })}
+          >
+            {link.label}
+          </Link>
+        ))}
 
         {mainCategories.map(category => {
           return (
@@ -59,14 +63,6 @@ export function TopNav() {
             </Link>
           );
         })}
-        <Link
-          href="/articles"
-          className={cn(navLinkStyle, 'font-semibold', {
-            'bg-accent/50': pathname.startsWith('/articles'),
-          })}
-        >
-          Articles
-        </Link>
       </nav>
 
       {/* Mobile Navigation */}
@@ -90,7 +86,7 @@ export function TopNav() {
             <nav role="navigation" aria-label="Mobile menu">
               <div className="px-2">
               <div className="flex flex-col gap-1">
-                {categories.find(c => c.name === 'Navigation')?.items.map(item => (
+                {navigationLinks.map(item => (
                   <Link
                       key={item.href}
                       href={item.href}
