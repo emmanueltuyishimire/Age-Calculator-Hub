@@ -17,6 +17,17 @@ export const metadata: Metadata = {
     alternates: {
         canonical: '/bond-calculator',
     },
+    openGraph: {
+        title: 'Bond Calculator – Price, Yield, and Accrued Interest',
+        description: 'A comprehensive Bond Calculator to solve for price, yield, and other variables. Includes tools for calculating clean price, dirty price, and accrued interest.',
+        type: 'website',
+        url: '/bond-calculator',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Bond Calculator – Price, Yield, and Accrued Interest',
+        description: 'A comprehensive Bond Calculator to solve for price, yield, and other variables. Includes tools for calculating clean price, dirty price, and accrued interest.',
+    },
 };
 
 const faqs = [
