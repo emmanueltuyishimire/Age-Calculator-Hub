@@ -94,7 +94,7 @@ export default function AnnuityCalculatorPage() {
 
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social Security" currentHref="/annuity-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/annuity-calculator" />
       </div>
     </div>
   );

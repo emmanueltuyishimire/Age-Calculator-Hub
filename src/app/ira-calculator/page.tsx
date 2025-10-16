@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const faqs = [
     {
         question: "What is the main difference between a Traditional and Roth IRA?",
-        answer: "The primary difference is when you pay taxes. With a Traditional IRA, you get a tax deduction on your contributions now and pay taxes on withdrawals in retirement. With a Roth IRA, you contribute after-tax money, and your qualified withdrawals in retirement are tax-free."
+        answer: "The primary difference is when you pay taxes. With a Traditional IRA, you get a tax deduction on your contributions now and you pay taxes on withdrawals in retirement. With a Roth IRA, you contribute after-tax money, and your qualified withdrawals in retirement are tax-free."
     },
     {
         question: "Which IRA is better if my tax rate is higher now than in retirement?",
@@ -115,7 +115,7 @@ export default function IraCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Financial Calculators" currentHref="/ira-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/ira-calculator" />
       </div>
     </div>
   );

@@ -97,7 +97,7 @@ export default function RetirementSavingsGoalCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social Security" currentHref="/retirement-savings-goal-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/retirement-savings-goal-calculator" />
       </div>
     </div>
   );

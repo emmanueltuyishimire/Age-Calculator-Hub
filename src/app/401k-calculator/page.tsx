@@ -133,7 +133,7 @@ export default function FourOhOneKCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement" currentHref="/401k-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/401k-calculator" />
       </div>
     </div>
   );

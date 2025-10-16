@@ -98,7 +98,7 @@ export default function RmdCalculatorPage() {
 
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social Security" currentHref="/rmd-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/rmd-calculator" />
       </div>
     </div>
   );

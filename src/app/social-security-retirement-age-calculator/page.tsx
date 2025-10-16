@@ -172,7 +172,7 @@ export default function SocialSecurityRetirementPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social Security" currentHref="/social-security-retirement-age-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/social-security-retirement-age-calculator" />
       </div>
     </div>
   );

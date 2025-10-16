@@ -42,7 +42,7 @@ export default function AnnuityPayoutCalculatorPage() {
 
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social Security" currentHref="/annuity-payout-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/annuity-payout-calculator" />
       </div>
     </div>
   );

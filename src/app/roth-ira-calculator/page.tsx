@@ -1,12 +1,6 @@
 
 import RothIraCalculator from '@/components/calculators/roth-ira-calculator';
 import { type Metadata } from 'next';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
@@ -121,7 +115,7 @@ export default function RothIraCalculatorPage() {
                 </Card>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social Security" currentHref="/roth-ira-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/roth-ira-calculator" />
       </div>
     </div>
   );

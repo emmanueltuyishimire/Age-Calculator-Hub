@@ -79,9 +79,8 @@ export default function PensionCalculatorPage() {
 
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social Security" currentHref="/pension-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/pension-calculator" />
       </div>
     </div>
   );
 }
-

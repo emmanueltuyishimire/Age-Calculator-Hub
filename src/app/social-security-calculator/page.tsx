@@ -135,9 +135,8 @@ export default function SocialSecurityCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Retirement & Social Security" currentHref="/social-security-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/social-security-calculator" />
       </div>
     </div>
   );
 }
-
