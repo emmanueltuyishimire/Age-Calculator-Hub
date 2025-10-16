@@ -41,45 +41,28 @@ export function TopNav() {
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="hidden md:flex items-center gap-4 text-sm" aria-label="Main navigation">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink
-                  active={pathname === '/'}
-                  className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
-                >
-                  Home
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
+      <nav className="hidden md:flex items-center gap-1 text-sm" aria-label="Main navigation">
+        <Link href="/" className={cn(navigationMenuTriggerStyle(), 'font-semibold')} aria-current={pathname === '/' ? 'page' : undefined}>
+          Home
+        </Link>
 
-            {mainCategories.map(category => (
-              <NavigationMenuItem key={category.name}>
-                <Link href={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`} passHref legacyBehavior>
-                  <NavigationMenuLink
-                    active={pathname.startsWith(`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`)}
-                    className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
-                  >
-                    {category.name}
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            ))}
+        {mainCategories.map(category => {
+          const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`;
+          return (
+            <Link 
+              key={category.name} 
+              href={categoryHref} 
+              className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
+              aria-current={pathname.startsWith(categoryHref) ? 'page' : undefined}
+            >
+              {category.name}
+            </Link>
+          )
+        })}
 
-            <NavigationMenuItem>
-              <Link href="/articles" legacyBehavior passHref>
-                <NavigationMenuLink
-                  active={pathname.startsWith('/articles')}
-                  className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
-                >
-                  Articles
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        <Link href="/articles" className={cn(navigationMenuTriggerStyle(), 'font-semibold')} aria-current={pathname.startsWith('/articles') ? 'page' : undefined}>
+          Articles
+        </Link>
       </nav>
 
       {/* Mobile Navigation */}
