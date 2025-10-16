@@ -102,7 +102,7 @@ export default function MortgageCalculatorUk() {
       startDateYear: currentYear,
     },
   });
-
+  
   function onSubmit(values: FormData) {
     const { homePrice, downPayment, loanTerm, interestRate, propertyTax, homeInsurance, otherCosts, startDateMonth, startDateYear } = values;
 
@@ -162,6 +162,21 @@ export default function MortgageCalculatorUk() {
     });
   }
 
+  function handleReset() {
+    form.reset({
+      homePrice: 500000,
+      downPayment: 25,
+      loanTerm: 25,
+      interestRate: 5,
+      propertyTax: 1.2,
+      homeInsurance: 2500,
+      otherCosts: 6000,
+      startDateMonth: (new Date().getMonth() + 1).toString(),
+      startDateYear: currentYear,
+    });
+    setResult(null);
+  }
+
   const chartData = result ? [
     { name: 'P&I', value: result.principalAndInterest, fill: 'hsl(var(--chart-1))' },
     { name: 'Taxes', value: result.monthlyTax, fill: 'hsl(var(--chart-2))' },
@@ -189,6 +204,10 @@ export default function MortgageCalculatorUk() {
                     </div></FormItem>
                     <div className="flex flex-col sm:flex-row gap-2 pt-2">
                         <Button type="submit" className="w-full"><Home className="mr-2 h-4 w-4"/>Calculate</Button>
+                        <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset">
+                           <RefreshCcw className="mr-2 h-4 w-4" /> Reset
+                        </Button>
+                        <ShareButton title="UK Mortgage Calculator" text="Estimate your UK mortgage repayment with this calculator!" url="/mortgage-calculator-uk" />
                     </div>
                 </form>
               </Form>
