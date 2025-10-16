@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -36,11 +36,16 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const getCpiValue = (year: string, month: string): number | undefined => {
     const yearData = cpiData[year as CpiYear];
     if (!yearData) return undefined;
-    if (month === 'Average') {
-        return yearData.Average;
+    
+    // If a specific month is requested, check if it exists in the data.
+    if (month !== 'Average' && yearData[month as keyof typeof yearData]) {
+      return yearData[month as keyof typeof yearData];
     }
-    return yearData[month as keyof typeof yearData];
+    
+    // Fallback to average if the specific month isn't available or if "Average" is requested.
+    return yearData.Average;
 };
+
 
 // --- CPI Calculator ---
 const cpiSchema = z.object({
@@ -53,7 +58,7 @@ const cpiSchema = z.object({
 type CpiFormData = z.infer<typeof cpiSchema>;
 
 function CpiCalculator() {
-    const [result, setResult] = useState<number | null>(null);
+    const [result, setResult] = React.useState<number | null>(null);
     const form = useForm<CpiFormData>({
         resolver: zodResolver(cpiSchema),
         defaultValues: { amount: 100, startYear: '2015', startMonth: 'Average', endYear: '2025', endMonth: 'August' },
@@ -99,7 +104,7 @@ const flatRateSchema = z.object({ amount: z.coerce.number().min(0.01), rate: z.c
 type FlatRateFormData = z.infer<typeof flatRateSchema>;
 
 function ForwardFlatRateCalculator() {
-  const [result, setResult] = useState<number | null>(null);
+  const [result, setResult] = React.useState<number | null>(null);
   const form = useForm<FlatRateFormData>({ resolver: zodResolver(flatRateSchema), defaultValues: { amount: 100, rate: 3, years: 10 } });
   function onSubmit(values: FlatRateFormData) { setResult(values.amount * Math.pow(1 + values.rate / 100, values.years)); }
   return (
@@ -123,7 +128,7 @@ function ForwardFlatRateCalculator() {
 }
 
 function BackwardFlatRateCalculator() {
-  const [result, setResult] = useState<number | null>(null);
+  const [result, setResult] = React.useState<number | null>(null);
   const form = useForm<FlatRateFormData>({ resolver: zodResolver(flatRateSchema), defaultValues: { amount: 100, rate: 3, years: 10 } });
   function onSubmit(values: FlatRateFormData) { setResult(values.amount / Math.pow(1 + values.rate / 100, values.years)); }
   return (
@@ -189,8 +194,9 @@ function HistoricalData() {
                                 <TableRow key={year}>
                                     <TableCell className="font-medium">{year}</TableCell>
                                     {months.map(month => {
-                                        const currentCpi = getCpiValue(year, month);
-                                        const prevYearCpi = getCpiValue(String(Number(year) - 1), month);
+                                        const currentCpi = cpiData[year as CpiYear]?.[month as keyof typeof cpiData[CpiYear]];
+                                        const prevYearData = cpiData[String(Number(year) - 1) as CpiYear];
+                                        const prevYearCpi = prevYearData?.[month as keyof typeof prevYearData];
                                         const inflation = (currentCpi && prevYearCpi) ? ((currentCpi / prevYearCpi) - 1) * 100 : null;
                                         return <TableCell key={`${year}-${month}`}>{inflation !== null ? `${inflation.toFixed(2)}%` : ''}</TableCell>;
                                     })}
