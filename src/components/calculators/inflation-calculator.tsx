@@ -33,8 +33,9 @@ const currencySymbol = '$';
 const years = Object.keys(cpiData).sort((a, b) => Number(b) - Number(a));
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-const getCpiValue = (year: string, month: string): number => {
+const getCpiValue = (year: string, month: string): number | undefined => {
     const yearData = cpiData[year as CpiYear];
+    if (!yearData) return undefined;
     if (month === 'Average') {
         return yearData.Average;
     }
@@ -61,7 +62,7 @@ function CpiCalculator() {
     function onSubmit(values: CpiFormData) {
         const startCpi = getCpiValue(values.startYear, values.startMonth);
         const endCpi = getCpiValue(values.endYear, values.endMonth);
-        if (startCpi > 0) {
+        if (startCpi && endCpi && startCpi > 0) {
             const resultValue = values.amount * (endCpi / startCpi);
             setResult(resultValue);
         }
@@ -148,10 +149,14 @@ function BackwardFlatRateCalculator() {
 // --- Historical Data Display ---
 function HistoricalData() {
     const chartData = Object.entries(cpiData)
-        .map(([year, data]) => ({
-            year,
-            inflation: (data.Average / cpiData[String(Number(year) - 1) as CpiYear]?.Average - 1) * 100,
-        }))
+        .map(([year, data]) => {
+            const prevYearData = cpiData[String(Number(year) - 1) as CpiYear];
+            if (!prevYearData || !prevYearData.Average || !data.Average) return { year, inflation: NaN };
+            return {
+                year,
+                inflation: (data.Average / prevYearData.Average - 1) * 100,
+            };
+        })
         .filter(d => !isNaN(d.inflation) && d.year >= '1920')
         .reverse();
 
@@ -183,10 +188,20 @@ function HistoricalData() {
                             {years.map(year => (
                                 <TableRow key={year}>
                                     <TableCell className="font-medium">{year}</TableCell>
-                                    {months.map(month => (
-                                        <TableCell key={`${year}-${month}`}>{getCpiValue(year, month) ? `${((getCpiValue(year, month) / getCpiValue(String(Number(year)-1), month)) - 1) * 100 .toFixed(2)}%` : ''}</TableCell>
-                                    ))}
-                                    <TableCell className="font-bold">{cpiData[year as CpiYear].Average ? `${((cpiData[year as CpiYear].Average / cpiData[String(Number(year) - 1) as CpiYear]?.Average) - 1) * 100 .toFixed(2)}%` : ''}</TableCell>
+                                    {months.map(month => {
+                                        const currentCpi = getCpiValue(year, month);
+                                        const prevYearCpi = getCpiValue(String(Number(year) - 1), month);
+                                        const inflation = (currentCpi && prevYearCpi) ? ((currentCpi / prevYearCpi) - 1) * 100 : null;
+                                        return <TableCell key={`${year}-${month}`}>{inflation !== null ? `${inflation.toFixed(2)}%` : ''}</TableCell>;
+                                    })}
+                                    <TableCell className="font-bold">
+                                        {(() => {
+                                            const currentAvg = getCpiValue(year, 'Average');
+                                            const prevAvg = getCpiValue(String(Number(year) - 1), 'Average');
+                                            const avgInflation = (currentAvg && prevAvg) ? ((currentAvg / prevAvg) - 1) * 100 : null;
+                                            return avgInflation !== null ? `${avgInflation.toFixed(2)}%` : '';
+                                        })()}
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -196,6 +211,7 @@ function HistoricalData() {
         </Card>
     );
 }
+
 
 // Main component
 export default function InflationCalculator() {
