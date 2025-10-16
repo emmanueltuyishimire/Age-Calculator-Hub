@@ -45,7 +45,7 @@ export function TopNav() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link href="/" passHref legacyBehavior>
+              <Link href="/" legacyBehavior passHref>
                 <NavigationMenuLink
                   active={pathname === '/'}
                   className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
@@ -60,7 +60,7 @@ export function TopNav() {
               const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`;
               return (
                  <NavigationMenuItem key={category.name}>
-                   <Link href={categoryHref} passHref legacyBehavior>
+                   <Link href={categoryHref} legacyBehavior passHref>
                     <NavigationMenuLink active={pathname.startsWith(categoryHref)} className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
                       {category.name}
                     </NavigationMenuLink>
@@ -69,7 +69,7 @@ export function TopNav() {
               )
             })}
              <NavigationMenuItem>
-                <Link href="/articles" passHref legacyBehavior>
+                <Link href="/articles" legacyBehavior passHref>
                     <NavigationMenuLink active={pathname.startsWith('/articles')} className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
                     Articles
                     </NavigationMenuLink>
