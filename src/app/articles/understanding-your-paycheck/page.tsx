@@ -139,7 +139,7 @@ export default function PaycheckGuidePage() {
                    Knowing your net pay is the starting point for creating a budget. It's the real amount you have to work with each month for your expenses and savings. The difference between your gross and net pay is money that is working for you in other ways—funding your retirement, paying for your health coverage, and contributing to public services. 
                 </p>
                  <p className="text-muted-foreground mt-2">
-                   Once you know your take-home pay, you can use our <a href="/savings-goal-calculator" class="text-primary hover:underline font-bold">Savings Goal Calculator</a> to allocate it effectively and our <Link href="/retirement-savings-goal-calculator" className="font-bold text-primary hover:underline">Retirement Savings Calculator</Link> to see if your pre-tax contributions are on track.
+                   Once you know your take-home pay, you can use our <Link href="/savings-goal-calculator" className="text-primary hover:underline font-bold">Savings Goal Calculator</Link> to allocate it effectively and our <Link href="/retirement-savings-goal-calculator" className="font-bold text-primary hover:underline">Retirement Savings Calculator</Link> to see if your pre-tax contributions are on track.
                 </p>
             </CardContent>
           </Card>

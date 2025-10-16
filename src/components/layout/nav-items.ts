@@ -53,6 +53,7 @@ import {
   Tag,
   Sailboat,
   Wallet,
+  Heart,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -338,6 +339,13 @@ export const navItems: NavItem[] = [
     label: 'Sales Tax Calculator',
     category: 'Financial Calculators',
     description: 'Calculate the final price of an item including sales tax.'
+  },
+   {
+    href: '/marriage-tax-calculator',
+    icon: Heart,
+    label: 'Marriage Tax Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate the tax impact of marriage by comparing joint vs. single filing.'
   },
   {
     href: '/take-home-pay-calculator',
