@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -10,7 +11,6 @@ import { SearchBar } from '@/components/layout/search-bar';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
-  ssr: false,
   loading: () => <Skeleton className="h-[500px] w-full max-w-sm" />,
 });
 
