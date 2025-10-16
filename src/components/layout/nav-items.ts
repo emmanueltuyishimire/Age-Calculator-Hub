@@ -52,6 +52,7 @@ import {
   TrendingUp,
   Tag,
   Sailboat,
+  Wallet,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -261,6 +262,13 @@ export const navItems: NavItem[] = [
     description: 'Calculate the Return on Investment and Annualized ROI for any investment.'
   },
   {
+    href: '/payback-period-calculator',
+    icon: Wallet,
+    label: 'Payback Period Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate simple & discounted payback periods for investments.'
+  },
+  {
     href: '/rental-property-calculator',
     icon: Home,
     label: 'Rental Property Calculator',
@@ -447,7 +455,7 @@ export const navItems: NavItem[] = [
     icon: Target,
     label: 'Retirement Savings Goal Calculator',
     category: 'Financial Calculators',
-    description: 'Estimate how much money you need to save for retirement.'
+    description: 'Estimate how much you need to save for retirement.'
   },
   {
     href: '/savings-goal-calculator',
