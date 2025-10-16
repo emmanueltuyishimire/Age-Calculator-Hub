@@ -322,8 +322,8 @@ const ScientificCalculator = () => {
   }
 
   return (
-    <div className="bg-slate-700 dark:bg-green-950 border-4 border-slate-600 dark:border-green-800 rounded-xl p-2 sm:p-4 w-full max-w-[700px] mx-auto shadow-2xl">
-      <div className="bg-gray-800/50 dark:bg-gray-900/50 rounded p-2 mb-4 border-2 border-slate-800 dark:border-green-900 shadow-inner">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-4 w-full max-w-[700px] mx-auto shadow-2xl">
+      <div className="bg-gray-800/50 dark:bg-gray-900/50 rounded p-2 mb-4 border-2 border-slate-800 dark:border-slate-900 shadow-inner">
         <Input
             type="text"
             value={display}
@@ -334,12 +334,12 @@ const ScientificCalculator = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Scientific Panel */}
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-green-950">
             {scientificButtonsFirstPanel.flat().map((btn, i) => renderButton(btn, i))}
         </div>
 
         {/* Basic Panel */}
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-green-950">
              {basicButtonsSecondPanel.slice(0,1).flat().map((btn, i) => renderButton(btn, i + 25))}
              {basicButtonsSecondPanel.slice(1,2).flat().map((btn, i) => renderButton(btn, i + 30))}
              {renderButton('=', 34, 'row-span-3 h-auto col-start-5')}
