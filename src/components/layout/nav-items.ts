@@ -220,9 +220,16 @@ export const navItems: NavItem[] = [
   {
     href: '/social-security-retirement-age-calculator',
     icon: PiggyBank,
-    label: 'Social Security Retirement Age',
+    label: 'Retirement Age Calculator',
     category: 'Retirement & Social Security',
     description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
+  },
+  {
+    href: '/social-security-calculator',
+    icon: Scale,
+    label: 'Social Security Calculator',
+    category: 'Retirement & Social Security',
+    description: 'Find your break-even age for claiming Social Security benefits.'
   },
 
   // Financial Calculators
