@@ -1,6 +1,10 @@
 
 export async function GET(request: Request) {
-  const sitemapUrl = `https://innerpeacejournals.com/sitemap.xml`;
+  const { protocol, host } = new URL(request.url);
+  const baseUrl = `${protocol}//${host}`;
+
+  const sitemapUrl = `${baseUrl}/sitemap.xml`;
+
   const content = `User-agent: *
 Allow: /
 

@@ -3,9 +3,15 @@ import { MetadataRoute } from 'next';
 import { navItems } from '@/components/layout/nav-items';
 import { articles } from '@/lib/articles';
 
-const baseUrl = 'https://innerpeacejournals.com';
+const getBaseUrl = () => {
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return `http://localhost:${process.env.PORT || 3000}`;
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = getBaseUrl();
   const lastModified = new Date();
 
   const calculatorPages = navItems
