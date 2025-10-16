@@ -105,10 +105,10 @@ export default function PaycheckGuidePage() {
           </p>
           
           <div className="my-10 text-center">
-            <Link href="/savings-goal-calculator">
-                <Button size="lg" className="text-lg">Plan Your Savings Now</Button>
+            <Link href="/take-home-pay-calculator">
+                <Button size="lg" className="text-lg">Estimate Your Take-Home Pay</Button>
             </Link>
-            <p className="text-sm text-muted-foreground mt-2">See how much of your net pay you need to save to reach your goals.</p>
+            <p className="text-sm text-muted-foreground mt-2">See how much of your paycheck you actually take home.</p>
           </div>
           
           <h2 className="text-3xl font-bold text-center mb-8">Anatomy of a Paycheck</h2>
@@ -139,7 +139,7 @@ export default function PaycheckGuidePage() {
                    Knowing your net pay is the starting point for creating a budget. It's the real amount you have to work with each month for your expenses and savings. The difference between your gross and net pay is money that is working for you in other ways—funding your retirement, paying for your health coverage, and contributing to public services. 
                 </p>
                  <p className="text-muted-foreground mt-2">
-                   Once you know your take-home pay, you can use our <Link href="/budget-calculator" className="font-bold text-primary hover:underline">Budgeting Calculator</Link> to allocate it effectively and our <Link href="/retirement-savings-goal-calculator" className="font-bold text-primary hover:underline">Retirement Savings Calculator</Link> to see if your pre-tax contributions are on track.
+                   Once you know your take-home pay, you can use our <a href="/savings-goal-calculator" class="text-primary hover:underline font-bold">Savings Goal Calculator</a> to allocate it effectively and our <Link href="/retirement-savings-goal-calculator" className="font-bold text-primary hover:underline">Retirement Savings Calculator</Link> to see if your pre-tax contributions are on track.
                 </p>
             </CardContent>
           </Card>

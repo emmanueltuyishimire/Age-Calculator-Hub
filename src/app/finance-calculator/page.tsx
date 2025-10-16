@@ -85,6 +85,18 @@ export default function FinanceCalculatorPage() {
                     </CardContent>
                 </Card>
 
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Investing</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-asset-allocation" className="text-primary hover:underline">Investing 101: Understanding Asset Allocation</Link></li>
+                            <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
                     <Accordion type="single" collapsible className="w-full">

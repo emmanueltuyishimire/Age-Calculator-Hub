@@ -284,11 +284,11 @@ export const navItems: NavItem[] = [
     description: 'Calculate the future value of an investment with periodic deposits.'
   },
    {
-    href: '/roi-calculator',
-    icon: TrendingUp,
-    label: 'ROI Calculator',
+    href: '/finance-calculator',
+    icon: Briefcase,
+    label: 'Finance Calculator',
     category: 'Financial Calculators',
-    description: 'Calculate the Return on Investment and Annualized ROI for any investment.'
+    description: 'A TVM calculator to solve for FV, PV, PMT, N, or I/Y.'
   },
   {
     href: '/payback-period-calculator',
@@ -359,13 +359,6 @@ export const navItems: NavItem[] = [
     label: 'Rent Calculator',
     category: 'Financial Calculators',
     description: 'Estimate how much rent you can afford based on your income.'
-  },
-  {
-    href: '/finance-calculator',
-    icon: Briefcase,
-    label: 'Finance Calculator',
-    category: 'Financial Calculators',
-    description: 'A TVM calculator to solve for FV, PV, PMT, N, or I/Y.'
   },
   {
     href: '/bond-calculator',

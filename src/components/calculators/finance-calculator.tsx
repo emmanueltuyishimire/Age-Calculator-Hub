@@ -117,7 +117,7 @@ export default function FinanceCalculator() {
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: { n: 10, iy: 6, pv: 20000, pmt: -2000, fv: 0, compounding: 'annually', paymentAt: 'end' },
+    defaultValues: { n: 10, iy: 6, pv: -20000, pmt: -2000, fv: 0, compounding: 'annually', paymentAt: 'end' },
   });
 
   const getCompoundingPeriods = (c: string) => {
@@ -158,28 +158,35 @@ export default function FinanceCalculator() {
 
         // Generate schedule
         const schedule: ScheduleRow[] = [];
-        let currentPV = pv;
+        let currentPV = form.getValues('pv');
         const currentPMT = form.getValues('pmt');
-        const numPeriods = Math.ceil(form.getValues('n') * compoundingPeriods);
+        const currentN = form.getValues('n') * compoundingPeriods;
+        const currentR = form.getValues('iy') / 100 / compoundingPeriods;
 
-        for (let i = 1; i <= numPeriods; i++) {
-            const interest = currentPV * r;
-            let endFV: number;
-            if (pmtAtBeginning) {
-                 endFV = (currentPV + currentPMT) * (1 + r);
-            } else {
-                 endFV = currentPV * (1 + r) + currentPMT;
+        for (let i = 1; i <= currentN; i++) {
+            let interest = 0;
+            let startPV = currentPV;
+            
+            if(pmtAtBeginning) {
+                currentPV += currentPMT;
+            }
+            
+            interest = currentPV * -currentR; // interest on negative pv
+            
+            if(!pmtAtBeginning) {
+                 currentPV += currentPMT;
             }
 
-            schedule.push({ period: i, startPV: currentPV, pmt: currentPMT, interest, endFV });
-            currentPV = endFV;
+            currentPV += interest;
+            
+            schedule.push({ period: i, startPV: startPV, pmt: currentPMT, interest, endFV: currentPV });
         }
 
         setResult({
-        calculatedValue,
-        totalPayments: currentPMT * numPeriods,
-        totalInterest: (currentPV - pv - (currentPMT * numPeriods)),
-        schedule,
+          calculatedValue,
+          totalPayments: form.getValues('pmt') * currentN,
+          totalInterest: (currentPV - form.getValues('pv') - (form.getValues('pmt') * currentN)),
+          schedule,
         });
     } catch(e) {
         console.error("Calculation error", e);
@@ -217,19 +224,19 @@ export default function FinanceCalculator() {
                 <div className="space-y-6">
                     <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                        <FormField control={form.control} name="n" render={({ field }) => (<FormItem><FormLabel>N (# of periods)</FormLabel><FormControl><Input type="number" {...field} disabled={isCalcDisabled('n')} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="n" render={({ field }) => (<FormItem><FormLabel>N (Number of periods, years)</FormLabel><FormControl><Input type="number" {...field} disabled={isCalcDisabled('n')} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="iy" render={({ field }) => (<FormItem><FormLabel>I/Y (Interest per year %)</FormLabel><FormControl><Input type="number" {...field} disabled={isCalcDisabled('iy')} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="pv" render={({ field }) => (<FormItem><FormLabel>PV (Present Value)</FormLabel><FormControl><Input type="number" {...field} disabled={isCalcDisabled('pv')} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="pmt" render={({ field }) => (<FormItem><FormLabel>PMT (Periodic Payment)</FormLabel><FormControl><Input type="number" {...field} disabled={isCalcDisabled('pmt')} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="fv" render={({ field }) => (<FormItem><FormLabel>FV (Future Value)</FormLabel><FormControl><Input type="number" {...field} disabled={isCalcDisabled('fv')} /></FormControl><FormMessage /></FormItem>)} />
                         
                         <div className="flex items-center space-x-2 pt-2">
-                           <Button type="button" variant="link" onClick={() => setShowSettings(!showSettings)}>+ Settings</Button>
+                           <Button type="button" variant="link" onClick={() => setShowSettings(!showSettings)} className="p-0 h-auto">+ Settings</Button>
                         </div>
                         {showSettings && (
                             <div className="space-y-4 p-4 border rounded-lg bg-muted/50">
                                 <FormField control={form.control} name="compounding" render={({ field }) => (<FormItem><FormLabel>Compounding</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="annually">Annually</SelectItem><SelectItem value="semiannually">Semiannually</SelectItem><SelectItem value="quarterly">Quarterly</SelectItem><SelectItem value="monthly">Monthly</SelectItem></SelectContent></Select></FormItem>)} />
-                                <FormField control={form.control} name="paymentAt" render={({ field }) => (<FormItem className="flex items-center space-x-2"><FormLabel>Payment at:</FormLabel><div className="flex items-center gap-2"><p>End</p><FormControl><Switch checked={field.value === 'beginning'} onCheckedChange={c => field.onChange(c ? 'beginning' : 'end')} /></FormControl><p>Beginning</p></div></FormItem>)} />
+                                <FormField control={form.control} name="paymentAt" render={({ field }) => (<FormItem className="flex items-center space-x-2 pt-2"><FormLabel>Payment at:</FormLabel><div className="flex items-center gap-2"><p>End</p><FormControl><Switch checked={field.value === 'beginning'} onCheckedChange={c => field.onChange(c ? 'beginning' : 'end')} /></FormControl><p>Beginning</p></div></FormItem>)} />
                             </div>
                         )}
 
@@ -247,7 +254,13 @@ export default function FinanceCalculator() {
                     <div className="space-y-4 animate-fade-in">
                         <div className="p-4 bg-muted rounded-lg text-center">
                             <h3 className="text-lg font-semibold text-muted-foreground uppercase">{activeTab} Result</h3>
-                            <p className="text-4xl font-bold text-primary">{currencySymbol}{result.calculatedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                            <p className="text-4xl font-bold text-primary">
+                                {['iy'].includes(activeTab) ? '' : currencySymbol}
+                                {result.calculatedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 })}
+                                {['iy', 'n'].includes(activeTab) ? '' : ''}
+                                {activeTab === 'iy' && '%'}
+                                {activeTab === 'n' && ' years'}
+                            </p>
                         </div>
                         <div className="space-y-2 text-sm">
                             <div className="flex justify-between"><span className="text-muted-foreground">Sum of all payments:</span><span className="font-semibold">{currencySymbol}{result.totalPayments.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
@@ -263,7 +276,7 @@ export default function FinanceCalculator() {
                                     <XAxis dataKey="name" tick={{ fontSize: 10 }} />
                                     <YAxis tickFormatter={(val) => currencySymbol + (val/1000) + 'k'} tick={{ fontSize: 10 }} />
                                     <Tooltip content={<ChartTooltipContent formatter={(value) => currencySymbol + Number(value).toFixed(2)}/>} />
-                                    <Area type="monotone" dataKey="Future Value" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
+                                    <Area type="monotone" dataKey="Future Value" stackId="1" stroke="hsl(var(--chart-1))" fill="hsl(var(--chart-1))" />
                                 </AreaChart>
                                 </ChartContainer>
                             </div>
