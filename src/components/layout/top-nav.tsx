@@ -60,7 +60,7 @@ export function TopNav() {
                  <NavigationMenuItem key={category.name}>
                    <Link href={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`} passHref legacyBehavior>
                     <NavigationMenuLink asChild>
-                      <a className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
+                       <a className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
                         {category.name}
                       </a>
                     </NavigationMenuLink>
