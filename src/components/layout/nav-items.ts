@@ -274,6 +274,13 @@ export const navItems: NavItem[] = [
     category: 'Retirement',
     description: 'Compare Traditional IRAs, Roth IRAs, and taxable savings.'
   },
+   {
+    href: '/roth-ira-calculator',
+    icon: Landmark,
+    label: 'Roth IRA Calculator',
+    category: 'Retirement',
+    description: 'Compare a Roth IRA with a regular taxable investment account.'
+  },
   {
     href: '/retirement-savings-goal-calculator',
     icon: Goal,
