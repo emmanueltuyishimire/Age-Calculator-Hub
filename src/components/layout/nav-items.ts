@@ -229,70 +229,70 @@ export const navItems: NavItem[] = [
     href: '/social-security-retirement-age-calculator',
     icon: PiggyBank,
     label: 'Retirement Age Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
   },
   {
     href: '/social-security-calculator',
     icon: Scale,
     label: 'Social Security Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Find your break-even age for claiming Social Security benefits.'
   },
   {
     href: '/401k-calculator',
     icon: Briefcase,
     label: '401(k) Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Estimate retirement savings, withdrawal costs, and employer match.'
   },
    {
     href: '/annuity-calculator',
     icon: Wallet,
     label: 'Annuity Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Estimate the future value of an annuity during its accumulation phase.'
   },
   {
     href: '/annuity-payout-calculator',
     icon: Landmark,
     label: 'Annuity Payout Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Estimate annuity payouts or duration.'
   },
   {
     href: '/pension-calculator',
     icon: Briefcase,
     label: 'Pension Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Evaluate pension decisions like lump sum vs. monthly income.'
   },
   {
     href: '/ira-calculator',
     icon: Landmark,
     label: 'IRA Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Compare Traditional IRAs, Roth IRAs, and taxable savings.'
   },
    {
     href: '/roth-ira-calculator',
     icon: Landmark,
     label: 'Roth IRA Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Compare a Roth IRA with a regular taxable investment account.'
   },
   {
     href: '/retirement-savings-goal-calculator',
     icon: Goal,
     label: 'Retirement Savings Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Estimate your total nest egg needed for retirement.'
   },
    {
     href: '/rmd-calculator',
     icon: PiggyBank,
     label: 'RMD Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Calculate your Required Minimum Distribution from retirement accounts.'
   },
 
@@ -383,6 +383,13 @@ export const navItems: NavItem[] = [
     category: 'Auto',
     description: 'Estimate your monthly car lease payment and see a breakdown of costs.'
   },
+  {
+    href: '/cash-back-or-low-interest-calculator',
+    icon: Car,
+    label: 'Cash Back or Low Interest',
+    category: 'Auto',
+    description: 'Compare a cash back rebate vs. low interest rate car deal.'
+  },
 
   // Investment
    {
@@ -454,13 +461,6 @@ export const navItems: NavItem[] = [
     label: 'ROI Calculator',
     category: 'Investment',
     description: 'Measure the profitability of an investment with simple and annualized ROI.'
-  },
-  {
-    href: '/cd-calculator',
-    icon: Wallet,
-    label: 'CD Calculator',
-    category: 'Investment',
-    description: 'Determine the interest earnings on a Certificate of Deposit.'
   },
 
   // Tax & Salary
@@ -591,63 +591,63 @@ export const navItems: NavItem[] = [
     href: '/loan-calculator',
     icon: Landmark,
     label: 'Loan Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'A comprehensive calculator for various loan types like amortized and deferred payment.'
   },
   {
     href: '/debt-payoff-calculator',
     icon: CreditCard,
     label: 'Debt Payoff Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Create a payoff plan for multiple debts using the Debt Avalanche method.'
   },
   {
     href: '/credit-card-calculator',
     icon: CreditCard,
     label: 'Credit Card Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Calculates the time or payment needed to pay off a credit card balance.'
   },
    {
     href: '/debt-consolidation-calculator',
     icon: Scale,
     label: 'Debt Consolidation Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Compare current debts with a consolidation loan to see potential savings.'
   },
    {
     href: '/inflation-calculator',
     icon: TrendingUp,
     label: 'Inflation Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Calculate the buying power of money over time using CPI data.'
   },
   {
     href: '/discount-calculator',
     icon: Tag,
     label: 'Discount Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Calculate the final price after a percentage or fixed amount off.'
   },
   {
     href: '/payment-calculator',
     icon: DollarSign,
     label: 'Payment Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Estimate the monthly payment for any type of loan.'
   },
   {
     href: '/boat-loan-calculator',
     icon: Sailboat,
     label: 'Boat Loan Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Estimate your monthly boat payment and total loan cost.'
   },
   {
     href: '/college-cost-calculator',
     icon: GraduationCap,
     label: 'College Cost Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Estimate future college costs and the savings needed.'
   },
   
@@ -719,7 +719,7 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Mortgage & Real Estate',
     'Auto',
     'Investment',
-    'Retirement & Social Security',
+    'Retirement',
     'Tax & Salary',
     'Other',
     'Fitness & Health Calculators',
