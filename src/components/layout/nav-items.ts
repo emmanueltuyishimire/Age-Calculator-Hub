@@ -291,6 +291,13 @@ export const navItems: NavItem[] = [
     description: 'Calculate the future value of an investment with contributions.'
   },
   {
+    href: '/savings-calculator',
+    icon: PiggyBank,
+    label: 'Savings Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate your savings growth with contributions and interest.'
+  },
+  {
     href: '/future-value-calculator',
     icon: TrendingUp,
     label: 'Future Value Calculator',
