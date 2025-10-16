@@ -1,14 +1,19 @@
 
 "use client";
 
+import { useState } from 'react';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
+import { Slider } from '@/components/ui/slider';
+import { Label } from '@/components/ui/label';
 
 export default function Home() {
+  const [calculatorSize, setCalculatorSize] = useState(70);
+
   return (
     <main role="main">
       <section className="bg-muted/50 py-12 md:py-16">
@@ -21,7 +26,23 @@ export default function Home() {
             <div className="mt-8 w-full max-w-md">
                 <SearchBar />
             </div>
-             <div className="mt-10 w-full max-w-sm">
+             <div 
+              className="mt-10 w-full transition-all duration-300 ease-in-out"
+              style={{ maxWidth: `${calculatorSize}%` }}
+             >
+                <div className="mb-4">
+                  <Label htmlFor="size-slider" className="text-sm text-muted-foreground">Adjust Calculator Size</Label>
+                  <Slider
+                    id="size-slider"
+                    defaultValue={[calculatorSize]}
+                    min={40}
+                    max={100}
+                    step={5}
+                    onValueChange={(value) => setCalculatorSize(value[0])}
+                    className="w-48 mx-auto mt-2"
+                    aria-label="Calculator size slider"
+                  />
+                </div>
                 <ScientificCalculator />
             </div>
           </div>
