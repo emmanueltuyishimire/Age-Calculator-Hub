@@ -46,6 +46,7 @@ import {
   FlaskConical,
   Cuboid,
   Percent,
+  CreditCard,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -351,6 +352,13 @@ export const navItems: NavItem[] = [
     label: 'Loan Payoff Calculator',
     category: 'Financial Calculators',
     description: 'Calculate how long it will take to pay off a loan.'
+  },
+  {
+    href: '/credit-card-payoff-calculator',
+    icon: CreditCard,
+    label: 'Credit Card Payoff Calculator',
+    category: 'Financial Calculators',
+    description: 'Create a payoff plan for multiple credit cards using the Debt Avalanche method.'
   },
   
   // Math Calculators
