@@ -307,7 +307,7 @@ const ScientificCalculator = () => {
   );
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-4 w-full mx-auto shadow-2xl">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-4 w-full mx-auto shadow-2xl max-w-2xl">
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-4 border-2 border-slate-800 dark:border-black shadow-inner">
         <div className="text-right text-emerald-300/80 font-mono text-xs pr-2 h-5">
             {currentTime}
@@ -334,5 +334,3 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
-
-    

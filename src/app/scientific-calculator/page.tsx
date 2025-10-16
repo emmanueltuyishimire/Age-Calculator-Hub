@@ -1,5 +1,5 @@
 
-import ScientificCalculator from '@/components/calculators/scientific-calculator';
+import ScientificCalculator from '@/components/calculators/scientific-calculator-loader';
 import { type Metadata } from 'next';
 import {
   Accordion,
@@ -62,7 +62,7 @@ export default function ScientificCalculatorPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <main role="main" className="max-w-4xl mx-auto">
+      <main role="main" className="max-w-5xl mx-auto">
           <div className="text-center mb-8">
               <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Scientific Calculator</h1>
               <p className="text-md md:text-lg text-muted-foreground">

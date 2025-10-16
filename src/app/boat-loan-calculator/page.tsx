@@ -73,7 +73,7 @@ export default function BoatLoanCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Understanding Boat Loans</CardTitle>
+                        <CardTitle>What is a Boat Loan?</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
