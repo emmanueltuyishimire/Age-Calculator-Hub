@@ -77,8 +77,13 @@ export default function RoiCalculator() {
     const investmentLength = days / 365.25;
 
     let annualizedRoi = 0;
-    if (investmentLength > 0 && amountInvested > 0) {
+    if (investmentLength > 0 && amountInvested > 0 && amountReturned >= 0) {
+      if(investmentLength >= 1) {
         annualizedRoi = (Math.pow(amountReturned / amountInvested, 1 / investmentLength) - 1) * 100;
+      } else {
+        // For periods less than a year, annualize by simple extrapolation
+        annualizedRoi = (roi / investmentLength);
+      }
     }
     
     setResult({

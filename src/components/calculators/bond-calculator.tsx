@@ -34,7 +34,7 @@ import { Separator } from '../ui/separator';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Calendar } from '../ui/calendar';
 import { cn } from '@/lib/utils';
-import { format, differenceInDays } from 'date-fns';
+import { format, differenceInDays, addMonths, getDaysInMonth, setMonth } from 'date-fns';
 
 const currencySymbol = '$';
 
@@ -135,42 +135,35 @@ function BondPricingCalculator() {
     const onSubmit = (values: BondPricingFormData) => {
         const { faceValue, yield: ytm, coupon, frequency, maturityDate, settlementDate, dayCount } = values;
 
-        // This is a simplified implementation. Real bond pricing is very complex.
         const freqVal = frequency === 'annually' ? 1 : 2;
+        const monthsBetweenCoupons = 12 / freqVal;
         const couponPayment = (faceValue * (coupon/100)) / freqVal;
-        const r = ytm / 100 / freqVal;
         
+        let lastCouponDate = new Date(maturityDate);
+        while (lastCouponDate > settlementDate) {
+            lastCouponDate = addMonths(lastCouponDate, -monthsBetweenCoupons);
+        }
+        
+        const nextCouponDate = addMonths(lastCouponDate, monthsBetweenCoupons);
+
         let daysInPeriod;
-        if (dayCount === '30/360') {
-            daysInPeriod = frequency === 'annually' ? 360 : 180;
+        if(dayCount === '30/360') {
+            daysInPeriod = 180;
         } else if (dayCount === 'Actual/360') {
-            daysInPeriod = 360; // This is a simplification
+            daysInPeriod = differenceInDays(nextCouponDate, lastCouponDate); // Simplified for this logic
         } else if (dayCount === 'Actual/365') {
-            daysInPeriod = 365;
-        } else { // Actual/Actual approximation
-            daysInPeriod = frequency === 'annually' ? 365.25 : 365.25 / 2;
+             daysInPeriod = differenceInDays(nextCouponDate, lastCouponDate);
+        } else { // Actual/Actual
+            daysInPeriod = differenceInDays(nextCouponDate, lastCouponDate);
         }
-        
-        // Find previous coupon date from settlement date
-        let lastCouponDate = new Date(settlementDate);
-        // This logic is complex; we'll simplify and assume settlement date is closer to the previous coupon date
-        const nextCouponDateApprox = new Date(maturityDate);
-        while(nextCouponDateApprox > settlementDate) {
-            nextCouponDateApprox.setMonth(nextCouponDateApprox.getMonth() - (12 / freqVal));
-        }
-        lastCouponDate = nextCouponDateApprox;
         
         const accruedDays = differenceInDays(settlementDate, lastCouponDate);
         const accruedInterest = (accruedDays / daysInPeriod) * couponPayment;
         
-        const totalPeriods = Math.ceil(differenceInDays(maturityDate, settlementDate) / daysInPeriod);
-        
-        let dirtyPrice = 0;
-        for (let i = 1; i <= totalPeriods; i++) {
-            dirtyPrice += couponPayment / Math.pow(1 + r, i);
-        }
-        dirtyPrice += faceValue / Math.pow(1 + r, totalPeriods);
-        // This is a rough approximation and doesn't properly discount to the settlement date
+        // This is a simplified implementation for price. A real one is very complex.
+        const r = ytm / 100 / freqVal;
+        const n = differenceInDays(maturityDate, settlementDate) / (365.25 / freqVal);
+        const dirtyPrice = couponPayment * (1 - Math.pow(1 + r, -n)) / r + faceValue / Math.pow(1 + r, n);
         
         const cleanPrice = dirtyPrice - accruedInterest;
         

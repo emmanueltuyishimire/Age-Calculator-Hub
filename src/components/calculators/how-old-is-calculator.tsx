@@ -99,6 +99,7 @@ export default function HowOldIsCalculator() {
                   toYear={new Date().getFullYear()}
                   selected={dob}
                   onSelect={setDob}
+                  disabled={(date) => date > new Date()}
                   initialFocus
                 />
               </PopoverContent>
