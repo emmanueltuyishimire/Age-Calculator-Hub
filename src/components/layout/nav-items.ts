@@ -441,6 +441,13 @@ export const navItems: NavItem[] = [
     category: 'Investment',
     description: 'Measure the profitability of an investment with simple and annualized ROI.'
   },
+   {
+    href: '/cd-calculator',
+    icon: Wallet,
+    label: 'CD Calculator',
+    category: 'Investment',
+    description: 'Determine the future value and interest earned on a Certificate of Deposit.'
+  },
 
   // Tax & Salary
   {
