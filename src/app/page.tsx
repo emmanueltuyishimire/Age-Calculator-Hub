@@ -1,21 +1,54 @@
 
+"use client";
+
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
 import ScientificCalculatorLoader from '@/components/calculators/scientific-calculator-loader';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
+  const [loadCalculator, setLoadCalculator] = useState(false);
+  const calculatorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setLoadCalculator(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' } // Load when it's 200px away from viewport
+    );
+
+    if (calculatorRef.current) {
+      observer.observe(calculatorRef.current);
+    }
+
+    return () => {
+      if (calculatorRef.current) {
+        observer.unobserve(calculatorRef.current);
+      }
+    };
+  }, []);
+
   return (
     <main role="main">
       <section className="bg-muted/50 py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="flex justify-center">
-                <div className="w-full max-w-2xl">
-                    <ScientificCalculatorLoader />
-                </div>
+              <div className="w-full max-w-2xl min-h-[500px]" ref={calculatorRef}>
+                {loadCalculator ? (
+                  <ScientificCalculatorLoader />
+                ) : (
+                  <Skeleton className="h-[500px] w-full max-w-xs mx-auto" />
+                )}
+              </div>
             </div>
             <div className="text-center md:text-left">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
