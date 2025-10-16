@@ -47,9 +47,9 @@ export function TopNav() {
           <Link
             href="/"
             aria-label="Go to homepage"
-            className={`transition-colors hover:text-foreground/80 ${
+            className={cn('transition-colors hover:text-foreground/80',
               pathname === '/' ? 'text-foreground' : 'text-foreground/60'
-            }`}
+            )}
           >
             Home
           </Link>
@@ -71,9 +71,9 @@ export function TopNav() {
           <Link
             href="/articles"
             aria-label="View all articles"
-            className={`transition-colors hover:text-foreground/80 ${
+            className={cn('transition-colors hover:text-foreground/80',
               pathname === '/articles' ? 'text-foreground' : 'text-foreground/60'
-            }`}
+            )}
           >
             Articles
           </Link>
