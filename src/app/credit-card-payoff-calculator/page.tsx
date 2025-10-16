@@ -13,7 +13,7 @@ import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Credit Card Payoff Calculator (Debt Avalanche Method)',
+    title: 'Credit Card Payoff Calculator (Multiple Cards)',
     description: 'Use our free Credit Card Payoff Calculator to create a cost-efficient payment schedule for multiple cards using the Debt Avalanche method. See when you can be debt-free.',
     alternates: {
         canonical: '/credit-card-payoff-calculator',
@@ -62,7 +62,7 @@ export default function CreditCardPayoffCalculatorPage() {
       <div className="max-w-4xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Credit Card Payoff Calculator</h1>
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Credit Card Payoff Calculator (Multiple Cards)</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
                     This calculator creates a cost-efficient payback schedule for multiple credit cards using the **Debt Avalanche** method. See how quickly you can become debt-free.
                 </p>
@@ -77,6 +77,7 @@ export default function CreditCardPayoffCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li>For single card analysis, use the <Link href="/credit-card-calculator" className="text-primary hover:underline">Credit Card Calculator</Link>.</li>
                             <li><Link href="/articles/debt-snowball-vs-avalanche" className="text-primary hover:underline">Debt Snowball vs. Avalanche: Which Method is Best?</Link></li>
                             <li><Link href="/loan-payoff-calculator" className="text-primary hover:underline">Loan Payoff Calculator</Link></li>
                         </ul>
