@@ -254,6 +254,13 @@ export const navItems: NavItem[] = [
     category: 'Financial Calculators',
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
+  {
+    href: '/future-value-calculator',
+    icon: TrendingUp,
+    label: 'Future Value Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate the future value of an investment with periodic deposits.'
+  },
    {
     href: '/roi-calculator',
     icon: TrendingUp,
