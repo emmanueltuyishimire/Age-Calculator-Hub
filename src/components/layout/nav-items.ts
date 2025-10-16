@@ -248,6 +248,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate your federal tax refund or amount owed.'
   },
   {
+    href: '/estate-tax-calculator',
+    icon: Landmark,
+    label: 'Estate Tax Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate your federal estate tax liability.'
+  },
+  {
     href: '/rent-calculator',
     icon: Home,
     label: 'Rent Calculator',
