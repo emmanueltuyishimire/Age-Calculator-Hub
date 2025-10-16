@@ -417,6 +417,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate your monthly mortgage payment with PITI.'
   },
   {
+    href: '/mortgage-payoff-calculator',
+    icon: Home,
+    label: 'Mortgage Payoff Calculator',
+    category: 'Financial Calculators',
+    description: 'See how extra payments can shorten your loan term.'
+  },
+  {
     href: '/refinance-calculator',
     icon: Home,
     label: 'Refinance Calculator',

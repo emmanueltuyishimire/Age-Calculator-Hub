@@ -1,7 +1,7 @@
 
-// This file is a redirect to the new /loan-calculator page.
+// This file is a redirect to the new /mortgage-payoff-calculator page.
 import { redirect } from 'next/navigation';
 
 export default function LoanPayoffCalculatorRedirectPage() {
-    redirect('/loan-calculator');
+    redirect('/mortgage-payoff-calculator');
 }
