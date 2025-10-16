@@ -110,7 +110,7 @@ export default function MortgageCalculatorUk() {
     const loanAmount = homePrice - depositAmount;
     
     if (loanAmount <= 0) {
-        setResult(null); // Or handle as a fully paid property
+        setResult(null);
         return;
     }
 
@@ -127,7 +127,6 @@ export default function MortgageCalculatorUk() {
     const totalOutOfPocket = monthlyRepayment * numberOfPayments;
     const totalInterest = (principalAndInterest * numberOfPayments) - loanAmount;
 
-    // Amortization
     let balance = loanAmount;
     const schedule: AmortizationRow[] = [];
     for (let year = 1; year <= loanTerm; year++) {
