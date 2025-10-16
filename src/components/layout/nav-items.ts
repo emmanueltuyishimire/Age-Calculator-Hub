@@ -233,6 +233,13 @@ export const navItems: NavItem[] = [
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
   {
+    href: '/salary-calculator',
+    icon: Briefcase,
+    label: 'Salary Calculator',
+    category: 'Financial Calculators',
+    description: 'Convert any salary to its hourly, weekly, monthly, and annual equivalents.'
+  },
+  {
     href: '/income-tax-calculator',
     icon: DollarSign,
     label: 'Income Tax Calculator',
