@@ -42,16 +42,25 @@ export function TopNav() {
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-1 text-sm" aria-label="Main navigation">
-        <Link href="/" className={cn(navigationMenuTriggerStyle(), 'font-semibold')} aria-current={pathname === '/' ? 'page' : undefined}>
-          Home
-        </Link>
         <NavigationMenu>
           <NavigationMenuList>
+            <NavigationMenuItem>
+              <Link href="/" passHref legacyBehavior>
+                <NavigationMenuLink
+                  active={pathname === '/'}
+                  className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
+                  aria-current={pathname === '/' ? 'page' : undefined}
+                >
+                  Home
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
             {mainCategories.map(category => {
               const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`;
               return (
                  <NavigationMenuItem key={category.name}>
-                   <Link href={categoryHref} legacyBehavior passHref>
+                   <Link href={categoryHref} passHref legacyBehavior>
                     <NavigationMenuLink active={pathname.startsWith(categoryHref)} className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
                       {category.name}
                     </NavigationMenuLink>
@@ -60,7 +69,7 @@ export function TopNav() {
               )
             })}
              <NavigationMenuItem>
-                <Link href="/articles" legacyBehavior passHref>
+                <Link href="/articles" passHref legacyBehavior>
                     <NavigationMenuLink active={pathname.startsWith('/articles')} className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
                     Articles
                     </NavigationMenuLink>
