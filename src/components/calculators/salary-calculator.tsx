@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { taxData, type FilingStatus } from '@/lib/tax-data';
 import {
   Card,
   CardContent,
@@ -30,33 +31,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+  ChartContainer,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
 const formSchema = z.object({
-  amount: z.coerce.number().min(0, "Amount cannot be negative."),
-  frequency: z.enum(['hour', 'day', 'week', 'bi-weekly', 'semi-monthly', 'month', 'quarter', 'year']),
-  hoursPerWeek: z.coerce.number().min(1).max(100),
-  daysPerWeek: z.coerce.number().min(1).max(7),
-  holidays: z.coerce.number().min(0).max(50),
-  vacationDays: z.coerce.number().min(0).max(100),
+  grossSalary: z.coerce.number().min(1, "Salary must be positive."),
+  payFrequency: z.enum(['annually', 'monthly', 'semi-monthly', 'bi-weekly', 'weekly']),
+  filingStatus: z.enum(['single', 'marriedFilingJointly', 'marriedFilingSeparately', 'headOfHousehold', 'qualifyingWidow']),
+  preTaxDeductions: z.coerce.number().min(0).optional(),
+  stateTaxRate: z.coerce.number().min(0).max(20).optional(),
+  localTaxRate: z.coerce.number().min(0).max(20).optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 interface Result {
-  unadjusted: Record<string, number>;
-  adjusted: Record<string, number>;
+  grossPayPerPeriod: number;
+  federalTax: number;
+  stateTax: number;
+  localTax: number;
+  socialSecurity: number;
+  medicare: number;
+  preTaxDeductionsPerPeriod: number;
+  netPayPerPeriod: number;
 }
 
-const WEEKS_PER_YEAR = 52;
-const WEEKDAYS_PER_YEAR = 260; // 5 days * 52 weeks
+const payPeriodsPerYear = {
+    annually: 1,
+    monthly: 12,
+    'semi-monthly': 24,
+    'bi-weekly': 26,
+    weekly: 52,
+};
 
 export default function SalaryCalculator() {
   const [result, setResult] = useState<Result | null>(null);
@@ -64,179 +73,174 @@ export default function SalaryCalculator() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      amount: 50,
-      frequency: 'hour',
-      hoursPerWeek: 40,
-      daysPerWeek: 5,
-      holidays: 10,
-      vacationDays: 15,
+      grossSalary: 80000,
+      payFrequency: 'bi-weekly',
+      filingStatus: 'single',
+      preTaxDeductions: 6000,
+      stateTaxRate: 0,
+      localTaxRate: 0,
     },
   });
 
   function onSubmit(values: FormData) {
-    const { amount, frequency, hoursPerWeek, daysPerWeek, holidays, vacationDays } = values;
+    const taxYear = '2024'; // Using fixed tax year for simplicity
+    const yearData = taxData[taxYear];
+    const { grossSalary, payFrequency, filingStatus, preTaxDeductions = 0, stateTaxRate = 0, localTaxRate = 0 } = values;
 
-    // First, convert everything to an unadjusted annual salary
-    let unadjustedAnnual = 0;
-    switch (frequency) {
-        case 'hour':
-            unadjustedAnnual = amount * hoursPerWeek * WEEKS_PER_YEAR;
-            break;
-        case 'day':
-            unadjustedAnnual = amount * daysPerWeek * WEEKS_PER_YEAR;
-            break;
-        case 'week':
-            unadjustedAnnual = amount * WEEKS_PER_YEAR;
-            break;
-        case 'bi-weekly':
-            unadjustedAnnual = amount * (WEEKS_PER_YEAR / 2);
-            break;
-        case 'semi-monthly':
-            unadjustedAnnual = amount * 24;
-            break;
-        case 'month':
-            unadjustedAnnual = amount * 12;
-            break;
-        case 'quarter':
-            unadjustedAnnual = amount * 4;
-            break;
-        case 'year':
-            unadjustedAnnual = amount;
-            break;
+    const periods = payPeriodsPerYear[payFrequency];
+    const grossPayPerPeriod = grossSalary / periods;
+    
+    // Federal Tax Calculation (Simplified W-4 approach)
+    const annualDeduction = yearData.standardDeduction[filingStatus as FilingStatus] + preTaxDeductions;
+    const annualTaxableIncome = Math.max(0, grossSalary - annualDeduction);
+    
+    let annualFederalTax = 0;
+    const brackets = yearData.taxBrackets[filingStatus as FilingStatus];
+    let incomeRemaining = annualTaxableIncome;
+    for (const bracket of brackets) {
+      if (incomeRemaining > bracket.from) {
+        const taxableInBracket = Math.min(incomeRemaining, bracket.to) - bracket.from;
+        annualFederalTax += taxableInBracket * bracket.rate;
+      }
     }
 
-    // Now calculate adjusted annual salary
-    const totalPaidDaysOff = holidays + vacationDays;
-    const actualWorkingDays = WEEKDAYS_PER_YEAR - totalPaidDaysOff;
-    const unadjustedDaily = unadjustedAnnual / WEEKDAYS_PER_YEAR;
-    const adjustedAnnual = unadjustedDaily * actualWorkingDays;
-    
-    // Now convert both annual salaries to all other frequencies
-    const calculateFrequencies = (annualSalary: number, isAdjusted: boolean) => {
-        const workingDays = isAdjusted ? actualWorkingDays : WEEKDAYS_PER_YEAR;
-        const weeks = workingDays / daysPerWeek;
-        const daily = annualSalary / workingDays;
-        const hourly = daily / (hoursPerWeek / daysPerWeek);
+    const federalTaxPerPeriod = annualFederalTax / periods;
 
-        return {
-            Hourly: hourly,
-            Daily: daily,
-            Weekly: daily * daysPerWeek,
-            'Bi-weekly': daily * daysPerWeek * 2,
-            'Semi-monthly': annualSalary / 24,
-            Monthly: annualSalary / 12,
-            Quarterly: annualSalary / 4,
-            Annual: annualSalary,
-        };
-    };
-    
-    // The prompt says "hourly and daily salary inputs to be unadjusted values",
-    // while others are "holidays and vacation days adjusted values".
-    // This is complex and potentially confusing. Let's use a more standard approach:
-    // We derive ONE annual salary from the user input and then calculate both adjusted and unadjusted from that.
-    
-    let baseAnnualSalary: number;
-    if (frequency === 'hour' || frequency === 'day' || frequency === 'week') {
-      baseAnnualSalary = unadjustedAnnual; // Treat these as unadjusted rates
-    } else {
-      // Treat bi-weekly, semi-monthly etc. as already adjusted for time off.
-      // So we back-calculate the "unadjusted" annual salary.
-      const dailyRate = amount / (frequency === 'bi-weekly' ? 10 : frequency === 'semi-monthly' ? WEEKDAYS_PER_YEAR / 24 : frequency === 'month' ? WEEKDAYS_PER_YEAR / 12 : frequency === 'quarter' ? WEEKDAYS_PER_YEAR / 4 : WEEKDAYS_PER_YEAR);
-      baseAnnualSalary = dailyRate * WEEKDAYS_PER_YEAR;
-    }
-    
-    const unadjustedResults = calculateFrequencies(baseAnnualSalary, false);
-    const adjustedResults = calculateFrequencies(baseAnnualSalary, true);
+    // FICA Taxes
+    const socialSecurityLimit = 168600; // For 2024
+    const socialSecurityRate = 0.062;
+    const medicareRate = 0.0145;
 
-    setResult({ unadjusted: unadjustedResults, adjusted: adjustedResults });
+    const annualSocialSecurity = Math.min(grossSalary, socialSecurityLimit) * socialSecurityRate;
+    const annualMedicare = grossSalary * medicareRate;
+    
+    const socialSecurityPerPeriod = annualSocialSecurity / periods;
+    const medicarePerPeriod = annualMedicare / periods;
+    
+    // State & Local
+    const preTaxDeductionsPerPeriod = preTaxDeductions / periods;
+    const taxableForStateLocal = grossPayPerPeriod - preTaxDeductionsPerPeriod;
+    const stateTax = taxableForStateLocal * (stateTaxRate / 100);
+    const localTax = taxableForStateLocal * (localTaxRate / 100);
+    
+    // Net Pay
+    const totalDeductions = federalTaxPerPeriod + socialSecurityPerPeriod + medicarePerPeriod + stateTax + localTax + preTaxDeductionsPerPeriod;
+    const netPayPerPeriod = grossPayPerPeriod - totalDeductions;
+    
+    setResult({
+      grossPayPerPeriod,
+      federalTax: federalTaxPerPeriod,
+      stateTax,
+      localTax,
+      socialSecurity: socialSecurityPerPeriod,
+      medicare: medicarePerPeriod,
+      preTaxDeductionsPerPeriod,
+      netPayPerPeriod,
+    });
   }
-  
+
   function handleReset() {
-      form.reset();
-      setResult(null);
+    form.reset();
+    setResult(null);
   }
 
   const currencySymbol = '$';
-  const frequencies = ['hour', 'day', 'week', 'bi-weekly', 'semi-monthly', 'month', 'quarter', 'year'];
+  
+  const chartData = result ? [
+    { name: 'Net Pay', value: result.netPayPerPeriod, fill: 'hsl(var(--chart-1))' },
+    { name: 'Federal Tax', value: result.federalTax, fill: 'hsl(var(--chart-2))' },
+    { name: 'FICA', value: result.socialSecurity + result.medicare, fill: 'hsl(var(--chart-3))' },
+    { name: 'State/Local', value: result.stateTax + result.localTax, fill: 'hsl(var(--chart-4))' },
+    { name: 'Deductions', value: result.preTaxDeductionsPerPeriod, fill: 'hsl(var(--chart-5))' },
+  ].filter(item => item.value > 0) : [];
 
   return (
-    <Card className="w-full max-w-3xl mx-auto shadow-lg animate-fade-in">
+    <Card className="w-full mx-auto shadow-lg animate-fade-in">
       <CardHeader>
-        <CardTitle className="text-center">Salary Conversion</CardTitle>
-        <CardDescription className="text-center">Enter your salary and work schedule details.</CardDescription>
+        <CardTitle className="text-center">Paycheck Details</CardTitle>
       </CardHeader>
       <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="amount"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Salary Amount</FormLabel>
-                    <FormControl><Input type="number" {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="frequency"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Per</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
-                      <SelectContent>
-                        {frequencies.map(freq => (
-                          <SelectItem key={freq} value={freq}>{freq.charAt(0).toUpperCase() + freq.slice(1)}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField control={form.control} name="hoursPerWeek" render={({ field }) => (<FormItem><FormLabel>Hours per week</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormField control={form.control} name="daysPerWeek" render={({ field }) => (<FormItem><FormLabel>Days per week</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormField control={form.control} name="holidays" render={({ field }) => (<FormItem><FormLabel>Holidays per year</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormField control={form.control} name="vacationDays" render={({ field }) => (<FormItem><FormLabel>Vacation days per year</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="grossSalary" render={({ field }) => (<FormItem><FormLabel>Gross Annual Salary</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="payFrequency" render={({ field }) => (
+                      <FormItem><FormLabel>Pay Frequency</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
+                          <SelectContent>
+                            {Object.keys(payPeriodsPerYear).map(freq => (<SelectItem key={freq} value={freq}>{freq.charAt(0).toUpperCase() + freq.slice(1)}</SelectItem>))}
+                          </SelectContent>
+                        </Select>
+                      <FormMessage /></FormItem>
+                    )} />
+                    <FormField control={form.control} name="filingStatus" render={({ field }) => (
+                      <FormItem className="sm:col-span-2"><FormLabel>Filing Status</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl>
+                          <SelectContent>
+                            <SelectItem value="single">Single</SelectItem>
+                            <SelectItem value="marriedFilingJointly">Married Filing Jointly</SelectItem>
+                            <SelectItem value="headOfHousehold">Head of Household</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      <FormMessage /></FormItem>
+                    )} />
+                    <FormField control={form.control} name="preTaxDeductions" render={({ field }) => (<FormItem><FormLabel>Annual Pre-Tax Deductions</FormLabel><FormControl><Input type="number" placeholder="e.g., 401k, health" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="stateTaxRate" render={({ field }) => (<FormItem><FormLabel>State Tax Rate (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="localTaxRate" render={({ field }) => (<FormItem><FormLabel>Local Tax Rate (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-2 pt-2">
+                    <Button type="submit" className="w-full"><DollarSign className="mr-2 h-4 w-4"/>Calculate Paycheck</Button>
+                    <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                  </div>
+              </form>
+              </Form>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-2 pt-2">
-              <Button type="submit" className="w-full"><DollarSign className="mr-2 h-4 w-4"/>Calculate</Button>
-              <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+            <div className="flex flex-col space-y-4">
+                {result ? (
+                <div className="space-y-4 animate-fade-in">
+                    <div className="p-4 bg-muted rounded-lg text-center">
+                        <h3 className="text-lg font-semibold text-muted-foreground">Estimated Take-Home Pay</h3>
+                        <p className="text-4xl font-bold text-primary">{currencySymbol}{result.netPayPerPeriod.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                        <p className="text-muted-foreground">per {form.getValues('payFrequency').replace('-', ' ')}</p>
+                    </div>
+                    <div className="h-[200px]">
+                       <ChartContainer config={{}} className="mx-auto aspect-square h-full">
+                            <PieChart>
+                                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel formatter={(value, name) => `${currencySymbol}${Number(value).toFixed(2)}`} />} />
+                                <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={50} outerRadius={70} paddingAngle={2} strokeWidth={2}>
+                                    {chartData.map((entry) => (<Cell key={entry.name} fill={entry.fill} />))}
+                                </Pie>
+                            </PieChart>
+                        </ChartContainer>
+                    </div>
+                     <div className="space-y-1 text-sm border-t pt-2">
+                        <div className="flex justify-between"><span className="text-muted-foreground">Gross Pay Per Period:</span><span className="font-semibold">{currencySymbol}{result.grossPayPerPeriod.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                        <div className="pl-4">
+                            <div className="flex justify-between"><span className="text-muted-foreground">Federal Tax:</span><span className="font-semibold text-destructive">-{currencySymbol}{result.federalTax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                            <div className="flex justify-between"><span className="text-muted-foreground">Social Security:</span><span className="font-semibold text-destructive">-{currencySymbol}{result.socialSecurity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                            <div className="flex justify-between"><span className="text-muted-foreground">Medicare:</span><span className="font-semibold text-destructive">-{currencySymbol}{result.medicare.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                            <div className="flex justify-between"><span className="text-muted-foreground">State Tax:</span><span className="font-semibold text-destructive">-{currencySymbol}{result.stateTax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                            <div className="flex justify-between"><span className="text-muted-foreground">Local Tax:</span><span className="font-semibold text-destructive">-{currencySymbol}{result.localTax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                            <div className="flex justify-between"><span className="text-muted-foreground">Pre-Tax Deductions:</span><span className="font-semibold text-destructive">-{currencySymbol}{result.preTaxDeductionsPerPeriod.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                        </div>
+                        <div className="flex justify-between border-t mt-1 pt-1"><span className="font-bold">Net Pay (Take-Home):</span><span className="font-bold">{currencySymbol}{result.netPayPerPeriod.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                    </div>
+                </div>
+                ) : (
+                    <div className="flex items-center justify-center h-full bg-muted rounded-lg p-8">
+                        <div className="text-center">
+                            <DollarSign className="mx-auto h-12 w-12 text-muted-foreground" />
+                            <p className="mt-4 text-muted-foreground">Your paycheck breakdown will appear here.</p>
+                        </div>
+                    </div>
+                )}
             </div>
-          </form>
-        </Form>
-        
-        {result && (
-          <div className="mt-6 animate-fade-in">
-            <h3 className="text-xl font-bold text-center mb-4">Your Salary Breakdown</h3>
-            <div className="border rounded-lg overflow-hidden">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Frequency</TableHead>
-                            <TableHead className="text-right">Unadjusted</TableHead>
-                            <TableHead className="text-right">Adjusted (Holidays & Vacation)</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {Object.keys(result.unadjusted).map((key) => (
-                            <TableRow key={key}>
-                                <TableCell className="font-medium">{key}</TableCell>
-                                <TableCell className="text-right">{currencySymbol}{result.unadjusted[key].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</TableCell>
-                                <TableCell className="text-right">{currencySymbol}{result.adjusted[key].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>
-             <p className="text-xs text-muted-foreground mt-2">Calculations are based on 260 weekdays per year.</p>
-          </div>
-        )}
+        </div>
       </CardContent>
     </Card>
   );

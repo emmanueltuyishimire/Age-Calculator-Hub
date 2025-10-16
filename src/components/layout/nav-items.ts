@@ -253,6 +253,13 @@ export const navItems: NavItem[] = [
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
   {
+    href: '/salary-calculator',
+    icon: Briefcase,
+    label: 'Salary Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate your take-home pay after taxes and deductions.'
+  },
+  {
     href: '/dti-calculator',
     icon: Scale,
     label: 'DTI Calculator',
@@ -265,13 +272,6 @@ export const navItems: NavItem[] = [
     label: 'Average Return Calculator',
     category: 'Financial Calculators',
     description: 'Calculate IRR from cash flows or average returns from multiple investments.'
-  },
-  {
-    href: '/salary-calculator',
-    icon: Briefcase,
-    label: 'Salary Calculator',
-    category: 'Financial Calculators',
-    description: 'Convert any salary to its hourly, weekly, monthly, and annual equivalents.'
   },
   {
     href: '/student-loan-calculator',
