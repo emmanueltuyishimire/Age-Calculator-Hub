@@ -228,7 +228,7 @@ export default function MortgageCalculatorUk() {
                         <div className="flex justify-between"><span className="text-muted-foreground">Mortgage Deposit:</span><span className="font-semibold">{currencySymbol}{result.depositAmount.toLocaleString(undefined, {maximumFractionDigits:0})}</span></div>
                         <div className="flex justify-between"><span className="text-muted-foreground">Total Interest:</span><span className="font-semibold">{currencySymbol}{result.totalInterest.toLocaleString(undefined, {maximumFractionDigits:0})}</span></div>
                         <div className="flex justify-between"><span className="text-muted-foreground">Total Out-of-Pocket:</span><span className="font-semibold">{currencySymbol}{result.totalOutOfPocket.toLocaleString(undefined, {maximumFractionDigits:0})}</span></div>
-                        <div className="flex justify-between"><span className="text-muted-foreground">Payoff Date:</span><span className="font-semibold">{format(result.payoffDate, 'MMM yyyy')}</span></div>
+                        <div className="flex justify-between"><span className="font-bold">Payoff Date:</span><span className="font-semibold">{format(result.payoffDate, 'MMM yyyy')}</span></div>
                     </div>
                 </div>
                 ) : (

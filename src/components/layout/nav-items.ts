@@ -479,11 +479,11 @@ export const navItems: NavItem[] = [
     description: 'Find out how much you need to save to reach your goal.'
   },
   {
-    href: '/loan-payoff-calculator',
+    href: '/loan-calculator',
     icon: Landmark,
-    label: 'Loan Payoff Calculator',
+    label: 'Loan Calculator',
     category: 'Financial Calculators',
-    description: 'Calculate how long it will take to pay off a loan.'
+    description: 'A comprehensive calculator for various loan types like amortized and deferred payment.'
   },
   {
     href: '/credit-card-payoff-calculator',
