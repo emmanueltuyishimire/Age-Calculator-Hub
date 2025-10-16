@@ -7,6 +7,17 @@ interface TaxBracket {
     rate: number;
 }
 
+interface ContributionLimits {
+    '401k': {
+        regular: number;
+        catchUp: number;
+    };
+    ira: {
+        regular: number;
+        catchUp: number;
+    };
+}
+
 interface TaxYearData {
     standardDeduction: Record<FilingStatus, number>;
     taxBrackets: Record<FilingStatus, TaxBracket[]>;
@@ -18,6 +29,7 @@ interface TaxYearData {
     otherDependentCredit: number;
     studentLoanInterestMax: number;
     saltCap: number;
+    contributionLimits: ContributionLimits;
 }
 
 export const taxData: Record<'2024' | '2025', TaxYearData> = {
@@ -87,6 +99,10 @@ export const taxData: Record<'2024' | '2025', TaxYearData> = {
         otherDependentCredit: 500,
         studentLoanInterestMax: 2500,
         saltCap: 10000,
+        contributionLimits: {
+            '401k': { regular: 23000, catchUp: 30500 },
+            ira: { regular: 7000, catchUp: 8000 }
+        }
     },
     '2025': {
         standardDeduction: {
@@ -154,5 +170,9 @@ export const taxData: Record<'2024' | '2025', TaxYearData> = {
         otherDependentCredit: 500,
         studentLoanInterestMax: 2500,
         saltCap: 10000,
+        contributionLimits: {
+            '401k': { regular: 23500, catchUp: 31000 },
+            ira: { regular: 7000, catchUp: 8000 }
+        }
     },
 };

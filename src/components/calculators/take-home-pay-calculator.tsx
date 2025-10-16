@@ -41,11 +41,13 @@ import { Switch } from '../ui/switch';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '../ui/collapsible';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
+const latestTaxYear = Object.keys(taxData).sort((a, b) => Number(b) - Number(a))[0] as '2024' | '2025';
+
 const formSchema = z.object({
   grossSalary: z.coerce.number().min(1, "Salary must be positive."),
   payFrequency: z.enum(['annually', 'monthly', 'semi-monthly', 'bi-weekly', 'weekly']),
   filingStatus: z.enum(['single', 'marriedFilingJointly', 'marriedFilingSeparately', 'headOfHousehold', 'qualifyingWidow']),
-  taxYear: z.enum(['2024', '2025']),
+  taxYear: z.enum(['2024', '2025']).default(latestTaxYear),
   youngDependents: z.coerce.number().min(0).int().optional(),
   otherDependents: z.coerce.number().min(0).int().optional(),
   preTaxDeductions: z.coerce.number().min(0).optional(),
@@ -82,7 +84,7 @@ export default function TakeHomePayCalculator() {
       grossSalary: 80000,
       payFrequency: 'bi-weekly',
       filingStatus: 'single',
-      taxYear: '2024',
+      taxYear: latestTaxYear,
       preTaxDeductions: 0,
       stateTaxRate: 0,
       hasMultipleJobs: false,
@@ -127,7 +129,7 @@ export default function TakeHomePayCalculator() {
     const federalTaxPerPeriod = annualFederalTax / periods;
 
     // FICA Taxes
-    const socialSecurityLimit = yearData.saltCap === 10000 ? 168600 : 160200; // Example adjustment based on a tax year specific value
+    const socialSecurityLimit = yearData.contributionLimits.socialSecurity;
     const socialSecurityRate = 0.062;
     const medicareRate = 0.0145;
 
@@ -206,7 +208,7 @@ export default function TakeHomePayCalculator() {
                         </Select>
                       <FormMessage /></FormItem>
                     )} />
-                    <FormField control={form.control} name="taxYear" render={({ field }) => (<FormItem><FormLabel>Tax Year</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl><SelectContent><SelectItem value="2024">2024</SelectItem><SelectItem value="2025">2025</SelectItem></SelectContent></Select><FormMessage/></FormItem>)}/>
+                    <FormField control={form.control} name="taxYear" render={({ field }) => (<FormItem><FormLabel>Tax Year</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl><SelectContent>{Object.keys(taxData).sort((a,b) => Number(b) - Number(a)).map(year => <SelectItem key={year} value={year}>{year}</SelectItem>)}</SelectContent></Select><FormMessage/></FormItem>)}/>
                     <FormField control={form.control} name="preTaxDeductions" render={({ field }) => (<FormItem><FormLabel>Annual Pre-Tax Deductions</FormLabel><FormControl><Input type="number" placeholder="e.g., 401k, health" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="youngDependents" render={({ field }) => (<FormItem><FormLabel>Dependents (under 17)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="otherDependents" render={({ field }) => (<FormItem><FormLabel>Other Dependents</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />

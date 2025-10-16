@@ -33,8 +33,10 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '../ui/separator';
 
+const latestTaxYear = Object.keys(estateTaxData).sort((a, b) => Number(b) - Number(a))[0] as EstateTaxYear;
+
 const formSchema = z.object({
-  yearOfDeath: z.string(),
+  yearOfDeath: z.string().default(latestTaxYear),
   // Assets
   residence: z.coerce.number().min(0).optional(),
   investments: z.coerce.number().min(0).optional(),
@@ -63,7 +65,7 @@ export default function EstateTaxCalculator() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      yearOfDeath: '2024',
+      yearOfDeath: latestTaxYear,
       residence: 0,
       investments: 0,
       savings: 0,

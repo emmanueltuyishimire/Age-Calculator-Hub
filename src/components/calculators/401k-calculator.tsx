@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { Checkbox } from '../ui/checkbox';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { taxData } from '@/lib/tax-data';
 
 const currencySymbol = '$';
 
@@ -178,7 +179,11 @@ function MaxMatchCalculator() {
     
     function onSubmit(values: MatchFormData) {
         const { salary, age, match1 = 0, match1Limit = 0, match2 = 0, match2Limit = 0 } = values;
-        const irsLimit = age >= 50 ? 31000 : 23500; // For 2025
+        
+        const currentYear = new Date().getFullYear().toString() as keyof typeof taxData;
+        const yearTaxData = taxData[currentYear] || taxData[Object.keys(taxData).sort().pop() as keyof typeof taxData];
+        const limits = yearTaxData.contributionLimits['401k'];
+        const irsLimit = age >= 50 ? limits.catchUp : limits.regular;
 
         const totalMatchPercent = Math.max(match1Limit, match2Limit);
         const maxEmployeeContribution = salary * (totalMatchPercent / 100);

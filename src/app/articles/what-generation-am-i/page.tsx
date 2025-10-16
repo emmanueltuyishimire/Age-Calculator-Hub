@@ -1,35 +1,22 @@
 
-import { type Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import { articles } from '@/lib/articles';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { notFound } from 'next/navigation';
+import { notFound, usePathname } from 'next/navigation';
+import * as React from 'react';
 
-const article = articles.find(a => a.slug === 'what-generation-am-i');
-
-export function generateMetadata(): Metadata {
-  if (!article) {
-    return {};
-  }
-  return {
-    title: article.title,
-    description: article.description,
-    alternates: {
-        canonical: `/articles/${article.slug}`,
-    },
-  };
-}
-
-const generations = [
-    { name: "The Silent Generation", years: "1928–1945", ageIn2024: "79–96" },
-    { name: "Baby Boomers", years: "1946–1964", ageIn2024: "60–78" },
-    { name: "Generation X", years: "1965–1980", ageIn2024: "44–59" },
-    { name: "Millennials (Gen Y)", years: "1981–1996", ageIn2024: "28–43" },
-    { name: "Generation Z (Gen Z)", years: "1997–2012", ageIn2024: "12–27" },
-    { name: "Generation Alpha", years: "2013–Present", ageIn2024: "0–11" },
+const generationData = [
+    { name: "The Silent Generation", years: "1928–1945" },
+    { name: "Baby Boomers", years: "1946–1964" },
+    { name: "Generation X", years: "1965–1980" },
+    { name: "Millennials (Gen Y)", years: "1981–1996" },
+    { name: "Generation Z (Gen Z)", years: "1997–2012" },
+    { name: "Generation Alpha", years: "2013–Present" },
 ];
 
 const faqs = [
@@ -56,9 +43,28 @@ const faqs = [
 ];
 
 export default function WhatGenerationAmIPage() {
+  const pathname = usePathname();
+  const article = articles.find(a => `/articles/${a.slug}` === pathname);
+  const [currentYear, setCurrentYear] = React.useState(new Date().getFullYear());
+
+  React.useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   if (!article) {
     notFound();
   }
+
+  const generationsWithAges = generationData.map(gen => {
+    const [startYear, endYearStr] = gen.years.split('–');
+    const endYear = endYearStr === 'Present' ? currentYear : parseInt(endYearStr);
+    const ageStart = currentYear - endYear;
+    const ageEnd = currentYear - parseInt(startYear);
+    return {
+        ...gen,
+        ageInRange: `${ageStart}–${ageEnd}`
+    }
+  });
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -87,15 +93,15 @@ export default function WhatGenerationAmIPage() {
                             <TableRow>
                                 <TableHead className="font-bold">Generation Name</TableHead>
                                 <TableHead className="font-bold">Birth Years</TableHead>
-                                <TableHead className="font-bold text-right">Age Range in 2024</TableHead>
+                                <TableHead className="font-bold text-right">Age Range in {currentYear}</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {generations.map((gen) => (
+                            {generationsWithAges.map((gen) => (
                                 <TableRow key={gen.name}>
                                     <TableCell className="font-medium">{gen.name}</TableCell>
                                     <TableCell>{gen.years}</TableCell>
-                                    <TableCell className="text-right">{gen.ageIn2024}</TableCell>
+                                    <TableCell className="text-right">{gen.ageInRange}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -113,7 +119,7 @@ export default function WhatGenerationAmIPage() {
 
 
             <h2 className="text-3xl font-bold text-center mb-8">A Quick Look at the Generations</h2>
-            {generations.map((gen) => (
+            {generationData.map((gen) => (
              <Card key={gen.name} className="my-6">
                 <CardHeader>
                     <CardTitle className="text-2xl">{gen.name} ({gen.years})</CardTitle>

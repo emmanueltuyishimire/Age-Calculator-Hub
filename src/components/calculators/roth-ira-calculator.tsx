@@ -42,11 +42,8 @@ import {
 } from "@/components/ui/table";
 import { ChartContainer, ChartTooltipContent } from '../ui/chart';
 import { Switch } from '../ui/switch';
+import { taxData } from '@/lib/tax-data';
 
-const iraContributionLimits = {
-  "2025": { under50: 7000, over50: 8000 },
-  "2024": { under50: 7000, over50: 8000 },
-};
 
 const formSchema = z.object({
   currentBalance: z.coerce.number().min(0),
@@ -104,6 +101,10 @@ export default function RothIraCalculator() {
     const r = rateOfReturn / 100;
     const currentTax = taxRate / 100;
     
+    const currentYearKey = new Date().getFullYear().toString();
+    const limitsYear = Object.keys(taxData).includes(currentYearKey) ? currentYearKey as keyof typeof taxData : Object.keys(taxData).sort().pop() as keyof typeof taxData;
+    const contributionLimits = taxData[limitsYear].contributionLimits.ira;
+
     const schedule: ScheduleRow[] = [];
     let rothBalance = currentBalance;
     let taxableBalance = currentBalance;
@@ -112,7 +113,7 @@ export default function RothIraCalculator() {
 
     for (let i = 0; i < yearsToRetirement; i++) {
         const age = currentAge + i;
-        const contributionLimit = age < 50 ? iraContributionLimits["2025"].under50 : iraContributionLimits["2025"].over50;
+        const contributionLimit = age < 50 ? contributionLimits.regular : contributionLimits.catchUp;
         const annualContribution = maximizeContribution ? contributionLimit : (values.annualContribution || 0);
 
         const row: Partial<ScheduleRow> = { age, principalStart: principalBalance, rothStart: rothBalance, taxableStart: taxableBalance };
@@ -250,7 +251,7 @@ export default function RothIraCalculator() {
                             <TableHead></TableHead>
                             <TableHead className="text-right">Start</TableHead><TableHead className="text-right">End</TableHead>
                             <TableHead className="text-right">Start</TableHead><TableHead className="text-right">End</TableHead>
-                            <TableHead className="text-right">Start</TableHead><TableHead className="text-right">End</TableHead>
+                             <TableHead className="text-right">Start</TableHead><TableHead className="text-right">End</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>

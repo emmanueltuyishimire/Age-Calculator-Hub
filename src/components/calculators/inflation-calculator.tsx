@@ -31,6 +31,10 @@ import {
 
 const currencySymbol = '$';
 const years = Object.keys(cpiData).sort((a, b) => Number(b) - Number(a));
+const latestYear = years[0];
+const latestMonthData = cpiData[latestYear as CpiYear];
+const latestMonth = Object.keys(latestMonthData!).filter(k => k !== 'Average').pop() || 'August';
+
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const getCpiValue = (year: string, month: string): number | undefined => {
@@ -61,7 +65,7 @@ function CpiCalculator() {
     const [result, setResult] = React.useState<number | null>(null);
     const form = useForm<CpiFormData>({
         resolver: zodResolver(cpiSchema),
-        defaultValues: { amount: 100, startYear: '2015', startMonth: 'Average', endYear: '2025', endMonth: 'August' },
+        defaultValues: { amount: 100, startYear: '2015', startMonth: 'Average', endYear: latestYear, endMonth: latestMonth },
     });
 
     function onSubmit(values: CpiFormData) {

@@ -83,7 +83,7 @@ export default function RmdCalculator() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       birthYear: 1950,
-      rmdYear: 2025,
+      rmdYear: new Date().getFullYear(),
       accountBalance: 200000,
       isSpouseBeneficiary: false,
       spouseBirthYear: undefined,

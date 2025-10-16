@@ -20,6 +20,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -35,11 +36,13 @@ import { Switch } from '../ui/switch';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 import { Separator } from '../ui/separator';
 
+const latestTaxYear = Object.keys(taxData).sort((a, b) => Number(b) - Number(a))[0] as '2024' | '2025';
+
 const formSchema = z.object({
   filingStatus: z.enum(['single', 'marriedFilingJointly', 'marriedFilingSeparately', 'headOfHousehold', 'qualifyingWidow']),
   youngDependents: z.coerce.number().min(0).int(),
   otherDependents: z.coerce.number().min(0).int(),
-  taxYear: z.enum(['2024', '2025']),
+  taxYear: z.enum(['2024', '2025']).default(latestTaxYear),
   wages: z.coerce.number().min(0),
   wagesWithheld: z.coerce.number().min(0),
   interestIncome: z.coerce.number().min(0).optional(),
@@ -75,7 +78,7 @@ export default function IncomeTaxCalculator() {
       filingStatus: 'single',
       youngDependents: 0,
       otherDependents: 0,
-      taxYear: '2024',
+      taxYear: latestTaxYear,
       wages: 80000,
       wagesWithheld: 9000,
     },
@@ -174,7 +177,7 @@ export default function IncomeTaxCalculator() {
               <h3 className="text-lg font-semibold">Filing Information</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField control={form.control} name="filingStatus" render={({ field }) => (<FormItem><FormLabel>Filing Status</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl><SelectContent><SelectItem value="single">Single</SelectItem><SelectItem value="marriedFilingJointly">Married Filing Jointly</SelectItem><SelectItem value="marriedFilingSeparately">Married Filing Separately</SelectItem><SelectItem value="headOfHousehold">Head of Household</SelectItem><SelectItem value="qualifyingWidow">Qualifying Widow(er)</SelectItem></SelectContent></Select><FormMessage/></FormItem>)}/>
-                <FormField control={form.control} name="taxYear" render={({ field }) => (<FormItem><FormLabel>Tax Year</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl><SelectContent><SelectItem value="2024">2024</SelectItem><SelectItem value="2025">2025</SelectItem></SelectContent></Select><FormMessage/></FormItem>)}/>
+                <FormField control={form.control} name="taxYear" render={({ field }) => (<FormItem><FormLabel>Tax Year</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl><SelectContent>{Object.keys(taxData).sort((a,b) => Number(b) - Number(a)).map(year => <SelectItem key={year} value={year}>{year}</SelectItem>)}</SelectContent></Select><FormMessage/></FormItem>)}/>
                 <FormField control={form.control} name="youngDependents" render={({ field }) => (<FormItem><FormLabel>Young Dependents (0-16)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="otherDependents" render={({ field }) => (<FormItem><FormLabel>Other Dependents (17+)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
               </div>
