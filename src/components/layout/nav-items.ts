@@ -239,6 +239,13 @@ export const navItems: NavItem[] = [
     description: 'Find your break-even age for claiming Social Security benefits.'
   },
   {
+    href: '/401k-calculator',
+    icon: Briefcase,
+    label: '401(k) Calculator',
+    category: 'Retirement & Social Security',
+    description: 'Estimate retirement savings, withdrawal costs, and employer match.'
+  },
+  {
     href: '/retirement-savings-goal-calculator',
     icon: Target,
     label: 'Retirement Savings Goal Calculator',
