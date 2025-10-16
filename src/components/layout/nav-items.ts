@@ -622,6 +622,13 @@ export const navItems: NavItem[] = [
     category: 'Other',
     description: 'Estimate your monthly boat payment and total loan cost.'
   },
+  {
+    href: '/college-cost-calculator',
+    icon: GraduationCap,
+    label: 'College Cost Calculator',
+    category: 'Other',
+    description: 'Estimate future college costs and the savings needed.'
+  },
   
   // Company & Legal Links (for footer and mobile nav)
   {
