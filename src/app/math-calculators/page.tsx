@@ -16,10 +16,10 @@ export default function MathCalculatorsHub() {
       <div className="text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Math Calculators</h1>
         <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-          A comprehensive suite of tools to help with your mathematical needs. More calculators coming soon!
+          A comprehensive suite of tools to help with your mathematical needs.
         </p>
       </div>
-      <CategoryHubClient categoryName="Math & Other" />
+      <CategoryHubClient categoryName="Math" />
     </main>
   );
 }

@@ -85,36 +85,6 @@ export const navItems: NavItem[] = [
     description: 'Read our latest articles.'
   },
 
-  // Core Age Calculators
-  {
-    href: '/age-calculator',
-    icon: Clock,
-    label: 'Age Calculator',
-    category: 'Core Age & Time',
-    description: 'Calculates age from date of birth in years, months, and days.'
-  },
-  {
-    href: '/birthday-age-calculator',
-    icon: Cake,
-    label: 'Birthday Calculator',
-    category: 'Core Age & Time',
-    description: 'Find your exact age and see a live countdown to your next birthday.'
-  },
-  {
-    href: '/how-old-is',
-    icon: HelpCircle,
-    label: 'How Old Is...?',
-    category: 'Core Age & Time',
-    description: 'A quick age finder to determine how old someone is from their birth date.'
-  },
-  {
-    href: '/age-calculator-by-year',
-    icon: CalendarIcon,
-    label: 'Age by Year Calculator',
-    category: 'Core Age & Time',
-    description: 'Quickly estimate age by only entering the year of birth.'
-  },
-
   // Health & Fitness Calculators
   {
     href: '/biological-age',
@@ -476,138 +446,168 @@ export const navItems: NavItem[] = [
     description: 'Estimate your federal estate tax liability.'
   },
 
-  // Math & Other Calculators
+  // Math Calculators
   {
     href: '/scientific-calculator',
     icon: FlaskConical,
     label: 'Scientific Calculator',
-    category: 'Math & Other',
+    category: 'Math',
     description: 'An online scientific calculator with advanced functions.'
   },
   {
     href: '/percentage-calculator',
     icon: Calculator,
     label: 'Percentage Calculator',
-    category: 'Math & Other',
+    category: 'Math',
     description: 'A versatile tool for all types of percentage calculations.'
   },
   {
     href: '/volume-calculator',
     icon: Cuboid,
     label: 'Volume Calculator',
-    category: 'Math & Other',
+    category: 'Math',
     description: 'Calculate the volume of common 3D shapes like spheres, cubes, and cylinders.'
   },
   {
     href: '/sales-tax-calculator',
     icon: Percent,
     label: 'Sales Tax Calculator',
-    category: 'Math & Other',
+    category: 'Math',
     description: 'Calculate the final price of an item including sales tax.'
   },
   {
     href: '/vat-calculator',
     icon: Percent,
     label: 'VAT Calculator',
-    category: 'Math & Other',
+    category: 'Math',
     description: 'Easily add or remove Value Added Tax (VAT) from a price.'
+  },
+
+  // Other Calculators
+   {
+    href: '/age-calculator',
+    icon: Clock,
+    label: 'Age Calculator',
+    category: 'Other Calculators',
+    description: 'Calculates age from date of birth in years, months, and days.'
+  },
+  {
+    href: '/birthday-age-calculator',
+    icon: Cake,
+    label: 'Birthday Calculator',
+    category: 'Other Calculators',
+    description: 'Find your exact age and see a live countdown to your next birthday.'
+  },
+  {
+    href: '/how-old-is',
+    icon: HelpCircle,
+    label: 'How Old Is...?',
+    category: 'Other Calculators',
+    description: 'A quick age finder to determine how old someone is from their birth date.'
+  },
+  {
+    href: '/age-calculator-by-year',
+    icon: CalendarIcon,
+    label: 'Age by Year Calculator',
+    category: 'Other Calculators',
+    description: 'Quickly estimate age by only entering the year of birth.'
   },
   {
     href: '/dog-age',
     icon: Dog,
     label: 'Dog Age Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Find out how old your dog is in human years based on size.'
   },
    {
     href: '/cat-age-in-human-years',
     icon: Cat,
     label: 'Cat Age Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Find out how old your cat is in human years.'
   },
   {
     href: '/statute-of-limitations',
     icon: BookOpen,
     label: 'Statute of Limitations Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Estimate legal filing deadlines for common claims.'
   },
   {
     href: '/child-support-calculator',
     icon: Users,
     label: 'Child Support Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Get a simple estimate of potential child support payments.'
   },
   {
     href: '/life-insurance-calculator',
     icon: ShieldCheck,
     label: 'Life Insurance Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Estimate how much life insurance coverage you really need.'
   },
   {
     href: '/loan-calculator',
     icon: Landmark,
     label: 'Loan Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'A comprehensive calculator for various loan types like amortized and deferred payment.'
   },
   {
     href: '/debt-payoff-calculator',
     icon: CreditCard,
     label: 'Debt Payoff Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Create a payoff plan for multiple debts using the Debt Avalanche method.'
   },
   {
     href: '/credit-card-calculator',
     icon: CreditCard,
     label: 'Credit Card Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Calculates the time or payment needed to pay off a credit card balance.'
   },
    {
     href: '/debt-consolidation-calculator',
     icon: Scale,
     label: 'Debt Consolidation Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Compare current debts with a consolidation loan to see potential savings.'
   },
    {
     href: '/inflation-calculator',
     icon: TrendingUp,
     label: 'Inflation Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Calculate the buying power of money over time using CPI data.'
   },
   {
     href: '/discount-calculator',
     icon: Tag,
     label: 'Discount Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Calculate the final price after a percentage or fixed amount off.'
   },
   {
     href: '/payment-calculator',
     icon: DollarSign,
     label: 'Payment Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Estimate the monthly payment for any type of loan.'
   },
   {
     href: '/boat-loan-calculator',
     icon: Sailboat,
     label: 'Boat Loan Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Estimate your monthly boat payment and total loan cost.'
   },
   {
     href: '/college-cost-calculator',
     icon: GraduationCap,
     label: 'College Cost Calculator',
-    category: 'Math & Other',
+    category: 'Other Calculators',
     description: 'Estimate future college costs and the savings needed.'
   },
   
@@ -660,21 +660,24 @@ export const categorizedNavItems = (): NavCategory[] => {
   
   const categoryOrder = [
     'Navigation',
-    'Core Age & Time',
     'Financial',
     'Health & Fitness',
-    'Math & Other',
+    'Math',
+    'Other Calculators',
     'Company',
     'Legal',
   ];
 
   const sortedCategories = Object.keys(categories).sort((a, b) => {
-    return categoryOrder.indexOf(a) - categoryOrder.indexOf(b);
+    const indexA = categoryOrder.indexOf(a);
+    const indexB = categoryOrder.indexOf(b);
+    if (indexA === -1) return 1;
+    if (indexB === -1) return -1;
+    return indexA - indexB;
   });
 
   return sortedCategories.map(key => ({
     name: key,
     items: categories[key],
-    // No hub hrefs needed with this simplified structure
   }));
 };

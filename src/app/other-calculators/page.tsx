@@ -16,10 +16,10 @@ export default function OtherCalculatorsHub() {
       <div className="text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Other Calculators</h1>
         <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-          Discover a variety of useful tools, from pet age calculators to legal estimators and other everyday utilities.
+          Discover a variety of useful tools, from pet age calculators and legal estimators to everyday utilities for time and more.
         </p>
       </div>
-      <CategoryHubClient categoryName="Math & Other" />
+      <CategoryHubClient categoryName="Other Calculators" />
     </main>
   );
 }
