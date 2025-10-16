@@ -1,14 +1,19 @@
-
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
-import ScientificCalculatorLoader from '@/components/calculators/scientific-calculator-loader';
 import { Skeleton } from '@/components/ui/skeleton';
+
+const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
+  loading: () => <Skeleton className="h-[500px] w-full max-w-xs mx-auto" />,
+  ssr: false,
+});
+
 
 export default function Home() {
   const [loadCalculator, setLoadCalculator] = useState(false);
@@ -31,6 +36,7 @@ export default function Home() {
 
     return () => {
       if (calculatorRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         observer.unobserve(calculatorRef.current);
       }
     };
@@ -44,7 +50,7 @@ export default function Home() {
             <div className="flex justify-center">
               <div className="w-full max-w-2xl min-h-[500px]" ref={calculatorRef}>
                 {loadCalculator ? (
-                  <ScientificCalculatorLoader />
+                  <ScientificCalculator />
                 ) : (
                   <Skeleton className="h-[500px] w-full max-w-xs mx-auto" />
                 )}

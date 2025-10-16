@@ -1,5 +1,5 @@
 
-import ScientificCalculator from '@/components/calculators/scientific-calculator-loader';
+import dynamic from 'next/dynamic';
 import { type Metadata } from 'next';
 import {
   Accordion,
@@ -10,6 +10,13 @@ import {
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
+  loading: () => <Skeleton className="h-[500px] w-full max-w-2xl" />,
+  ssr: false,
+});
+
 
 export const metadata: Metadata = {
     title: 'Scientific Calculator – Advanced Online Math Tool',
