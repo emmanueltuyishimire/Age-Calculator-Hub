@@ -62,11 +62,9 @@ export function TopNav() {
            <NavigationMenu>
             <NavigationMenuList>
                <NavigationMenuItem>
-                <Link href="/financial-calculators" legacyBehavior passHref>
-                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
-                    Financial
+                  <NavigationMenuLink asChild className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
+                    <Link href="/financial-calculators">Financial</Link>
                   </NavigationMenuLink>
-                </Link>
               </NavigationMenuItem>
               {nonFinancialCategories.map(category => (
                  <NavigationMenuItem key={category.name}>
