@@ -233,6 +233,13 @@ export const navItems: NavItem[] = [
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
   {
+    href: '/payment-calculator',
+    icon: DollarSign,
+    label: 'Payment Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate the monthly payment for any type of loan.'
+  },
+  {
     href: '/mortgage-calculator',
     icon: Landmark,
     label: 'Mortgage Calculator',
