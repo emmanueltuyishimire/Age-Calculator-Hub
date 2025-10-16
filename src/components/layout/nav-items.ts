@@ -253,6 +253,13 @@ export const navItems: NavItem[] = [
     category: 'Financial Calculators',
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
+   {
+    href: '/roi-calculator',
+    icon: TrendingUp,
+    label: 'ROI Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate the Return on Investment and Annualized ROI for any investment.'
+  },
   {
     href: '/rental-property-calculator',
     icon: Home,
