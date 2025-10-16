@@ -373,6 +373,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate your monthly mortgage payment with PITI.'
   },
   {
+    href: '/refinance-calculator',
+    icon: Home,
+    label: 'Refinance Calculator',
+    category: 'Financial Calculators',
+    description: 'See if refinancing your loan makes financial sense.'
+  },
+  {
     href: '/house-affordability-calculator',
     icon: Home,
     label: 'House Affordability Calculator',
