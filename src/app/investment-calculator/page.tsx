@@ -1,7 +1,7 @@
 
-// This file is a redirect to the new /finance-calculator page.
+// This file is a redirect to the new /future-value-calculator page.
 import { redirect } from 'next/navigation';
 
 export default function InvestmentCalculatorRedirectPage() {
-    redirect('/finance-calculator');
+    redirect('/future-value-calculator');
 }
