@@ -48,6 +48,7 @@ import {
   Percent,
   CreditCard,
   GraduationCap,
+  FileBarChart,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -290,6 +291,13 @@ export const navItems: NavItem[] = [
     label: 'Finance Calculator',
     category: 'Financial Calculators',
     description: 'A TVM calculator to solve for FV, PV, PMT, N, or I/Y.'
+  },
+  {
+    href: '/bond-calculator',
+    icon: FileBarChart,
+    label: 'Bond Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate bond price, yield, and accrued interest.'
   },
   {
     href: '/simple-interest-calculator',
