@@ -38,6 +38,7 @@ export const metadata: Metadata = {
     description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
     type: 'website',
     url: 'https://innerpeacejournals.com',
+    siteName: 'Calculators',
     images: [
       {
         url: '/logo.png',
@@ -53,11 +54,21 @@ export const metadata: Metadata = {
     description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
   },
   icons: {
-    icon: '/logo.png',
-    apple: '/logo.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
   },
   manifest: '/manifest.json',
 };
+
+const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Calculators",
+    "url": "https://innerpeacejournals.com",
+    "logo": "https://innerpeacejournals.com/logo.png"
+};
+
 
 export default function RootLayout({
   children,
@@ -67,6 +78,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <Script 
+            id="org-schema" 
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <Script
