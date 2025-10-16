@@ -288,6 +288,13 @@ export const navItems: NavItem[] = [
     category: 'Retirement',
     description: 'Estimate your total nest egg needed for retirement.'
   },
+   {
+    href: '/rmd-calculator',
+    icon: PiggyBank,
+    label: 'RMD Calculator',
+    category: 'Retirement',
+    description: 'Calculate your Required Minimum Distribution from retirement accounts.'
+  },
 
   // Mortgage & Real Estate
   {

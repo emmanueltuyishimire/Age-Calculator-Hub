@@ -104,7 +104,7 @@ export default function CdCalculator() {
     const schedule: ScheduleRow[] = [];
     let currentBalance = initialDeposit;
     for (let year = 1; year <= Math.ceil(termInYears); year++) {
-        const interestThisYear = currentBalance * Math.pow(1 + netRate/n, n) - currentBalance;
+        const interestThisYear = currentBalance * (Math.pow(1 + netRate / n, n) - 1);
         currentBalance += interestThisYear;
         schedule.push({
             year,
