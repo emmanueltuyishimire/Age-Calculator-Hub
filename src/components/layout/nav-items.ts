@@ -47,6 +47,7 @@ import {
   Cuboid,
   Percent,
   CreditCard,
+  GraduationCap,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -247,6 +248,13 @@ export const navItems: NavItem[] = [
     label: 'Salary Calculator',
     category: 'Financial Calculators',
     description: 'Convert any salary to its hourly, weekly, monthly, and annual equivalents.'
+  },
+  {
+    href: '/student-loan-calculator',
+    icon: GraduationCap,
+    label: 'Student Loan Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate payments, analyze payoff strategies, and project future loan balances.'
   },
   {
     href: '/income-tax-calculator',
