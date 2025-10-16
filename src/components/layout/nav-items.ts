@@ -394,6 +394,13 @@ export const navItems: NavItem[] = [
     description: 'See if refinancing your loan makes financial sense.'
   },
   {
+    href: '/down-payment-calculator',
+    icon: Home,
+    label: 'Down Payment Calculator',
+    category: 'Financial Calculators',
+    description: 'Plan your home down payment from multiple angles.'
+  },
+  {
     href: '/house-affordability-calculator',
     icon: Home,
     label: 'House Affordability Calculator',
