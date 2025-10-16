@@ -57,13 +57,13 @@ const faqSchema = {
 
 export default function ScientificCalculatorPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="flex min-h-[calc(100vh-10rem)] items-center justify-center py-8">
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="max-w-4xl mx-auto">
-        <main role="main">
+      <div className="container mx-auto px-4">
+        <main role="main" className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Scientific Calculator</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
