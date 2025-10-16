@@ -13,8 +13,8 @@ import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Mortgage Calculator – Estimate Your Monthly House Payment',
-    description: 'Use our free Mortgage Calculator to estimate your monthly payment, including principal, interest, taxes, and insurance (PITI). See how your down payment and interest rate affect your payments.',
+    title: 'Mortgage Amortization Calculator – Estimate Your Monthly House Payment',
+    description: 'Use our free Mortgage Calculator to estimate your monthly payment, including principal, interest, taxes, insurance (PITI), and other costs. View a full amortization schedule.',
     alternates: {
         canonical: '/mortgage-calculator',
     },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 const faqs = [
     {
         question: "What is PITI?",
-        answer: "PITI stands for Principal, Interest, Taxes, and Insurance. These are the four components of a monthly mortgage payment. Our calculator helps you estimate all of them."
+        answer: "PITI stands for Principal, Interest, Taxes, and Insurance. These are the four main components of a monthly mortgage payment. Our calculator helps you estimate all of them, plus other potential costs like HOA fees."
     },
     {
         question: "How much of a down payment do I need?",
@@ -59,12 +59,12 @@ export default function MortgageCalculatorPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Mortgage Calculator</h1>
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Mortgage Amortization Calculator</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
-                    Estimate your monthly mortgage payment and see a breakdown of principal, interest, taxes, and insurance.
+                    Estimate your monthly mortgage payment and see a breakdown of principal, interest, taxes, insurance, and other costs.
                 </p>
             </div>
 
@@ -83,34 +83,20 @@ export default function MortgageCalculatorPage() {
                         </ul>
                     </CardContent>
                 </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>How to Use the Mortgage Calculator</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Home Price:</strong> Enter the purchase price of the home.</li>
-                            <li><strong>Down Payment:</strong> Input your down payment as either a fixed amount or a percentage of the home price.</li>
-                            <li><strong>Loan Term:</strong> Select the length of your mortgage, typically 15 or 30 years.</li>
-                            <li><strong>Interest Rate:</strong> Enter the annual interest rate for the loan.</li>
-                            <li><strong>Annual Taxes & Insurance:</strong> Add estimates for property taxes and homeowner's insurance to get a full PITI payment.</li>
-                            <li><strong>Click “Calculate”:</strong> Get an instant breakdown of your estimated monthly payment.</li>
-                        </ol>
-                    </CardContent>
-                </Card>
                 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Understanding Your Mortgage Payment</CardTitle>
+                        <CardTitle>What Is Amortization?</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <p className="text-muted-foreground">Your monthly mortgage payment is more than just paying back the loan. It's typically composed of four parts known as PITI:</p>
+                        <p className="text-muted-foreground">
+                            Amortization is the process of spreading out a loan into a series of fixed payments over time. Each payment you make is split into two parts: interest and principal.
+                        </p>
                         <ul className="space-y-3">
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Principal:</strong> The portion of your payment that goes directly to paying down your loan balance.</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Interest:</strong> The cost of borrowing the money, paid to the lender. In the early years of a loan, this makes up the largest part of your payment.</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Taxes:</strong> Property taxes, which your lender usually collects and pays on your behalf from an escrow account.</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Insurance:</strong> Homeowner's insurance, also typically paid from your escrow account, to protect against damage to the property.</span></li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Interest:</strong> This is the fee you pay to the lender for borrowing the money. In the early years of a loan, the interest portion of your payment is highest.</span></li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Principal:</strong> This is the portion of your payment that goes directly to paying down your loan balance. As you pay down the loan, the interest portion of each payment decreases, and more money goes toward principal.</span></li>
                         </ul>
+                        <p className="text-muted-foreground mt-4">This calculator provides a full amortization schedule, allowing you to see this process year-by-year and how your equity builds over time.</p>
                     </CardContent>
                 </Card>
 
