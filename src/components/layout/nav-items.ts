@@ -50,6 +50,7 @@ import {
   GraduationCap,
   FileBarChart,
   TrendingUp,
+  Tag,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -320,6 +321,13 @@ export const navItems: NavItem[] = [
     label: 'Simple Interest Calculator',
     category: 'Financial Calculators',
     description: 'Calculate simple interest on a loan or investment.'
+  },
+  {
+    href: '/discount-calculator',
+    icon: Tag,
+    label: 'Discount Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate the final price after a percentage or fixed amount off.'
   },
   {
     href: '/payment-calculator',
