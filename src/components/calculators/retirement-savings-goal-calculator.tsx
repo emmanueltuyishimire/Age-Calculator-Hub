@@ -141,7 +141,7 @@ export default function RetirementSavingsGoalCalculator() {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-2 pt-2">
-              <Button type="submit" className="w-full"><PiggyBank className="mr-2 h-4 w-4"/>Calculate Goal</Button>
+              <Button type="submit" className="w-full" aria-label="Calculate Savings Goal"><PiggyBank className="mr-2 h-4 w-4"/>Calculate Goal</Button>
               <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
               <ShareButton title="Retirement Savings Goal Calculator" text="Find out how much you need to save for retirement with this easy calculator!" url="/retirement-savings-goal-calculator" />
             </div>

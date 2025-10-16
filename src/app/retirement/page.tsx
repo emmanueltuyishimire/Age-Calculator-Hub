@@ -1,147 +1,147 @@
+"use client";
 
-import RetirementAgeCalculator from "@/components/calculators/retirement-age-calculator";
-import { type Metadata } from 'next';
+import { useState } from 'react';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import RelatedCalculators from "@/components/layout/related-calculators";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import Link from 'next/link';
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
+import ShareButton from '../share-button';
 
-export const metadata: Metadata = {
-    title: 'Retirement Age Calculator – Find Your Full Retirement Age by Birth Year',
-    description: 'Use our free Retirement Age Calculator to determine your full retirement age based on your birth year. Plan your Social Security, pension, and retirement timing easily.',
-    openGraph: {
-        title: 'Retirement Age Calculator – Find Your Full Retirement Age by Birth Year',
-        description: 'Use our free Retirement Age Calculator to determine your full retirement age based on your birth year. Plan your Social Security, pension, and retirement timing easily.',
-        type: 'website',
-        url: '/retirement',
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Retirement Age Calculator – Find Your Full Retirement Age by Birth Year',
-        description: 'Use our free Retirement Age Calculator to determine your full retirement age based on your birth year. Plan your Social Security, pension, and retirement timing easily.',
-    },
-    alternates: {
-        canonical: '/retirement',
-    },
+interface RetirementInfo {
+  fullRetirementAge: { years: number; months: number };
+  earlyBenefitReduction: number;
+  delayedBenefitIncrease: number;
+}
+
+const getFullRetirementAge = (birthYear: number): { years: number; months: number } => {
+  if (birthYear <= 1937) return { years: 65, months: 0 };
+  if (birthYear === 1938) return { years: 65, months: 2 };
+  if (birthYear === 1939) return { years: 65, months: 4 };
+  if (birthYear === 1940) return { years: 65, months: 6 };
+  if (birthYear === 1941) return { years: 65, months: 8 };
+  if (birthYear === 1942) return { years: 65, months: 10 };
+  if (birthYear >= 1943 && birthYear <= 1954) return { years: 66, months: 0 };
+  if (birthYear === 1955) return { years: 66, months: 2 };
+  if (birthYear === 1956) return { years: 66, months: 4 };
+  if (birthYear === 1957) return { years: 66, months: 6 };
+  if (birthYear === 1958) return { years: 66, months: 8 };
+  if (birthYear === 1959) return { years: 66, months: 10 };
+  return { years: 67, months: 0 }; // 1960 or later
 };
 
-const faqs = [
-    {
-        question: "What is the full retirement age if I was born in 1948?",
-        answer: "For individuals born between 1943 and 1954, the full retirement age for Social Security benefits is 66 years. You can use our calculator to see this specifically for your birth date."
-    },
-    {
-        question: "Can I retire at age 62?",
-        answer: "Yes, you can start receiving Social Security retirement benefits as early as age 62. However, your monthly benefits will be permanently reduced if you claim them before reaching your full retirement age."
-    },
-    {
-        question: "What is the best age to retire?",
-        answer: "There is no single 'best' age. It depends on your financial situation, health, and personal goals. Financially, delaying benefits until age 70 provides the largest monthly Social Security payment. However, retiring earlier may be better for your lifestyle. It's a personal decision."
-    },
-     {
-        question: "Is it possible to retire at 50?",
-        answer: "Retiring at 50 is possible but requires significant financial planning, as you cannot claim Social Security retirement benefits until age 62. You would need to rely entirely on personal savings, pensions, or other investments until then."
-    },
-    {
-        question: "Does this calculator show my benefit amount?",
-        answer: "No, this tool only calculates your retirement age eligibility. To get a personalized estimate of your benefit amount, you should use the official calculator on the Social Security Administration's website."
+const getBenefitAdjustments = (fra: {years: number, months: number}): { reduction: number, increase: number } => {
+    const fraInMonths = fra.years * 12 + fra.months;
+    const monthsEarly = fraInMonths - (62 * 12);
+    
+    let reduction = 0;
+    if (monthsEarly <= 36) {
+        reduction = monthsEarly * (5/9);
+    } else {
+        reduction = 36 * (5/9) + (monthsEarly - 36) * (5/12);
     }
-];
 
-const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": faq.answer
-        }
-    }))
-};
+    const monthsDelayed = (70*12) - fraInMonths;
+    const increase = (monthsDelayed / 12) * 8;
 
-export default function RetirementPage() {
+    return { reduction, increase };
+}
+
+
+export default function SocialSecurityRetirementAgeCalculator() {
+  const [birthYear, setBirthYear] = useState('');
+  const [retirementInfo, setRetirementInfo] = useState<RetirementInfo | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleCalculate = () => {
+    const year = parseInt(birthYear, 10);
+
+    if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+      setError("Please enter a valid birth year.");
+      setRetirementInfo(null);
+      return;
+    }
+    setError(null);
+
+    const fullRetirementAge = getFullRetirementAge(year);
+    const adjustments = getBenefitAdjustments(fullRetirementAge);
+    
+    setRetirementInfo({
+      fullRetirementAge,
+      earlyBenefitReduction: Math.round(adjustments.reduction),
+      delayedBenefitIncrease: Math.round(adjustments.increase),
+    });
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <div className="max-w-4xl mx-auto">
-        <main role="main">
-            <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Retirement Age Calculator – Find Your Full Retirement Age by Birth Year</h1>
-            <p className="text-md md:text-lg text-muted-foreground">
-                Use our free Retirement Age Calculator to determine when you can retire with full Social Security benefits. Enter your date of birth to see your full retirement age, explore early retirement options, and understand the advantages of delaying benefits.
-            </p>
+    <Card className="w-full max-w-xl mx-auto shadow-lg animate-fade-in">
+      <CardHeader className="text-center">
+        <CardTitle>Calculate Your Full Retirement Age</CardTitle>
+        <CardDescription>
+          Enter your birth year to find your Social Security retirement details.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {error && (
+            <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+            </Alert>
+        )}
+        <div className="space-y-2">
+            <Label htmlFor="birth-year-ss">Your Birth Year</Label>
+            <div className="flex gap-2">
+                <Input 
+                    id="birth-year-ss"
+                    placeholder="YYYY" 
+                    value={birthYear} 
+                    onChange={e => setBirthYear(e.target.value)} 
+                    aria-label="Year of Birth"
+                />
+                <Button onClick={handleCalculate} className="w-full sm:w-auto">Calculate</Button>
+                 <ShareButton title="Social Security Retirement Calculator" text="Find out your full retirement age for Social Security!" url="/social-security-retirement-age-calculator" />
             </div>
+        </div>
 
-            <RetirementAgeCalculator />
-            
-            <section className="mt-12 space-y-8 animate-fade-in">
-                <Card>
-                    <CardHeader><CardTitle>How to Use the Retirement Age Calculator</CardTitle></CardHeader>
-                    <CardContent>
-                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Date of Birth:</strong> Provide your exact birth date using the DD, MM, and YYYY fields to get the most accurate retirement age calculation based on SSA rules.</li>
-                            <li><strong>Click "Calculate Retirement Age":</strong> Press the button to instantly see the age at which you are eligible for full Social Security benefits.</li>
-                            <li><strong>Review Your Retirement Options:</strong> The results will clearly show your full retirement age, the date you become eligible, and how your benefits are affected by retiring early (at 62) or delaying (until 70).</li>
-                        </ol>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader><CardTitle>Understanding Your Retirement Options</CardTitle></CardHeader>
-                    <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                        <div>
-                            <h3 className="font-semibold text-lg">Early Retirement (Age 62)</h3>
-                            <p className="text-sm text-muted-foreground">You can start benefits at 62, but they will be permanently reduced by up to 30% compared to waiting for your full retirement age.</p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-lg">Full Retirement Age (FRA)</h3>
-                            <p className="text-sm text-muted-foreground">This is the age you are entitled to 100% of your earned Social Security benefits. Our calculator shows this age and date for you.</p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-lg">Delayed Retirement (Age 70)</h3>
-                            <p className="text-sm text-muted-foreground">For every year you delay past your FRA, your benefit increases by about 8%, up to age 70. This can significantly boost your monthly income.</p>
-                        </div>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader><CardTitle>Smart Retirement Planning Tips</CardTitle></CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Start Saving Early:</strong> The sooner you begin saving in accounts like a 401(k) or IRA, the more time your investments have to grow, thanks to the power of compound interest.</li>
-                            <li><strong>Know Your Number:</strong> Use your calculated full retirement age as a baseline for your financial plan.</li>
-                            <li><strong>Consider Healthcare Costs:</strong> Medicare eligibility begins at 65, which may not align with your full retirement age. Plan for potential healthcare costs in the gap.</li>
-                            <li><strong>Pay Off High-Interest Debt:</strong> Entering retirement debt-free, especially from high-interest sources like credit cards, frees up your income for living expenses.</li>
-                            <li><strong>Create a Retirement Budget:</strong> Understand your expected expenses in retirement to ensure your savings will be sufficient. Read our <Link href="/articles/planning-for-retirement-at-any-age" className="text-primary hover:underline">decade-by-decade retirement guide</Link> for more tips.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
-
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>
-                    <Accordion type="single" collapsible className="w-full">
-                        {faqs.map((faq, index) => (
-                            <AccordionItem value={`item-${index}`} key={index}>
-                                <AccordionTrigger>{faq.question}</AccordionTrigger>
-                                <AccordionContent>{faq.answer}</AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
+        {retirementInfo && (
+          
+            <div className="p-6 bg-muted rounded-lg space-y-6 animate-fade-in mt-4">
+              <div className="text-center">
+                <h3 className="text-lg font-medium text-muted-foreground">Your Full Retirement Age is:</h3>
+                <div className="flex justify-center items-baseline space-x-2">
+                  <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirementAge.years}</span>
+                  <span className="text-xl text-muted-foreground">years</span>
+                  {retirementInfo.fullRetirementAge.months > 0 && (
+                    <>
+                      <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirementAge.months}</span>
+                      <span className="text-xl text-muted-foreground">months</span>
+                    </>
+                  )}
                 </div>
-            </section>
-        </main>
-        <RelatedCalculators currentCategory="Retirement & Social" currentHref="/retirement" />
-      </div>
-    </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                  <div className="p-4 border rounded-lg">
+                      <h4 className="font-semibold">Early Retirement (Age 62)</h4>
+                      <p className="text-sm text-muted-foreground">You can start benefits at age 62, but they will be reduced by approximately <strong className="text-foreground">{retirementInfo.earlyBenefitReduction}%</strong>.</p>
+                  </div>
+                  <div className="p-4 border rounded-lg">
+                      <h4 className="font-semibold">Delayed Retirement (Age 70)</h4>
+                      <p className="text-sm text-muted-foreground">If you wait until age 70, your benefits will increase by about <strong className="text-foreground">{retirementInfo.delayedBenefitIncrease}%</strong> over your full retirement amount.</p>
+                  </div>
+              </div>
+            </div>
+            
+        )}
+      </CardContent>
+    </Card>
   );
 }

@@ -239,12 +239,27 @@ export const navItems: NavItem[] = [
     description: 'Find your break-even age for claiming Social Security benefits.'
   },
   {
+    href: '/retirement-savings-goal-calculator',
+    icon: Target,
+    label: 'Retirement Savings Goal Calculator',
+    category: 'Retirement & Social Security',
+    description: 'Estimate how much you need to save for retirement.'
+  },
+  {
     href: '/ira-calculator',
     icon: Landmark,
     label: 'IRA Calculator',
-    category: 'Financial Calculators',
+    category: 'Retirement & Social Security',
     description: 'Compare Traditional IRAs, Roth IRAs, and taxable savings.'
   },
+  {
+    href: '/annuity-payout-calculator',
+    icon: Landmark,
+    label: 'Annuity Payout Calculator',
+    category: 'Retirement & Social Security',
+    description: 'Estimate annuity payouts or duration.'
+  },
+
 
   // Financial Calculators
    {
@@ -337,13 +352,6 @@ export const navItems: NavItem[] = [
     label: 'Estate Tax Calculator',
     category: 'Financial Calculators',
     description: 'Estimate your federal estate tax liability.'
-  },
-  {
-    href: '/annuity-payout-calculator',
-    icon: Landmark,
-    label: 'Annuity Payout Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate annuity payouts or duration.'
   },
   {
     href: '/rent-calculator',
@@ -463,20 +471,6 @@ export const navItems: NavItem[] = [
     label: 'Life Insurance Calculator',
     category: 'Financial Calculators',
     description: 'Estimate how much life insurance coverage you really need.'
-  },
-   {
-    href: '/retirement-savings-goal-calculator',
-    icon: Target,
-    label: 'Retirement Savings Goal Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate how much you need to save for retirement.'
-  },
-  {
-    href: '/savings-goal-calculator',
-    icon: Goal,
-    label: 'Savings Goal Calculator',
-    category: 'Financial Calculators',
-    description: 'Find out how much you need to save to reach your goal.'
   },
   {
     href: '/loan-calculator',
