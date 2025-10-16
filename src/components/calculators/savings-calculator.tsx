@@ -8,8 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import {
   Form,
@@ -17,7 +15,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -36,7 +33,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
 const formSchema = z.object({
   initialDeposit: z.coerce.number().min(0, "Must be non-negative."),
@@ -65,8 +62,6 @@ interface Result {
   totalPrincipal: number;
   totalContributions: number;
   totalInterest: number;
-  interestOfInitial: number;
-  interestOfContributions: number;
   buyingPower: number;
   schedule: ScheduleRow[];
 }
@@ -94,36 +89,32 @@ export default function SavingsCalculator() {
     const { initialDeposit, annualContribution = 0, annualIncrease = 0, monthlyContribution = 0, monthlyIncrease = 0, interestRate, compounding, yearsToSave, taxRate = 0, inflationRate = 0 } = values;
     
     const n = getCompoundingPeriods(compounding);
-    const totalPeriods = yearsToSave * n;
-    const r = interestRate / 100 / n;
+    const r = interestRate / 100;
     const actualTaxRate = taxRate / 100;
     
     let balance = initialDeposit;
     let totalContributions = 0;
-    let totalInterest = 0;
     let currentAnnualContrib = annualContribution;
     let currentMonthlyContrib = monthlyContribution;
     const schedule: ScheduleRow[] = [];
 
     for (let year = 1; year <= yearsToSave; year++) {
-        let yearlyDeposit = 0;
-        let yearlyInterest = 0;
         let yearStartBalance = balance;
-
-        for (let period = 1; period <= n; period++) {
-            const periodicContribution = (currentAnnualContrib / n) + currentMonthlyContrib * (12/n) / n * period; // simplistic monthly applied at each compound period
-            yearlyDeposit += periodicContribution;
-            
-            const interestForPeriod = balance * r;
-            const taxOnInterest = interestForPeriod * actualTaxRate;
-            const netInterest = interestForPeriod - taxOnInterest;
-            
-            balance += periodicContribution + netInterest;
-            yearlyInterest += netInterest;
-        }
-
+        const yearAnnualContribution = currentAnnualContrib;
+        const yearMonthlyContribution = currentMonthlyContrib * 12;
+        const yearlyDeposit = yearAnnualContribution + yearMonthlyContribution;
+        
+        let yearlyInterest = 0;
+        
+        // Simplified approach: apply interest annually, contributions added at year end
+        const interestForYear = balance * r;
+        const taxOnInterest = interestForYear * actualTaxRate;
+        const netInterest = interestForYear - taxOnInterest;
+        
+        balance += netInterest + yearlyDeposit;
+        yearlyInterest = netInterest;
+        
         totalContributions += yearlyDeposit;
-        totalInterest += yearlyInterest;
         
         schedule.push({
             year: year,
@@ -136,17 +127,11 @@ export default function SavingsCalculator() {
         currentMonthlyContrib *= (1 + (monthlyIncrease / 100));
     }
     
-    // Simplified interest breakdown
-    const fvInitial = initialDeposit * Math.pow(1 + r * (1 - actualTaxRate), totalPeriods);
-    const interestOfInitial = fvInitial - initialDeposit;
-
     setResult({
         endBalance: balance,
         totalPrincipal: initialDeposit + totalContributions,
         totalContributions,
-        totalInterest,
-        interestOfInitial,
-        interestOfContributions: totalInterest - interestOfInitial,
+        totalInterest: balance - initialDeposit - totalContributions,
         buyingPower: balance / Math.pow(1 + inflationRate / 100, yearsToSave),
         schedule,
     });

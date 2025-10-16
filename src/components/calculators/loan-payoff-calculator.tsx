@@ -174,14 +174,14 @@ export default function LoanPayoffCalculator() {
         </Form>
         
         {result && (
-          <div className="p-4 bg-muted rounded-lg text-center mt-6 space-y-4 animate-fade-in">
-            <h3 className="text-xl font-bold text-foreground">Your Payoff Comparison</h3>
+          <div className="p-4 bg-muted rounded-lg mt-6 space-y-4 animate-fade-in">
+            <h3 className="text-xl font-bold text-center text-foreground">Your Payoff Comparison</h3>
             <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 border rounded-lg bg-background">
+                <div className="p-4 border rounded-lg bg-background text-center">
                     <h4 className="font-semibold text-muted-foreground">Interest Savings</h4>
                     <p className="text-2xl font-bold text-primary">{currencySymbol}{result.interestSavings.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
                 </div>
-                <div className="p-4 border rounded-lg bg-background">
+                <div className="p-4 border rounded-lg bg-background text-center">
                     <h4 className="font-semibold text-muted-foreground">You'll Be Debt-Free</h4>
                     <p className="text-2xl font-bold text-primary">{Math.floor(result.timeSavingsMonths/12)} yrs, {result.timeSavingsMonths % 12} mos earlier</p>
                 </div>

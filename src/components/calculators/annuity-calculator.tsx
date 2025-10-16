@@ -93,6 +93,7 @@ export default function AnnuityCalculator() {
 
     for (let year = 1; year <= afterYears; year++) {
       const yearlyAddition = annualAddition + (monthlyAddition * 12);
+      let yearStartBalance = balance;
       
       let interest = 0;
       if (addAtBeginning) {

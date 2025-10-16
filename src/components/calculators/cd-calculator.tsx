@@ -112,23 +112,27 @@ export default function CdCalculator() {
     let totalInterest = 0;
     let totalTax = 0;
     const schedule: ScheduleRow[] = [];
+    
+    let cumulativeInterestThisYear = 0;
 
     for (let i = 1; i <= totalPeriods; i++) {
         const interestForPeriod = balance * r;
-        const taxOnInterest = interestForPeriod * actualTaxRate;
-        const netInterest = interestForPeriod - taxOnInterest;
+        cumulativeInterestThisYear += interestForPeriod;
         
-        balance += netInterest;
+        balance += interestForPeriod;
         totalInterest += interestForPeriod;
-        totalTax += taxOnInterest;
 
         if (i % n === 0 || i === totalPeriods) {
+            const taxForYear = cumulativeInterestThisYear * actualTaxRate;
+            balance -= taxForYear;
+            totalTax += taxForYear;
              schedule.push({
                 period: `Year ${Math.ceil(i/n)}`,
-                interest: totalInterest - schedule.reduce((acc, r) => acc + r.interest + r.tax, 0),
-                tax: taxOnInterest,
+                interest: cumulativeInterestThisYear,
+                tax: taxForYear,
                 endBalance: balance,
             });
+            cumulativeInterestThisYear = 0;
         }
     }
 
@@ -185,7 +189,7 @@ export default function CdCalculator() {
                     </div>
                      <div className="h-[200px] w-full">
                         <ChartContainer config={{}} className="mx-auto aspect-square h-full">
-                            <PieChart><Tooltip content={<ChartTooltipContent hideLabel formatter={(value) => `${currencySymbol}${Number(value).toLocaleString()}`} />} /><Pie data={pieData} dataKey="value" nameKey="name" innerRadius={50} outerRadius={70}><Cell key="cell-0" fill="hsl(var(--chart-1))" /><Cell key="cell-1" fill="hsl(var(--chart-2))" /></Pie></ChartContainer>
+                            <PieChart><Tooltip content={<ChartTooltipContent hideLabel formatter={(value) => `${currencySymbol}${Number(value).toLocaleString(undefined, {maximumFractionDigits:0})}`} />} /><Pie data={pieData} dataKey="value" nameKey="name" innerRadius={50} outerRadius={70}><Cell key="cell-0" fill="hsl(var(--chart-1))" /><Cell key="cell-1" fill="hsl(var(--chart-2))" /></Pie></ChartContainer>
                     </div>
                     <div className="space-y-1 text-sm">
                         <div className="flex justify-between"><span className="text-muted-foreground">Total Interest:</span><span className="font-semibold">{currencySymbol}{result.totalInterest.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span></div>

@@ -103,7 +103,7 @@ export default function DebtPayoffCalculator() {
       return;
     }
     
-    let debts = values.debts.map((d, i) => ({ ...d, id: i, name: d.name || `Debt ${i + 1}`, currentBalance: d.balance, originalMinPayment: d.minPayment }));
+    let debts = values.debts.map((d, i) => ({ ...d, id: i, name: d.name || `Debt ${i + 1}`, currentBalance: d.balance, originalMinPayment: d.minPayment, isPaidOff: false }));
     const schedule: ScheduleRow[] = [];
     let month = 0;
     let totalInterestPaid = 0;
@@ -115,7 +115,6 @@ export default function DebtPayoffCalculator() {
         return;
       }
 
-      // Accrue interest
       debts.forEach(debt => {
         if (debt.currentBalance > 0) {
           const interest = debt.currentBalance * (debt.apr / 100 / 12);
@@ -124,8 +123,7 @@ export default function DebtPayoffCalculator() {
         }
       });
       
-      // One time payment
-      if (month === values.oneTimePaymentMonth) {
+      if (month === values.oneTimePaymentMonth && (values.oneTimePayment || 0) > 0) {
         let oneTimeRemaining = values.oneTimePayment || 0;
         debts.sort((a,b) => b.apr - a.apr);
         for(const debt of debts) {
@@ -137,52 +135,52 @@ export default function DebtPayoffCalculator() {
         }
       }
 
-      // Yearly payment
       let budgetForMonth = budget;
       if (month % 12 === 0 && values.extraYearly) {
         budgetForMonth += values.extraYearly;
       }
       
+      let paymentsThisMonth: Payment[] = [];
       let budgetRemaining = budgetForMonth;
-      const paymentsThisMonth: { name: string, amount: number }[] = [];
 
-      // Make minimum payments
+      // 1. Minimum payments
       debts.forEach(debt => {
-        if (debt.currentBalance > 0) {
-          const payment = Math.min(debt.currentBalance, debt.originalMinPayment);
-          paymentsThisMonth.push({ name: debt.name, amount: payment });
-          debt.currentBalance -= payment;
-          budgetRemaining -= debt.originalMinPayment; // Use original min payment for budget calc
-        }
+          if (debt.currentBalance > 0) {
+              const payment = Math.min(debt.currentBalance, debt.originalMinPayment);
+              paymentsThisMonth.push({ debtName: debt.name, paymentAmount: payment });
+              debt.currentBalance -= payment;
+              budgetRemaining -= debt.originalMinPayment;
+          }
       });
 
-      // Avalanche extra payments
+      // 2. Extra payments (avalanche)
       debts.sort((a, b) => b.apr - a.apr);
       for (const debt of debts) {
-        if (debt.currentBalance > 0 && budgetRemaining > 0) {
-          const extraPayment = Math.min(debt.currentBalance, budgetRemaining);
-          const existingPayment = paymentsThisMonth.find(p => p.name === debt.name);
-          if (existingPayment) {
-            existingPayment.amount += extraPayment;
-          } else {
-            paymentsThisMonth.push({ name: debt.name, amount: extraPayment });
+          if (debt.currentBalance > 0 && budgetRemaining > 0) {
+              const extraPayment = Math.min(debt.currentBalance, budgetRemaining);
+              const existingPayment = paymentsThisMonth.find(p => p.debtName === debt.name);
+              if (existingPayment) {
+                  existingPayment.paymentAmount += extraPayment;
+              } else {
+                  paymentsThisMonth.push({ debtName: debt.name, paymentAmount: extraPayment });
+              }
+              debt.currentBalance -= extraPayment;
+              budgetRemaining -= extraPayment;
           }
-          debt.currentBalance -= extraPayment;
-          budgetRemaining -= extraPayment;
-        }
+      }
+
+      // If not using fixed budget, re-calculate for next month
+      if (!values.useFixedBudget) {
+        const newTotalMin = debts.reduce((sum, d) => d.currentBalance > 0 ? sum + d.originalMinPayment : sum, 0);
+        budget = newTotalMin + (values.extraMonthly || 0);
       }
       
       schedule.push({
         month,
-        payments: paymentsThisMonth.map(p => ({ debtName: p.name, paymentAmount: p.amount })),
+        payments: paymentsThisMonth,
         totalPayment: budgetForMonth - budgetRemaining,
         endingBalances: debts.map(d => ({ debtName: d.name, balance: Math.max(0, d.currentBalance) }))
       });
-      
-      if (!values.useFixedBudget) {
-          const newTotalMin = debts.reduce((sum, d) => d.currentBalance > 0 ? sum + d.originalMinPayment : sum, 0);
-          budget = newTotalMin + (values.extraMonthly || 0);
-      }
     }
 
     setResult({
@@ -207,7 +205,7 @@ export default function DebtPayoffCalculator() {
               <h3 className="text-lg font-semibold">Your Debts</h3>
               {fields.map((field, index) => (
                 <div key={field.id} className="grid grid-cols-1 md:grid-cols-5 gap-2 items-end p-2 border rounded-lg">
-                  <FormField control={form.control} name={`debts.${index}.name`} render={({ field }) => (<FormItem><FormLabel>Name</FormLabel><FormControl><Input placeholder={`Debt ${index+1}`} {...field} /></FormControl></FormItem>)} />
+                  <FormField control={form.control} name={`debts.${index}.name`} render={({ field }) => (<FormItem><FormLabel>Name</FormLabel><FormControl><Input placeholder={`Debt ${index + 1}`} {...field} /></FormControl></FormItem>)} />
                   <FormField control={form.control} name={`debts.${index}.balance`} render={({ field }) => (<FormItem><FormLabel>Balance</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name={`debts.${index}.minPayment`} render={({ field }) => (<FormItem><FormLabel>Min. Payment</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name={`debts.${index}.apr`} render={({ field }) => (<FormItem><FormLabel>APR (%)</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -236,8 +234,8 @@ export default function DebtPayoffCalculator() {
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                       <div className="space-y-0.5">
-                        <FormLabel>Fixed total monthly payment?</FormLabel>
-                        <FormDescription>If yes, paid-off debt payments are reallocated (faster). If no, total payment decreases.</FormDescription>
+                        <FormLabel>Use fixed monthly budget (Avalanche)?</FormLabel>
+                        <FormDescription>If yes, paid-off debt payments are reallocated. If no, total payment decreases over time (Snowball effect).</FormDescription>
                       </div>
                       <FormControl><Switch checked={field.value} onCheckedChange={field.onChange} /></FormControl>
                     </FormItem>
