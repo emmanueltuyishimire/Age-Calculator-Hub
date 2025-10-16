@@ -82,6 +82,7 @@ export default function HowOldIsCalculator() {
                 <Button
                   id="dob-howoldis"
                   variant={"outline"}
+                  aria-label="Pick a date of birth"
                   className={cn(
                     "w-full justify-start text-left font-normal",
                     !dob && "text-muted-foreground"
@@ -115,7 +116,7 @@ export default function HowOldIsCalculator() {
         )}
 
         <div className="flex flex-col md:flex-row gap-2">
-            <Button onClick={handleCalculate} className="w-full">Find Out How Old They Are</Button>
+            <Button onClick={handleCalculate} className="w-full" aria-label="Calculate Age">Find Out How Old They Are</Button>
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>

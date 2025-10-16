@@ -113,7 +113,7 @@ export default function AgeCalculatorByDateOfBirthPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Core Age Calculators" currentHref="/age-calculator-by-date-of-birth" />
+        <RelatedCalculators currentCategory="Other Calculators" currentHref="/age-calculator-by-date-of-birth" />
       </div>
     </div>
   );

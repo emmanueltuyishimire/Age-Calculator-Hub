@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { categorizedNavItems } from './nav-items';
+import { categorizedNavItems } from '@/components/layout/nav-items';
 import { Card, CardHeader, CardTitle, CardDescription } from '../ui/card';
 import { usePathname } from 'next/navigation';
 

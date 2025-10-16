@@ -78,12 +78,7 @@ export default function RoiCalculator() {
 
     let annualizedRoi = 0;
     if (investmentLength > 0 && amountInvested > 0 && amountReturned >= 0) {
-      if(investmentLength >= 1) {
         annualizedRoi = (Math.pow(amountReturned / amountInvested, 1 / investmentLength) - 1) * 100;
-      } else {
-        // For periods less than a year, annualize by simple extrapolation
-        annualizedRoi = (roi / investmentLength);
-      }
     }
     
     setResult({
@@ -122,7 +117,7 @@ export default function RoiCalculator() {
              </div>
             
             <div className="flex flex-col sm:flex-row gap-2 pt-2">
-              <Button type="submit" className="w-full"><DollarSign className="mr-2 h-4 w-4"/>Calculate ROI</Button>
+              <Button type="submit" className="w-full" aria-label="Calculate ROI"><DollarSign className="mr-2 h-4 w-4"/>Calculate ROI</Button>
               <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
             </div>
           </form>

@@ -234,7 +234,7 @@ export default function ChronologicalAgeCalculatorForm() {
         </div>
 
         <div className="flex flex-col md:flex-row gap-2">
-            <Button onClick={handleCalculate} className="w-full">Calculate Age</Button>
+            <Button onClick={handleCalculate} className="w-full" aria-label="Calculate Age">Calculate Age</Button>
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
