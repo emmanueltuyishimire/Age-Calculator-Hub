@@ -522,11 +522,11 @@ export const navItems: NavItem[] = [
     description: 'A comprehensive calculator for various loan types like amortized and deferred payment.'
   },
   {
-    href: '/credit-card-payoff-calculator',
+    href: '/debt-payoff-calculator',
     icon: CreditCard,
-    label: 'Credit Card Payoff Calculator',
+    label: 'Debt Payoff Calculator',
     category: 'Financial Calculators',
-    description: 'Create a payoff plan for multiple credit cards using the Debt Avalanche method.'
+    description: 'Create a payoff plan for multiple debts using the Debt Avalanche method.'
   },
   {
     href: '/credit-card-calculator',
