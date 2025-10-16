@@ -46,6 +46,14 @@ const ScientificCalculator = () => {
     const [expression, setExpression] = useState('');
     const [isError, setIsError] = useState(false);
     const [isResult, setIsResult] = useState(false);
+    const [currentTime, setCurrentTime] = useState('');
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date().toLocaleTimeString());
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
 
     const calculate = useCallback(() => {
         if (!expression) return;
@@ -230,9 +238,10 @@ const ScientificCalculator = () => {
             if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
                 return;
             }
-             if ((event.metaKey || event.ctrlKey) && ['c', 'v', 'a', 'r', 'l'].includes(event.key.toLowerCase())) {
+            if ((event.metaKey || event.ctrlKey) && ['c', 'v', 'a', 'r', 'l'].includes(event.key.toLowerCase())) {
               return;
             }
+            event.preventDefault();
 
             const keyMappings: { [key: string]: string | (() => void) } = {
                 ...Object.fromEntries("0123456789.()".split('').map(k => [k, k])),
@@ -245,7 +254,6 @@ const ScientificCalculator = () => {
 
             const action = keyMappings[event.key];
             if (action) {
-                event.preventDefault();
                 if (typeof action === 'function') {
                     action();
                 } else {
@@ -323,23 +331,26 @@ const ScientificCalculator = () => {
 
   return (
     <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-4 w-full max-w-[700px] mx-auto shadow-2xl">
-      <div className="bg-gray-800/50 dark:bg-gray-900/50 rounded p-2 mb-4 border-2 border-slate-800 dark:border-slate-900 shadow-inner">
+      <div className="bg-slate-500/20 dark:bg-black/20 rounded p-2 mb-4 border-2 border-slate-800 dark:border-black shadow-inner">
+        <div className="text-right text-emerald-300/80 font-mono text-xs pr-2 h-5">
+            {currentTime}
+        </div>
         <Input
             type="text"
             value={display}
             readOnly
-            className="w-full h-20 text-4xl text-right mb-2 bg-slate-200/10 dark:bg-green-900/50 pr-4 text-emerald-300 border-transparent font-mono tracking-wider"
+            className="w-full h-20 text-4xl text-right mb-1 bg-transparent pr-4 text-emerald-300 border-transparent font-mono tracking-wider shadow-inner"
             aria-label="Calculator display"
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Scientific Panel */}
-        <div className="grid grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-green-950">
+        <div className="grid grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-black">
             {scientificButtonsFirstPanel.flat().map((btn, i) => renderButton(btn, i))}
         </div>
 
         {/* Basic Panel */}
-        <div className="grid grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-green-950">
+        <div className="grid grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-black">
              {basicButtonsSecondPanel.slice(0,1).flat().map((btn, i) => renderButton(btn, i + 25))}
              {basicButtonsSecondPanel.slice(1,2).flat().map((btn, i) => renderButton(btn, i + 30))}
              {renderButton('=', 34, 'row-span-3 h-auto col-start-5')}
