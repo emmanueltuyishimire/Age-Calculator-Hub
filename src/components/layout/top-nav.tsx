@@ -25,6 +25,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Button } from '../ui/button';
 import { Menu } from 'lucide-react';
@@ -39,18 +40,9 @@ export function TopNav() {
   const categories = categorizedNavItems();
   const mainCategories = categories.filter(cat => cat.name !== 'Company' && cat.name !== 'Legal' && cat.name !== 'Navigation');
   
-  const financialSubCategories = categories.filter(cat => 
-    [
-      "Mortgage & Real Estate",
-      "Auto",
-      "Investment",
-      "Retirement",
-      "Tax & Salary",
-      "Other"
-    ].includes(cat.name)
-  );
+  const financialCategory = mainCategories.find(c => c.name === 'Financial Calculators');
 
-  const nonFinancialCategories = mainCategories.filter(c => !financialSubCategories.some(fc => fc.name === c.name));
+  const nonFinancialCategories = mainCategories.filter(c => c.name !== 'Financial Calculators');
 
 
   return (
@@ -70,25 +62,11 @@ export function TopNav() {
            <NavigationMenu>
             <NavigationMenuList>
                <NavigationMenuItem>
-                <NavigationMenuTrigger aria-label="Open Financial Calculators menu">Financial</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="grid w-[600px] grid-cols-2 gap-x-8 gap-y-4 p-4 lg:w-[700px]">
-                    {financialSubCategories.map((subCategory) => (
-                      <div key={subCategory.name}>
-                        <Link href={subCategory.href || '#'} className="font-bold text-primary hover:underline mb-2 block">{subCategory.name}</Link>
-                        <ul className="space-y-1">
-                          {subCategory.items.slice(0,5).map((item) => (
-                            <li key={item.href}>
-                              <ListItem href={item.href} title={item.label} className="text-xs">
-                                {item.description}
-                              </ListItem>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </NavigationMenuContent>
+                <Link href="/financial-calculators" legacyBehavior passHref>
+                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
+                    Financial
+                  </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
               {nonFinancialCategories.map(category => (
                  <NavigationMenuItem key={category.name}>
@@ -132,7 +110,7 @@ export function TopNav() {
               <span className="sr-only">Toggle Menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left">
+          <SheetContent side="left" className="overflow-y-auto">
              <SheetHeader className="px-2 py-6">
                 <SheetTitle className="sr-only">Main Menu</SheetTitle>
                 <SheetDescription className="sr-only">Main navigation menu for Calculators, including links to all calculators.</SheetDescription>
@@ -160,11 +138,17 @@ export function TopNav() {
                 <Accordion type="single" collapsible className="w-full" aria-label="Calculator Categories">
                   {mainCategories.map((category) => (
                     <AccordionItem value={category.name} key={category.name}>
-                       <AccordionTrigger className="text-base font-semibold py-2">
-                          <span className="flex flex-1 items-center justify-between">
-                            {category.name}
-                          </span>
-                        </AccordionTrigger>
+                       <AccordionTrigger className="text-base font-semibold py-2" asChild>
+                         <Link href={category.href || '#'} onClick={(e) => {
+                            if (!category.href) e.preventDefault();
+                            else setIsOpen(false);
+                         }}>
+                            <span className="flex flex-1 items-center justify-between">
+                              {category.name}
+                              {category.href ? null : <span className="sr-only"> (opens sub-menu)</span>}
+                            </span>
+                         </Link>
+                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex flex-col gap-1 pl-4">
                           {category.items.map((item) => (
