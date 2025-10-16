@@ -72,18 +72,6 @@ export default function AnnuityPayoutCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Learn More About Retirement & Investments</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/retirement-savings-goal-calculator" className="text-primary hover:underline">Retirement Savings Goal Calculator</Link></li>
-                            <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
-                        </ul>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader>
                         <CardTitle>Understanding Annuity Payouts</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -93,6 +81,18 @@ export default function AnnuityPayoutCalculatorPage() {
                         <ul className="list-disc list-inside mt-4 space-y-2 text-muted-foreground">
                             <li><strong>Fixed Length Calculation:</strong> Use this if you want to know how much you can withdraw each month to make your money last for a set number of years (e.g., a 20-year retirement).</li>
                             <li><strong>Fixed Payment Calculation:</strong> Use this if you know how much money you need each month and want to find out how long your principal will be able to provide that amount.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Retirement & Investments</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/retirement-savings-goal-calculator" className="text-primary hover:underline">Retirement Savings Goal Calculator</Link></li>
+                            <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
                         </ul>
                     </CardContent>
                 </Card>

@@ -2,7 +2,6 @@
 "use client";
 
 import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
-import { type Metadata } from 'next';
 import {
   Accordion,
   AccordionContent,
@@ -72,15 +71,6 @@ export default function ChronologicalAgeCalculatorPage() {
             <ChronologicalAgeCalculatorForm />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <Card>
-                    <CardHeader><CardTitle>Learn More About Different Types of Age</CardTitle></CardHeader>
-                    <CardContent>
-                       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/articles/understanding-chronological-age" className="text-primary hover:underline">Understanding Chronological Age: More Than Just a Number</Link></li>
-                            <li>Explore a different perspective with our <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>.</li>
-                        </ul>
-                    </CardContent>
-                </Card>
 
                 <Card>
                     <CardHeader><CardTitle>How to Use the Chronological Age Calculator</CardTitle></CardHeader>
@@ -105,6 +95,16 @@ export default function ChronologicalAgeCalculatorPage() {
                         <p className="text-muted-foreground mt-2">
                             Unlike <Link href="/biological-age" className="text-primary hover:underline">biological age</Link>, which reflects your body's health, chronological age is a simple, objective measure of time. Our calculator provides a precise measurement, breaking down your age into years, months, and days, and can even update in real-time to the second. For a deeper dive, read our <Link href="/articles/understanding-chronological-age" className="text-primary hover:underline">article on chronological age</Link>.
                         </p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader><CardTitle>Learn More About Different Types of Age</CardTitle></CardHeader>
+                    <CardContent>
+                       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-chronological-age" className="text-primary hover:underline">Understanding Chronological Age: More Than Just a Number</Link></li>
+                            <li>Explore a different perspective with our <Link href="/biological-age" className="text-primary hover:underline">Biological Age Calculator</Link>.</li>
+                        </ul>
                     </CardContent>
                 </Card>
 

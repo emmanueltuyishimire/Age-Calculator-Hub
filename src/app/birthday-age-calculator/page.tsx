@@ -73,14 +73,6 @@ export default function BirthdayAgeCalculatorPage() {
             <BirthdayAgeCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <Card>
-                    <CardHeader><CardTitle>Learn More From Our Articles</CardTitle></CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/articles/what-generation-am-i" className="text-primary hover:underline">What Generation Am I? A Guide to Gen Z, Millennials, Gen X, and Boomers</Link></li>
-                        </ul>
-                    </CardContent>
-                </Card>
 
                 <Card>
                     <CardHeader><CardTitle>How to Use the Birthday Age Calculator</CardTitle></CardHeader>
@@ -133,6 +125,15 @@ export default function BirthdayAgeCalculatorPage() {
                     </CardContent>
                 </Card>
 
+                <Card>
+                    <CardHeader><CardTitle>Learn More From Our Articles</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/what-generation-am-i" className="text-primary hover:underline">What Generation Am I? A Guide to Gen Z, Millennials, Gen X, and Boomers</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
                     <Accordion type="single" collapsible className="w-full">
@@ -146,10 +147,8 @@ export default function BirthdayAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Fitness & Health Calculators" currentHref="/birthday-age-calculator" />
+        <RelatedCalculators currentCategory="Core Age Calculators" currentHref="/birthday-age-calculator" />
       </div>
     </div>
   );
 }
-
-    

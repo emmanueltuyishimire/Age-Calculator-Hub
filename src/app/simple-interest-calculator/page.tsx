@@ -72,22 +72,23 @@ export default function SimpleInterestCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Learn More About Interest</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
-                        </ul>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader>
                         <CardTitle>Understanding Simple Interest</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
                            Simple interest is a straightforward method for calculating the interest charge on a loan or investment. Unlike compound interest, it is calculated only on the original principal amount. The amount of interest earned is the same for every period of the term.
                         </p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Interest</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
+                        </ul>
                     </CardContent>
                 </Card>
 

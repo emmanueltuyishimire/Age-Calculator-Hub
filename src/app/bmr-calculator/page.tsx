@@ -71,20 +71,21 @@ export default function BmrCalculatorPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
+                    <CardHeader><CardTitle>Understanding Your BMR</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">
+                           Your Basal Metabolic Rate (BMR) represents the number of calories your body needs to perform its most essential functions at rest. Think of it as the energy required to keep your body running if you were to stay in bed all day. Knowing your BMR is the first step in determining your total daily calorie needs and can be a powerful tool for weight management.
+                        </p>
+                    </CardContent>
+                </Card>
+
+                <Card>
                     <CardHeader><CardTitle>Learn More About Your Metabolism</CardTitle></CardHeader>
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                             <li><Link href="/articles/understanding-bmr" className="text-primary hover:underline">Understanding BMR: Your Body's Baseline Calorie Needs</Link></li>
                             <li>Use your BMR to find your daily macro needs with our <Link href="/macro-calculator" className="text-primary hover:underline">Macro Calculator</Link>.</li>
                         </ul>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader><CardTitle>Understanding Your BMR</CardTitle></CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">
-                           Your Basal Metabolic Rate (BMR) represents the number of calories your body needs to perform its most essential functions at rest. Think of it as the energy required to keep your body running if you were to stay in bed all day. Knowing your BMR is the first step in determining your total daily calorie needs and can be a powerful tool for weight management.
-                        </p>
                     </CardContent>
                 </Card>
 
@@ -108,5 +109,3 @@ export default function BmrCalculatorPage() {
     </div>
   );
 }
-
-    

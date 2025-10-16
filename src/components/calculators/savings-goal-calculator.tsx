@@ -23,32 +23,22 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { RefreshCcw, Goal } from 'lucide-react';
+import { RefreshCcw, Goal, CalendarIcon } from 'lucide-react';
 import ShareButton from '../share-button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Calendar } from '../ui/calendar';
+import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
   currency: z.string().default('USD'),
   goalAmount: z.coerce.number().min(1, "Goal must be greater than zero."),
   initialSavings: z.coerce.number().min(0, "Cannot be negative."),
-  targetDateDay: z.string(),
-  targetDateMonth: z.string(),
-  targetDateYear: z.string(),
+  targetDate: z.date({ required_error: 'Please select a target date.' }),
   interestRate: z.coerce.number().min(0).max(50),
-}).refine(data => {
-    const { targetDateYear, targetDateMonth, targetDateDay } = data;
-    const date = new Date(parseInt(targetDateYear), parseInt(targetDateMonth) - 1, parseInt(targetDateDay));
-    return isValid(date) && date.getFullYear() === parseInt(targetDateYear) && date.getMonth() === parseInt(targetDateMonth) - 1 && date.getDate() === parseInt(targetDateDay);
-}, {
-    message: "Target date is not valid.",
-    path: ["targetDateYear"],
-}).refine(data => {
-    const { targetDateYear, targetDateMonth, targetDateDay } = data;
-    const date = new Date(parseInt(targetDateYear), parseInt(targetDateMonth) - 1, parseInt(targetDateDay));
-    return isFuture(date);
-}, {
+}).refine(data => isFuture(data.targetDate), {
     message: "Target date must be in the future.",
-    path: ["targetDateYear"],
+    path: ["targetDate"],
 }).refine(data => data.goalAmount > data.initialSavings, {
   message: "Goal amount must be greater than your initial savings.",
   path: ["goalAmount"],
@@ -75,28 +65,19 @@ export default function SavingsGoalCalculator() {
       currency: 'USD',
       goalAmount: undefined,
       initialSavings: 0,
-      targetDateDay: '',
-      targetDateMonth: '',
-      targetDateYear: '',
+      targetDate: undefined,
       interestRate: 4,
     },
   });
 
-  const getTargetDate = useCallback(() => {
-    const { targetDateYear, targetDateMonth, targetDateDay } = form.getValues();
-    if (!targetDateYear || !targetDateMonth || !targetDateDay) return null;
-    return new Date(parseInt(targetDateYear), parseInt(targetDateMonth) - 1, parseInt(targetDateDay));
-  }, [form]);
-
   function onSubmit(values: FormData) {
-    const { goalAmount, initialSavings, interestRate } = values;
-    const targetDate = getTargetDate();
+    const { goalAmount, initialSavings, interestRate, targetDate } = values;
 
     if(!targetDate) return;
 
     const months = differenceInMonths(targetDate, new Date());
     if (months <= 0) {
-        form.setError("targetDateYear", {type: "manual", message: "Target date must be at least one month in the future."});
+        form.setError("targetDate", {type: "manual", message: "Target date must be at least one month in the future."});
         return;
     }
 
@@ -106,11 +87,9 @@ export default function SavingsGoalCalculator() {
     
     let monthlyContribution: number;
     if (monthlyRate > 0) {
-        // Future value of an annuity formula rearranged for monthly payment
         const fvFactor = (Math.pow(1 + monthlyRate, months) - 1) / monthlyRate;
         monthlyContribution = neededFromContributions / fvFactor;
     } else {
-        // Simple interest case
         monthlyContribution = neededFromContributions / months;
     }
     
@@ -125,19 +104,17 @@ export default function SavingsGoalCalculator() {
 
     setResult({
       monthlyContribution,
-      dailyContribution: monthlyContribution / 30.44, // Average days in a month
-      hourlyContribution: (monthlyContribution / 30.44) / 8, // Assuming an 8-hour work day
+      dailyContribution: monthlyContribution / 30.44,
+      hourlyContribution: (monthlyContribution / 30.44) / 8,
     });
   }
 
   function handleReset() {
     form.reset({
       currency: 'USD',
-      goalAmount: 0,
+      goalAmount: undefined,
       initialSavings: 0,
-      targetDateDay: '',
-      targetDateMonth: '',
-      targetDateYear: '',
+      targetDate: undefined,
       interestRate: 4,
     });
     setResult(null);
@@ -166,17 +143,47 @@ export default function SavingsGoalCalculator() {
               <FormField control={form.control} name="goalAmount" render={({ field }) => (<FormItem><FormLabel>Savings Goal</FormLabel><FormControl><Input type="number" placeholder="e.g., 25000" {...field} /></FormControl><FormMessage /></FormItem>)} />
               <FormField control={form.control} name="initialSavings" render={({ field }) => (<FormItem><FormLabel>Initial Savings</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
               
-              <FormItem className="flex flex-col md:col-span-2">
-                <FormLabel>Target Date</FormLabel>
-                <div className="flex gap-2">
-                    <FormField control={form.control} name="targetDateDay" render={({ field }) => (<FormControl><Input placeholder="DD" {...field} aria-label="Target Day"/></FormControl>)} />
-                    <FormField control={form.control} name="targetDateMonth" render={({ field }) => (<FormControl><Input placeholder="MM" {...field} aria-label="Target Month"/></FormControl>)} />
-                    <FormField control={form.control} name="targetDateYear" render={({ field }) => (<FormControl><Input placeholder="YYYY" {...field} aria-label="Target Year"/></FormControl>)} />
-                </div>
-                <FormMessage>{form.formState.errors.targetDateYear?.message}</FormMessage>
-              </FormItem>
+              <FormField
+                control={form.control}
+                name="targetDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Target Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) => date < new Date()}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <FormField control={form.control} name="interestRate" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>Est. Annual Interest Rate (APY %)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="interestRate" render={({ field }) => (<FormItem><FormLabel>Est. Annual Interest Rate (APY %)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
             </div>
             
             <div className="flex flex-col sm:flex-row gap-2 pt-2">

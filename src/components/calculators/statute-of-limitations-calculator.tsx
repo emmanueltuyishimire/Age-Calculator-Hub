@@ -122,12 +122,11 @@ export default function StatuteOfLimitationsCalculator() {
 
     const statute = statuteData[state]?.[claimType];
     if (!statute) {
-      // This should not happen with proper form validation
       return;
     }
 
     const deadline = addYears(addMonths(incidentDate, statute.months || 0), statute.years);
-    const timePeriod = `${statute.years} year${statute.years > 1 ? 's' : ''}${statute.months ? ` and ${statute.months} month${statute.months > 1 ? 's' : ''}` : ''}`;
+    const timePeriod = `${statute.years} year${statute.years !== 1 ? 's' : ''}${statute.months ? ` and ${statute.months} month${statute.months > 1 ? 's' : ''}` : ''}`;
     
     setResult({ deadline, timePeriod });
   }

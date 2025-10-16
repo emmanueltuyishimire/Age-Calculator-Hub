@@ -70,22 +70,15 @@ export default function HowOldIsPage() {
             <HowOldIsCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <Card>
-                    <CardHeader><CardTitle>Learn More About Age & Generations</CardTitle></CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/articles/what-generation-am-i" className="text-primary hover:underline">What Generation Am I? A Guide to Gen Z, Millennials, Gen X, and Boomers</Link></li>
-                        </ul>
-                    </CardContent>
-                </Card>
+                
                 <Card>
                     <CardHeader><CardTitle>How to Use This Flexible Age Finder</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4">Our tool is designed to give you an answer even with incomplete information. Simply select the tab that matches the details you have:</p>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Year Only:</strong> Perfect for a quick estimate. Just enter the 4-digit birth year for a ballpark age.</li>
-                            <li><strong>Month & Year:</strong> More precise. Enter the birth month and year for a closer approximation.</li>
                             <li><strong>Full Date:</strong> The most accurate. Enter the complete date of birth (Day, Month, Year) for the exact age.</li>
+                            <li><strong>Month & Year:</strong> More precise than year alone. Enter the birth month and year for a closer approximation.</li>
+                            <li><strong>Year Only:</strong> Perfect for a quick estimate. Just enter the 4-digit birth year for a ballpark age.</li>
                             <li><strong>Click "Find Out":</strong> Press the button to see the result framed as a direct answer to your question.</li>
                         </ol>
                     </CardContent>
@@ -113,6 +106,15 @@ export default function HowOldIsPage() {
                     </CardContent>
                 </Card>
 
+                <Card>
+                    <CardHeader><CardTitle>Learn More About Age & Generations</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/what-generation-am-i" className="text-primary hover:underline">What Generation Am I? A Guide to Gen Z, Millennials, Gen X, and Boomers</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>
                     <Accordion type="single" collapsible className="w-full">
@@ -128,10 +130,8 @@ export default function HowOldIsPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Fitness & Health Calculators" currentHref="/how-old-is" />
+        <RelatedCalculators currentCategory="Core Age Calculators" currentHref="/how-old-is" />
       </div>
     </div>
   );
 }
-
-    

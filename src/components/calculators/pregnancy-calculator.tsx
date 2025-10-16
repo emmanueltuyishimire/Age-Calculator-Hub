@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from 'react';
-import { format, addDays, subDays, isValid } from 'date-fns';
+import { format, addDays, isValid } from 'date-fns';
 import {
   Card,
   CardContent,
@@ -59,7 +59,7 @@ export default function PregnancyCalculator() {
     const dueDate = addDays(lmpDate, 280 + cycleAdjustment);
     const conceptionDate = addDays(lmpDate, 14 + cycleAdjustment);
     const today = new Date();
-    const daysPregnant = differenceInDays(today, lmpDate);
+    const daysPregnant = Math.floor((today.getTime() - lmpDate.getTime()) / (1000 * 60 * 60 * 24));
     const weeks = Math.floor(daysPregnant / 7);
     const days = daysPregnant % 7;
 
@@ -148,9 +148,4 @@ export default function PregnancyCalculator() {
       </CardContent>
     </Card>
   );
-}
-
-function differenceInDays(dateLeft: Date, dateRight: Date): number {
-    const diff = dateLeft.getTime() - dateRight.getTime();
-    return Math.floor(diff / (1000 * 60 * 60 * 24));
 }

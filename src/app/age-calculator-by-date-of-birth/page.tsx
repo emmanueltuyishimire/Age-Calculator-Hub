@@ -2,7 +2,6 @@
 "use client";
 
 import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
-import { type Metadata } from 'next';
 import {
   Accordion,
   AccordionContent,

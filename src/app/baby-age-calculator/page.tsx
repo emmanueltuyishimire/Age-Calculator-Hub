@@ -94,14 +94,6 @@ export default function BabyAgeCalculatorPage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
-                    <CardHeader><CardTitle>Learn More About Pregnancy & Baby Milestones</CardTitle></CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/articles/navigating-pregnancy-milestones" className="text-primary hover:underline">Navigating Your Pregnancy: A Trimester-by-Trimester Milestone Guide</Link></li>
-                        </ul>
-                    </CardContent>
-                </Card>
-                <Card>
                     <CardHeader><CardTitle>How to Use the Baby Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
@@ -129,6 +121,15 @@ export default function BabyAgeCalculatorPage() {
                             <li><strong>Developmental Milestones:</strong> Knowing your baby's precise age helps you understand if they are on track for milestones like rolling over, sitting up, and talking.</li>
                             <li><strong>Feeding Schedules:</strong> A baby's nutritional needs change rapidly. Age in weeks and months often dictates when to introduce solid foods.</li>
                             <li><strong>Clarity:</strong> It answers the common confusion between weeks and months. For example, a baby is 3 months old, not at 12 weeks, but after 3 full calendar months have passed.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader><CardTitle>Learn More About Pregnancy & Baby Milestones</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/navigating-pregnancy-milestones" className="text-primary hover:underline">Navigating Your Pregnancy: A Trimester-by-Trimester Milestone Guide</Link></li>
                         </ul>
                     </CardContent>
                 </Card>

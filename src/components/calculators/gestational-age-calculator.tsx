@@ -13,9 +13,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, CalendarIcon } from "lucide-react"
 import ShareButton from '../share-button';
-import { Input } from '../ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Calendar } from '../ui/calendar';
+import { cn } from '@/lib/utils';
 
 interface GestationalInfo {
   weeks: number;
@@ -55,18 +57,12 @@ const getDevelopmentStage = (weeks: number) => {
 
 
 export default function GestationalAgeCalculator() {
-  const [lmp, setLmp] = useState({ day: '', month: '', year: ''});
+  const [lmp, setLmp] = useState<Date | undefined>();
   const [gestationalInfo, setGestationalInfo] = useState<GestationalInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const getLmpDate = useCallback(() => {
-    const { year, month, day } = lmp;
-    if (!year || !month || !day) return null;
-    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-  }, [lmp]);
-
   const handleCalculate = () => {
-    const selectedDate = getLmpDate();
+    const selectedDate = lmp;
     
     if (!selectedDate || !isValid(selectedDate)) {
         setError("Please enter a valid date for the last menstrual period.");
@@ -116,11 +112,25 @@ export default function GestationalAgeCalculator() {
         )}
         <div className="space-y-2">
             <Label htmlFor="lmp-day-gestational">Last Menstrual Period (LMP) Date</Label>
-            <div className="flex gap-2">
-                <Input id="lmp-day-gestational" placeholder="DD" value={lmp.day} onChange={e => setLmp(d => ({...d, day: e.target.value}))} aria-label="LMP Day" />
-                <Input placeholder="MM" value={lmp.month} onChange={e => setLmp(d => ({...d, month: e.target.value}))} aria-label="LMP Month" />
-                <Input placeholder="YYYY" value={lmp.year} onChange={e => setLmp(d => ({...d, year: e.target.value}))} aria-label="LMP Year" />
-            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button id="lmp-day-gestational" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !lmp && "text-muted-foreground")}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {lmp ? format(lmp, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={new Date().getFullYear() - 1}
+                  toYear={new Date().getFullYear()}
+                  selected={lmp}
+                  onSelect={setLmp}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
         </div>
         <div className="flex gap-2">
             <Button onClick={handleCalculate} className="w-full" aria-label="Calculate Gestational Age">Calculate Gestational Age</Button>

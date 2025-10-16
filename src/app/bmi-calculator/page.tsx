@@ -85,15 +85,7 @@ export default function BmiCalculatorPage() {
             <BmiCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                 <Card>
-                    <CardHeader><CardTitle>Learn More About Body Composition</CardTitle></CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/articles/understanding-bmi" className="text-primary hover:underline">A Deep Dive into Understanding BMI and Its Limitations</Link></li>
-                            <li><Link href="/articles/understanding-body-fat" className="text-primary hover:underline">Why Body Fat Percentage is a Better Metric Than Weight</Link></li>
-                        </ul>
-                    </CardContent>
-                </Card>
+                 
                  <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">BMI Categories for Adults</h2>
                     <p className="text-muted-foreground mb-4">
@@ -128,6 +120,16 @@ export default function BmiCalculatorPage() {
                     </CardContent>
                 </Card>
 
+                 <Card>
+                    <CardHeader><CardTitle>Learn More About Body Composition</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-bmi" className="text-primary hover:underline">A Deep Dive into Understanding BMI and Its Limitations</Link></li>
+                            <li><Link href="/articles/understanding-body-fat" className="text-primary hover:underline">Why Body Fat Percentage is a Better Metric Than Weight</Link></li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>
                     <Accordion type="single" collapsible className="w-full">
@@ -148,5 +150,3 @@ export default function BmiCalculatorPage() {
     </div>
   );
 }
-
-    

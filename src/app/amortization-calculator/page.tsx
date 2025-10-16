@@ -70,17 +70,7 @@ export default function AmortizationCalculatorPage() {
             <AmortizationCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Learn More About Loans & Financial Planning</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/articles/how-to-pay-off-debt-faster" className="text-primary hover:underline">The Power of Extra Payments: How to Pay Off Your Loans Faster</Link></li>
-                            <li><Link href="/articles/understanding-your-credit-score" className="text-primary hover:underline">Understanding Your Credit Score: The 5 Key Factors</Link></li>
-                        </ul>
-                    </CardContent>
-                </Card>
+                
                 <Card>
                     <CardHeader>
                         <CardTitle>How to Use the Amortization Calculator</CardTitle>
@@ -106,6 +96,18 @@ export default function AmortizationCalculatorPage() {
                             <li><strong>Visualize Your Progress:</strong> Watch your loan balance decrease year after year as more of your payment shifts from interest to principal.</li>
                             <li><strong>Plan for the Future:</strong> Knowing your payment schedule helps you budget effectively and plan for other financial goals.</li>
                             <li><strong>Understand the Impact of Extra Payments:</strong> While this calculator doesn't model extra payments, seeing how much interest you pay can motivate you to use a tool like our <Link href="/loan-payoff-calculator" className="text-primary hover:underline">Loan Payoff Calculator</Link> to see how extra payments can save you money.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Loans & Financial Planning</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/how-to-pay-off-debt-faster" className="text-primary hover:underline">The Power of Extra Payments: How to Pay Off Your Loans Faster</Link></li>
+                            <li><Link href="/articles/understanding-your-credit-score" className="text-primary hover:underline">Understanding Your Credit Score: The 5 Key Factors</Link></li>
                         </ul>
                     </CardContent>
                 </Card>

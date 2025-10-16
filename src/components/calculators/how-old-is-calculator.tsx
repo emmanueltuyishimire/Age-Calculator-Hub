@@ -13,9 +13,13 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, RefreshCcw } from "lucide-react"
+import { AlertCircle, RefreshCcw, CalendarIcon } from "lucide-react"
 import ShareButton from '../share-button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Calendar } from '../ui/calendar';
+import { cn } from '@/lib/utils';
+import { Label } from '../ui/label';
 
 type InputMode = "full" | "monthYear" | "year";
 
@@ -27,7 +31,7 @@ interface AgeResult {
 }
 
 export default function HowOldIsCalculator() {
-  const [dob, setDob] = useState({ day: '', month: '', year: '' });
+  const [dob, setDob] = useState<Date | undefined>();
   const [ageResult, setAgeResult] = useState<AgeResult | undefined>();
   const [error, setError] = useState<string | null>(null);
   const [mode, setMode] = useState<InputMode>("full");
@@ -36,15 +40,9 @@ export default function HowOldIsCalculator() {
     setError(null);
     setAgeResult(undefined);
 
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const yearNum = parseInt(dob.year, 10);
-    const monthNum = parseInt(dob.month, 10);
-    const dayNum = parseInt(dob.day, 10);
-
     if (mode === "full") {
-      const dobDate = new Date(yearNum, monthNum - 1, dayNum);
-       if (!isValid(dobDate) || dobDate.getFullYear() !== yearNum || dobDate.getMonth() !== monthNum - 1 || dobDate.getDate() !== dayNum) {
+      const dobDate = dob;
+      if (!dobDate || !isValid(dobDate)) {
         setError("Please enter a valid date of birth.");
         return;
       }
@@ -52,51 +50,20 @@ export default function HowOldIsCalculator() {
         setError("The date of birth cannot be in the future.");
         return;
       }
-      const duration = intervalToDuration({ start: dobDate, end: now });
+      const duration = intervalToDuration({ start: dobDate, end: new Date() });
       setAgeResult({
         years: duration.years,
         months: duration.months,
         days: duration.days,
         text: `Someone born on ${format(dobDate, 'MMMM d, yyyy')} is currently:`
       });
-    } else if (mode === "monthYear") {
-        if (isNaN(yearNum) || yearNum < 1000 || yearNum > currentYear || isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
-            setError("Please enter a valid month and year.");
-            return;
-        }
-        const dobDate = new Date(yearNum, monthNum - 1, 1);
-        if (isFuture(dobDate)) {
-            setError("The month and year cannot be in the future.");
-            return;
-        }
-        const totalMonths = differenceInMonths(now, dobDate);
-        setAgeResult({
-            years: Math.floor(totalMonths / 12),
-            months: totalMonths % 12,
-            text: `Someone born in ${format(dobDate, 'MMMM yyyy')} is approximately:`
-        });
-    } else if (mode === "year") {
-        if (isNaN(yearNum) || yearNum < 1000 || yearNum > currentYear) {
-            setError(`Please enter a valid year between 1000 and ${currentYear}.`);
-            return;
-        }
-        const age = differenceInYears(now, new Date(yearNum, 0, 1));
-        setAgeResult({
-            years: age,
-            text: `Someone born in ${yearNum} is or will be this year:`
-        });
     }
   }, [dob, mode]);
   
   const handleReset = useCallback(() => {
-      setDob({ day: '', month: '', year: '' });
+      setDob(undefined);
       setAgeResult(undefined);
       setError(null);
-  }, []);
-
-  const handleDobChange = useCallback((field: 'day' | 'month' | 'year', value: string) => {
-    setDob(prev => ({...prev, [field]: value.replace(/\D/g, '')}));
-    setAgeResult(undefined);
   }, []);
 
   return (
@@ -104,28 +71,39 @@ export default function HowOldIsCalculator() {
       <CardHeader className="text-center">
         <CardTitle>Find Out Their Age</CardTitle>
         <CardDescription>
-          Enter a date of birth below using the tabs for different levels of precision.
+          Enter a date of birth to find out how old someone is.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Tabs value={mode} onValueChange={(value) => setMode(value as InputMode)} className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="full">Full Date</TabsTrigger>
-                <TabsTrigger value="monthYear">Month & Year</TabsTrigger>
-                <TabsTrigger value="year">Year Only</TabsTrigger>
-            </TabsList>
-            <div className="mt-4">
-                <div className="flex gap-2">
-                    {mode === 'full' && (
-                        <Input placeholder="DD" value={dob.day} onChange={e => handleDobChange('day', e.target.value)} maxLength={2} aria-label="Day of Birth"/>
-                    )}
-                    {(mode === 'full' || mode === 'monthYear') && (
-                        <Input placeholder="MM" value={dob.month} onChange={e => handleDobChange('month', e.target.value)} maxLength={2} aria-label="Month of Birth"/>
-                    )}
-                    <Input placeholder="YYYY" value={dob.year} onChange={e => handleDobChange('year', e.target.value)} maxLength={4} aria-label="Year of Birth"/>
-                </div>
-            </div>
-        </Tabs>
+        <div className='space-y-2'>
+            <Label htmlFor='dob-howoldis'>Date of Birth</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="dob-howoldis"
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !dob && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={1900}
+                  toYear={new Date().getFullYear()}
+                  selected={dob}
+                  onSelect={setDob}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+        </div>
         
         {error && (
             <Alert variant="destructive">

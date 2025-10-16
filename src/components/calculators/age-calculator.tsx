@@ -157,7 +157,7 @@ export default function AgeCalculator() {
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg animate-fade-in">
       <CardHeader className="text-center">
-        <CardTitle>Chronological Age Calculator</CardTitle>
+        <CardTitle>Age Calculator</CardTitle>
         <CardDescription>
           Calculate the age or interval between two dates.
         </CardDescription>
