@@ -233,6 +233,13 @@ export const navItems: NavItem[] = [
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
   {
+    href: '/income-tax-calculator',
+    icon: DollarSign,
+    label: 'Income Tax Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate your federal tax refund or amount owed.'
+  },
+  {
     href: '/finance-calculator',
     icon: Briefcase,
     label: 'Finance Calculator',
