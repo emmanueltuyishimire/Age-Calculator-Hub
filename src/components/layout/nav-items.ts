@@ -45,6 +45,7 @@ import {
   Car,
   FlaskConical,
   Cuboid,
+  Percent,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -259,6 +260,13 @@ export const navItems: NavItem[] = [
     label: 'Payment Calculator',
     category: 'Financial Calculators',
     description: 'Estimate the monthly payment for any type of loan.'
+  },
+  {
+    href: '/interest-rate-calculator',
+    icon: Percent,
+    label: 'Interest Rate Calculator',
+    category: 'Financial Calculators',
+    description: 'Solve for the interest rate (APR) of a loan from its payments.'
   },
   {
     href: '/amortization-calculator',
