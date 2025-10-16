@@ -257,7 +257,7 @@ export const navItems: NavItem[] = [
     icon: Briefcase,
     label: 'Salary Calculator',
     category: 'Financial Calculators',
-    description: 'Get a quick estimate of your take-home pay after taxes.'
+    description: 'Convert your salary between different pay frequencies.'
   },
   {
     href: '/take-home-pay-calculator',
