@@ -360,6 +360,13 @@ export const navItems: NavItem[] = [
     category: 'Financial Calculators',
     description: 'Create a payoff plan for multiple credit cards using the Debt Avalanche method.'
   },
+   {
+    href: '/debt-consolidation-calculator',
+    icon: Scale,
+    label: 'Debt Consolidation Calculator',
+    category: 'Financial Calculators',
+    description: 'Compare current debts with a consolidation loan to see potential savings.'
+  },
   
   // Math Calculators
   {
