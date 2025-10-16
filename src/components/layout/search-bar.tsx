@@ -36,7 +36,6 @@ interface SearchableItem {
 export function SearchBar() {
   const [open, setOpen] = React.useState(false)
   const [query, setQuery] = React.useState("")
-  const [submittedQuery, setSubmittedQuery] = React.useState("")
   const router = useRouter()
 
   const searchableItems: SearchableItem[] = React.useMemo(() => {
@@ -59,22 +58,22 @@ export function SearchBar() {
   }, []);
   
   const fuse = React.useMemo(() => new Fuse(searchableItems, {
-    keys: ['title'],
+    keys: ['title', 'description'],
     includeScore: true,
     threshold: 0.4,
   }), [searchableItems]);
 
   const results = React.useMemo(() => {
-    if (!submittedQuery) {
+    if (!query) {
       const allCalculators = searchableItems.filter(i => i.type === 'calculator');
       const allArticles = searchableItems.filter(i => i.type === 'article');
       return { calculators: allCalculators.slice(0, 5), articles: allArticles.slice(0, 5), hasResults: true };
     }
-    const searchResults = fuse.search(submittedQuery);
+    const searchResults = fuse.search(query);
     const calculators = searchResults.filter(r => r.item.type === 'calculator').map(r => r.item);
     const articles = searchResults.filter(r => r.item.type === 'article').map(r => r.item);
     return { calculators, articles, hasResults: calculators.length > 0 || articles.length > 0 };
-  }, [submittedQuery, fuse, searchableItems]);
+  }, [query, fuse, searchableItems]);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -98,18 +97,9 @@ export function SearchBar() {
 
   const runCommand = React.useCallback((command: () => unknown) => {
     setOpen(false)
+    setQuery("")
     command()
   }, [])
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmittedQuery(query);
-  }
-
-  const handleClear = () => {
-    setQuery("");
-    setSubmittedQuery("");
-  }
 
   return (
     <>
@@ -133,14 +123,11 @@ export function SearchBar() {
             <DialogDescription>Search for calculators and articles</DialogDescription>
           </DialogHeader>
           <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-            <form onSubmit={handleSearchSubmit}>
               <CommandInput
                 placeholder="Type to search..."
                 value={query}
                 onValueChange={setQuery}
-                onClear={handleClear}
               />
-            </form>
             <CommandList>
               {!results.hasResults && <CommandEmpty>No results found.</CommandEmpty>}
 
