@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { notFound } from 'next/navigation';
-import { TrendingUp, Activity } from 'lucide-react';
+import { TrendingUp, Activity, BarChart2 } from 'lucide-react';
 
 const article = articles.find(a => a.slug === 'the-power-of-compound-interest');
 
@@ -26,11 +26,11 @@ export function generateMetadata(): Metadata {
 const faqs = [
     {
         question: "What is the formula for compound interest?",
-        answer: "The basic formula is A = P(1 + r/n)^(nt), where A is the future value, P is the principal, r is the annual interest rate, n is the number of times interest is compounded per year, and t is the number of years."
+        answer: "The basic formula is A = P(1 + r/n)^(nt), where A is the future value, P is the principal, r is the annual interest rate, n is the number of times interest is compounded per year, and t is the number of years. Our calculators automate this for you."
     },
     {
         question: "How is compound interest different from simple interest?",
-        answer: "Simple interest is calculated only on the principal amount. Compound interest is calculated on the principal amount plus the accumulated interest from previous periods. This 'interest on interest' is what makes it so powerful."
+        answer: "Simple interest is calculated only on the original principal amount. Compound interest is calculated on the principal amount plus the accumulated interest from previous periods. This 'interest on interest' is what makes it so powerful."
     },
     {
         question: "Does compound interest work for debt too?",
@@ -38,7 +38,7 @@ const faqs = [
     },
     {
         question: "How can I see the effect of compound interest on my savings?",
-        answer: "Our <a href='/finance-calculator' class='text-primary hover:underline'>Finance Calculator</a> and <a href='/retirement-savings-goal-calculator' class='text-primary hover:underline'>Retirement Savings Calculator</a> are perfect for this. You can input your savings, contribution, and interest rate to see how your money can grow over time."
+        answer: "Our <a href='/compound-interest-calculator' class='text-primary hover:underline'>Compound Interest Calculator</a> and <a href='/retirement-savings-goal-calculator' class='text-primary hover:underline'>Retirement Savings Goal Calculator</a> are perfect for this. You can input your savings, contribution, and interest rate to see how your money can grow over time."
     }
 ];
 
@@ -87,9 +87,9 @@ export default function CompoundInterestPage() {
            </p>
            <div className="my-10 text-center">
                 <Link href="/compound-interest-calculator">
-                    <Button size="lg" className="text-lg">Convert Interest Rates Now</Button>
+                    <Button size="lg" className="text-lg">Calculate Your Investment Growth</Button>
                 </Link>
-                <p className="text-sm text-muted-foreground mt-2">Compare APR, APY, and other compounding periods.</p>
+                <p className="text-sm text-muted-foreground mt-2">See how compounding affects your money.</p>
             </div>
 
            <h2 className="text-3xl font-bold">Why Starting Early is Everything</h2>

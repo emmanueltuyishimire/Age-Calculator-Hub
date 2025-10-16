@@ -1,5 +1,4 @@
 
-import CompoundInterestCalculator from '@/components/calculators/compound-interest-calculator';
 import { type Metadata } from 'next';
 import {
   Accordion,
@@ -10,10 +9,11 @@ import {
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+import FutureValueCalculator from '@/components/calculators/future-value-calculator';
 
 export const metadata: Metadata = {
-    title: 'Compound Interest Calculator – Convert APR to APY & More',
-    description: 'A free Compound Interest Calculator to compare or convert interest rates between different compounding periods (e.g., monthly, quarterly, annually).',
+    title: 'Compound Interest Calculator – Find Future Value',
+    description: 'A free Compound Interest Calculator to find the future value of an investment with fixed principal and periodic contributions. Includes options for tax and inflation.',
     alternates: {
         canonical: '/compound-interest-calculator',
     },
@@ -25,16 +25,16 @@ const faqs = [
         answer: "Simple interest is calculated only on the original principal amount. Compound interest is calculated on the principal plus the accumulated interest from previous periods, leading to exponential growth."
     },
     {
-        question: "How does compounding frequency affect the interest rate?",
-        answer: "The more frequently interest is compounded, the higher the effective annual rate (APY) will be for the same nominal rate (APR). For example, a 6% APR compounded monthly results in an APY of 6.17%."
+        question: "How does compounding frequency affect my investment?",
+        answer: "The more frequently interest is compounded (e.g., monthly vs. annually), the more interest you will earn over time, because you start earning interest on your interest sooner."
     },
     {
-        question: "What is the Rule of 72?",
-        answer: "The Rule of 72 is a quick mental shortcut to estimate the number of years it takes to double your money. You divide 72 by the annual interest rate. For example, at an 8% interest rate, your money would double in approximately 9 years (72 / 8 = 9)."
+        question: "What is the 'Contribute at' setting for?",
+        answer: "This determines if your periodic contributions are made at the beginning or end of each period. Contributions made at the 'beginning' will have slightly more time to earn interest, resulting in a higher final balance."
     },
     {
-        question: "What is the difference between APY and APR?",
-        answer: "APR (Annual Percentage Rate) is the nominal yearly interest rate. APY (Annual Percentage Yield) is the effective yearly rate that includes the effect of compounding. This calculator helps you convert between them."
+        question: "How do taxes and inflation affect my end balance?",
+        answer: "Taxes reduce your interest earned each year, slowing down growth. Inflation reduces the future 'buying power' of your money. This calculator can show you the real value of your investment after accounting for these factors."
     }
 ];
 
@@ -58,36 +58,28 @@ export default function CompoundInterestCalculatorPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="max-w-xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Compound Interest Calculator</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
-                    This Compound Interest Calculator can be used to compare or convert the interest rates of different compounding periods.
+                    This calculator helps determine the final balance and compound interest on an investment with fixed principal and optional periodic contributions.
                 </p>
             </div>
 
-            <CompoundInterestCalculator />
+            <FutureValueCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <Card>
+                 <Card>
                     <CardHeader>
                         <CardTitle>What is Compound Interest?</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
-                           Interest is the cost of using borrowed money. While simple interest is calculated only on the principal amount, compound interest is interest earned on both the principal and the accumulated interest. This "interest on interest" effect can lead to exponential growth over time. To learn more, read our detailed <Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">article on compound interest</Link>.
+                           Interest is the cost of using borrowed money, or more specifically, the amount a lender receives for advancing money to a borrower. Simple interest is earned only on the principal, while compound interest is interest earned on both the principal and on the accumulated interest. Because lenders earn interest on interest, earnings compound over time like an exponentially growing snowball. Therefore, compound interest can financially reward lenders generously over time. The longer the interest compounds for any investment, the greater the growth.
                         </p>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Different Compounding Frequencies</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">
-                            The more frequently interest is compounded within a time period, the higher the interest will be earned on an original principal. The interest rates of savings accounts and Certificate of Deposits (CD) tend to compound annually. Mortgage loans, home equity loans, and credit card accounts usually compound monthly. For this reason, lenders often like to present interest rates compounded monthly instead of annually. For example, a 6% mortgage interest rate amounts to a monthly 0.5% interest rate. However, after compounding monthly, interest totals 6.17% compounded annually. Our compound interest calculator above accommodates the conversion between daily, bi-weekly, semi-monthly, monthly, quarterly, semi-annual, and annual compounding frequencies.
+                        <p className="text-muted-foreground mt-2">
+                            To learn more, read our detailed <Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">article on the power of compound interest</Link>.
                         </p>
                     </CardContent>
                 </Card>
