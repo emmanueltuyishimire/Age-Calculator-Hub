@@ -83,30 +83,12 @@ export default function RootLayout({
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <Script
-          id="gtag-init"
-          strategy="worker"
-        >
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-7XVG2YF7MY');
-          `}
-        </Script>
-         <Script
-          id="gtag-js"
-          strategy="worker"
-          src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"
-        />
-         <script
           async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811`}
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
           crossOrigin="anonymous"
-          type="text/partytown"
-        ></script>
+          strategy="worker"
+        ></Script>
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider
@@ -118,6 +100,22 @@ export default function RootLayout({
             <AppLayout>{children}</AppLayout>
           <Toaster />
         </ThemeProvider>
+         <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"
+          strategy="worker"
+        />
+        <Script
+          id="gtag-init"
+          strategy="worker"
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-7XVG2YF7MY');
+          `,
+          }}
+        />
       </body>
     </html>
   );
