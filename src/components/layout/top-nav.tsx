@@ -19,7 +19,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import {
+  NavigationMenu,
+  NavigationMenuItem,
   NavigationMenuLink,
+  NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Button } from '../ui/button';
@@ -39,38 +42,44 @@ export function TopNav() {
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-4 text-sm" aria-label="Main navigation">
-          <Link
-            href="/"
-            aria-label="Go to homepage"
-            className={cn('font-semibold transition-colors hover:text-foreground/80',
-              pathname === '/' ? 'text-foreground' : 'text-foreground/60'
-            )}
-          >
-            Home
-          </Link>
-          
-          {mainCategories.map(category => (
-            <Link
-              key={category.name}
-              href={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`}
-              className={cn(
-                'font-semibold transition-colors hover:text-foreground/80',
-                pathname.startsWith(`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`) ? 'text-foreground' : 'text-foreground/60'
-              )}
-            >
-              {category.name}
-            </Link>
-          ))}
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <Link href="/" legacyBehavior passHref>
+                <NavigationMenuLink
+                  active={pathname === '/'}
+                  className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
+                >
+                  Home
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
 
-          <Link
-            href="/articles"
-            aria-label="View all articles"
-            className={cn('font-semibold transition-colors hover:text-foreground/80',
-              pathname === '/articles' ? 'text-foreground' : 'text-foreground/60'
-            )}
-          >
-            Articles
-          </Link>
+            {mainCategories.map(category => (
+              <NavigationMenuItem key={category.name}>
+                <Link href={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`} passHref legacyBehavior>
+                  <NavigationMenuLink
+                    active={pathname.startsWith(`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`)}
+                    className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
+                  >
+                    {category.name}
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            ))}
+
+            <NavigationMenuItem>
+              <Link href="/articles" legacyBehavior passHref>
+                <NavigationMenuLink
+                  active={pathname.startsWith('/articles')}
+                  className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
+                >
+                  Articles
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </nav>
 
       {/* Mobile Navigation */}
@@ -142,30 +151,3 @@ export function TopNav() {
     </>
   );
 }
-
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
