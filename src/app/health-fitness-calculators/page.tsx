@@ -19,7 +19,7 @@ export default function HealthFitnessCalculatorsHub() {
           Explore our collection of free health metric calculators designed to help you stay informed about your wellness. From calculating your BMI and BMR to tracking your pregnancy, these calculators provide valuable insights.
         </p>
       </div>
-      <CategoryHubClient categoryName="Fitness & Health Calculators" />
+      <CategoryHubClient categoryName="Health & Fitness" />
     </main>
   );
 }

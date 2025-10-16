@@ -17,7 +17,9 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="flex justify-center">
-                <ScientificCalculatorLoader />
+                <div className="w-full max-w-xs">
+                  <ScientificCalculatorLoader />
+                </div>
             </div>
             <div className="text-center md:text-left">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
