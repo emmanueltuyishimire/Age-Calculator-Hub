@@ -41,7 +41,7 @@ export default function LoanCalculatorPage() {
                             <Link href="/auto-loan-calculator" className="text-primary hover:underline">Auto Loan Calculator</Link>
                             <Link href="/student-loan-calculator" className="text-primary hover:underline">Student Loan Calculator</Link>
                             <Link href="/fha-loan-calculator" className="text-primary hover:underline">FHA Loan Calculator</Link>
-                            <Link href="/investment-calculator" className="text-primary hover:underline">Investment Calculator</Link>
+                            <Link href="/compound-interest-calculator" className="text-primary hover:underline">Investment Calculator</Link>
                             <Link href="/payment-calculator" className="text-primary hover:underline">Personal Loan Calculator</Link>
                         </div>
                     </CardContent>

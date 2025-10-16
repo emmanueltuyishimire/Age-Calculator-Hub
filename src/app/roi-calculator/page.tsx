@@ -76,7 +76,7 @@ export default function RoiCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/investment-calculator" className="text-primary hover:underline">Investment Calculator</Link></li>
+                            <li><Link href="/compound-interest-calculator" className="text-primary hover:underline">Investment Calculator</Link></li>
                              <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
                         </ul>
                     </CardContent>

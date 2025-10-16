@@ -120,7 +120,7 @@ export default function RetirementPlanningArticle() {
           
           <div className="my-10 text-center">
             <Link href="/retirement-calculators">
-                <Button size="lg" className="text-lg">Find Your Full Retirement Age</Button>
+                <Button size="lg" className="text-lg">Explore Retirement Calculators</Button>
             </Link>
             <p className="text-sm text-muted-foreground mt-2">The first step in any retirement plan is knowing your target.</p>
           </div>

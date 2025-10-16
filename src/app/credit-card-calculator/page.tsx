@@ -34,7 +34,7 @@ const faqs = [
     },
     {
         question: "What if I have multiple credit cards?",
-        answer: "This calculator is designed for analyzing a single card. For a comprehensive strategy to pay off multiple cards, use our <a href='/credit-card-payoff-calculator' class='text-primary hover:underline'>Credit Card Payoff Calculator (Multiple Cards)</a>, which uses the Debt Avalanche method."
+        answer: "This calculator is designed for analyzing a single card. For a comprehensive strategy to pay off multiple cards, use our <a href='/debt-payoff-calculator' class='text-primary hover:underline'>Debt Payoff Calculator</a>, which uses the Debt Avalanche method."
     }
 ];
 
@@ -87,7 +87,7 @@ export default function CreditCardCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li>For multiple cards, use the <Link href="/credit-card-payoff-calculator" className="text-primary hover:underline">Credit Card Payoff Calculator (Multiple Cards)</Link>.</li>
+                            <li>For multiple cards, use the <Link href="/debt-payoff-calculator" className="text-primary hover:underline">Debt Payoff Calculator</Link>.</li>
                             <li><Link href="/articles/debt-snowball-vs-avalanche" className="text-primary hover:underline">Debt Snowball vs. Avalanche: Which Method is Best?</Link></li>
                         </ul>
                     </CardContent>
