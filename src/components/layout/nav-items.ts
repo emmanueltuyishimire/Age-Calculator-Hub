@@ -492,12 +492,12 @@ export const navItems: NavItem[] = [
     category: 'Investment',
     description: 'Measure the profitability of an investment with simple and annualized ROI.'
   },
-   {
+  {
     href: '/cd-calculator',
     icon: Wallet,
     label: 'CD Calculator',
     category: 'Investment',
-    description: 'Estimate the future value of a Certificate of Deposit.'
+    description: 'Estimate the future value of a Certificate of Deposit.',
   },
 
   // Tax & Salary
@@ -802,3 +802,5 @@ export const categorizedNavItems = (): NavCategory[] => {
     };
   });
 };
+
+    
