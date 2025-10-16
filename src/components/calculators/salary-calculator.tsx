@@ -35,8 +35,9 @@ import {
 const formSchema = z.object({
   amount: z.coerce.number().min(0, "Amount cannot be negative."),
   frequency: z.enum(['hourly', 'daily', 'weekly', 'bi-weekly', 'semi-monthly', 'monthly', 'quarterly', 'annually']),
-  hoursPerWeek: z.coerce.number().min(1).max(100),
+  hoursPerWeek: z.coerce.number().min(1).max(168),
   daysPerWeek: z.coerce.number().min(1).max(7),
+  hoursPerDay: z.coerce.number().min(1).max(24),
   holidaysPerYear: z.coerce.number().min(0).max(50),
   vacationDaysPerYear: z.coerce.number().min(0).max(100),
 });
@@ -66,13 +67,14 @@ export default function SalaryCalculator() {
       frequency: 'hourly',
       hoursPerWeek: 40,
       daysPerWeek: 5,
+      hoursPerDay: 8,
       holidaysPerYear: 10,
       vacationDaysPerYear: 15,
     },
   });
 
   function onSubmit(values: FormData) {
-    const { amount, frequency, hoursPerWeek, daysPerWeek, holidaysPerYear, vacationDaysPerYear } = values;
+    const { amount, frequency, hoursPerWeek, daysPerWeek, hoursPerDay, holidaysPerYear, vacationDaysPerYear } = values;
 
     const weeksPerYear = 52;
     const unadjustedWorkDays = weeksPerYear * daysPerWeek;
@@ -97,14 +99,13 @@ export default function SalaryCalculator() {
         semiMonthly: unadjustedAnnualSalary / 24,
         biWeekly: unadjustedAnnualSalary / 26,
         weekly: unadjustedAnnualSalary / 52,
-        daily: unadjustedAnnualSalary / unadjustedWorkDays,
-        hourly: unadjustedAnnualSalary / unadjustedWorkHours,
+        daily: unadjustedWorkDays > 0 ? unadjustedAnnualSalary / unadjustedWorkDays : 0,
+        hourly: unadjustedWorkHours > 0 ? unadjustedAnnualSalary / unadjustedWorkHours : 0,
     };
     
     // Adjusted Calculation
     const totalPaidTimeOffDays = holidaysPerYear + vacationDaysPerYear;
     const adjustedWorkDays = unadjustedWorkDays - totalPaidTimeOffDays;
-    const hoursPerDay = hoursPerWeek / daysPerWeek;
     const adjustedWorkHours = adjustedWorkDays * hoursPerDay;
 
     const adjusted = {
@@ -164,11 +165,12 @@ export default function SalaryCalculator() {
                         </Select><FormMessage /></FormItem>
                     )} />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <FormField control={form.control} name="hoursPerWeek" render={({ field }) => (<FormItem><FormLabel>Hours per week</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                    <FormField control={form.control} name="daysPerWeek" render={({ field }) => (<FormItem><FormLabel>Days per week</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                    <FormField control={form.control} name="holidaysPerYear" render={({ field }) => (<FormItem><FormLabel>Holidays per year</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                    <FormField control={form.control} name="vacationDaysPerYear" render={({ field }) => (<FormItem><FormLabel>Vacation days per year</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <FormField control={form.control} name="hoursPerWeek" render={({ field }) => (<FormItem><FormLabel>Hours / week</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="daysPerWeek" render={({ field }) => (<FormItem><FormLabel>Days / week</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                     <FormField control={form.control} name="hoursPerDay" render={({ field }) => (<FormItem><FormLabel>Hours / day</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="holidaysPerYear" render={({ field }) => (<FormItem><FormLabel>Holidays / year</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="vacationDaysPerYear" render={({ field }) => (<FormItem><FormLabel>Vacation days / year</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   </div>
                   
                   <div className="flex flex-col sm:flex-row gap-2 pt-2">
