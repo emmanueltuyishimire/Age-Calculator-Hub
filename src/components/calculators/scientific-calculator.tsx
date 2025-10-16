@@ -227,7 +227,6 @@ const ScientificCalculator = () => {
     
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            // Ignore if input fields are focused
             if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
                 return;
             }
@@ -236,10 +235,9 @@ const ScientificCalculator = () => {
                 ...Object.fromEntries("0123456789.()".split('').map(k => [k, k])),
                 '+': '+', '-': '−', '*': '×', '/': '÷',
                 'Enter': () => calculate(), '=': () => calculate(),
-                'Backspace': 'backspace', 'Escape': 'AC',
+                'Backspace': 'backspace', 'Escape': 'AC', 'c': 'AC',
                 '^': 'xy', '%': '%',
-                's': 'sin', 'c': 'cos', 't': 'tan',
-                '!': 'n!', 'p': 'π', 'e': 'e', 'l': 'log',
+                's': 'sin', 'p': 'π', 'e': 'e', 'l': 'log',
             };
 
             const action = keyMappings[event.key];
@@ -284,15 +282,12 @@ const ScientificCalculator = () => {
         if (btn.props?.children) value = React.Children.toArray(btn.props.children).join('');
     }
     
-    if (['+', '−', '×', '÷'].includes(value)) return 'secondary';
-    if (value === '=') return 'default';
+    if (['+', '−', '×', '÷', '='].includes(value)) return 'default';
     if (value === 'AC') return 'destructive';
     if (memoryButtons.includes(value)) return 'outline';
-    if (['Deg', 'Rad'].includes(value)) return 'secondary';
+    if (['Deg', 'Rad'].includes(value)) return 'ghost';
 
-    if (/\d/.test(value) || value === '.' || value === '±') return 'outline';
-
-    return 'outline';
+    return 'secondary';
   }
   
   const renderButton = (btn: string | React.ReactNode, index: number, style?: string) => {
@@ -311,9 +306,9 @@ const ScientificCalculator = () => {
         <Button 
             key={value + index} 
             variant={getVariant(btn)} 
-            className={cn("h-10 text-xs p-1 text-base", style, {
-                'bg-primary hover:bg-primary/90 text-primary-foreground': (value === 'Deg' && isDeg) || (value === 'Rad' && !isDeg),
-                'bg-red-800 hover:bg-red-900 text-white': value === 'AC'
+            className={cn("h-10 text-xs p-1 text-base shadow-md hover:shadow-sm active:shadow-inner", style, {
+                'bg-primary/80 text-primary-foreground': (value === 'Deg' && isDeg) || (value === 'Rad' && !isDeg),
+                'bg-destructive/80 hover:bg-destructive/90 text-white': value === 'AC'
             })}
             onClick={() => handleButtonClick(btn)}
             aria-label={value}
@@ -324,22 +319,24 @@ const ScientificCalculator = () => {
   }
 
   return (
-    <div className="bg-slate-800 dark:bg-slate-900 border rounded-lg p-2 sm:p-4 w-full max-w-[700px] mx-auto shadow-lg">
-      <Input
-        type="text"
-        value={display}
-        readOnly
-        className="w-full h-20 text-4xl text-right mb-2 bg-slate-700 dark:bg-slate-800 pr-4 text-white border-slate-600 dark:border-slate-700"
-        aria-label="Calculator display"
-      />
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-4 w-full max-w-[700px] mx-auto shadow-2xl">
+      <div className="bg-gray-800/50 dark:bg-gray-900/50 rounded p-2 mb-4 border-2 border-slate-800 shadow-inner">
+        <Input
+            type="text"
+            value={display}
+            readOnly
+            className="w-full h-20 text-4xl text-right mb-2 bg-slate-200/10 pr-4 text-emerald-300 border-transparent font-mono tracking-wider"
+            aria-label="Calculator display"
+        />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Scientific Panel */}
-        <div className="grid grid-cols-5 gap-1">
+        <div className="grid grid-cols-5 gap-2">
             {scientificButtonsFirstPanel.flat().map((btn, i) => renderButton(btn, i))}
         </div>
 
         {/* Basic Panel */}
-        <div className="grid grid-cols-5 gap-1">
+        <div className="grid grid-cols-5 gap-2">
              {basicButtonsSecondPanel.slice(0,1).flat().map((btn, i) => renderButton(btn, i + 25))}
              {basicButtonsSecondPanel.slice(1,2).flat().map((btn, i) => renderButton(btn, i + 30))}
              {renderButton('=', 34, 'row-span-3 h-auto col-start-5')}
@@ -353,5 +350,3 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
-
-    
