@@ -254,6 +254,13 @@ export const navItems: NavItem[] = [
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
   {
+    href: '/rental-property-calculator',
+    icon: Home,
+    label: 'Rental Property Calculator',
+    category: 'Financial Calculators',
+    description: 'Analyze real estate investments with IRR, Cap Rate, and cash flow.'
+  },
+  {
     href: '/salary-calculator',
     icon: Briefcase,
     label: 'Salary Calculator',
