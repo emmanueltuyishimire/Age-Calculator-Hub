@@ -45,24 +45,29 @@ export function TopNav() {
         <Link href="/" className={cn(navigationMenuTriggerStyle(), 'font-semibold')} aria-current={pathname === '/' ? 'page' : undefined}>
           Home
         </Link>
-
-        {mainCategories.map(category => {
-          const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`;
-          return (
-            <Link 
-              key={category.name} 
-              href={categoryHref} 
-              className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
-              aria-current={pathname.startsWith(categoryHref) ? 'page' : undefined}
-            >
-              {category.name}
-            </Link>
-          )
-        })}
-
-        <Link href="/articles" className={cn(navigationMenuTriggerStyle(), 'font-semibold')} aria-current={pathname.startsWith('/articles') ? 'page' : undefined}>
-          Articles
-        </Link>
+        <NavigationMenu>
+          <NavigationMenuList>
+            {mainCategories.map(category => {
+              const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`;
+              return (
+                 <NavigationMenuItem key={category.name}>
+                   <Link href={categoryHref} legacyBehavior passHref>
+                    <NavigationMenuLink active={pathname.startsWith(categoryHref)} className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
+                      {category.name}
+                    </NavigationMenuLink>
+                   </Link>
+                 </NavigationMenuItem>
+              )
+            })}
+             <NavigationMenuItem>
+                <Link href="/articles" legacyBehavior passHref>
+                    <NavigationMenuLink active={pathname.startsWith('/articles')} className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
+                    Articles
+                    </NavigationMenuLink>
+                </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </nav>
 
       {/* Mobile Navigation */}

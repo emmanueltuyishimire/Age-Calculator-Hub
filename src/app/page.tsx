@@ -12,7 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
   loading: () => <Skeleton className="h-[500px] w-full max-w-sm" />,
-  ssr: true,
+  ssr: false,
 });
 
 

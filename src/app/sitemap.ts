@@ -8,17 +8,15 @@ const baseUrl = 'https://innerpeacejournals.com';
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  // Pages from navItems, excluding hub pages which are handled by categories
-  const pageUrls = navItems
-    .filter(item => item.href.startsWith('/') && !item.href.endsWith('-calculators') && item.href !== '/' && item.category !== 'Company' && item.category !== 'Legal' && item.category !== 'Navigation')
+  const calculatorPages = navItems
+    .filter(item => item.href.startsWith('/') && !item.href.endsWith('-calculators') && !item.category.includes('Navigation') && !item.category.includes('Company') && !item.category.includes('Legal'))
     .map(item => ({
       url: `${baseUrl}${item.href}`,
       lastModified: lastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     }));
-  
-  // Static pages not in navItems' main sections
+
   const staticPages = [
     '/about',
     '/contact',
@@ -33,53 +31,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.5,
   }));
 
-  // Article pages
   const articlePages = articles.map(article => ({
     url: `${baseUrl}/articles/${article.slug}`,
     lastModified: new Date(article.publishedDate),
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
-  
-  // Hub pages for articles and categories
+
   const hubPages = [
-    {
-      url: `${baseUrl}/articles`,
-      lastModified: new Date(articles[0]?.publishedDate || lastModified),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/financial-calculators`,
-      lastModified: lastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/health-fitness-calculators`,
-      lastModified: lastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/math-calculators`,
-      lastModified: lastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.9,
-    },
-     {
-      url: `${baseUrl}/other-calculators`,
-      lastModified: lastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.9,
-    },
-  ];
+    { url: `${baseUrl}/articles`, priority: 0.9 },
+    { url: `${baseUrl}/financial-calculators`, priority: 0.9 },
+    { url: `${baseUrl}/health-fitness-calculators`, priority: 0.9 },
+    { url: `${baseUrl}/math-calculators`, priority: 0.9 },
+    { url: `${baseUrl}/other-calculators`, priority: 0.9 },
+    { url: `${baseUrl}/auto`, priority: 0.9 },
+    { url: `${baseUrl}/investment`, priority: 0.9 },
+    { url: `${baseUrl}/tax-salary`, priority: 0.9 },
+    { url: `${baseUrl}/mortgage-real-estate`, priority: 0.9 },
+    { url: `${baseUrl}/other`, priority: 0.9 },
+  ].map(page => ({
+    url: page.url,
+    lastModified: lastModified,
+    changeFrequency: 'monthly' as const,
+    priority: page.priority,
+  }));
 
   return [
     { url: baseUrl, lastModified: lastModified, changeFrequency: 'weekly', priority: 1.0 },
-    ...pageUrls,
-    ...staticPages, 
-    ...articlePages, 
-    ...hubPages
+    ...calculatorPages,
+    ...staticPages,
+    ...articlePages,
+    ...hubPages,
   ];
 }

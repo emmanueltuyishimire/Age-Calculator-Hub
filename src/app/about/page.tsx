@@ -3,17 +3,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { Metadata } from 'next';
-
-// This is a client component, but we can export metadata from it.
-// Next.js will use this for static rendering.
-export const metadata: Metadata = {
-  title: 'About Us – Calculators',
-  description: 'Our mission is to provide accessible tools that help you make sense of the numbers in your life, whether you\'re calculating finances, health metrics, or mathematical equations.',
-   alternates: {
-      canonical: '/about',
-  },
-};
 
 export default function AboutPage() {
   const pathname = usePathname();

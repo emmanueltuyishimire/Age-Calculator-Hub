@@ -37,6 +37,10 @@ const nextConfig: NextConfig = {
         source: '/sitemap.xml',
         destination: '/sitemap',
       },
+      {
+        source: '/robots.txt',
+        destination: '/api/robots',
+      }
     ];
   },
   experimental: {

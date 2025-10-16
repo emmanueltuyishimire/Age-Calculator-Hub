@@ -1,7 +1,6 @@
 
-"use client";
-
 import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
+import { type Metadata } from 'next';
 import {
   Accordion,
   AccordionContent,
@@ -11,6 +10,14 @@ import {
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+    title: 'Online Age Calculator by Date of Birth - Real-Time Age Finder',
+    description: 'Use our free age calculator to instantly find your exact age from your date of birth. This real-time tool provides precise results in years, months, days, hours, minutes, and seconds, updating live before your eyes.',
+    alternates: {
+        canonical: '/age-calculator-by-date-of-birth',
+    },
+};
 
 const faqs = [
     { question: "How does this online age calculator work?", answer: "Our calculator determines your age by computing the precise time difference between your date of birth and the current date, accounting for all leap years and the varying lengths of months." },

@@ -1,4 +1,5 @@
+# This file is dynamically handled by /src/app/api/robots/route.ts
+# via a rewrite rule in next.config.ts to ensure the sitemap is always up to date.
 User-agent: *
 Allow: /
-
 Sitemap: https://innerpeacejournals.com/sitemap.xml
