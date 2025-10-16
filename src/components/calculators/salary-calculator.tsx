@@ -36,6 +36,7 @@ import {
   ChartContainer,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Switch } from '../ui/switch';
 
 const formSchema = z.object({
   grossSalary: z.coerce.number().min(1, "Salary must be positive."),
@@ -44,6 +45,7 @@ const formSchema = z.object({
   preTaxDeductions: z.coerce.number().min(0).optional(),
   stateTaxRate: z.coerce.number().min(0).max(20).optional(),
   localTaxRate: z.coerce.number().min(0).max(20).optional(),
+  hasMultipleJobs: z.boolean().default(false),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -79,21 +81,29 @@ export default function SalaryCalculator() {
       preTaxDeductions: 6000,
       stateTaxRate: 0,
       localTaxRate: 0,
+      hasMultipleJobs: false,
     },
   });
 
   function onSubmit(values: FormData) {
     const taxYear = '2024'; // Using fixed tax year for simplicity
     const yearData = taxData[taxYear];
-    const { grossSalary, payFrequency, filingStatus, preTaxDeductions = 0, stateTaxRate = 0, localTaxRate = 0 } = values;
+    const { grossSalary, payFrequency, filingStatus, preTaxDeductions = 0, stateTaxRate = 0, localTaxRate = 0, hasMultipleJobs } = values;
 
     const periods = payPeriodsPerYear[payFrequency];
     const grossPayPerPeriod = grossSalary / periods;
     
     // Federal Tax Calculation (Simplified W-4 approach)
-    const annualDeduction = yearData.standardDeduction[filingStatus as FilingStatus] + preTaxDeductions;
-    const annualTaxableIncome = Math.max(0, grossSalary - annualDeduction);
+    let annualDeduction = yearData.standardDeduction[filingStatus as FilingStatus] + preTaxDeductions;
+    let annualTaxableIncome = Math.max(0, grossSalary - preTaxDeductions);
+
+    // If multiple jobs, the standard deduction and tax brackets are effectively split
+    if (hasMultipleJobs) {
+      annualTaxableIncome = annualTaxableIncome / 2; // Rough approximation
+    }
     
+    annualTaxableIncome = Math.max(0, annualTaxableIncome - (hasMultipleJobs ? annualDeduction / 2 : annualDeduction));
+
     let annualFederalTax = 0;
     const brackets = yearData.taxBrackets[filingStatus as FilingStatus];
     let incomeRemaining = annualTaxableIncome;
@@ -102,6 +112,10 @@ export default function SalaryCalculator() {
         const taxableInBracket = Math.min(incomeRemaining, bracket.to) - bracket.from;
         annualFederalTax += taxableInBracket * bracket.rate;
       }
+    }
+
+    if (hasMultipleJobs) {
+        annualFederalTax *= 2; // Apply tax to both "halves" of the income
     }
 
     const federalTaxPerPeriod = annualFederalTax / periods;
@@ -124,8 +138,8 @@ export default function SalaryCalculator() {
     const localTax = taxableForStateLocal * (localTaxRate / 100);
     
     // Net Pay
-    const totalDeductions = federalTaxPerPeriod + socialSecurityPerPeriod + medicarePerPeriod + stateTax + localTax + preTaxDeductionsPerPeriod;
-    const netPayPerPeriod = grossPayPerPeriod - totalDeductions;
+    const totalDeductions = federalTaxPerPeriod + socialSecurityPerPeriod + medicarePerPeriod + stateTax + localTax;
+    const netPayPerPeriod = grossPayPerPeriod - totalDeductions - preTaxDeductionsPerPeriod;
     
     setResult({
       grossPayPerPeriod,
@@ -171,7 +185,7 @@ export default function SalaryCalculator() {
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
                           <SelectContent>
-                            {Object.keys(payPeriodsPerYear).map(freq => (<SelectItem key={freq} value={freq}>{freq.charAt(0).toUpperCase() + freq.slice(1)}</SelectItem>))}
+                            {Object.keys(payPeriodsPerYear).map(freq => (<SelectItem key={freq} value={freq}>{freq.charAt(0).toUpperCase() + freq.slice(1).replace('-', ' ')}</SelectItem>))}
                           </SelectContent>
                         </Select>
                       <FormMessage /></FormItem>
@@ -190,8 +204,27 @@ export default function SalaryCalculator() {
                     )} />
                     <FormField control={form.control} name="preTaxDeductions" render={({ field }) => (<FormItem><FormLabel>Annual Pre-Tax Deductions</FormLabel><FormControl><Input type="number" placeholder="e.g., 401k, health" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="stateTaxRate" render={({ field }) => (<FormItem><FormLabel>State Tax Rate (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                    <FormField control={form.control} name="localTaxRate" render={({ field }) => (<FormItem><FormLabel>Local Tax Rate (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   </div>
+                  <FormField
+                    control={form.control}
+                    name="hasMultipleJobs"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                        <div className="space-y-0.5">
+                          <FormLabel>Do you have 2+ jobs?</FormLabel>
+                          <FormDescription className="text-xs">
+                            This affects tax withholding (W-4 Step 2c).
+                          </FormDescription>
+                        </div>
+                        <FormControl>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
                   <div className="flex flex-col sm:flex-row gap-2 pt-2">
                     <Button type="submit" className="w-full"><DollarSign className="mr-2 h-4 w-4"/>Calculate Paycheck</Button>
                     <Button onClick={handleReset} variant="outline" className="w-full sm:w-auto" aria-label="Reset"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
