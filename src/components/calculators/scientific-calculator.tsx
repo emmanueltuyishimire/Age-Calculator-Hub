@@ -227,26 +227,29 @@ const ScientificCalculator = () => {
     
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            event.preventDefault();
-            const { key } = event;
-             if (/[\d.]/.test(key) || ['(', ')', '%'].includes(key)) {
-                handleButtonClick(key);
-            } else if (key === '+') {
-                handleButtonClick('+');
-            } else if (key === '-') {
-                handleButtonClick('−');
-            } else if (key === '*') {
-                handleButtonClick('×');
-            } else if (key === '/') {
-                handleButtonClick('÷');
-            } else if (key === 'Enter' || key === '=') {
-                calculate();
-            } else if (key === 'Backspace') {
-                handleButtonClick('backspace');
-            } else if (key === 'Escape') {
-                handleButtonClick('AC');
-            } else if (key === '^') {
-                handleButtonClick('xy');
+            // Ignore if input fields are focused
+            if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+                return;
+            }
+
+            const keyMappings: { [key: string]: string | (() => void) } = {
+                ...Object.fromEntries("0123456789.()".split('').map(k => [k, k])),
+                '+': '+', '-': '−', '*': '×', '/': '÷',
+                'Enter': () => calculate(), '=': () => calculate(),
+                'Backspace': 'backspace', 'Escape': 'AC',
+                '^': 'xy', '%': '%',
+                's': 'sin', 'c': 'cos', 't': 'tan',
+                '!': 'n!', 'p': 'π', 'e': 'e', 'l': 'log',
+            };
+
+            const action = keyMappings[event.key];
+            if (action) {
+                event.preventDefault();
+                if (typeof action === 'function') {
+                    action();
+                } else {
+                    handleButtonClick(action);
+                }
             }
         };
 
@@ -350,3 +353,5 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
+
+    
