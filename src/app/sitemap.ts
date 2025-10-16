@@ -44,11 +44,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/health-fitness-calculators`, priority: 0.9 },
     { url: `${baseUrl}/math-calculators`, priority: 0.9 },
     { url: `${baseUrl}/other-calculators`, priority: 0.9 },
-    { url: `${baseUrl}/auto`, priority: 0.9 },
-    { url: `${baseUrl}/investment`, priority: 0.9 },
-    { url: `${baseUrl}/tax-salary`, priority: 0.9 },
-    { url: `${baseUrl}/mortgage-real-estate`, priority: 0.9 },
-    { url: `${baseUrl}/other`, priority: 0.9 },
   ].map(page => ({
     url: page.url,
     lastModified: lastModified,

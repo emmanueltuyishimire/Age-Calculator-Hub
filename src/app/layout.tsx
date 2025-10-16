@@ -103,7 +103,6 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
           crossOrigin="anonymous"
           strategy="worker"
-          type="text/partytown"
         ></Script>
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
@@ -119,12 +118,10 @@ export default function RootLayout({
          <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"
           strategy="worker"
-          type="text/partytown"
         />
         <Script
           id="gtag-init"
           strategy="worker"
-          type="text/partytown"
           dangerouslySetInnerHTML={{
             __html: `
             window.dataLayer = window.dataLayer || [];

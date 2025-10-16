@@ -1,12 +1,17 @@
 
-"use client";
-
+import { type Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, MessageSquare, Lightbulb } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+
+export const metadata: Metadata = {
+    title: 'Contact Us – Calculators',
+    description: 'Get in touch with the team at Calculators. We welcome your questions, feedback, and suggestions to help us improve our tools.',
+    alternates: {
+        canonical: '/contact',
+    },
+};
 
 export default function ContactPage() {
-  const pathname = usePathname();
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">

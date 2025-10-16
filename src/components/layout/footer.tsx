@@ -14,18 +14,22 @@ export function Footer() {
   }, []);
 
   const categories = categorizedNavItems().filter(cat => 
-    cat.name !== 'Navigation' &&
-    cat.name !== 'Company' && 
-    cat.name !== 'Legal'
+    !['Navigation', 'Company', 'Legal'].includes(cat.name)
   );
 
   return (
     <footer className="py-8 md:py-12 bg-background border-t">
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {categories.map(category => (
+            {categories.map(category => {
+              const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`;
+              return (
                 <div key={category.name}>
-                    <h3 className="font-bold mb-4">{category.name}</h3>
+                    <h3 className="font-bold mb-4">
+                      <Link href={categoryHref} className="hover:text-primary hover:underline">
+                        {category.name}
+                      </Link>
+                    </h3>
                     <ul className="space-y-2">
                         {category.items.slice(0, 5).map(item => (
                             <li key={item.href}>
@@ -36,7 +40,8 @@ export function Footer() {
                         ))}
                     </ul>
                 </div>
-            ))}
+              );
+            })}
             <div>
               <h3 className="font-bold mb-4">Company</h3>
               <ul className="space-y-2">

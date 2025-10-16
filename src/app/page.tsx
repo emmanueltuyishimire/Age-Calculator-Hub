@@ -1,29 +1,23 @@
-"use client";
 
-import { useState } from 'react';
-import dynamic from 'next/dynamic';
-import CalculatorHub from '@/components/layout/calculator-hub';
-import ArticleList from '@/components/layout/article-list';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
-import { Skeleton } from '@/components/ui/skeleton';
-
-const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
-  loading: () => <Skeleton className="h-[500px] w-full max-w-sm" />,
-  ssr: false,
-});
-
+import CalculatorHub from '@/components/layout/calculator-hub';
+import ArticleList from '@/components/layout/article-list';
+import ScientificCalculatorLoader from '@/components/calculators/scientific-calculator-loader';
 
 export default function Home() {
+  const calculatorImage = PlaceHolderImages.find(img => img.id === 'scientific_calculator');
+
   return (
     <main role="main">
       <section className="bg-muted/50 py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="flex justify-center">
-                <ScientificCalculator />
+                <ScientificCalculatorLoader />
             </div>
             <div className="text-center md:text-left">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>

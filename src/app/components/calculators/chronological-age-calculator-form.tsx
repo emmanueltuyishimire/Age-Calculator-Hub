@@ -159,7 +159,7 @@ export default function ChronologicalAgeCalculatorForm() {
       <CardHeader className="text-center">
         <CardTitle>Age Calculator</CardTitle>
         <CardDescription>
-          Calculate the age or interval between two dates, displayed in years, months, days, and updating live to the second.
+          Calculate the age or interval between two dates.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -234,7 +234,7 @@ export default function ChronologicalAgeCalculatorForm() {
         </div>
 
         <div className="flex flex-col md:flex-row gap-2">
-            <Button onClick={handleCalculate} className="w-full">Calculate Age</Button>
+            <Button onClick={handleCalculate} className="w-full" aria-label="Calculate Age">Calculate Age</Button>
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
@@ -245,28 +245,28 @@ export default function ChronologicalAgeCalculatorForm() {
           
             <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 animate-fade-in">
               <div>
-                <h3 className="text-md sm:text-lg font-medium mb-2 text-muted-foreground">Your Exact Age:</h3>
-                <div className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2">
+                <h3 className="text-md sm:text-lg font-medium mb-2 text-foreground" id="exact-age-heading">Your Exact Age:</h3>
+                <div aria-labelledby="exact-age-heading" className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2">
                   <div><span className="text-2xl sm:text-3xl font-bold text-primary">{age.years}</span> <span className="text-md sm:text-lg text-muted-foreground">years</span></div>
                   <div><span className="text-2xl sm:text-3xl font-bold text-primary">{age.months}</span> <span className="text-md sm:text-lg text-muted-foreground">months</span></div>
                   <div><span className="text-2xl sm:text-3xl font-bold text-primary">{age.days}</span> <span className="text-md sm:text-lg text-muted-foreground">days</span></div>
                 </div>
-                 <div className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2 mt-2">
+                 <div aria-labelledby="exact-age-heading" className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2 mt-2">
                   <div><span className="text-xl sm:text-2xl font-bold text-primary">{age.hours}</span> <span className="text-sm sm:text-base text-muted-foreground">hours</span></div>
                   <div><span className="text-xl sm:text-2xl font-bold text-primary">{age.minutes}</span> <span className="text-sm sm:text-base text-muted-foreground">minutes</span></div>
                   <div><span className="text-xl sm:text-2xl font-bold text-primary">{age.seconds}</span> <span className="text-sm sm:text-base text-muted-foreground">seconds</span></div>
                 </div>
               </div>
               <div>
-                 <h3 className="text-md sm:text-lg font-medium mb-2 mt-4 text-muted-foreground">In Other Units:</h3>
-                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs sm:text-sm text-foreground">
-                    <p><span className='font-semibold'>{age.totalMonths.toLocaleString()}</span> months, <span className='font-semibold'>{age.days}</span> days</p>
-                    <p><span className='font-semibold'>{age.totalWeeks.toLocaleString()}</span> weeks, <span className='font-semibold'>{age.totalDays % 7}</span> days</p>
-                    <p><span className='font-semibold'>{age.totalDays.toLocaleString()}</span> days</p>
-                    <p><span className='font-semibold'>{age.totalHours.toLocaleString()}</span> hours</p>
-                    <p><span className='font-semibold'>{age.totalMinutes.toLocaleString()}</span> minutes</p>
-                    <p><span className='font-semibold'>{age.totalSeconds.toLocaleString()}</span> seconds</p>
-                 </div>
+                 <h3 className="text-md sm:text-lg font-medium mb-2 mt-4 text-foreground" id="other-units-heading">In Other Units:</h3>
+                 <ul aria-labelledby="other-units-heading" className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs sm:text-sm text-foreground">
+                    <li><span className='font-semibold'>{age.totalMonths.toLocaleString()}</span> months, <span className='font-semibold'>{age.days}</span> days</li>
+                    <li><span className='font-semibold'>{age.totalWeeks.toLocaleString()}</span> weeks, <span className='font-semibold'>{age.totalDays % 7}</span> days</li>
+                    <li><span className='font-semibold'>{age.totalDays.toLocaleString()}</span> days</li>
+                    <li><span className='font-semibold'>{age.totalHours.toLocaleString()}</span> hours</li>
+                    <li><span className='font-semibold'>{age.totalMinutes.toLocaleString()}</span> minutes</li>
+                    <li><span className='font-semibold'>{age.totalSeconds.toLocaleString()}</span> seconds</li>
+                 </ul>
               </div>
             </div>
             

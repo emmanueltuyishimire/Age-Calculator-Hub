@@ -1,11 +1,16 @@
 
-"use client";
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About Us – Calculators',
+  description: 'Our mission is to provide accessible tools that help you make sense of the numbers in your life, whether you\'re calculating finances, health metrics, or mathematical equations.',
+   alternates: {
+      canonical: '/about',
+  },
+};
 
 export default function AboutPage() {
-  const pathname = usePathname();
   return (
     <div className="container mx-auto px-4 py-8">
       <main role="main" className="max-w-4xl mx-auto">

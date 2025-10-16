@@ -1,13 +1,18 @@
 
-"use client";
-
-import { usePathname } from 'next/navigation';
+import type { Metadata } from 'next';
 import ArticleList from '@/components/layout/article-list';
 import { articles } from '@/lib/articles';
 
+export const metadata: Metadata = {
+  title: 'Articles & Insights Hub – Calculators',
+  description: 'Explore our collection of articles to learn more about the science of aging, health and wellness tips, financial planning for retirement, and more.',
+  alternates: {
+      canonical: '/articles',
+  },
+};
+
 export default function ArticlesHubPage() {
   const categories = [...new Set(articles.map(article => article.category))];
-  const pathname = usePathname();
 
   return (
     <main className="container mx-auto px-4 py-8" role="main">

@@ -1,6 +1,5 @@
 
-"use client";
-
+import type { Metadata } from 'next';
 import { faqCategories } from '@/lib/faqs';
 import {
   Accordion,
@@ -8,10 +7,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { usePathname } from 'next/navigation';
+
+export const metadata: Metadata = {
+    title: 'Frequently Asked Questions – Calculators',
+    description: 'Find answers to common questions about our free online age, health, and financial calculators. Learn how they work and how to use them effectively.',
+    alternates: {
+        canonical: '/faq',
+    },
+};
 
 export default function FAQPage() {
-  const pathname = usePathname();
   return (
     <main className="container mx-auto px-4 py-8" role="main">
       <div className="text-center mb-12">

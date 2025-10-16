@@ -18,11 +18,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
+import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Menu } from 'lucide-react';
 import { categorizedNavItems } from './nav-items';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 export function TopNav() {
@@ -32,13 +31,15 @@ export function TopNav() {
   const categories = categorizedNavItems();
   const mainCategories = categories.filter(cat => cat.name !== 'Company' && cat.name !== 'Legal' && cat.name !== 'Navigation');
   
+  const navLinkStyle = "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50";
+  
   return (
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-1 text-sm" aria-label="Main navigation">
         <Link
           href="/"
-          className={cn(navigationMenuTriggerStyle(), 'font-semibold', {
+          className={cn(navLinkStyle, 'font-semibold', {
             'bg-accent/50': pathname === '/',
           })}
         >
@@ -51,7 +52,7 @@ export function TopNav() {
             <Link
               key={category.name}
               href={categoryHref}
-              className={cn(navigationMenuTriggerStyle(), 'font-semibold', {
+              className={cn(navLinkStyle, 'font-semibold', {
                 'bg-accent/50': pathname.startsWith(categoryHref),
               })}
             >
@@ -61,7 +62,7 @@ export function TopNav() {
         })}
         <Link
           href="/articles"
-          className={cn(navigationMenuTriggerStyle(), 'font-semibold', {
+          className={cn(navLinkStyle, 'font-semibold', {
             'bg-accent/50': pathname.startsWith('/articles'),
           })}
         >
