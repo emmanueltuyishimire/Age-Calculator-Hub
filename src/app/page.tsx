@@ -6,12 +6,14 @@ import dynamic from 'next/dynamic';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
   loading: () => <Skeleton className="h-[500px] w-full max-w-sm" />,
+  ssr: true,
 });
 
 
@@ -25,7 +27,10 @@ export default function Home() {
                 <ScientificCalculator />
             </div>
             <div className="text-center md:text-left">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
+                <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
+                  <Image src="/logo.png" alt="Calculators Logo" width={64} height={64} className="h-12 w-12 sm:h-16 sm:w-16" priority />
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
+                </div>
                 <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-xl mx-auto md:mx-0">
                     Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
                 </p>
