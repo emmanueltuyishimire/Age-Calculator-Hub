@@ -248,6 +248,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate your federal tax refund or amount owed.'
   },
   {
+    href: '/rent-calculator',
+    icon: Home,
+    label: 'Rent Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate how much rent you can afford based on your income.'
+  },
+  {
     href: '/finance-calculator',
     icon: Briefcase,
     label: 'Finance Calculator',
