@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,13 +22,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { RefreshCcw, Scale, AlertCircle, CalendarIcon } from 'lucide-react';
+import { RefreshCcw, Scale, AlertCircle } from 'lucide-react';
 import ShareButton from '../share-button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Calendar } from '../ui/calendar';
-import { cn } from '@/lib/utils';
+import { Input } from '../ui/input';
+
+const months = Array.from({ length: 12 }, (_, i) => ({ value: (i + 1).toString(), label: format(new Date(0, i), 'MMMM') }));
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
 
 // IMPORTANT: This is sample data for demonstration purposes only.
 // It is NOT a comprehensive or legally accurate list and is subject to change.
@@ -88,11 +90,10 @@ const statuteData: Record<string, Record<string, { years: number, months?: numbe
 const formSchema = z.object({
   state: z.string().min(1, 'Please select a state.'),
   claimType: z.string().min(1, 'Please select a claim type.'),
-  incidentDate: z.date({ required_error: "Incident date is required."}).refine(date => !isFuture(date), {
-      message: "Incident date cannot be in the future."
-  }),
+  incidentDateDay: z.string().min(1).max(2),
+  incidentDateMonth: z.string().min(1),
+  incidentDateYear: z.string().min(4).max(4),
 });
-
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -109,21 +110,34 @@ export default function StatuteOfLimitationsCalculator() {
     defaultValues: {
       state: undefined,
       claimType: undefined,
-      incidentDate: undefined,
+      incidentDateDay: '',
+      incidentDateMonth: '',
+      incidentDateYear: '',
     },
   });
 
   const availableClaimTypes = form.watch('state') ? Object.keys(statuteData[form.watch('state')]).sort() : [];
+  
+  const getIncidentDate = useCallback(() => {
+    const { incidentDateYear, incidentDateMonth, incidentDateDay } = form.getValues();
+    if (incidentDateYear && incidentDateMonth && incidentDateDay) {
+        const date = new Date(parseInt(incidentDateYear), parseInt(incidentDateMonth) - 1, parseInt(incidentDateDay));
+        if (isValid(date) && !isFuture(date)) return date;
+    }
+    return null;
+  }, [form]);
 
   function onSubmit(values: FormData) {
-    const { state, claimType, incidentDate } = values;
+    const { state, claimType } = values;
+    const incidentDate = getIncidentDate();
 
-    if(!incidentDate) return;
+    if(!incidentDate) {
+        form.setError("incidentDateDay", { message: "Invalid date." });
+        return;
+    }
 
     const statute = statuteData[state]?.[claimType];
-    if (!statute) {
-      return;
-    }
+    if (!statute) return;
 
     const deadline = addYears(addMonths(incidentDate, statute.months || 0), statute.years);
     const timePeriod = `${statute.years} year${statute.years !== 1 ? 's' : ''}${statute.months ? ` and ${statute.months} month${statute.months > 1 ? 's' : ''}` : ''}`;
@@ -135,7 +149,9 @@ export default function StatuteOfLimitationsCalculator() {
     form.reset({
       state: undefined,
       claimType: undefined,
-      incidentDate: undefined,
+      incidentDateDay: '',
+      incidentDateMonth: '',
+      incidentDateYear: '',
     });
     setResult(null);
   }
@@ -166,47 +182,21 @@ export default function StatuteOfLimitationsCalculator() {
                   </Select>
                 <FormMessage /></FormItem>
               )} />
-              <FormField
-                control={form.control}
-                name="incidentDate"
-                render={({ field }) => (
-                <FormItem className="flex flex-col md:col-span-2">
-                    <FormLabel>Date of Incident</FormLabel>
-                    <Popover>
-                    <PopoverTrigger asChild>
-                        <FormControl>
-                        <Button
-                            variant={"outline"}
-                            className={cn(
-                            "w-full pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                            )}
-                        >
-                            {field.value ? (
-                            format(field.value, "PPP")
-                            ) : (
-                            <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                        </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                        />
-                    </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                </FormItem>
-                )}
-              />
+              <div className="space-y-2 md:col-span-2">
+                <Label>Date of Incident</Label>
+                <div className="flex gap-2">
+                   <FormField control={form.control} name="incidentDateMonth" render={({ field }) => (
+                      <Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger aria-label="Incident Month"><SelectValue placeholder="Month" /></SelectTrigger></FormControl>
+                      <SelectContent>{months.map(m => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}</SelectContent></Select>
+                   )}/>
+                   <FormField control={form.control} name="incidentDateDay" render={({ field }) => (<FormControl><Input type="number" placeholder="Day" {...field} aria-label="Incident Day" /></FormControl>)}/>
+                   <FormField control={form.control} name="incidentDateYear" render={({ field }) => (
+                      <Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger aria-label="Incident Year"><SelectValue placeholder="Year" /></SelectTrigger></FormControl>
+                      <SelectContent>{years.map(y => <SelectItem key={y} value={y.toString()}>{y}</SelectItem>)}</SelectContent></Select>
+                   )}/>
+                </div>
+                <FormMessage>{form.formState.errors.incidentDateDay?.message}</FormMessage>
+              </div>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-2 pt-2">

@@ -13,11 +13,14 @@ import {
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, CalendarIcon } from "lucide-react"
+import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Calendar } from '../ui/calendar';
-import { cn } from '@/lib/utils';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Input } from '../ui/input';
+
+const months = Array.from({ length: 12 }, (_, i) => ({ value: (i + 1).toString(), label: format(new Date(0, i), 'MMMM') }));
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
 interface RetirementInfo {
   fullRetirement: {
@@ -51,16 +54,30 @@ const getRetirementAge = (birthYear: number): { years: number; months: number } 
 };
 
 export default function RetirementAgeCalculator() {
-  const [dob, setDob] = useState<Date | undefined>();
+  const [dobDay, setDobDay] = useState('');
+  const [dobMonth, setDobMonth] = useState('');
+  const [dobYear, setDobYear] = useState('');
   const [retirementInfo, setRetirementInfo] = useState<RetirementInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const getDob = useCallback((): Date | null => {
+    if (dobYear && dobMonth && dobDay) {
+        const date = new Date(parseInt(dobYear), parseInt(dobMonth) - 1, parseInt(dobDay));
+        if (isValid(date)) return date;
+    }
+    return null;
+  }, [dobDay, dobMonth, dobYear]);
 
   useEffect(() => {
     try {
         const savedDob = localStorage.getItem('retirementAgeCalculatorDob');
         if (savedDob) {
             const parsedDate = new Date(JSON.parse(savedDob));
-            if(isValid(parsedDate)) setDob(parsedDate);
+            if(isValid(parsedDate)) {
+                setDobDay(parsedDate.getDate().toString());
+                setDobMonth((parsedDate.getMonth() + 1).toString());
+                setDobYear(parsedDate.getFullYear().toString());
+            }
         }
     } catch(e) {
         // ignore
@@ -68,15 +85,15 @@ export default function RetirementAgeCalculator() {
   }, []);
 
   const handleCalculate = () => {
-    const selectedDate = dob;
+    const selectedDate = getDob();
 
-    if (!selectedDate || !isValid(selectedDate)) {
+    if (!selectedDate) {
       setError("Please enter a valid date of birth.");
       setRetirementInfo(null);
       return;
     }
     setError(null);
-    localStorage.setItem('retirementAgeCalculatorDob', JSON.stringify(dob));
+    localStorage.setItem('retirementAgeCalculatorDob', JSON.stringify(selectedDate));
 
     const birthYear = selectedDate.getFullYear();
     const fullRetirementAge = getRetirementAge(birthYear);
@@ -118,26 +135,18 @@ export default function RetirementAgeCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-            <Label htmlFor="dob-day-ret">Date of Birth</Label>
-             <Popover>
-              <PopoverTrigger asChild>
-                <Button id="dob-day-ret" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !dob && "text-muted-foreground")}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dob ? format(dob, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  captionLayout="dropdown-buttons"
-                  fromYear={1920}
-                  toYear={new Date().getFullYear()}
-                  selected={dob}
-                  onSelect={setDob}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <Label>Date of Birth</Label>
+            <div className="flex gap-2">
+                <Select value={dobMonth} onValueChange={setDobMonth}>
+                    <SelectTrigger aria-label="Birth Month"><SelectValue placeholder="Month" /></SelectTrigger>
+                    <SelectContent>{months.map(m => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}</SelectContent>
+                </Select>
+                <Input type="number" placeholder="Day" value={dobDay} onChange={e => setDobDay(e.target.value)} aria-label="Birth Day" />
+                <Select value={dobYear} onValueChange={setDobYear}>
+                    <SelectTrigger aria-label="Birth Year"><SelectValue placeholder="Year" /></SelectTrigger>
+                    <SelectContent>{years.map(y => <SelectItem key={y} value={y.toString()}>{y}</SelectItem>)}</SelectContent>
+                </Select>
+            </div>
         </div>
         <div className="flex gap-2">
             <Button onClick={handleCalculate} className="w-full" aria-label="Calculate Retirement Age">Calculate Retirement Age</Button>

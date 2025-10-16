@@ -14,11 +14,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, CalendarIcon } from "lucide-react"
+import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { cn } from '@/lib/utils';
-import { Calendar } from '../ui/calendar';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+
+const months = Array.from({ length: 12 }, (_, i) => ({ value: (i + 1).toString(), label: format(new Date(0, i), 'MMMM') }));
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 2 }, (_, i) => currentYear - i);
 
 interface PregnancyInfo {
   gestationalAge: string;
@@ -28,16 +30,23 @@ interface PregnancyInfo {
 }
 
 export default function PregnancyCalculator() {
-  const [lmp, setLmp] = useState<Date | undefined>();
+  const [lmpDay, setLmpDay] = useState('');
+  const [lmpMonth, setLmpMonth] = useState('');
+  const [lmpYear, setLmpYear] = useState('');
   const [cycleLength, setCycleLength] = useState('28');
   const [pregnancyInfo, setPregnancyInfo] = useState<PregnancyInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleCalculate = () => {
-    const lmpDate = lmp;
+    if (!lmpYear || !lmpMonth || !lmpDay) {
+        setError("Please enter a full, valid date for the last menstrual period.");
+        setPregnancyInfo(null);
+        return;
+    }
+    const lmpDate = new Date(parseInt(lmpYear), parseInt(lmpMonth) - 1, parseInt(lmpDay));
     const cycle = parseInt(cycleLength, 10);
 
-    if (!lmpDate || !isValid(lmpDate)) {
+    if (!isValid(lmpDate)) {
       setError("Please enter a valid date for the last menstrual period.");
       setPregnancyInfo(null);
       return;
@@ -93,26 +102,18 @@ export default function PregnancyCalculator() {
             </Alert>
         )}
         <div className="space-y-2">
-            <Label htmlFor="lmp-picker-preg">Last Menstrual Period (LMP)</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button id="lmp-picker-preg" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !lmp && "text-muted-foreground")}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {lmp ? format(lmp, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  captionLayout="dropdown-buttons"
-                  fromYear={new Date().getFullYear() - 1}
-                  toYear={new Date().getFullYear()}
-                  selected={lmp}
-                  onSelect={setLmp}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <Label>Last Menstrual Period (LMP)</Label>
+            <div className="flex gap-2">
+                <Select value={lmpMonth} onValueChange={setLmpMonth}>
+                    <SelectTrigger aria-label="LMP Month"><SelectValue placeholder="Month" /></SelectTrigger>
+                    <SelectContent>{months.map(m => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}</SelectContent>
+                </Select>
+                <Input type="number" placeholder="Day" value={lmpDay} onChange={e => setLmpDay(e.target.value)} aria-label="LMP Day" />
+                <Select value={lmpYear} onValueChange={setLmpYear}>
+                    <SelectTrigger aria-label="LMP Year"><SelectValue placeholder="Year" /></SelectTrigger>
+                    <SelectContent>{years.map(y => <SelectItem key={y} value={y.toString()}>{y}</SelectItem>)}</SelectContent>
+                </Select>
+            </div>
         </div>
         <div className="space-y-2">
             <Label htmlFor="cycle-length-preg">Average Cycle Length (days)</Label>

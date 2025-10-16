@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { format, intervalToDuration, isFuture, isValid, addYears } from 'date-fns';
-import { RefreshCcw, Gift, CalendarIcon } from 'lucide-react';
+import { RefreshCcw, Gift } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -15,10 +15,8 @@ import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { cn } from '@/lib/utils';
-import { Calendar } from '../ui/calendar';
-
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Input } from '../ui/input';
 
 interface Age {
   years: number;
@@ -37,19 +35,38 @@ interface BirthdayCountdown {
     seconds: number;
 }
 
+const months = Array.from({ length: 12 }, (_, i) => ({ value: (i + 1).toString(), label: format(new Date(0, i), 'MMMM') }));
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 125 }, (_, i) => currentYear - i);
+
 export default function BirthdayAgeCalculator() {
-  const [dob, setDob] = useState<Date | undefined>();
+  const [dobDay, setDobDay] = useState('');
+  const [dobMonth, setDobMonth] = useState('');
+  const [dobYear, setDobYear] = useState('');
+
   const [age, setAge] = useState<Age | undefined>();
   const [countdown, setCountdown] = useState<BirthdayCountdown | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const getDob = useCallback((): Date | null => {
+    if (dobYear && dobMonth && dobDay) {
+        const date = new Date(parseInt(dobYear), parseInt(dobMonth) - 1, parseInt(dobDay));
+        if (isValid(date)) return date;
+    }
+    return null;
+  }, [dobDay, dobMonth, dobYear]);
 
   useEffect(() => {
     try {
         const savedDob = localStorage.getItem('birthdayAgeCalculatorDob');
         if (savedDob) {
             const parsedDob = new Date(JSON.parse(savedDob));
-            if(isValid(parsedDob)) setDob(parsedDob);
+            if(isValid(parsedDob)) {
+                setDobDay(parsedDob.getDate().toString());
+                setDobMonth((parsedDob.getMonth() + 1).toString());
+                setDobYear(parsedDob.getFullYear().toString());
+            }
         }
     } catch(e) {
         // ignore
@@ -57,16 +74,12 @@ export default function BirthdayAgeCalculator() {
   }, []);
 
   const calculateAgeAndCountdown = useCallback(() => {
-    const dobDate = dob;
+    const dobDate = getDob();
     if (!dobDate) return;
     
     const now = new Date();
 
-    // Calculate age
-    const ageDuration = intervalToDuration({
-      start: dobDate,
-      end: now,
-    });
+    const ageDuration = intervalToDuration({ start: dobDate, end: now });
     setAge({
       years: ageDuration.years || 0,
       months: ageDuration.months || 0,
@@ -76,16 +89,12 @@ export default function BirthdayAgeCalculator() {
       seconds: ageDuration.seconds || 0,
     });
 
-    // Calculate next birthday
     let nextBirthday = new Date(now.getFullYear(), dobDate.getMonth(), dobDate.getDate());
     if (now > nextBirthday) {
         nextBirthday = addYears(nextBirthday, 1);
     }
 
-    const countdownDuration = intervalToDuration({
-        start: now,
-        end: nextBirthday
-    });
+    const countdownDuration = intervalToDuration({ start: now, end: nextBirthday });
     setCountdown({
       months: countdownDuration.months || 0,
       days: countdownDuration.days || 0,
@@ -93,32 +102,26 @@ export default function BirthdayAgeCalculator() {
       minutes: countdownDuration.minutes || 0,
       seconds: countdownDuration.seconds || 0,
     });
-  }, [dob]);
+  }, [getDob]);
 
   const handleCalculate = useCallback(() => {
-    const dobDate = dob;
-    if (!dobDate || !isValid(dobDate)) {
+    const dobDate = getDob();
+    if (!dobDate) {
         setError("Please enter a valid date of birth.");
-        setIsCalculating(false);
-        setAge(undefined);
-        setCountdown(undefined);
         return;
     }
      if (isFuture(dobDate)) {
       setError("Date of birth cannot be in the future.");
-      setIsCalculating(false);
-      setAge(undefined);
-      setCountdown(undefined);
       return;
     }
     setError(null);
-    localStorage.setItem('birthdayAgeCalculatorDob', JSON.stringify(dob));
+    localStorage.setItem('birthdayAgeCalculatorDob', JSON.stringify(dobDate));
     setIsCalculating(true);
     calculateAgeAndCountdown();
-  }, [dob, calculateAgeAndCountdown]);
+  }, [getDob, calculateAgeAndCountdown]);
 
   const handleReset = useCallback(() => {
-      setDob(undefined);
+      setDobDay(''); setDobMonth(''); setDobYear('');
       setAge(undefined);
       setCountdown(undefined);
       setIsCalculating(false);
@@ -129,7 +132,7 @@ export default function BirthdayAgeCalculator() {
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
     if (isCalculating) {
-      calculateAgeAndCountdown(); // Initial calculation
+      calculateAgeAndCountdown();
       interval = setInterval(calculateAgeAndCountdown, 1000);
     }
     return () => {
@@ -137,12 +140,11 @@ export default function BirthdayAgeCalculator() {
     };
   }, [isCalculating, calculateAgeAndCountdown]);
 
-  // Reset calculation when input changes
   useEffect(() => {
     setIsCalculating(false);
     setAge(undefined);
     setCountdown(undefined);
-  }, [dob]);
+  }, [dobDay, dobMonth, dobYear]);
 
   return (
     <div className="space-y-6">
@@ -159,28 +161,18 @@ export default function BirthdayAgeCalculator() {
             </Alert>
           )}
 
-          <div className="grid grid-cols-1 gap-4">
-            <div className='space-y-2'>
-              <Label htmlFor='dob-day'>Date of Birth</Label>
-               <Popover>
-                <PopoverTrigger asChild>
-                    <Button id="dob-day" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !dob && "text-muted-foreground")}>
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {dob ? format(dob, "PPP") : <span>Pick a date</span>}
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                    <Calendar
-                    mode="single"
-                    captionLayout="dropdown-buttons"
-                    fromYear={1900}
-                    toYear={new Date().getFullYear()}
-                    selected={dob}
-                    onSelect={setDob}
-                    initialFocus
-                    />
-                </PopoverContent>
-                </Popover>
+          <div className="space-y-2">
+            <Label>Date of Birth</Label>
+            <div className="flex gap-2">
+                <Select value={dobMonth} onValueChange={setDobMonth}>
+                    <SelectTrigger aria-label="Birth Month"><SelectValue placeholder="Month" /></SelectTrigger>
+                    <SelectContent>{months.map(m => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}</SelectContent>
+                </Select>
+                <Input type="number" placeholder="Day" value={dobDay} onChange={e => setDobDay(e.target.value)} aria-label="Birth Day" />
+                <Select value={dobYear} onValueChange={setDobYear}>
+                    <SelectTrigger aria-label="Birth Year"><SelectValue placeholder="Year" /></SelectTrigger>
+                    <SelectContent>{years.map(y => <SelectItem key={y} value={y.toString()}>{y}</SelectItem>)}</SelectContent>
+                </Select>
             </div>
           </div>
 

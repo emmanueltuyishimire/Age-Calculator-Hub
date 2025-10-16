@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { format, addDays, subDays, isValid, differenceInDays } from 'date-fns';
 import {
   Card,
@@ -20,12 +20,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, CalendarIcon } from "lucide-react"
+import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { cn } from '@/lib/utils';
-import { Calendar } from '../ui/calendar';
+import { Input } from '../ui/input';
 
+const months = Array.from({ length: 12 }, (_, i) => ({ value: (i + 1).toString(), label: format(new Date(0, i), 'MMMM') }));
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 2 }, (_, i) => currentYear - i);
 
 interface DueDateInfo {
   dueDate: Date;
@@ -35,13 +36,23 @@ interface DueDateInfo {
 
 export default function DueDateCalculator() {
   const [calculationMethod, setCalculationMethod] = useState('lmp');
-  const [inputDate, setInputDate] = useState<Date | undefined>();
+  
+  const [inputDay, setInputDay] = useState('');
+  const [inputMonth, setInputMonth] = useState('');
+  const [inputYear, setInputYear] = useState('');
+
   const [dueDateInfo, setDueDateInfo] = useState<DueDateInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleCalculate = () => {
-    const date = inputDate;
-    if (!date || !isValid(date)) {
+    if (!inputYear || !inputMonth || !inputDay) {
+      setError("Please enter a full, valid date.");
+      setDueDateInfo(null);
+      return;
+    }
+    const date = new Date(parseInt(inputYear), parseInt(inputMonth) - 1, parseInt(inputDay));
+    
+    if (!isValid(date)) {
       setError("Please enter a valid date.");
       setDueDateInfo(null);
       return;
@@ -62,7 +73,6 @@ export default function DueDateCalculator() {
         startDate = subDays(date, 14);
         break;
       case 'ivf':
-        // Assuming a Day 5 transfer (blastocyst)
         dueDate = addDays(date, 261);
         startDate = subDays(date, 19);
         break;
@@ -120,26 +130,18 @@ export default function DueDateCalculator() {
           </Select>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="date-day-due-date">Date</Label>
-          <Popover>
-              <PopoverTrigger asChild>
-                <Button id="date-day-due-date" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !inputDate && "text-muted-foreground")}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {inputDate ? format(inputDate, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  captionLayout="dropdown-buttons"
-                  fromYear={new Date().getFullYear() - 1}
-                  toYear={new Date().getFullYear() + 1}
-                  selected={inputDate}
-                  onSelect={setInputDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+          <Label>Date</Label>
+           <div className="flex gap-2">
+                <Select value={inputMonth} onValueChange={setInputMonth}>
+                    <SelectTrigger aria-label="Month"><SelectValue placeholder="Month" /></SelectTrigger>
+                    <SelectContent>{months.map(m => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}</SelectContent>
+                </Select>
+                <Input type="number" placeholder="Day" value={inputDay} onChange={e => setInputDay(e.target.value)} aria-label="Day" />
+                <Select value={inputYear} onValueChange={setInputYear}>
+                    <SelectTrigger aria-label="Year"><SelectValue placeholder="Year" /></SelectTrigger>
+                    <SelectContent>{years.map(y => <SelectItem key={y} value={y.toString()}>{y}</SelectItem>)}</SelectContent>
+                </Select>
+            </div>
         </div>
         <div className="flex gap-2">
             <Button onClick={handleCalculate} className="w-full" aria-label="Calculate Due Date">Calculate Due Date</Button>
