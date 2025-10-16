@@ -262,6 +262,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate your federal estate tax liability.'
   },
   {
+    href: '/annuity-payout-calculator',
+    icon: Landmark,
+    label: 'Annuity Payout Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate annuity payouts or duration.'
+  },
+  {
     href: '/rent-calculator',
     icon: Home,
     label: 'Rent Calculator',
