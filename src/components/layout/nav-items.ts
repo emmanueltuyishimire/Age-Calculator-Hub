@@ -402,13 +402,6 @@ export const navItems: NavItem[] = [
     description: 'Estimate your monthly mortgage payment with PITI.'
   },
   {
-    href: '/mortgage-calculator-uk',
-    icon: Landmark,
-    label: 'Mortgage Calculator UK',
-    category: 'Financial Calculators',
-    description: 'Estimate your monthly mortgage repayment in pounds (£).'
-  },
-  {
     href: '/refinance-calculator',
     icon: Home,
     label: 'Refinance Calculator',
