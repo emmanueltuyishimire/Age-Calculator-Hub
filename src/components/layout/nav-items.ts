@@ -269,6 +269,13 @@ export const navItems: NavItem[] = [
     category: 'Financial Calculators',
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
+   {
+    href: '/inflation-calculator',
+    icon: TrendingUp,
+    label: 'Inflation Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate the buying power of money over time using CPI data.'
+  },
   {
     href: '/compound-interest-calculator',
     icon: PieChart,
