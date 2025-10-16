@@ -34,7 +34,7 @@ const faqs = [
     },
     {
         question: "What is the difference between 'End' and 'Beginning' mode for payments?",
-        answer: "'End' mode (annuity) assumes payments are made at the end of each period, which is standard for loans. 'Beginning' mode (annuity due) assumes payments are made at the start of each period, common for lease payments or retirement contributions."
+        answer: "'End' mode (ordinary annuity) assumes payments are made at the end of each period, which is standard for loans. 'Beginning' mode (annuity due) assumes payments are made at the start of each period, common for lease payments or retirement contributions."
     },
 ];
 
@@ -94,6 +94,16 @@ export default function FinanceCalculatorPage() {
                             <li><Link href="/articles/understanding-asset-allocation" className="text-primary hover:underline">Investing 101: Understanding Asset Allocation</Link></li>
                             <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
                         </ul>
+                    </CardContent>
+                </Card>
+                
+                <Card>
+                    <CardHeader>
+                        <CardTitle>What is an Investment?</CardTitle>
+                    </CardHeader>
+                     <CardContent className="space-y-4 text-muted-foreground">
+                        <p>An investment is the act of using money to make more money. The Investment Calculator can help determine one of many different variables concerning investments with a fixed rate of return.</p>
+                        <p>For any typical financial investment, there are four crucial elements: Return rate, Starting amount, End amount, and Investment length. Any additional contributions will result in a more accrued return and a higher end value.</p>
                     </CardContent>
                 </Card>
 

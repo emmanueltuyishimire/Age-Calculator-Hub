@@ -33,7 +33,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Area, AreaChart, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
+import { Area, AreaChart, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
@@ -48,11 +48,11 @@ import { Switch } from '../ui/switch';
 const currencySymbol = '$';
 
 const formSchema = z.object({
-  n: z.coerce.number().min(0, "Must be non-negative."),
-  iy: z.coerce.number().min(-99).max(100),
-  pv: z.coerce.number(),
-  pmt: z.coerce.number(),
-  fv: z.coerce.number(),
+  n: z.coerce.number().min(0, "Must be non-negative.").optional(),
+  iy: z.coerce.number().min(-99).max(100).optional(),
+  pv: z.coerce.number().optional(),
+  pmt: z.coerce.number().optional(),
+  fv: z.coerce.number().optional(),
   compounding: z.enum(['annually', 'semiannually', 'quarterly', 'monthly']).default('annually'),
   paymentAt: z.enum(['end', 'beginning']).default('end'),
 });
@@ -75,16 +75,19 @@ interface Result {
 
 // Financial formulas
 const solveFV = (n: number, r: number, pv: number, pmt: number, pmtAtBeginning: boolean) => {
+  if (r === 0) return -(pv + pmt * n);
   const pmtFactor = pmtAtBeginning ? 1 + r : 1;
   return -(pv * Math.pow(1 + r, n) + pmt * pmtFactor * (Math.pow(1 + r, n) - 1) / r);
 };
 
 const solvePV = (n: number, r: number, pmt: number, fv: number, pmtAtBeginning: boolean) => {
+  if (r === 0) return -(fv + pmt * n);
   const pmtFactor = pmtAtBeginning ? 1 + r : 1;
   return -((fv + pmt * pmtFactor * (Math.pow(1 + r, n) - 1) / r) / Math.pow(1 + r, n));
 };
 
 const solvePMT = (n: number, r: number, pv: number, fv: number, pmtAtBeginning: boolean) => {
+  if (r === 0) return -(pv + fv) / n;
   const pmtFactor = pmtAtBeginning ? 1 + r : 1;
   return -((pv * Math.pow(1 + r, n) + fv) / (pmtFactor * (Math.pow(1 + r, n) - 1) / r));
 };
@@ -96,15 +99,14 @@ const solveN = (r: number, pv: number, pmt: number, fv: number, pmtAtBeginning: 
 };
 
 const solveRate = (n: number, pv: number, pmt: number, fv: number, pmtAtBeginning: boolean): number => {
-    // Simplified Newton-Raphson method to solve for rate
     let rate = 0.1;
     for (let i = 0; i < 20; i++) {
         const pmtFactor = pmtAtBeginning ? 1 + rate : 1;
         const f = pv * Math.pow(1 + rate, n) + pmt * pmtFactor * (Math.pow(1 + rate, n) - 1) / rate + fv;
+        if(Math.abs(f) < 1e-5) return rate;
         const df = n * pv * Math.pow(1 + rate, n - 1) + pmt * pmtFactor * (n * rate * Math.pow(1 + rate, n - 1) - (Math.pow(1 + rate, n) - 1)) / (rate * rate);
-        const newRate = rate - f / df;
-        if (Math.abs(newRate - rate) < 1e-6) return newRate;
-        rate = newRate;
+        if(Math.abs(df) < 1e-5) break;
+        rate = rate - f / df;
     }
     return rate;
 };
@@ -130,38 +132,41 @@ export default function FinanceCalculator() {
   };
 
   function onSubmit(values: FormData) {
-    const compoundingPeriods = getCompoundingPeriods(values.compounding);
-    const r = values.iy / 100 / compoundingPeriods;
-    const n = values.n * compoundingPeriods;
-    const pv = values.pv;
-    const pmt = values.pmt;
-    const fv = values.fv;
+    const compoundingPeriods = getCompoundingPeriods(values.compounding || 'annually');
+    const r = (values.iy || 0) / 100 / compoundingPeriods;
+    const n = (values.n || 0) * compoundingPeriods;
+    const pv = values.pv || 0;
+    const pmt = values.pmt || 0;
+    const fv = values.fv || 0;
     const pmtAtBeginning = values.paymentAt === 'beginning';
 
     let calculatedValue = 0;
     
     try {
         switch (activeTab) {
-        case 'fv': calculatedValue = solveFV(n, r, pv, pmt, pmtAtBeginning); form.setValue('fv', calculatedValue); break;
-        case 'pmt': calculatedValue = solvePMT(n, r, pv, fv, pmtAtBeginning); form.setValue('pmt', calculatedValue); break;
-        case 'iy': 
-            const periodicRate = solveRate(n, pv, pmt, fv, pmtAtBeginning);
-            calculatedValue = periodicRate * compoundingPeriods * 100;
-            form.setValue('iy', calculatedValue);
-            break;
-        case 'n':
-            calculatedValue = solveN(r, pv, pmt, fv, pmtAtBeginning) / compoundingPeriods;
-            form.setValue('n', calculatedValue);
-            break;
-        case 'pv': calculatedValue = solvePV(n, r, pmt, fv, pmtAtBeginning); form.setValue('pv', calculatedValue); break;
+          case 'fv': calculatedValue = solveFV(n, r, pv, pmt, pmtAtBeginning); form.setValue('fv', calculatedValue); break;
+          case 'pmt': calculatedValue = solvePMT(n, r, pv, fv, pmtAtBeginning); form.setValue('pmt', calculatedValue); break;
+          case 'iy': 
+              const periodicRate = solveRate(n, pv, pmt, fv, pmtAtBeginning);
+              calculatedValue = periodicRate * compoundingPeriods * 100;
+              form.setValue('iy', calculatedValue);
+              break;
+          case 'n':
+              calculatedValue = solveN(r, pv, pmt, fv, pmtAtBeginning) / compoundingPeriods;
+              form.setValue('n', calculatedValue);
+              break;
+          case 'pv': calculatedValue = solvePV(n, r, pmt, fv, pmtAtBeginning); form.setValue('pv', calculatedValue); break;
         }
 
         // Generate schedule
         const schedule: ScheduleRow[] = [];
-        let currentPV = form.getValues('pv');
-        const currentPMT = form.getValues('pmt');
-        const currentN = form.getValues('n') * compoundingPeriods;
-        const currentR = form.getValues('iy') / 100 / compoundingPeriods;
+        let currentPV = form.getValues('pv') || 0;
+        const currentPMT = form.getValues('pmt') || 0;
+        const currentN = (form.getValues('n') || 0) * compoundingPeriods;
+        const currentR = (form.getValues('iy') || 0) / 100 / compoundingPeriods;
+
+        let totalInterest = 0;
+        let totalPmt = 0;
 
         for (let i = 1; i <= currentN; i++) {
             let interest = 0;
@@ -171,21 +176,23 @@ export default function FinanceCalculator() {
                 currentPV += currentPMT;
             }
             
-            interest = currentPV * -currentR; // interest on negative pv
+            interest = currentPV * -currentR; 
             
             if(!pmtAtBeginning) {
                  currentPV += currentPMT;
             }
 
             currentPV += interest;
+            totalInterest += interest;
+            totalPmt += currentPMT;
             
             schedule.push({ period: i, startPV: startPV, pmt: currentPMT, interest, endFV: currentPV });
         }
 
         setResult({
           calculatedValue,
-          totalPayments: form.getValues('pmt') * currentN,
-          totalInterest: (currentPV - form.getValues('pv') - (form.getValues('pmt') * currentN)),
+          totalPayments: totalPmt,
+          totalInterest,
           schedule,
         });
     } catch(e) {
@@ -195,7 +202,7 @@ export default function FinanceCalculator() {
   }
 
   function handleReset() {
-    form.reset();
+    form.reset({ n: 10, iy: 6, pv: -20000, pmt: -2000, fv: 0 });
     setResult(null);
   }
 
@@ -257,13 +264,12 @@ export default function FinanceCalculator() {
                             <p className="text-4xl font-bold text-primary">
                                 {['iy'].includes(activeTab) ? '' : currencySymbol}
                                 {result.calculatedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 })}
-                                {['iy', 'n'].includes(activeTab) ? '' : ''}
                                 {activeTab === 'iy' && '%'}
                                 {activeTab === 'n' && ' years'}
                             </p>
                         </div>
                         <div className="space-y-2 text-sm">
-                            <div className="flex justify-between"><span className="text-muted-foreground">Sum of all payments:</span><span className="font-semibold">{currencySymbol}{result.totalPayments.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+                            <div className="flex justify-between"><span className="text-muted-foreground">Sum of all payments:</span><span className="font-semibold">{currencySymbol}{Math.abs(result.totalPayments).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
                             <div className="flex justify-between"><span className="text-muted-foreground">Total Interest:</span><span className="font-semibold">{currencySymbol}{result.totalInterest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
                         </div>
 
@@ -274,7 +280,7 @@ export default function FinanceCalculator() {
                                 <AreaChart data={chartData}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="name" tick={{ fontSize: 10 }} />
-                                    <YAxis tickFormatter={(val) => currencySymbol + (val/1000) + 'k'} tick={{ fontSize: 10 }} />
+                                    <YAxis tickFormatter={(val) => currencySymbol + Math.round(val/1000) + 'k'} tick={{ fontSize: 10 }} />
                                     <Tooltip content={<ChartTooltipContent formatter={(value) => currencySymbol + Number(value).toFixed(2)}/>} />
                                     <Area type="monotone" dataKey="Future Value" stackId="1" stroke="hsl(var(--chart-1))" fill="hsl(var(--chart-1))" />
                                 </AreaChart>

@@ -246,19 +246,12 @@ export const navItems: NavItem[] = [
     category: 'Retirement & Social Security',
     description: 'Estimate retirement savings, withdrawal costs, and employer match.'
   },
-  {
-    href: '/retirement-savings-goal-calculator',
-    icon: Target,
-    label: 'Retirement Savings Goal Calculator',
+   {
+    href: '/annuity-calculator',
+    icon: Wallet,
+    label: 'Annuity Calculator',
     category: 'Retirement & Social Security',
-    description: 'Estimate how much you need to save for retirement.'
-  },
-  {
-    href: '/ira-calculator',
-    icon: Landmark,
-    label: 'IRA Calculator',
-    category: 'Retirement & Social Security',
-    description: 'Compare Traditional IRAs, Roth IRAs, and taxable savings.'
+    description: 'Estimate the future value of an annuity during its accumulation phase.'
   },
   {
     href: '/annuity-payout-calculator',
@@ -274,7 +267,13 @@ export const navItems: NavItem[] = [
     category: 'Retirement & Social Security',
     description: 'Evaluate pension decisions like lump sum vs. monthly income.'
   },
-
+  {
+    href: '/ira-calculator',
+    icon: Landmark,
+    label: 'IRA Calculator',
+    category: 'Retirement & Social Security',
+    description: 'Compare Traditional IRAs, Roth IRAs, and taxable savings.'
+  },
 
   // Financial Calculators
    {
@@ -304,6 +303,13 @@ export const navItems: NavItem[] = [
     label: 'Savings Calculator',
     category: 'Financial Calculators',
     description: 'Estimate your savings growth with contributions and interest.'
+  },
+  {
+    href: '/savings-goal-calculator',
+    icon: Target,
+    label: 'Savings Goal Calculator',
+    category: 'Financial Calculators',
+    description: 'Find out how much you need to save daily, monthly, or hourly for a goal.'
   },
   {
     href: '/future-value-calculator',
@@ -367,13 +373,6 @@ export const navItems: NavItem[] = [
     label: 'DTI Calculator',
     category: 'Financial Calculators',
     description: 'Calculate your Debt-to-Income ratio to assess your financial health.'
-  },
-   {
-    href: '/average-return-calculator',
-    icon: TrendingUp,
-    label: 'Average Return Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate IRR from cash flows or average returns from multiple investments.'
   },
   {
     href: '/student-loan-calculator',
