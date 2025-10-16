@@ -221,7 +221,7 @@ export const navItems: NavItem[] = [
   {
     href: '/retirement-calculators',
     icon: PiggyBank,
-    label: 'Retirement Calculators',
+    label: 'Retirement',
     category: 'Retirement',
     description: 'A hub for retirement planning and Social Security tools.'
   },
@@ -485,6 +485,13 @@ export const navItems: NavItem[] = [
     category: 'Tax & Salary',
     description: 'Calculate the final price of an item including sales tax.'
   },
+  {
+    href: '/vat-calculator',
+    icon: Percent,
+    label: 'VAT Calculator',
+    category: 'Tax & Salary',
+    description: 'Easily add or remove Value Added Tax (VAT) from a price.'
+  },
 
   // Math Calculators
   {
@@ -509,13 +516,6 @@ export const navItems: NavItem[] = [
     description: 'A versatile tool for all types of percentage calculations.'
   },
   {
-    href: '/vat-calculator',
-    icon: Percent,
-    label: 'VAT Calculator',
-    category: 'Math Calculators',
-    description: 'Easily add or remove Value Added Tax (VAT) from a price.'
-  },
-  {
     href: '/volume-calculator',
     icon: Cuboid,
     label: 'Volume Calculator',
@@ -527,7 +527,7 @@ export const navItems: NavItem[] = [
   {
     href: '/other-calculators',
     icon: LayoutGrid,
-    label: 'Other Calculators',
+    label: 'Other',
     category: 'Other',
     description: 'A hub for pet age, legal estimators, and more.'
   },
