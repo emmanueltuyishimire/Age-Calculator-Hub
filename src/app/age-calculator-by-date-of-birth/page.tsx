@@ -1,5 +1,7 @@
 
-import AgeCalculatorOnline from '@/components/calculators/age-calculator-online';
+"use client";
+
+import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
 import { type Metadata } from 'next';
 import {
   Accordion,
@@ -10,25 +12,6 @@ import {
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-    title: 'Age Calculator by Date of Birth - Find Your Age Instantly',
-    description: 'A free and easy tool to calculate age from a date of birth. Enter your birthday to get your precise age in years, months, and days, with real-time updates.',
-    openGraph: {
-        title: 'Age Calculator by Date of Birth - Find Your Age Instantly',
-        description: 'A free and easy tool to calculate age from a date of birth. Enter your birthday to get your precise age in years, months, and days, with real-time updates.',
-        type: 'website',
-        url: '/age-calculator-by-date-of-birth',
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Age Calculator by Date of Birth - Find Your Age Instantly',
-        description: 'A free and easy tool to calculate age from a date of birth. Enter your birthday to get your precise age in years, months, and days, with real-time updates.',
-    },
-    alternates: {
-        canonical: '/age-calculator-by-date-of-birth',
-    },
-};
 
 const faqs = [
     { question: "How does this online age calculator work?", answer: "Our calculator determines your age by computing the precise time difference between your date of birth and the current date, accounting for all leap years and the varying lengths of months." },
@@ -72,14 +55,14 @@ export default function AgeCalculatorByDateOfBirthPage() {
                 </p>
             </div>
 
-            <AgeCalculatorOnline />
+            <ChronologicalAgeCalculatorForm />
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader><CardTitle>How to Use the Age Calculator by Date of Birth</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Date of Birth:</strong> Use the calendar input fields (DD, MM, YYYY) to enter the exact day, month, and year you were born.</li>
+                            <li><strong>Enter Your Date of Birth:</strong> Use the calendar input fields to enter the exact day, month, and year you were born.</li>
                             <li><strong>Set the "Current Date" (Optional):</strong> The calculator automatically uses today's date. You can change this to any other date to calculate the age at a specific past or future moment.</li>
                             <li><strong>Click “Calculate Age”:</strong> Press the button to see your age computed instantly.</li>
                             <li><strong>See Your Exact Age Update Live:</strong> Watch as the calculator shows your age increasing every second in real time, broken down into years, months, days, hours, minutes, and seconds.</li>
@@ -131,7 +114,7 @@ export default function AgeCalculatorByDateOfBirthPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Core Age Calculation" currentHref="/age-calculator-by-date-of-birth" />
+        <RelatedCalculators currentCategory="Core Age Calculators" currentHref="/age-calculator-by-date-of-birth" />
       </div>
     </div>
   );

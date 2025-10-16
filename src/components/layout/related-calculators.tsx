@@ -5,6 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { categorizedNavItems } from './nav-items';
 import { Card, CardHeader, CardTitle, CardDescription } from '../ui/card';
+import { usePathname } from 'next/navigation';
 
 interface RelatedCalculatorsProps {
   currentCategory: string;
@@ -12,12 +13,13 @@ interface RelatedCalculatorsProps {
 }
 
 function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculatorsProps) {
+  const pathname = usePathname();
   const category = categorizedNavItems().find(cat => cat.name === currentCategory);
   if (!category) return null;
 
   // Filter out the current page and the main category hub page
   let relatedItems = category.items.filter(item => 
-    item.href !== currentHref && item.href !== category.href
+    item.href !== currentHref && item.href !== category.href && item.href !== pathname
   );
 
   if (relatedItems.length === 0) return null;

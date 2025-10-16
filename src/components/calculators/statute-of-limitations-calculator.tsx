@@ -3,7 +3,7 @@
 
 import { useState, useCallback } from 'react';
 import { z } from 'zod';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format, addYears, addMonths, isValid, isFuture } from 'date-fns';
 import {
@@ -22,12 +22,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { RefreshCcw, Scale, AlertCircle } from 'lucide-react';
+import { RefreshCcw, Scale, AlertCircle, CalendarIcon } from 'lucide-react';
 import ShareButton from '../share-button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import { Input } from '../ui/input';
-
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Calendar } from '../ui/calendar';
+import { cn } from '@/lib/utils';
 
 // IMPORTANT: This is sample data for demonstration purposes only.
 // It is NOT a comprehensive or legally accurate list and is subject to change.
@@ -87,23 +88,9 @@ const statuteData: Record<string, Record<string, { years: number, months?: numbe
 const formSchema = z.object({
   state: z.string().min(1, 'Please select a state.'),
   claimType: z.string().min(1, 'Please select a claim type.'),
-  incidentDateDay: z.string().min(1, 'Day is required.'),
-  incidentDateMonth: z.string().min(1, 'Month is required.'),
-  incidentDateYear: z.string().min(1, 'Year is required.'),
-}).refine(data => {
-    const { incidentDateYear, incidentDateMonth, incidentDateDay } = data;
-    const date = new Date(parseInt(incidentDateYear), parseInt(incidentDateMonth) - 1, parseInt(incidentDateDay));
-    return isValid(date) && date.getFullYear() === parseInt(incidentDateYear) && date.getMonth() === parseInt(incidentDateMonth) - 1 && date.getDate() === parseInt(incidentDateDay);
-}, {
-    message: "Incident date is not valid.",
-    path: ["incidentDateYear"],
-}).refine(data => {
-    const { incidentDateYear, incidentDateMonth, incidentDateDay } = data;
-    const date = new Date(parseInt(incidentDateYear), parseInt(incidentDateMonth) - 1, parseInt(incidentDateDay));
-    return !isFuture(date);
-}, {
-    message: "Incident date cannot be in the future.",
-    path: ["incidentDateYear"],
+  incidentDate: z.date({ required_error: "Incident date is required."}).refine(date => !isFuture(date), {
+      message: "Incident date cannot be in the future."
+  }),
 });
 
 
@@ -122,24 +109,14 @@ export default function StatuteOfLimitationsCalculator() {
     defaultValues: {
       state: undefined,
       claimType: undefined,
-      incidentDateDay: '',
-      incidentDateMonth: '',
-      incidentDateYear: '',
+      incidentDate: undefined,
     },
   });
-  
-  const getIncidentDate = useCallback(() => {
-    const { incidentDateYear, incidentDateMonth, incidentDateDay } = form.getValues();
-    if (!incidentDateYear || !incidentDateMonth || !incidentDateDay) return null;
-    return new Date(parseInt(incidentDateYear), parseInt(incidentDateMonth) - 1, parseInt(incidentDateDay));
-  }, [form]);
-
 
   const availableClaimTypes = form.watch('state') ? Object.keys(statuteData[form.watch('state')]).sort() : [];
 
   function onSubmit(values: FormData) {
-    const { state, claimType } = values;
-    const incidentDate = getIncidentDate();
+    const { state, claimType, incidentDate } = values;
 
     if(!incidentDate) return;
 
@@ -159,18 +136,16 @@ export default function StatuteOfLimitationsCalculator() {
     form.reset({
       state: undefined,
       claimType: undefined,
-      incidentDateDay: '',
-      incidentDateMonth: '',
-      incidentDateYear: '',
+      incidentDate: undefined,
     });
     setResult(null);
   }
 
   return (
     <Card className="w-full max-w-xl mx-auto shadow-lg animate-fade-in">
-      <CardHeader>
-        <CardTitle className="text-center">Statute of Limitations Estimator</CardTitle>
-        <CardDescription className="text-center">Select your state, claim type, and incident date.</CardDescription>
+      <CardHeader className="text-center">
+        <CardTitle>Statute of Limitations Estimator</CardTitle>
+        <CardDescription>Select your state, claim type, and incident date.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -192,15 +167,47 @@ export default function StatuteOfLimitationsCalculator() {
                   </Select>
                 <FormMessage /></FormItem>
               )} />
-              <FormItem className="md:col-span-2 flex flex-col">
-                <FormLabel>Date of Incident</FormLabel>
-                  <div className="flex gap-2">
-                    <FormField control={form.control} name="incidentDateDay" render={({ field }) => (<FormControl><Input placeholder="DD" {...field} aria-label="Incident Day"/></FormControl>)} />
-                    <FormField control={form.control} name="incidentDateMonth" render={({ field }) => (<FormControl><Input placeholder="MM" {...field} aria-label="Incident Month"/></FormControl>)} />
-                    <FormField control={form.control} name="incidentDateYear" render={({ field }) => (<FormControl><Input placeholder="YYYY" {...field} aria-label="Incident Year"/></FormControl>)} />
-                </div>
-                <FormMessage>{form.formState.errors.incidentDateYear?.message}</FormMessage>
-              </FormItem>
+              <FormField
+                control={form.control}
+                name="incidentDate"
+                render={({ field }) => (
+                <FormItem className="flex flex-col md:col-span-2">
+                    <FormLabel>Date of Incident</FormLabel>
+                    <Popover>
+                    <PopoverTrigger asChild>
+                        <FormControl>
+                        <Button
+                            variant={"outline"}
+                            className={cn(
+                            "w-full pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                            )}
+                        >
+                            {field.value ? (
+                            format(field.value, "PPP")
+                            ) : (
+                            <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                        </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                        />
+                    </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                </FormItem>
+                )}
+              />
             </div>
             
             <div className="flex flex-col sm:flex-row gap-2 pt-2">

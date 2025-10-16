@@ -105,7 +105,7 @@ export default function BabyAgeCalculatorPage() {
                     <CardHeader><CardTitle>How to Use the Baby Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Baby's Date of Birth:</strong> Use the input fields (DD, MM, YYYY) to enter their exact birthday.</li>
+                            <li><strong>Enter Your Baby's Date of Birth:</strong> Use the calendar input to enter their exact birthday.</li>
                             <li><strong>Click "Calculate Baby's Age":</strong> Press the button to get an instant result.</li>
                             <li><strong>View the Results:</strong> The tool will show your baby's age in three useful formats:
                                 <ul className="list-disc list-inside pl-6 mt-2">
@@ -190,10 +190,8 @@ export default function BabyAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Fitness & Health Calculators" currentHref="/baby-age-calculator" />
+        <RelatedCalculators currentCategory="Health & Fitness" currentHref="/baby-age-calculator" />
       </div>
     </div>
   );
 }
-
-    

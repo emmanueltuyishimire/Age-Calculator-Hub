@@ -13,9 +13,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, RefreshCcw } from "lucide-react"
+import { AlertCircle, CalendarIcon, RefreshCcw } from "lucide-react"
 import ShareButton from '../share-button';
-import { Input } from '../ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface Age {
   years: number;
@@ -33,8 +35,8 @@ interface Age {
 }
 
 export default function ChronologicalAgeCalculatorForm() {
-  const [dob, setDob] = useState({ day: '', month: '', year: ''});
-  const [ageAt, setAgeAt] = useState({ day: '', month: '', year: ''});
+  const [dob, setDob] = useState<Date | undefined>();
+  const [ageAt, setAgeAt] = useState<Date | undefined>(new Date());
   const [age, setAge] = useState<Age | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,62 +46,26 @@ export default function ChronologicalAgeCalculatorForm() {
         const savedDob = localStorage.getItem('ageCalculatorDob');
         const savedAgeAt = localStorage.getItem('ageCalculatorAgeAt');
         if (savedDob) {
-            const parsedDob = JSON.parse(savedDob);
-            setDob(parsedDob)
+            const parsedDob = new Date(JSON.parse(savedDob));
+            if(isValid(parsedDob)) setDob(parsedDob);
         }
         if (savedAgeAt) {
-            const parsedAgeAt = JSON.parse(savedAgeAt);
-            setAgeAt(parsedAgeAt);
-        } else {
-             const today = new Date();
-             setAgeAt({
-                day: String(today.getDate()),
-                month: String(today.getMonth() + 1),
-                year: String(today.getFullYear()),
-            });
+            const parsedAgeAt = new Date(JSON.parse(savedAgeAt));
+            if(isValid(parsedAgeAt)) setAgeAt(parsedAgeAt);
         }
     } catch(e) {
         // ignore
     }
   }, []);
 
-  const getDobDate = useCallback(() => {
-    const { year, month, day } = dob;
-    if (!year || !month || !day) return null;
-    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-    if (date.getFullYear() !== parseInt(year) || date.getMonth() !== parseInt(month) - 1 || date.getDate() !== parseInt(day)) return null;
-    return date;
-  }, [dob]);
-
-  const getAgeAtDate = useCallback(() => {
-    const { year, month, day } = ageAt;
-    if (!year || !month || !day) return null;
-    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-    if (date.getFullYear() !== parseInt(year) || date.getMonth() !== parseInt(month) - 1 || date.getDate() !== parseInt(day)) return null;
-    return date;
-  }, [ageAt]);
-
   const calculateAge = useCallback(() => {
-    const dobDate = getDobDate();
-    const ageAtDateVal = getAgeAtDate();
+    const dobDate = dob;
+    const ageAtDateVal = ageAt;
 
     if (!dobDate || !ageAtDateVal) {
       return;
     }
     
-    if (!isValid(dobDate)) {
-        setError("Please enter a valid date of birth.");
-        setIsCalculating(false);
-        setAge(undefined);
-        return;
-    }
-    if (!isValid(ageAtDateVal)) {
-        setError("Please enter a valid 'Age at' date.");
-        setIsCalculating(false);
-        setAge(undefined);
-        return;
-    }
-
     if (isFuture(dobDate)) {
         setError("Date of birth cannot be in the future.");
         setIsCalculating(false);
@@ -143,16 +109,16 @@ export default function ChronologicalAgeCalculatorForm() {
       totalMinutes,
       totalSeconds,
     });
-  }, [getDobDate, getAgeAtDate, isCalculating]);
+  }, [dob, ageAt, isCalculating]);
 
   const handleCalculate = () => {
-    const dobDate = getDobDate();
-    if (!dobDate || !isValid(dobDate)) {
+    const dobDate = dob;
+    if (!dobDate) {
         setError("Please enter a valid date of birth.");
         return;
     }
-    const ageAtDate = getAgeAtDate();
-    if (!ageAtDate || !isValid(ageAtDate)) {
+    const ageAtDate = ageAt;
+    if (!ageAtDate) {
         setError("Please enter a valid 'Age at' date.");
         return;
     }
@@ -164,13 +130,8 @@ export default function ChronologicalAgeCalculatorForm() {
   };
   
   const handleReset = () => {
-      setDob({day: '', month: '', year: ''});
-      const today = new Date();
-      setAgeAt({
-        day: String(today.getDate()),
-        month: String(today.getMonth() + 1),
-        year: String(today.getFullYear()),
-      });
+      setDob(undefined);
+      setAgeAt(new Date());
       setAge(undefined);
       setIsCalculating(false);
       setError(null);
@@ -198,7 +159,7 @@ export default function ChronologicalAgeCalculatorForm() {
       <CardHeader className="text-center">
         <CardTitle>Age Calculator</CardTitle>
         <CardDescription>
-          Calculate the age or interval between two dates, displayed in years, months, days, and updating live to the second.
+          Calculate the age or interval between two dates.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -211,25 +172,69 @@ export default function ChronologicalAgeCalculatorForm() {
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className='space-y-2'>
-            <Label htmlFor="dob-day-form">Date of Birth</Label>
-            <div className="flex gap-2">
-                <Input id="dob-day-form" placeholder="DD" value={dob.day} onChange={e => setDob(d => ({...d, day: e.target.value}))} aria-label="Day of Birth" />
-                <Input placeholder="MM" value={dob.month} onChange={e => setDob(d => ({...d, month: e.target.value}))} aria-label="Month of Birth" />
-                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob(d => ({...d, year: e.target.value}))} aria-label="Year of Birth" />
-            </div>
+            <Label htmlFor="dob-picker">Date of Birth</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="dob-picker"
+                  variant={"outline"}
+                  aria-label="Pick a date of birth"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !dob && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={1900}
+                  toYear={new Date().getFullYear()}
+                  selected={dob}
+                  onSelect={setDob}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
           <div className='space-y-2'>
-            <Label htmlFor="age-at-day-form">Age at the Date of</Label>
-            <div className="flex gap-2">
-              <Input id="age-at-day-form" placeholder="DD" value={ageAt.day} onChange={e => setAgeAt(d => ({...d, day: e.target.value}))} aria-label="Day for age calculation" />
-              <Input placeholder="MM" value={ageAt.month} onChange={e => setAgeAt(d => ({...d, month: e.target.value}))} aria-label="Month for age calculation" />
-              <Input placeholder="YYYY" value={ageAt.year} onChange={e => setAgeAt(d => ({...d, year: e.target.value}))} aria-label="Year for age calculation" />
-            </div>
+            <Label htmlFor="age-at-picker">Age at the Date of</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="age-at-picker"
+                  variant={"outline"}
+                  aria-label="Pick an end date for age calculation"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !ageAt && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {ageAt ? format(ageAt, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={1900}
+                  toYear={new Date().getFullYear() + 100}
+                  selected={ageAt}
+                  onSelect={setAgeAt}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
         <div className="flex flex-col md:flex-row gap-2">
-            <Button onClick={handleCalculate} className="w-full" aria-label="Calculate Age">Calculate Age</Button>
+            <Button onClick={handleCalculate} className="w-full">Calculate Age</Button>
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>

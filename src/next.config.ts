@@ -45,7 +45,6 @@ const nextConfig: NextConfig = {
     allowedDevOrigins: ["https://*.cloudworkstations.dev"],
     partytown: true,
   },
-  reactStrictMode: true,
 };
 
 export default nextConfig;

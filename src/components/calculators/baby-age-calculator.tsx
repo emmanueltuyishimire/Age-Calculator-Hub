@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { format, intervalToDuration, isValid, isFuture, differenceInWeeks, differenceInDays, differenceInMonths } from 'date-fns';
-import { RefreshCcw, Baby } from 'lucide-react';
+import { RefreshCcw, Baby, CalendarIcon } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -16,7 +16,9 @@ import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
-import { Input } from '../ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface BabyAge {
   years: number;
@@ -29,29 +31,17 @@ interface BabyAge {
 }
 
 export default function BabyAgeCalculator() {
-  const [dob, setDob] = useState({ day: '', month: '', year: ''});
+  const [dob, setDob] = useState<Date | undefined>();
   const [age, setAge] = useState<BabyAge | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getDobDate = useCallback(() => {
-    const { year, month, day } = dob;
-    if (!year || !month || !day) return null;
-    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-  }, [dob]);
-
   const calculateAge = useCallback(() => {
-    const dobDate = getDobDate();
+    const dobDate = dob;
     if (!dobDate) return;
     
     const now = new Date();
     
-    if (!isValid(dobDate)) {
-        setError("Please enter a valid date of birth.");
-        setIsCalculating(false);
-        return;
-    }
-
     if (isFuture(dobDate)) {
         setError("Baby's date of birth cannot be in the future.");
         setIsCalculating(false);
@@ -75,10 +65,10 @@ export default function BabyAgeCalculator() {
       totalDays,
       weekPart,
     });
-  }, [getDobDate]);
+  }, [dob]);
 
   const handleCalculate = () => {
-    const dobDate = getDobDate();
+    const dobDate = dob;
     if (!dobDate || !isValid(dobDate)) {
         setError("Please enter a valid date of birth for your baby.");
         setIsCalculating(false);
@@ -89,7 +79,7 @@ export default function BabyAgeCalculator() {
   };
 
   const handleReset = () => {
-      setDob({day: '', month: '', year: ''});
+      setDob(undefined);
       setAge(undefined);
       setIsCalculating(false);
       setError(null);
@@ -127,11 +117,25 @@ export default function BabyAgeCalculator() {
         )}
         <div className='space-y-2'>
             <Label htmlFor='dob-baby-day'>Baby's Date of Birth</Label>
-            <div className="flex gap-2">
-                <Input id="dob-baby-day" placeholder="DD" value={dob.day} onChange={e => setDob(d => ({...d, day: e.target.value}))} aria-label="Day of Birth" />
-                <Input placeholder="MM" value={dob.month} onChange={e => setDob(d => ({...d, month: e.target.value}))} aria-label="Month of Birth" />
-                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob(d => ({...d, year: e.target.value}))} aria-label="Year of Birth" />
-            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button id="dob-baby-day" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !dob && "text-muted-foreground")}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={new Date().getFullYear() - 5}
+                  toYear={new Date().getFullYear()}
+                  selected={dob}
+                  onSelect={setDob}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
         </div>
 
         <div className="flex flex-col md:flex-row gap-2">

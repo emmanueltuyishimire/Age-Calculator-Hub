@@ -1,5 +1,7 @@
 
-import AgeCalculator from '@/components/calculators/age-calculator';
+"use client";
+
+import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
 import { type Metadata } from 'next';
 import {
   Accordion,
@@ -10,25 +12,6 @@ import {
 import RelatedCalculators from '@/components/layout/related-calculators';
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-
-export const metadata: Metadata = {
-    title: 'Chronological Age Calculator – Find Your Exact Age by Date',
-    description: 'Use our free Chronological Age Calculator to determine your exact age in years, months, and days from your date of birth. The most accurate and simple way to calculate chronological age online.',
-    openGraph: {
-        title: 'Chronological Age Calculator – Find Your Exact Age by Date',
-        description: 'Use our free Chronological Age Calculator to determine your exact age in years, months, and days from your date of birth. The most accurate and simple way to calculate chronological age online.',
-        type: 'website',
-        url: '/chronological-age-calculator',
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Chronological Age Calculator – Find Your Exact Age by Date',
-        description: 'Use our free Chronological Age Calculator to determine your exact age in years, months, and days from your date of birth. The most accurate and simple way to calculate chronological age online.',
-    },
-    alternates: {
-        canonical: '/chronological-age-calculator',
-    },
-};
 
 const faqs = [
     {
@@ -86,7 +69,7 @@ export default function ChronologicalAgeCalculatorPage() {
                 </p>
             </div>
 
-            <AgeCalculator />
+            <ChronologicalAgeCalculatorForm />
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
@@ -106,9 +89,9 @@ export default function ChronologicalAgeCalculatorPage() {
                            Our tool uses a precise algorithm to give you an accurate result. Here’s a quick guide:
                         </p>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-4">
-                            <li>Enter your full <strong>Date of Birth</strong> using the DD, MM, and YYYY fields.</li>
+                            <li>Enter your full <strong>Date of Birth</strong> using the date picker.</li>
                             <li>The <strong>Age at the Date of</strong> field is set to today by default, but you can change it to any past, present, or future date.</li>
-                            <li>Click "Calculate Your Age Now Online" to see the exact time interval between the two dates, presented as your chronological age.</li>
+                            <li>Click "Calculate Your Age" to see the exact time interval between the two dates, presented as your chronological age.</li>
                         </ol>
                     </CardContent>
                 </Card>
@@ -140,10 +123,8 @@ export default function ChronologicalAgeCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Fitness & Health Calculators" currentHref="/chronological-age-calculator" />
+        <RelatedCalculators currentCategory="Core Age Calculators" currentHref="/chronological-age-calculator" />
       </div>
     </div>
   );
 }
-
-    

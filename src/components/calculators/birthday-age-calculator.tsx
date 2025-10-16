@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { format, intervalToDuration, isFuture, isValid, addYears } from 'date-fns';
-import { RefreshCcw, Gift } from 'lucide-react';
+import { RefreshCcw, Gift, CalendarIcon } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -15,7 +15,10 @@ import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
-import { Input } from '../ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
+
 
 interface Age {
   years: number;
@@ -35,7 +38,7 @@ interface BirthdayCountdown {
 }
 
 export default function BirthdayAgeCalculator() {
-  const [dob, setDob] = useState({ day: '', month: '', year: ''});
+  const [dob, setDob] = useState<Date | undefined>();
   const [age, setAge] = useState<Age | undefined>();
   const [countdown, setCountdown] = useState<BirthdayCountdown | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
@@ -45,22 +48,16 @@ export default function BirthdayAgeCalculator() {
     try {
         const savedDob = localStorage.getItem('birthdayAgeCalculatorDob');
         if (savedDob) {
-            const parsedDob = JSON.parse(savedDob);
-            setDob(parsedDob);
+            const parsedDob = new Date(JSON.parse(savedDob));
+            if(isValid(parsedDob)) setDob(parsedDob);
         }
     } catch(e) {
         // ignore
     }
   }, []);
 
-  const getDobDate = useCallback(() => {
-    const { year, month, day } = dob;
-    if (!year || !month || !day) return null;
-    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-  }, [dob]);
-
   const calculateAgeAndCountdown = useCallback(() => {
-    const dobDate = getDobDate();
+    const dobDate = dob;
     if (!dobDate) return;
     
     const now = new Date();
@@ -96,10 +93,10 @@ export default function BirthdayAgeCalculator() {
       minutes: countdownDuration.minutes || 0,
       seconds: countdownDuration.seconds || 0,
     });
-  }, [getDobDate]);
+  }, [dob]);
 
   const handleCalculate = useCallback(() => {
-    const dobDate = getDobDate();
+    const dobDate = dob;
     if (!dobDate || !isValid(dobDate)) {
         setError("Please enter a valid date of birth.");
         setIsCalculating(false);
@@ -118,10 +115,10 @@ export default function BirthdayAgeCalculator() {
     localStorage.setItem('birthdayAgeCalculatorDob', JSON.stringify(dob));
     setIsCalculating(true);
     calculateAgeAndCountdown();
-  }, [dob, getDobDate, calculateAgeAndCountdown]);
+  }, [dob, calculateAgeAndCountdown]);
 
   const handleReset = useCallback(() => {
-      setDob({day: '', month: '', year: ''});
+      setDob(undefined);
       setAge(undefined);
       setCountdown(undefined);
       setIsCalculating(false);
@@ -165,11 +162,25 @@ export default function BirthdayAgeCalculator() {
           <div className="grid grid-cols-1 gap-4">
             <div className='space-y-2'>
               <Label htmlFor='dob-day'>Date of Birth</Label>
-              <div className="flex gap-2">
-                <Input id="dob-day" placeholder="DD" value={dob.day} onChange={e => setDob(d => ({...d, day: e.target.value}))} aria-label="Day of Birth" />
-                <Input placeholder="MM" value={dob.month} onChange={e => setDob(d => ({...d, month: e.target.value}))} aria-label="Month of Birth" />
-                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob(d => ({...d, year: e.target.value}))} aria-label="Year of Birth" />
-              </div>
+               <Popover>
+                <PopoverTrigger asChild>
+                    <Button id="dob-day" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !dob && "text-muted-foreground")}>
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                    <Calendar
+                    mode="single"
+                    captionLayout="dropdown-buttons"
+                    fromYear={1900}
+                    toYear={new Date().getFullYear()}
+                    selected={dob}
+                    onSelect={setDob}
+                    initialFocus
+                    />
+                </PopoverContent>
+                </Popover>
             </div>
           </div>
 
