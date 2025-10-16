@@ -43,12 +43,12 @@ const nextConfig: NextConfig = {
       }
     ];
   },
-  experimental: {
-    // This is required to allow the Next.js dev server to accept requests from the
-    // Firebase Studio preview environment.
-    allowedDevOrigins: ["https://*.cloudworkstations.dev"],
-    partytown: true,
-  },
+  // This is required to allow the Next.js dev server to accept requests from the
+  // Firebase Studio preview environment.
+  // allowedDevOrigins was moved out of experimental for newer Next.js versions,
+  // but it seems to be causing issues with Turbopack. Temporarily removing it.
+  // The Partytown feature was removed in Next.js 14. The 'worker' strategy on next/script is used instead.
+  experimental: { },
 };
 
 export default nextConfig;

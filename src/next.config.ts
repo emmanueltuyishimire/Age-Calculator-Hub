@@ -42,8 +42,7 @@ const nextConfig: NextConfig = {
   experimental: {
     // This is required to allow the Next.js dev server to accept requests from the
     // Firebase Studio preview environment.
-    allowedDevOrigins: ["https://*.cloudworkstations.dev"],
-    partytown: true,
+    // allowedDevOrigins: ["https://*.cloudworkstations.dev"], // This key is causing issues, temporarily removing it.
   },
 };
 
