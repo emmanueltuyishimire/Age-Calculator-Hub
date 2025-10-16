@@ -234,6 +234,13 @@ export const navItems: NavItem[] = [
     category: 'Retirement & Social Security',
     description: 'Find your break-even age for claiming Social Security benefits.'
   },
+  {
+    href: '/ira-calculator',
+    icon: Landmark,
+    label: 'IRA Calculator',
+    category: 'Financial Calculators',
+    description: 'Compare Traditional IRAs, Roth IRAs, and taxable savings.'
+  },
 
   // Financial Calculators
    {
