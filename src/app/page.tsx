@@ -1,24 +1,20 @@
 
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
-import ScientificCalculatorLoader from '@/components/calculators/scientific-calculator-loader';
+import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
 
 export default function Home() {
-  const calculatorImage = PlaceHolderImages.find(img => img.id === 'scientific_calculator');
-
   return (
     <main role="main">
       <section className="bg-muted/50 py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="flex justify-center">
-                <div className="w-full max-w-xs">
-                  <ScientificCalculatorLoader />
+                <div className="w-full max-w-2xl">
+                  <ChronologicalAgeCalculatorForm />
                 </div>
             </div>
             <div className="text-center md:text-left">
