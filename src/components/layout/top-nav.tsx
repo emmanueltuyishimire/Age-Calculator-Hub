@@ -47,13 +47,12 @@ export function TopNav() {
         </Link>
 
         {mainCategories.map(category => {
-          const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`;
           return (
             <Link
               key={category.name}
-              href={categoryHref}
+              href={category.href}
               className={cn(navLinkStyle, 'font-semibold', {
-                'bg-accent/50': pathname.startsWith(categoryHref),
+                'bg-accent/50': pathname.startsWith(category.href),
               })}
             >
               {category.name}

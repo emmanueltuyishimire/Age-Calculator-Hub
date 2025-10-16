@@ -22,11 +22,10 @@ export function Footer() {
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {categories.map(category => {
-              const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`;
               return (
                 <div key={category.name}>
                     <h3 className="font-bold mb-4">
-                      <Link href={categoryHref} className="hover:text-primary hover:underline">
+                      <Link href={category.href} className="hover:text-primary hover:underline">
                         {category.name}
                       </Link>
                     </h3>

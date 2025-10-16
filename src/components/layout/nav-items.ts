@@ -1,3 +1,4 @@
+
 import {
   Baby,
   Briefcase,
@@ -64,8 +65,8 @@ export type NavItem = {
 
 export type NavCategory = {
   name: string;
+  href: string;
   items: NavItem[];
-  href?: string;
 };
 
 export const navItems: NavItem[] = [
@@ -650,14 +651,23 @@ export const navItems: NavItem[] = [
 ];
 
 export const categorizedNavItems = (): NavCategory[] => {
-  const categories: { [key: string]: NavItem[] } = {};
+  const categories: Record<string, { items: NavItem[], href?: string }> = {};
+
+  // Initialize categories with their hub page URLs
+  categories['Financial'] = { items: [], href: '/financial-calculators' };
+  categories['Health & Fitness'] = { items: [], href: '/health-fitness-calculators' };
+  categories['Math'] = { items: [], href: '/math-calculators' };
+  categories['Other Calculators'] = { items: [], href: '/other-calculators' };
+  categories['Navigation'] = { items: [] };
+  categories['Company'] = { items: [] };
+  categories['Legal'] = { items: [] };
+
   navItems.forEach(item => {
-    if (!categories[item.category]) {
-      categories[item.category] = [];
+    if (categories[item.category]) {
+      categories[item.category].items.push(item);
     }
-    categories[item.category].push(item);
   });
-  
+
   const categoryOrder = [
     'Navigation',
     'Financial',
@@ -668,16 +678,11 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Legal',
   ];
 
-  const sortedCategories = Object.keys(categories).sort((a, b) => {
-    const indexA = categoryOrder.indexOf(a);
-    const indexB = categoryOrder.indexOf(b);
-    if (indexA === -1) return 1;
-    if (indexB === -1) return -1;
-    return indexA - indexB;
-  });
-
-  return sortedCategories.map(key => ({
-    name: key,
-    items: categories[key],
-  }));
+  return categoryOrder
+    .filter(key => categories[key])
+    .map(key => ({
+      name: key,
+      href: categories[key].href || '',
+      items: categories[key].items,
+    }));
 };
