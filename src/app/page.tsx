@@ -1,13 +1,19 @@
-
 "use client";
 
 import { useState } from 'react';
-import ScientificCalculator from '@/components/calculators/scientific-calculator';
+import dynamic from 'next/dynamic';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
+  ssr: false,
+  loading: () => <Skeleton className="h-[500px] w-full max-w-sm" />,
+});
+
 
 export default function Home() {
   return (

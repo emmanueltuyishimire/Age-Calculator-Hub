@@ -7,19 +7,10 @@ import Image from 'next/image';
 import { TopNav } from './top-nav';
 import { ThemeToggle } from './theme-toggle';
 import { Footer } from './footer';
-import { PT_Sans } from 'next/font/google';
-
-
-const ptSans = PT_Sans({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-pt-sans',
-});
-
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`min-h-screen flex flex-col ${ptSans.variable}`}>
+    <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-screen-2xl items-center justify-between px-4">
           <div className="flex items-center">
