@@ -19,12 +19,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
   NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Button } from '../ui/button';
@@ -47,33 +42,30 @@ export function TopNav() {
           <Link
             href="/"
             aria-label="Go to homepage"
-            className={cn('transition-colors hover:text-foreground/80',
+            className={cn('font-semibold transition-colors hover:text-foreground/80',
               pathname === '/' ? 'text-foreground' : 'text-foreground/60'
             )}
           >
             Home
           </Link>
           
-           <NavigationMenu>
-            <NavigationMenuList>
-              {mainCategories.map(category => (
-                 <NavigationMenuItem key={category.name}>
-                   <Link href={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`} legacyBehavior passHref>
-                    <NavigationMenuLink asChild>
-                      <a className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
-                        {category.name}
-                      </a>
-                    </NavigationMenuLink>
-                   </Link>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+          {mainCategories.map(category => (
+            <Link
+              key={category.name}
+              href={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`}
+              className={cn(
+                'font-semibold transition-colors hover:text-foreground/80',
+                pathname.startsWith(`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`) ? 'text-foreground' : 'text-foreground/60'
+              )}
+            >
+              {category.name}
+            </Link>
+          ))}
 
           <Link
             href="/articles"
             aria-label="View all articles"
-            className={cn('transition-colors hover:text-foreground/80',
+            className={cn('font-semibold transition-colors hover:text-foreground/80',
               pathname === '/articles' ? 'text-foreground' : 'text-foreground/60'
             )}
           >
