@@ -38,11 +38,23 @@ export function TopNav() {
 
   const categories = categorizedNavItems();
   const mainCategories = categories.filter(cat => cat.name !== 'Company' && cat.name !== 'Legal' && cat.name !== 'Navigation');
+  
+  const financialSubCategories = categories.filter(cat => 
+    [
+      "Mortgage & Real Estate",
+      "Auto",
+      "Investment",
+      "Retirement",
+      "Tax & Salary",
+      "Other"
+    ].includes(cat.name)
+  );
+
 
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="hidden md:flex items-center gap-6 text-sm" aria-label="Main navigation">
+      <nav className="hidden md:flex items-center gap-4 text-sm" aria-label="Main navigation">
           <Link
             href="/"
             aria-label="Go to homepage"
@@ -52,18 +64,31 @@ export function TopNav() {
           >
             Home
           </Link>
-          <Link
-            href="/articles"
-            aria-label="View all articles"
-            className={`transition-colors hover:text-foreground/80 ${
-              pathname === '/articles' ? 'text-foreground' : 'text-foreground/60'
-            }`}
-          >
-            Articles
-          </Link>
-          <NavigationMenu>
+          
+           <NavigationMenu>
             <NavigationMenuList>
-              {mainCategories.map(category => (
+               <NavigationMenuItem>
+                <NavigationMenuTrigger aria-label="Open Financial Calculators menu">Financial</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className="grid w-[600px] grid-cols-2 gap-x-8 gap-y-4 p-4 lg:w-[700px]">
+                    {financialSubCategories.map((subCategory) => (
+                      <div key={subCategory.name}>
+                        <p className="font-bold text-primary mb-2">{subCategory.name}</p>
+                        <ul className="space-y-1">
+                          {subCategory.items.map((item) => (
+                            <li key={item.href}>
+                              <ListItem href={item.href} title={item.label} className="text-xs">
+                                {item.description}
+                              </ListItem>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              {mainCategories.filter(c => !financialSubCategories.some(fc => fc.name === c.name)).map(category => (
                  <NavigationMenuItem key={category.name}>
                   <NavigationMenuTrigger aria-label={`Open ${category.name} menu`}>{category.name}</NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -84,6 +109,16 @@ export function TopNav() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
+
+          <Link
+            href="/articles"
+            aria-label="View all articles"
+            className={`transition-colors hover:text-foreground/80 ${
+              pathname === '/articles' ? 'text-foreground' : 'text-foreground/60'
+            }`}
+          >
+            Articles
+          </Link>
       </nav>
 
       {/* Mobile Navigation */}

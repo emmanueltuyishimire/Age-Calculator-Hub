@@ -217,332 +217,275 @@ export const navItems: NavItem[] = [
     description: 'Calculate your baby\'s age in weeks, months, and days.'
   },
   
-  // Retirement & Social Security
+  // Retirement
   {
     href: '/retirement-calculators',
     icon: PiggyBank,
-    label: 'Retirement & Social Security',
-    category: 'Retirement & Social Security',
+    label: 'Retirement Calculators',
+    category: 'Retirement',
     description: 'A hub for retirement planning and Social Security tools.'
   },
   {
     href: '/social-security-retirement-age-calculator',
     icon: PiggyBank,
     label: 'Retirement Age Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
   },
   {
     href: '/social-security-calculator',
     icon: Scale,
     label: 'Social Security Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Find your break-even age for claiming Social Security benefits.'
   },
   {
     href: '/401k-calculator',
     icon: Briefcase,
     label: '401(k) Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Estimate retirement savings, withdrawal costs, and employer match.'
   },
    {
     href: '/annuity-calculator',
     icon: Wallet,
     label: 'Annuity Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Estimate the future value of an annuity during its accumulation phase.'
   },
   {
     href: '/annuity-payout-calculator',
     icon: Landmark,
     label: 'Annuity Payout Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Estimate annuity payouts or duration.'
   },
   {
     href: '/pension-calculator',
     icon: Briefcase,
     label: 'Pension Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Evaluate pension decisions like lump sum vs. monthly income.'
   },
   {
     href: '/ira-calculator',
     icon: Landmark,
     label: 'IRA Calculator',
-    category: 'Retirement & Social Security',
+    category: 'Retirement',
     description: 'Compare Traditional IRAs, Roth IRAs, and taxable savings.'
   },
+  {
+    href: '/retirement-savings-goal-calculator',
+    icon: Goal,
+    label: 'Retirement Savings Calculator',
+    category: 'Retirement',
+    description: 'Estimate your total nest egg needed for retirement.'
+  },
 
-  // Financial Calculators
-   {
-    href: '/financial-calculators',
-    icon: DollarSign,
-    label: 'Financial Calculators',
-    category: 'Financial Calculators',
-    description: 'A hub for all our finance, investment, and loan calculators.'
-  },
-   {
-    href: '/inflation-calculator',
-    icon: TrendingUp,
-    label: 'Inflation Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate the buying power of money over time using CPI data.'
-  },
+  // Mortgage & Real Estate
   {
-    href: '/compound-interest-calculator',
-    icon: PieChart,
-    label: 'Compound Interest Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate the future value of an investment with contributions.'
-  },
-  {
-    href: '/savings-calculator',
-    icon: PiggyBank,
-    label: 'Savings Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate your savings growth with contributions and interest.'
-  },
-  {
-    href: '/savings-goal-calculator',
-    icon: Target,
-    label: 'Savings Goal Calculator',
-    category: 'Financial Calculators',
-    description: 'Find out how much you need to save daily, monthly, or hourly for a goal.'
-  },
-  {
-    href: '/future-value-calculator',
-    icon: TrendingUp,
-    label: 'Future Value Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate the future value of an investment with periodic deposits.'
-  },
-   {
-    href: '/finance-calculator',
-    icon: Briefcase,
-    label: 'Finance Calculator',
-    category: 'Financial Calculators',
-    description: 'A TVM calculator to solve for FV, PV, PMT, N, or I/Y.'
-  },
-  {
-    href: '/payback-period-calculator',
-    icon: Wallet,
-    label: 'Payback Period Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate simple & discounted payback periods for investments.'
-  },
-  {
-    href: '/rental-property-calculator',
-    icon: Home,
-    label: 'Rental Property Calculator',
-    category: 'Financial Calculators',
-    description: 'Analyze real estate investments with IRR, Cap Rate, and cash flow.'
-  },
-  {
-    href: '/salary-calculator',
-    icon: Briefcase,
-    label: 'Salary Calculator',
-    category: 'Financial Calculators',
-    description: 'Convert your salary between different pay frequencies.'
-  },
-  {
-    href: '/sales-tax-calculator',
-    icon: Percent,
-    label: 'Sales Tax Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate the final price of an item including sales tax.'
-  },
-   {
-    href: '/marriage-tax-calculator',
-    icon: Heart,
-    label: 'Marriage Tax Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate the tax impact of marriage by comparing joint vs. single filing.'
-  },
-  {
-    href: '/take-home-pay-calculator',
-    icon: Briefcase,
-    label: 'Take-Home Pay Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate your paycheck after taxes and deductions using W-4 info.'
-  },
-  {
-    href: '/dti-calculator',
-    icon: Scale,
-    label: 'DTI Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate your Debt-to-Income ratio to assess your financial health.'
-  },
-  {
-    href: '/student-loan-calculator',
-    icon: GraduationCap,
-    label: 'Student Loan Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate payments, analyze payoff strategies, and project future loan balances.'
-  },
-  {
-    href: '/income-tax-calculator',
-    icon: DollarSign,
-    label: 'Income Tax Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate your federal tax refund or amount owed.'
-  },
-  {
-    href: '/estate-tax-calculator',
+    href: '/mortgage-calculator',
     icon: Landmark,
-    label: 'Estate Tax Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate your federal estate tax liability.'
-  },
-  {
-    href: '/rent-calculator',
-    icon: Home,
-    label: 'Rent Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate how much rent you can afford based on your income.'
-  },
-  {
-    href: '/bond-calculator',
-    icon: FileBarChart,
-    label: 'Bond Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate bond price, yield, and accrued interest.'
-  },
-  {
-    href: '/simple-interest-calculator',
-    icon: DollarSign,
-    label: 'Simple Interest Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate simple interest on a loan or investment.'
-  },
-  {
-    href: '/discount-calculator',
-    icon: Tag,
-    label: 'Discount Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculate the final price after a percentage or fixed amount off.'
-  },
-  {
-    href: '/payment-calculator',
-    icon: DollarSign,
-    label: 'Payment Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate the monthly payment for any type of loan.'
-  },
-  {
-    href: '/interest-rate-calculator',
-    icon: Percent,
-    label: 'Interest Rate Calculator',
-    category: 'Financial Calculators',
-    description: 'Solve for the interest rate (APR) of a loan from its payments.'
+    label: 'Mortgage Calculator',
+    category: 'Mortgage & Real Estate',
+    description: 'Estimate your monthly mortgage payment with PITI.'
   },
   {
     href: '/amortization-calculator',
     icon: Landmark,
     label: 'Amortization Calculator',
-    category: 'Financial Calculators',
+    category: 'Mortgage & Real Estate',
     description: 'See a detailed payment schedule for your mortgage, auto, or personal loan.'
-  },
-  {
-    href: '/mortgage-calculator',
-    icon: Landmark,
-    label: 'Mortgage Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate your monthly mortgage payment with PITI.'
   },
   {
     href: '/mortgage-payoff-calculator',
     icon: Home,
     label: 'Mortgage Payoff Calculator',
-    category: 'Financial Calculators',
+    category: 'Mortgage & Real Estate',
     description: 'See how extra payments can shorten your loan term.'
-  },
-  {
-    href: '/refinance-calculator',
-    icon: Home,
-    label: 'Refinance Calculator',
-    category: 'Financial Calculators',
-    description: 'See if refinancing your loan makes financial sense.'
-  },
-  {
-    href: '/down-payment-calculator',
-    icon: Home,
-    label: 'Down Payment Calculator',
-    category: 'Financial Calculators',
-    description: 'Plan your home down payment from multiple angles.'
   },
   {
     href: '/house-affordability-calculator',
     icon: Home,
     label: 'House Affordability Calculator',
-    category: 'Financial Calculators',
+    category: 'Mortgage & Real Estate',
     description: 'Estimate how much house you can realistically afford.'
   },
+  {
+    href: '/rent-calculator',
+    icon: Home,
+    label: 'Rent Calculator',
+    category: 'Mortgage & Real Estate',
+    description: 'Estimate how much rent you can afford based on your income.'
+  },
+  {
+    href: '/dti-calculator',
+    icon: Scale,
+    label: 'DTI Calculator',
+    category: 'Mortgage & Real Estate',
+    description: 'Calculate your Debt-to-Income ratio to assess your financial health.'
+  },
+  {
+    href: '/refinance-calculator',
+    icon: Home,
+    label: 'Refinance Calculator',
+    category: 'Mortgage & Real Estate',
+    description: 'See if refinancing your loan makes financial sense.'
+  },
+  {
+    href: '/rental-property-calculator',
+    icon: Home,
+    label: 'Rental Property Calculator',
+    category: 'Mortgage & Real Estate',
+    description: 'Analyze real estate investments with IRR, Cap Rate, and cash flow.'
+  },
+  {
+    href: '/fha-loan-calculator',
+    icon: Home,
+    label: 'FHA Loan Calculator',
+    category: 'Mortgage & Real Estate',
+    description: 'Estimate monthly payments for an FHA mortgage, including MIP.'
+  },
+  {
+    href: '/down-payment-calculator',
+    icon: Home,
+    label: 'Down Payment Calculator',
+    category: 'Mortgage & Real Estate',
+    description: 'Plan your home down payment from multiple angles.'
+  },
+  
+  // Auto
   {
     href: '/auto-loan-calculator',
     icon: Car,
     label: 'Auto Loan Calculator',
-    category: 'Financial Calculators',
+    category: 'Auto',
     description: 'Estimate your monthly car payment and total loan cost.'
   },
   {
     href: '/auto-lease-calculator',
     icon: Car,
     label: 'Auto Lease Calculator',
-    category: 'Financial Calculators',
+    category: 'Auto',
     description: 'Estimate your monthly car lease payment and see a breakdown of costs.'
   },
-  {
-    href: '/boat-loan-calculator',
-    icon: Sailboat,
-    label: 'Boat Loan Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate your monthly boat payment and total loan cost.'
-  },
+
+  // Investment
    {
-    href: '/fha-loan-calculator',
-    icon: Home,
-    label: 'FHA Loan Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate monthly payments for an FHA mortgage, including MIP.'
+    href: '/finance-calculator',
+    icon: Briefcase,
+    label: 'Finance Calculator',
+    category: 'Investment',
+    description: 'A TVM calculator to solve for FV, PV, PMT, N, or I/Y.'
   },
   {
-    href: '/life-insurance-calculator',
-    icon: ShieldCheck,
-    label: 'Life Insurance Calculator',
-    category: 'Financial Calculators',
-    description: 'Estimate how much life insurance coverage you really need.'
+    href: '/compound-interest-calculator',
+    icon: PieChart,
+    label: 'Compound Interest Calculator',
+    category: 'Investment',
+    description: 'Calculate the future value of an investment with contributions.'
   },
   {
-    href: '/loan-calculator',
+    href: '/savings-calculator',
+    icon: PiggyBank,
+    label: 'Savings Calculator',
+    category: 'Investment',
+    description: 'Estimate your savings growth with contributions and interest.'
+  },
+  {
+    href: '/savings-goal-calculator',
+    icon: Target,
+    label: 'Savings Goal Calculator',
+    category: 'Investment',
+    description: 'Find out how much you need to save daily, monthly, or hourly for a goal.'
+  },
+  {
+    href: '/future-value-calculator',
+    icon: TrendingUp,
+    label: 'Future Value Calculator',
+    category: 'Investment',
+    description: 'Calculate the future value of an investment with periodic deposits.'
+  },
+  {
+    href: '/payback-period-calculator',
+    icon: Wallet,
+    label: 'Payback Period Calculator',
+    category: 'Investment',
+    description: 'Calculate simple & discounted payback periods for investments.'
+  },
+  {
+    href: '/bond-calculator',
+    icon: FileBarChart,
+    label: 'Bond Calculator',
+    category: 'Investment',
+    description: 'Calculate bond price, yield, and accrued interest.'
+  },
+  {
+    href: '/simple-interest-calculator',
+    icon: DollarSign,
+    label: 'Simple Interest Calculator',
+    category: 'Investment',
+    description: 'Calculate simple interest on a loan or investment.'
+  },
+  {
+    href: '/interest-rate-calculator',
+    icon: Percent,
+    label: 'Interest Rate Calculator',
+    category: 'Investment',
+    description: 'Solve for the interest rate (APR) of a loan from its payments.'
+  },
+  {
+    href: '/roi-calculator',
+    icon: TrendingUp,
+    label: 'ROI Calculator',
+    category: 'Investment',
+    description: 'Measure the profitability of an investment with simple and annualized ROI.'
+  },
+
+  // Tax & Salary
+  {
+    href: '/salary-calculator',
+    icon: Briefcase,
+    label: 'Salary Calculator',
+    category: 'Tax & Salary',
+    description: 'Convert your salary between different pay frequencies.'
+  },
+  {
+    href: '/take-home-pay-calculator',
+    icon: Briefcase,
+    label: 'Take-Home Pay Calculator',
+    category: 'Tax & Salary',
+    description: 'Estimate your paycheck after taxes and deductions using W-4 info.'
+  },
+  {
+    href: '/income-tax-calculator',
+    icon: DollarSign,
+    label: 'Income Tax Calculator',
+    category: 'Tax & Salary',
+    description: 'Estimate your federal tax refund or amount owed.'
+  },
+  {
+    href: '/marriage-tax-calculator',
+    icon: Heart,
+    label: 'Marriage Tax Calculator',
+    category: 'Tax & Salary',
+    description: 'Estimate the tax impact of marriage by comparing joint vs. single filing.'
+  },
+  {
+    href: '/estate-tax-calculator',
     icon: Landmark,
-    label: 'Loan Calculator',
-    category: 'Financial Calculators',
-    description: 'A comprehensive calculator for various loan types like amortized and deferred payment.'
+    label: 'Estate Tax Calculator',
+    category: 'Tax & Salary',
+    description: 'Estimate your federal estate tax liability.'
   },
   {
-    href: '/debt-payoff-calculator',
-    icon: CreditCard,
-    label: 'Debt Payoff Calculator',
-    category: 'Financial Calculators',
-    description: 'Create a payoff plan for multiple debts using the Debt Avalanche method.'
+    href: '/sales-tax-calculator',
+    icon: Percent,
+    label: 'Sales Tax Calculator',
+    category: 'Tax & Salary',
+    description: 'Calculate the final price of an item including sales tax.'
   },
-  {
-    href: '/credit-card-calculator',
-    icon: CreditCard,
-    label: 'Credit Card Calculator',
-    category: 'Financial Calculators',
-    description: 'Calculates the time or payment needed to pay off a credit card balance.'
-  },
-   {
-    href: '/debt-consolidation-calculator',
-    icon: Scale,
-    label: 'Debt Consolidation Calculator',
-    category: 'Financial Calculators',
-    description: 'Compare current debts with a consolidation loan to see potential savings.'
-  },
-  
+
   // Math Calculators
   {
     href: '/math-calculators',
@@ -585,36 +528,99 @@ export const navItems: NavItem[] = [
     href: '/other-calculators',
     icon: LayoutGrid,
     label: 'Other Calculators',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'A hub for pet age, legal estimators, and more.'
   },
   {
     href: '/dog-age',
     icon: Dog,
     label: 'Dog Age Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Find out how old your dog is in human years based on size.'
   },
    {
     href: '/cat-age-in-human-years',
     icon: Cat,
     label: 'Cat Age Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Find out how old your cat is in human years.'
   },
   {
     href: '/statute-of-limitations',
     icon: BookOpen,
     label: 'Statute of Limitations Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Estimate legal filing deadlines for common claims.'
   },
   {
     href: '/child-support-calculator',
     icon: Users,
     label: 'Child Support Calculator',
-    category: 'Other Calculators',
+    category: 'Other',
     description: 'Get a simple estimate of potential child support payments.'
+  },
+  {
+    href: '/life-insurance-calculator',
+    icon: ShieldCheck,
+    label: 'Life Insurance Calculator',
+    category: 'Other',
+    description: 'Estimate how much life insurance coverage you really need.'
+  },
+  {
+    href: '/loan-calculator',
+    icon: Landmark,
+    label: 'Loan Calculator',
+    category: 'Other',
+    description: 'A comprehensive calculator for various loan types like amortized and deferred payment.'
+  },
+  {
+    href: '/debt-payoff-calculator',
+    icon: CreditCard,
+    label: 'Debt Payoff Calculator',
+    category: 'Other',
+    description: 'Create a payoff plan for multiple debts using the Debt Avalanche method.'
+  },
+  {
+    href: '/credit-card-calculator',
+    icon: CreditCard,
+    label: 'Credit Card Calculator',
+    category: 'Other',
+    description: 'Calculates the time or payment needed to pay off a credit card balance.'
+  },
+   {
+    href: '/debt-consolidation-calculator',
+    icon: Scale,
+    label: 'Debt Consolidation Calculator',
+    category: 'Other',
+    description: 'Compare current debts with a consolidation loan to see potential savings.'
+  },
+   {
+    href: '/inflation-calculator',
+    icon: TrendingUp,
+    label: 'Inflation Calculator',
+    category: 'Other',
+    description: 'Calculate the buying power of money over time using CPI data.'
+  },
+  {
+    href: '/discount-calculator',
+    icon: Tag,
+    label: 'Discount Calculator',
+    category: 'Other',
+    description: 'Calculate the final price after a percentage or fixed amount off.'
+  },
+  {
+    href: '/payment-calculator',
+    icon: DollarSign,
+    label: 'Payment Calculator',
+    category: 'Other',
+    description: 'Estimate the monthly payment for any type of loan.'
+  },
+  {
+    href: '/boat-loan-calculator',
+    icon: Sailboat,
+    label: 'Boat Loan Calculator',
+    category: 'Other',
+    description: 'Estimate your monthly boat payment and total loan cost.'
   },
   
   // Company & Legal Links (for footer and mobile nav)
@@ -682,10 +688,14 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Navigation',
     'Core Age Calculators',
     'Financial Calculators',
-    'Retirement & Social Security',
+    'Mortgage & Real Estate',
+    'Auto',
+    'Investment',
+    'Retirement',
+    'Tax & Salary',
+    'Other',
     'Fitness & Health Calculators',
     'Math Calculators',
-    'Other Calculators',
     'Company',
     'Legal',
   ];
