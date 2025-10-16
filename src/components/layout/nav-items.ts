@@ -283,6 +283,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate your monthly mortgage payment with PITI.'
   },
   {
+    href: '/house-affordability-calculator',
+    icon: Home,
+    label: 'House Affordability Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate how much house you can realistically afford.'
+  },
+  {
     href: '/auto-loan-calculator',
     icon: Car,
     label: 'Auto Loan Calculator',
