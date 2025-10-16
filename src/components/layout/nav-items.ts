@@ -421,6 +421,13 @@ export const navItems: NavItem[] = [
     category: 'Financial Calculators',
     description: 'Estimate your monthly boat payment and total loan cost.'
   },
+   {
+    href: '/fha-loan-calculator',
+    icon: Home,
+    label: 'FHA Loan Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate monthly payments for an FHA mortgage, including MIP.'
+  },
   {
     href: '/life-insurance-calculator',
     icon: ShieldCheck,
