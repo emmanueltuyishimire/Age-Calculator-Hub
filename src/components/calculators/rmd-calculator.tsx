@@ -181,18 +181,20 @@ export default function RmdCalculator() {
              <div className="mt-8">
                 <h3 className="text-lg font-bold text-center mb-4">Projected Account Balance and RMDs</h3>
                 <div className="h-[350px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={result.schedule}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="age" tickFormatter={(val) => `Age ${val}`} />
-                            <YAxis yAxisId="left" tickFormatter={(val) => `${currencySymbol}${val/1000}k`} />
-                            <YAxis yAxisId="right" orientation="right" tickFormatter={(val) => `${currencySymbol}${val/1000}k`} />
-                            <Tooltip content={<ChartTooltipContent formatter={(value, name) => `${currencySymbol}${Number(value).toFixed(0)}`} />} />
-                            <Legend />
-                            <Bar yAxisId="left" dataKey="endOfYearBalance" fill="hsl(var(--chart-1))" name="Balance" radius={[4, 4, 0, 0]} />
-                            <Bar yAxisId="right" dataKey="rmd" fill="hsl(var(--chart-2))" name="RMD" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                    </ResponsiveContainer>
+                    <ChartContainer config={{}} className="w-full h-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={result.schedule}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="age" tickFormatter={(val) => `Age ${val}`} />
+                                <YAxis yAxisId="left" tickFormatter={(val) => `${currencySymbol}${val/1000}k`} />
+                                <YAxis yAxisId="right" orientation="right" tickFormatter={(val) => `${currencySymbol}${val/1000}k`} />
+                                <Tooltip content={<ChartTooltipContent formatter={(value, name) => `${currencySymbol}${Number(value).toFixed(0)}`} />} />
+                                <Legend />
+                                <Bar yAxisId="left" dataKey="endOfYearBalance" fill="hsl(var(--chart-1))" name="Balance" radius={[4, 4, 0, 0]} />
+                                <Bar yAxisId="right" dataKey="rmd" fill="hsl(var(--chart-2))" name="RMD" radius={[4, 4, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </ChartContainer>
                 </div>
                 <div className="h-[400px] overflow-y-auto border rounded-md mt-4">
                 <Table>
