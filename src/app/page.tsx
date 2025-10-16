@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -27,11 +26,8 @@ export default function Home() {
                 <ScientificCalculator />
             </div>
             <div className="text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
-                  <Image src="/logo.png" alt="Calculators Logo" width={64} height={64} className="h-12 w-12 sm:h-16 sm:w-16" priority />
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
-                </div>
-                <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-xl mx-auto md:mx-0">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
+                <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-xl mx-auto md:mx-0 mt-4">
                     Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
                 </p>
                 <div className="mt-8 mx-auto md:mx-0 max-w-md">
