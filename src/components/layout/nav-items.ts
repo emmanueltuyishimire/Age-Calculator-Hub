@@ -267,6 +267,13 @@ export const navItems: NavItem[] = [
     category: 'Retirement & Social Security',
     description: 'Estimate annuity payouts or duration.'
   },
+  {
+    href: '/pension-calculator',
+    icon: Briefcase,
+    label: 'Pension Calculator',
+    category: 'Retirement & Social Security',
+    description: 'Evaluate pension decisions like lump sum vs. monthly income.'
+  },
 
 
   // Financial Calculators
