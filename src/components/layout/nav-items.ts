@@ -49,6 +49,7 @@ import {
   CreditCard,
   GraduationCap,
   FileBarChart,
+  TrendingUp,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -249,6 +250,13 @@ export const navItems: NavItem[] = [
     label: 'Financial Calculators',
     category: 'Financial Calculators',
     description: 'A hub for all our finance, investment, and loan calculators.'
+  },
+   {
+    href: '/average-return-calculator',
+    icon: TrendingUp,
+    label: 'Average Return Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate IRR from cash flows or average returns from multiple investments.'
   },
   {
     href: '/salary-calculator',
