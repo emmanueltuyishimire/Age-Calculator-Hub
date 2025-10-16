@@ -240,6 +240,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate the monthly payment for any type of loan.'
   },
   {
+    href: '/amortization-calculator',
+    icon: Landmark,
+    label: 'Amortization Calculator',
+    category: 'Financial Calculators',
+    description: 'See a detailed payment schedule for your mortgage, auto, or personal loan.'
+  },
+  {
     href: '/mortgage-calculator',
     icon: Landmark,
     label: 'Mortgage Calculator',
