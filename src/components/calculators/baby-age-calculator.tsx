@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { format, intervalToDuration, isValid, isFuture, differenceInWeeks, differenceInDays, differenceInMonths } from 'date-fns';
-import { RefreshCcw, Baby, CalendarIcon } from 'lucide-react';
+import { RefreshCcw, Baby } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -16,9 +16,7 @@ import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import ShareButton from '../share-button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { cn } from '@/lib/utils';
-import { Calendar } from '../ui/calendar';
+import { Input } from '../ui/input';
 
 interface BabyAge {
   years: number;
@@ -31,17 +29,29 @@ interface BabyAge {
 }
 
 export default function BabyAgeCalculator() {
-  const [dob, setDob] = useState<Date|undefined>();
+  const [dob, setDob] = useState({ day: '', month: '', year: ''});
   const [age, setAge] = useState<BabyAge | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const getDobDate = useCallback(() => {
+    const { year, month, day } = dob;
+    if (!year || !month || !day) return null;
+    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  }, [dob]);
+
   const calculateAge = useCallback(() => {
-    const dobDate = dob;
+    const dobDate = getDobDate();
     if (!dobDate) return;
     
     const now = new Date();
     
+    if (!isValid(dobDate)) {
+        setError("Please enter a valid date of birth.");
+        setIsCalculating(false);
+        return;
+    }
+
     if (isFuture(dobDate)) {
         setError("Baby's date of birth cannot be in the future.");
         setIsCalculating(false);
@@ -65,10 +75,10 @@ export default function BabyAgeCalculator() {
       totalDays,
       weekPart,
     });
-  }, [dob]);
+  }, [getDobDate]);
 
   const handleCalculate = () => {
-    const dobDate = dob;
+    const dobDate = getDobDate();
     if (!dobDate || !isValid(dobDate)) {
         setError("Please enter a valid date of birth for your baby.");
         setIsCalculating(false);
@@ -79,7 +89,7 @@ export default function BabyAgeCalculator() {
   };
 
   const handleReset = () => {
-      setDob(undefined);
+      setDob({day: '', month: '', year: ''});
       setAge(undefined);
       setIsCalculating(false);
       setError(null);
@@ -116,30 +126,16 @@ export default function BabyAgeCalculator() {
             </Alert>
         )}
         <div className='space-y-2'>
-            <Label htmlFor='dob-baby-picker'>Baby's Date of Birth</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button id="dob-baby-picker" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !dob && "text-muted-foreground")}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dob ? format(dob, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  captionLayout="dropdown-buttons"
-                  fromYear={new Date().getFullYear() - 5}
-                  toYear={new Date().getFullYear()}
-                  selected={dob}
-                  onSelect={setDob}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <Label htmlFor='dob-baby-day'>Baby's Date of Birth</Label>
+            <div className="flex gap-2">
+                <Input id="dob-baby-day" placeholder="DD" value={dob.day} onChange={e => setDob(d => ({...d, day: e.target.value}))} aria-label="Day of Birth" />
+                <Input placeholder="MM" value={dob.month} onChange={e => setDob(d => ({...d, month: e.target.value}))} aria-label="Month of Birth" />
+                <Input placeholder="YYYY" value={dob.year} onChange={e => setDob(d => ({...d, year: e.target.value}))} aria-label="Year of Birth" />
+            </div>
         </div>
 
         <div className="flex flex-col md:flex-row gap-2">
-            <Button onClick={handleCalculate} className="w-full"><Baby className="mr-2 h-4 w-4" />Calculate Baby's Age</Button>
+            <Button onClick={handleCalculate} className="w-full" aria-label="Calculate Baby's Age"><Baby className="mr-2 h-4 w-4" />Calculate Baby's Age</Button>
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
