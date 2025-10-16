@@ -421,6 +421,13 @@ export const navItems: NavItem[] = [
     description: 'A versatile tool for all types of percentage calculations.'
   },
   {
+    href: '/vat-calculator',
+    icon: Percent,
+    label: 'VAT Calculator',
+    category: 'Math Calculators',
+    description: 'Easily add or remove Value Added Tax (VAT) from a price.'
+  },
+  {
     href: '/volume-calculator',
     icon: Cuboid,
     label: 'Volume Calculator',
