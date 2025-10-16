@@ -58,21 +58,11 @@ export function TopNav() {
             <NavigationMenuList>
               {mainCategories.map(category => (
                  <NavigationMenuItem key={category.name}>
-                  <NavigationMenuTrigger aria-label={`Open ${category.name} menu`}>{category.name}</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                      <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                      {category.items.map((item) => (
-                           <ListItem
-                              key={item.label}
-                              title={item.label}
-                              href={item.href}
-                              aria-label={`Go to ${item.label}`}
-                              >
-                              {item.description}
-                          </ListItem>
-                      ))}
-                      </ul>
-                  </NavigationMenuContent>
+                  <Link href={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`} passHref legacyBehavior>
+                    <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
+                      {category.name}
+                    </NavigationMenuLink>
+                  </Link>
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>
