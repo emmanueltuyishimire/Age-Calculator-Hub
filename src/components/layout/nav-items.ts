@@ -326,6 +326,13 @@ export const navItems: NavItem[] = [
     description: 'Convert your salary between different pay frequencies.'
   },
   {
+    href: '/sales-tax-calculator',
+    icon: Percent,
+    label: 'Sales Tax Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate the final price of an item including sales tax.'
+  },
+  {
     href: '/take-home-pay-calculator',
     icon: Briefcase,
     label: 'Take-Home Pay Calculator',
