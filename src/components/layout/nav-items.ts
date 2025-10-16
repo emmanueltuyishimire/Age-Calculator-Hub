@@ -257,7 +257,14 @@ export const navItems: NavItem[] = [
     icon: Briefcase,
     label: 'Salary Calculator',
     category: 'Financial Calculators',
-    description: 'Estimate your take-home pay after taxes and deductions.'
+    description: 'Get a quick estimate of your take-home pay after taxes.'
+  },
+  {
+    href: '/take-home-pay-calculator',
+    icon: Briefcase,
+    label: 'Take-Home Pay Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate your paycheck after taxes and deductions using W-4 info.'
   },
   {
     href: '/dti-calculator',
