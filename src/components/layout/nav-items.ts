@@ -51,6 +51,7 @@ import {
   FileBarChart,
   TrendingUp,
   Tag,
+  Sailboat,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -391,6 +392,13 @@ export const navItems: NavItem[] = [
     label: 'Auto Lease Calculator',
     category: 'Financial Calculators',
     description: 'Estimate your monthly car lease payment and see a breakdown of costs.'
+  },
+  {
+    href: '/boat-loan-calculator',
+    icon: Sailboat,
+    label: 'Boat Loan Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate your monthly boat payment and total loan cost.'
   },
   {
     href: '/life-insurance-calculator',
