@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'General Financial Calculators - Debt, Loans & More',
     description: 'Explore our collection of general financial calculators. Tools for debt payoff, loan payments, inflation, discounts, and more to help you manage your finances.',
     alternates: {
-        canonical: '/financial-calculators',
+        canonical: '/other-financial-calculators',
     },
 };
 
@@ -19,7 +19,7 @@ export default function OtherFinancialCalculatorsHub() {
           Explore our collection of general financial calculators. Tools for debt payoff, loan payments, inflation, discounts, and more to help you manage your finances.
         </p>
       </div>
-      <CategoryHubClient categoryName="Other" />
+      <CategoryHubClient categoryName="Financial" />
     </main>
   );
 }

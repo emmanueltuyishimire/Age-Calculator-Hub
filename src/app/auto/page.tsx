@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'Auto Calculators - Loan & Lease Payment Estimators',
     description: 'A suite of free auto calculators to help you make informed decisions. Estimate car loan payments, compare lease vs. buy, and determine which financing deal is best for you.',
     alternates: {
-        canonical: '/financial-calculators',
+        canonical: '/auto',
     },
 };
 
@@ -19,7 +19,7 @@ export default function AutoCalculatorsHub() {
           A suite of free auto calculators to help you make informed decisions. Estimate car loan payments, compare lease vs. buy, and determine which financing deal is best for you.
         </p>
       </div>
-      <CategoryHubClient categoryName="Auto" />
+      <CategoryHubClient categoryName="Financial" />
     </main>
   );
 }

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'Investment Calculators - Plan Your Financial Growth',
     description: 'A collection of free investment calculators to help you plan for the future. Estimate compound interest, savings growth, ROI, and more to make smart investment decisions.',
     alternates: {
-        canonical: '/financial-calculators',
+        canonical: '/investment',
     },
 };
 
@@ -19,7 +19,7 @@ export default function InvestmentCalculatorsHub() {
           A collection of free investment calculators to help you plan for the future. Estimate compound interest, savings growth, ROI, and more to make smart investment decisions.
         </p>
       </div>
-      <CategoryHubClient categoryName="Investment" />
+      <CategoryHubClient categoryName="Financial" />
     </main>
   );
 }

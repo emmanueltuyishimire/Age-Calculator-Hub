@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'Mortgage & Real Estate Calculators - Plan Your Home Purchase',
     description: 'Our suite of free mortgage and real estate calculators helps you plan your home purchase. Estimate mortgage payments, affordability, and analyze rental property investments.',
     alternates: {
-        canonical: '/financial-calculators',
+        canonical: '/mortgage-real-estate',
     },
 };
 
@@ -19,7 +19,7 @@ export default function MortgageCalculatorsHub() {
           Our suite of free mortgage and real estate calculators helps you plan your home purchase. Estimate mortgage payments, affordability, and analyze rental property investments.
         </p>
       </div>
-      <CategoryHubClient categoryName="Mortgage & Real Estate" />
+      <CategoryHubClient categoryName="Financial" />
     </main>
   );
 }

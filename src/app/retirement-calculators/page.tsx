@@ -19,7 +19,7 @@ export default function RetirementCalculatorsHub() {
           Plan for your future with confidence. Our calculators help you determine your full retirement age and other financial metrics so you can make informed decisions.
         </p>
       </div>
-      <CategoryHubClient categoryName="Retirement & Social Security" />
+      <CategoryHubClient categoryName="Financial" />
     </main>
   );
 }

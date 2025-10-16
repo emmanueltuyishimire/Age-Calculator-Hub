@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'Tax & Salary Calculators - Estimate Your Pay and Taxes',
     description: 'Free tax and salary calculators to help you understand your compensation. Estimate your take-home pay, calculate income tax liability, and convert salary between frequencies.',
     alternates: {
-        canonical: '/financial-calculators',
+        canonical: '/tax-salary',
     },
 };
 
@@ -19,7 +19,7 @@ export default function TaxSalaryCalculatorsHub() {
           Free tax and salary calculators to help you understand your compensation. Estimate your take-home pay, calculate income tax liability, and convert salary between frequencies.
         </p>
       </div>
-      <CategoryHubClient categoryName="Tax & Salary" />
+      <CategoryHubClient categoryName="Financial" />
     </main>
   );
 }

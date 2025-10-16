@@ -4,7 +4,7 @@ import CategoryHubClient from '@/components/layout/category-hub-client';
 
 export const metadata: Metadata = {
     title: 'Financial Calculators - Loan, Investment & Savings Tools',
-    description: 'Explore our free financial calculators for loans, mortgages, retirement savings, and more. Make informed decisions about your financial future with our easy-to-use tools.',
+    description: 'Explore our free financial calculators for loans, mortgages, retirement, investment, and savings. Make informed decisions with our easy-to-use financial planning tools.',
     alternates: {
         canonical: '/financial-calculators',
     },

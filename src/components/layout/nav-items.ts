@@ -445,6 +445,76 @@ export const navItems: NavItem[] = [
     category: 'Financial',
     description: 'Estimate your federal estate tax liability.'
   },
+  {
+    href: '/life-insurance-calculator',
+    icon: ShieldCheck,
+    label: 'Life Insurance Calculator',
+    category: 'Financial',
+    description: 'Estimate how much life insurance coverage you really need.'
+  },
+  {
+    href: '/loan-calculator',
+    icon: Landmark,
+    label: 'Loan Calculator',
+    category: 'Financial',
+    description: 'A comprehensive calculator for various loan types like amortized and deferred payment.'
+  },
+  {
+    href: '/debt-payoff-calculator',
+    icon: CreditCard,
+    label: 'Debt Payoff Calculator',
+    category: 'Financial',
+    description: 'Create a payoff plan for multiple debts using the Debt Avalanche method.'
+  },
+  {
+    href: '/credit-card-calculator',
+    icon: CreditCard,
+    label: 'Credit Card Calculator',
+    category: 'Financial',
+    description: 'Calculates the time or payment needed to pay off a credit card balance.'
+  },
+   {
+    href: '/debt-consolidation-calculator',
+    icon: Scale,
+    label: 'Debt Consolidation Calculator',
+    category: 'Financial',
+    description: 'Compare current debts with a consolidation loan to see potential savings.'
+  },
+   {
+    href: '/inflation-calculator',
+    icon: TrendingUp,
+    label: 'Inflation Calculator',
+    category: 'Financial',
+    description: 'Calculate the buying power of money over time using CPI data.'
+  },
+  {
+    href: '/discount-calculator',
+    icon: Tag,
+    label: 'Discount Calculator',
+    category: 'Financial',
+    description: 'Calculate the final price after a percentage or fixed amount off.'
+  },
+  {
+    href: '/payment-calculator',
+    icon: DollarSign,
+    label: 'Payment Calculator',
+    category: 'Financial',
+    description: 'Estimate the monthly payment for any type of loan.'
+  },
+  {
+    href: '/boat-loan-calculator',
+    icon: Sailboat,
+    label: 'Boat Loan Calculator',
+    category: 'Financial',
+    description: 'Estimate your monthly boat payment and total loan cost.'
+  },
+  {
+    href: '/college-cost-calculator',
+    icon: GraduationCap,
+    label: 'College Cost Calculator',
+    category: 'Financial',
+    description: 'Estimate future college costs and the savings needed.'
+  },
 
   // Math Calculators
   {
@@ -539,76 +609,6 @@ export const navItems: NavItem[] = [
     label: 'Child Support Calculator',
     category: 'Other Calculators',
     description: 'Get a simple estimate of potential child support payments.'
-  },
-  {
-    href: '/life-insurance-calculator',
-    icon: ShieldCheck,
-    label: 'Life Insurance Calculator',
-    category: 'Other Calculators',
-    description: 'Estimate how much life insurance coverage you really need.'
-  },
-  {
-    href: '/loan-calculator',
-    icon: Landmark,
-    label: 'Loan Calculator',
-    category: 'Other Calculators',
-    description: 'A comprehensive calculator for various loan types like amortized and deferred payment.'
-  },
-  {
-    href: '/debt-payoff-calculator',
-    icon: CreditCard,
-    label: 'Debt Payoff Calculator',
-    category: 'Other Calculators',
-    description: 'Create a payoff plan for multiple debts using the Debt Avalanche method.'
-  },
-  {
-    href: '/credit-card-calculator',
-    icon: CreditCard,
-    label: 'Credit Card Calculator',
-    category: 'Other Calculators',
-    description: 'Calculates the time or payment needed to pay off a credit card balance.'
-  },
-   {
-    href: '/debt-consolidation-calculator',
-    icon: Scale,
-    label: 'Debt Consolidation Calculator',
-    category: 'Other Calculators',
-    description: 'Compare current debts with a consolidation loan to see potential savings.'
-  },
-   {
-    href: '/inflation-calculator',
-    icon: TrendingUp,
-    label: 'Inflation Calculator',
-    category: 'Other Calculators',
-    description: 'Calculate the buying power of money over time using CPI data.'
-  },
-  {
-    href: '/discount-calculator',
-    icon: Tag,
-    label: 'Discount Calculator',
-    category: 'Other Calculators',
-    description: 'Calculate the final price after a percentage or fixed amount off.'
-  },
-  {
-    href: '/payment-calculator',
-    icon: DollarSign,
-    label: 'Payment Calculator',
-    category: 'Other Calculators',
-    description: 'Estimate the monthly payment for any type of loan.'
-  },
-  {
-    href: '/boat-loan-calculator',
-    icon: Sailboat,
-    label: 'Boat Loan Calculator',
-    category: 'Other Calculators',
-    description: 'Estimate your monthly boat payment and total loan cost.'
-  },
-  {
-    href: '/college-cost-calculator',
-    icon: GraduationCap,
-    label: 'College Cost Calculator',
-    category: 'Other Calculators',
-    description: 'Estimate future college costs and the savings needed.'
   },
   
   // Company & Legal Links (for footer and mobile nav)

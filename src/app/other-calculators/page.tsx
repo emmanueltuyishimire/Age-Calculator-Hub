@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import CategoryHubClient from '@/components/layout/category-hub-client';
 
 export const metadata: Metadata = {
-    title: 'Other Calculators - Pet Age, Legal Estimators & More',
-    description: 'Explore our collection of various free online calculators, including tools for pet age conversion, legal filing estimates, and other everyday utilities.',
+    title: 'Other Calculators - Age, Pet & Legal Estimators',
+    description: 'Explore our collection of various free online calculators, including tools for chronological age, pet age conversion, and legal filing estimates.',
     alternates: {
         canonical: '/other-calculators',
     },
@@ -16,7 +16,7 @@ export default function OtherCalculatorsHub() {
       <div className="text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Other Calculators</h1>
         <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-          Discover a variety of useful tools, from pet age calculators and legal estimators to everyday utilities for time and more.
+          Discover a variety of useful tools for everyday needs, from chronological age calculators and pet age converters to legal estimators.
         </p>
       </div>
       <CategoryHubClient categoryName="Other Calculators" />

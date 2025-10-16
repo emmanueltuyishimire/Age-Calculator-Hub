@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'Legal Estimator Calculators - Statute of Limitations & More',
     description: 'Explore our free legal estimator tools. Calculate the estimated statute of limitations for various claims. For informational and educational purposes only.',
     alternates: {
-        canonical: '/other-calculators',
+        canonical: '/legal-estimators',
     },
 };
 
