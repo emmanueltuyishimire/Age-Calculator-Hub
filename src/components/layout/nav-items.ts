@@ -356,6 +356,13 @@ export const navItems: NavItem[] = [
     description: 'Estimate your monthly car payment and total loan cost.'
   },
   {
+    href: '/auto-lease-calculator',
+    icon: Car,
+    label: 'Auto Lease Calculator',
+    category: 'Financial Calculators',
+    description: 'Estimate your monthly car lease payment and see a breakdown of costs.'
+  },
+  {
     href: '/life-insurance-calculator',
     icon: ShieldCheck,
     label: 'Life Insurance Calculator',
