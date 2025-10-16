@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { format, intervalToDuration, isFuture, isValid, addYears } from 'date-fns';
 import { RefreshCcw, Gift } from 'lucide-react';
 import {
@@ -48,6 +48,8 @@ export default function BirthdayAgeCalculator() {
   const [countdown, setCountdown] = useState<BirthdayCountdown | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  const animationFrameId = useRef<number>();
 
   const getDob = useCallback((): Date | null => {
     if (dobYear && dobMonth && dobDay) {
@@ -102,6 +104,8 @@ export default function BirthdayAgeCalculator() {
       minutes: countdownDuration.minutes || 0,
       seconds: countdownDuration.seconds || 0,
     });
+    
+    animationFrameId.current = requestAnimationFrame(calculateAgeAndCountdown);
   }, [getDob]);
 
   const handleCalculate = useCallback(() => {
@@ -117,8 +121,7 @@ export default function BirthdayAgeCalculator() {
     setError(null);
     localStorage.setItem('birthdayAgeCalculatorDob', JSON.stringify(dobDate));
     setIsCalculating(true);
-    calculateAgeAndCountdown();
-  }, [getDob, calculateAgeAndCountdown]);
+  }, [getDob]);
 
   const handleReset = useCallback(() => {
       setDobDay(''); setDobMonth(''); setDobYear('');
@@ -130,13 +133,17 @@ export default function BirthdayAgeCalculator() {
   }, []);
   
   useEffect(() => {
-    let interval: NodeJS.Timeout | undefined;
     if (isCalculating) {
-      calculateAgeAndCountdown();
-      interval = setInterval(calculateAgeAndCountdown, 1000);
+      animationFrameId.current = requestAnimationFrame(calculateAgeAndCountdown);
+    } else {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
     }
     return () => {
-      if (interval) clearInterval(interval);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
     };
   }, [isCalculating, calculateAgeAndCountdown]);
 
@@ -214,8 +221,8 @@ export default function BirthdayAgeCalculator() {
                     </div>
                     <div className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2 mt-2">
                         <div><span className="text-xl sm:text-2xl font-bold text-primary">{countdown.hours}</span> <span className="text-sm sm:text-base text-muted-foreground">hours</span></div>
-                        <div><span className="xl sm:text-2xl font-bold text-primary">{countdown.minutes}</span> <span className="text-sm sm:text-base text-muted-foreground">minutes</span></div>
-                        <div><span className="xl sm:text-2xl font-bold text-primary">{countdown.seconds}</span> <span className="text-sm sm:text-base text-muted-foreground">seconds</span></div>
+                        <div><span className="text-xl sm:text-2xl font-bold text-primary">{countdown.minutes}</span> <span className="text-sm sm:text-base text-muted-foreground">minutes</span></div>
+                        <div><span className="text-xl sm:text-2xl font-bold text-primary">{countdown.seconds}</span> <span className="text-sm sm:text-base text-muted-foreground">seconds</span></div>
                     </div>
                 </div>
             )}
