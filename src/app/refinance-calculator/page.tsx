@@ -8,7 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -36,7 +36,7 @@ const faqs = [
     {
         question: "Does this calculator work for auto loans?",
         answer: "Yes, this calculator can be used for any type of fixed-rate loan, including mortgages, auto loans, or personal loans. Simply enter your current loan details and the terms of the new loan you are considering."
-    },
+    }
 ];
 
 const terminologies = [
@@ -57,6 +57,7 @@ const terminologies = [
         definition: "The number of months it takes for the savings from your lower monthly payment to equal the total closing costs of the refinance. It's a critical factor in deciding if refinancing is worthwhile."
     }
 ];
+
 
 const faqSchema = {
     "@context": "https://schema.org",
@@ -90,22 +91,37 @@ export default function RefinanceCalculatorPage() {
             <RefinanceCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
-                <Card>
+                 <Card>
                     <CardHeader>
                         <CardTitle>How to Use the Refinance Calculator</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                            <li><strong>Enter Your Current Loan Details:</strong> Provide the remaining balance, your current monthly payment (principal and interest only), and your current interest rate. The calculator will use this to determine your remaining term.</li>
+                            <li><strong>Enter Your Current Loan Details:</strong> Provide the remaining balance, your current monthly payment (principal and interest only), and your current interest rate.</li>
                             <li><strong>Enter Your New Loan Details:</strong> Input the term and interest rate for the new loan you are considering.</li>
                             <li><strong>Add Refinance Costs:</strong> Enter any costs associated with the new loan, such as points and closing fees. A point is 1% of the loan amount.</li>
                             <li><strong>Consider Cash Out (Optional):</strong> If you plan to take cash out, enter that amount. This will be added to your new loan balance.</li>
-                            <li><strong>Click “Calculate”:</strong> Get an instant, detailed comparison of the two loans.</li>
+                            <li><strong>Click “Calculate & Compare”:</strong> Get an instant, detailed comparison of the two loans.</li>
                         </ol>
                     </CardContent>
                 </Card>
 
                 <Card>
+                    <CardHeader>
+                        <CardTitle>What is Loan Refinancing?</CardTitle>
+                        <CardDescription>And why it could be a smart financial move.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">
+                            Loan refinancing involves taking out a new loan, usually with more favorable terms, in order to pay off an old one. It is most commonly associated with home mortgages, car loans, or student loans. The primary goal is often to secure a lower interest rate, which can save a significant amount of money over the life of the loan.
+                        </p>
+                        <p className="text-muted-foreground mt-2">
+                           Refinancing can also be used to lower your monthly payment by extending the loan term, switch from a variable-rate to a fixed-rate loan for more predictability, or even to cash out some of the equity you've built.
+                        </p>
+                    </CardContent>
+                </Card>
+
+                 <Card>
                     <CardHeader>
                         <CardTitle>When Does Refinancing Make Sense?</CardTitle>
                     </CardHeader>
