@@ -58,11 +58,11 @@ export function TopNav() {
             <NavigationMenuList>
               {mainCategories.map(category => (
                  <NavigationMenuItem key={category.name}>
-                  <Link href={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`} asChild>
+                   <Link href={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`} legacyBehavior passHref>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
                       {category.name}
                     </NavigationMenuLink>
-                  </Link>
+                   </Link>
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>
