@@ -221,78 +221,78 @@ export const navItems: NavItem[] = [
   {
     href: '/retirement-calculators',
     icon: PiggyBank,
-    label: 'Retirement',
-    category: 'Retirement',
+    label: 'Retirement & Social Security',
+    category: 'Retirement & Social Security',
     description: 'A hub for retirement planning and Social Security tools.'
   },
   {
     href: '/social-security-retirement-age-calculator',
     icon: PiggyBank,
     label: 'Retirement Age Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Find your Full Retirement Age (FRA) for Social Security benefits.'
   },
   {
     href: '/social-security-calculator',
     icon: Scale,
     label: 'Social Security Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Find your break-even age for claiming Social Security benefits.'
   },
   {
     href: '/401k-calculator',
     icon: Briefcase,
     label: '401(k) Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Estimate retirement savings, withdrawal costs, and employer match.'
   },
    {
     href: '/annuity-calculator',
     icon: Wallet,
     label: 'Annuity Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Estimate the future value of an annuity during its accumulation phase.'
   },
   {
     href: '/annuity-payout-calculator',
     icon: Landmark,
     label: 'Annuity Payout Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Estimate annuity payouts or duration.'
   },
   {
     href: '/pension-calculator',
     icon: Briefcase,
     label: 'Pension Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Evaluate pension decisions like lump sum vs. monthly income.'
   },
   {
     href: '/ira-calculator',
     icon: Landmark,
     label: 'IRA Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Compare Traditional IRAs, Roth IRAs, and taxable savings.'
   },
    {
     href: '/roth-ira-calculator',
     icon: Landmark,
     label: 'Roth IRA Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Compare a Roth IRA with a regular taxable investment account.'
   },
   {
     href: '/retirement-savings-goal-calculator',
     icon: Goal,
     label: 'Retirement Savings Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Estimate your total nest egg needed for retirement.'
   },
    {
     href: '/rmd-calculator',
     icon: PiggyBank,
     label: 'RMD Calculator',
-    category: 'Retirement',
+    category: 'Retirement & Social Security',
     description: 'Calculate your Required Minimum Distribution from retirement accounts.'
   },
 
@@ -541,106 +541,106 @@ export const navItems: NavItem[] = [
   {
     href: '/other-calculators',
     icon: LayoutGrid,
-    label: 'Other',
-    category: 'Other',
+    label: 'Other Calculators',
+    category: 'Other Calculators',
     description: 'A hub for pet age, legal estimators, and more.'
   },
   {
     href: '/dog-age',
     icon: Dog,
     label: 'Dog Age Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Find out how old your dog is in human years based on size.'
   },
    {
     href: '/cat-age-in-human-years',
     icon: Cat,
     label: 'Cat Age Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Find out how old your cat is in human years.'
   },
   {
     href: '/statute-of-limitations',
     icon: BookOpen,
     label: 'Statute of Limitations Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Estimate legal filing deadlines for common claims.'
   },
   {
     href: '/child-support-calculator',
     icon: Users,
     label: 'Child Support Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Get a simple estimate of potential child support payments.'
   },
   {
     href: '/life-insurance-calculator',
     icon: ShieldCheck,
     label: 'Life Insurance Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Estimate how much life insurance coverage you really need.'
   },
   {
     href: '/loan-calculator',
     icon: Landmark,
     label: 'Loan Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'A comprehensive calculator for various loan types like amortized and deferred payment.'
   },
   {
     href: '/debt-payoff-calculator',
     icon: CreditCard,
     label: 'Debt Payoff Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Create a payoff plan for multiple debts using the Debt Avalanche method.'
   },
   {
     href: '/credit-card-calculator',
     icon: CreditCard,
     label: 'Credit Card Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Calculates the time or payment needed to pay off a credit card balance.'
   },
    {
     href: '/debt-consolidation-calculator',
     icon: Scale,
     label: 'Debt Consolidation Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Compare current debts with a consolidation loan to see potential savings.'
   },
    {
     href: '/inflation-calculator',
     icon: TrendingUp,
     label: 'Inflation Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Calculate the buying power of money over time using CPI data.'
   },
   {
     href: '/discount-calculator',
     icon: Tag,
     label: 'Discount Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Calculate the final price after a percentage or fixed amount off.'
   },
   {
     href: '/payment-calculator',
     icon: DollarSign,
     label: 'Payment Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Estimate the monthly payment for any type of loan.'
   },
   {
     href: '/boat-loan-calculator',
     icon: Sailboat,
     label: 'Boat Loan Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Estimate your monthly boat payment and total loan cost.'
   },
   {
     href: '/college-cost-calculator',
     icon: GraduationCap,
     label: 'College Cost Calculator',
-    category: 'Other',
+    category: 'Other Calculators',
     description: 'Estimate future college costs and the savings needed.'
   },
   
@@ -712,11 +712,12 @@ export const categorizedNavItems = (): NavCategory[] => {
     'Mortgage & Real Estate',
     'Auto',
     'Investment',
-    'Retirement',
+    'Retirement & Social Security',
     'Tax & Salary',
     'Other',
     'Fitness & Health Calculators',
     'Math Calculators',
+    'Other Calculators',
     'Company',
     'Legal',
   ];
