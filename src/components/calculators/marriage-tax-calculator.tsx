@@ -22,10 +22,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { RefreshCcw, Heart, Scale } from 'lucide-react';
-import { Separator } from '../ui/separator';
+import { RefreshCcw, Heart } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
 const spouseSchema = z.object({
+  filingStatus: z.enum(['single', 'headOfHousehold', 'qualifyingWidow']),
   salary: z.coerce.number().min(0).optional(),
   interestDividends: z.coerce.number().min(0).optional(),
   ltcg: z.coerce.number().min(0).optional(),
@@ -111,14 +112,14 @@ export default function MarriageTaxCalculator() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      spouse1: { salary: 65000, deductions401k: 10000, stateTaxRate: 5 },
-      spouse2: { salary: 45000, deductions401k: 6000, stateTaxRate: 5 },
+      spouse1: { filingStatus: 'single', salary: 65000, deductions401k: 10000, stateTaxRate: 5 },
+      spouse2: { filingStatus: 'single', salary: 45000, deductions401k: 6000, stateTaxRate: 5 },
     },
   });
 
   function onSubmit(values: FormData) {
-    const single1Result = calculateTax(values.spouse1, 'single');
-    const single2Result = calculateTax(values.spouse2, 'single');
+    const single1Result = calculateTax(values.spouse1, values.spouse1.filingStatus);
+    const single2Result = calculateTax(values.spouse2, values.spouse2.filingStatus);
     
     const jointIncome = {
       salary: (values.spouse1.salary || 0) + (values.spouse2.salary || 0),
@@ -164,8 +165,8 @@ export default function MarriageTaxCalculator() {
                 </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <ResultCard title="Spouse 1 (Single)" result={result.single1Result} />
-                <ResultCard title="Spouse 2 (Single)" result={result.single2Result} />
+                <ResultCard title="Spouse 1 (as Single)" result={result.single1Result} />
+                <ResultCard title="Spouse 2 (as Single)" result={result.single2Result} />
                 <ResultCard title="Married Filing Jointly" result={result.jointResult} />
             </div>
           </div>
@@ -178,6 +179,18 @@ export default function MarriageTaxCalculator() {
 const SpouseForm = ({ spouse, form }: { spouse: "spouse1" | "spouse2", form: any }) => (
   <div className="space-y-4">
     <h3 className="text-lg font-semibold border-b pb-2">{spouse === 'spouse1' ? 'Spouse 1' : 'Spouse 2'}</h3>
+    <FormField control={form.control} name={`${spouse}.filingStatus`} render={({ field }) => (
+        <FormItem><FormLabel>Filing Status (Before Marriage)</FormLabel>
+        <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
+            <SelectContent>
+                <SelectItem value="single">Single</SelectItem>
+                <SelectItem value="headOfHousehold">Head of Household</SelectItem>
+                <SelectItem value="qualifyingWidow">Qualifying Widow(er)</SelectItem>
+            </SelectContent>
+        </Select>
+        <FormMessage /></FormItem>
+    )} />
     <FormField control={form.control} name={`${spouse}.salary`} render={({ field }) => (<FormItem><FormLabel>Salary/Business Income</FormLabel><FormControl><Input type="number" {...field} /></FormControl></FormItem>)} />
     <FormField control={form.control} name={`${spouse}.interestDividends`} render={({ field }) => (<FormItem><FormLabel>Interest/Dividends</FormLabel><FormControl><Input type="number" {...field} placeholder="0" /></FormControl></FormItem>)} />
     <FormField control={form.control} name={`${spouse}.ltcg`} render={({ field }) => (<FormItem><FormLabel>Long-Term Capital Gains</FormLabel><FormControl><Input type="number" {...field} placeholder="0" /></FormControl></FormItem>)} />
