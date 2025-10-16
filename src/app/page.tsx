@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
-import ChronologicalAgeCalculatorForm from '@/components/calculators/chronological-age-calculator-form';
+import ScientificCalculatorLoader from '@/components/calculators/scientific-calculator-loader';
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="flex justify-center">
                 <div className="w-full max-w-2xl">
-                  <ChronologicalAgeCalculatorForm />
+                    <ScientificCalculatorLoader />
                 </div>
             </div>
             <div className="text-center md:text-left">
