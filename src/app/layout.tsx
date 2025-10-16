@@ -50,7 +50,7 @@ export const metadata: Metadata = {
         url: '/logo.png',
         width: 512,
         height: 512,
-        alt: 'AgeSage Logo',
+        alt: 'Calculators Logo',
       },
     ],
   },
@@ -58,6 +58,14 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Calculators – Free Online Financial, Health & Math Calculators',
     description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
+    images: [
+        {
+          url: '/logo.png',
+          width: 512,
+          height: 512,
+          alt: 'Calculators Logo',
+        },
+      ],
   },
   icons: {
     icon: '/favicon.png',
