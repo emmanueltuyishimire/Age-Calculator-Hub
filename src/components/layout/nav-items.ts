@@ -252,6 +252,13 @@ export const navItems: NavItem[] = [
     category: 'Financial Calculators',
     description: 'A hub for all our finance, investment, and loan calculators.'
   },
+  {
+    href: '/dti-calculator',
+    icon: Scale,
+    label: 'DTI Calculator',
+    category: 'Financial Calculators',
+    description: 'Calculate your Debt-to-Income ratio to assess your financial health.'
+  },
    {
     href: '/average-return-calculator',
     icon: TrendingUp,
