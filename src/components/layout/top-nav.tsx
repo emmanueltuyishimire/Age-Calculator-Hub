@@ -18,13 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import { Button } from '../ui/button';
 import { Menu } from 'lucide-react';
 import { categorizedNavItems } from './nav-items';
@@ -42,40 +36,37 @@ export function TopNav() {
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-1 text-sm" aria-label="Main navigation">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink
-                  active={pathname === '/'}
-                  className={cn(navigationMenuTriggerStyle(), 'font-semibold')}
-                >
-                  Home
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
+        <Link
+          href="/"
+          className={cn(navigationMenuTriggerStyle(), 'font-semibold', {
+            'bg-accent/50': pathname === '/',
+          })}
+        >
+          Home
+        </Link>
 
-            {mainCategories.map(category => {
-              const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`;
-              return (
-                 <NavigationMenuItem key={category.name}>
-                   <Link href={categoryHref} legacyBehavior passHref>
-                    <NavigationMenuLink active={pathname.startsWith(categoryHref)} className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
-                      {category.name}
-                    </NavigationMenuLink>
-                   </Link>
-                 </NavigationMenuItem>
-              )
-            })}
-             <NavigationMenuItem>
-                <Link href="/articles" legacyBehavior passHref>
-                    <NavigationMenuLink active={pathname.startsWith('/articles')} className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
-                    Articles
-                    </NavigationMenuLink>
-                </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        {mainCategories.map(category => {
+          const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`;
+          return (
+            <Link
+              key={category.name}
+              href={categoryHref}
+              className={cn(navigationMenuTriggerStyle(), 'font-semibold', {
+                'bg-accent/50': pathname.startsWith(categoryHref),
+              })}
+            >
+              {category.name}
+            </Link>
+          );
+        })}
+        <Link
+          href="/articles"
+          className={cn(navigationMenuTriggerStyle(), 'font-semibold', {
+            'bg-accent/50': pathname.startsWith('/articles'),
+          })}
+        >
+          Articles
+        </Link>
       </nav>
 
       {/* Mobile Navigation */}
