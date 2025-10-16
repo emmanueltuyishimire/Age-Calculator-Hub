@@ -34,7 +34,6 @@ export function Footer() {
                                 </Link>
                             </li>
                         ))}
-                        {category.href && <li key={`${category.name}-hub`}><Link href={category.href} className="text-sm font-semibold text-primary hover:underline">View all...</Link></li>}
                     </ul>
                 </div>
             ))}

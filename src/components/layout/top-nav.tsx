@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from 'react';
@@ -40,11 +39,6 @@ export function TopNav() {
   const categories = categorizedNavItems();
   const mainCategories = categories.filter(cat => cat.name !== 'Company' && cat.name !== 'Legal' && cat.name !== 'Navigation');
   
-  const financialCategory = mainCategories.find(c => c.name === 'Financial Calculators');
-
-  const nonFinancialCategories = mainCategories.filter(c => c.name !== 'Financial Calculators');
-
-
   return (
     <>
       {/* Desktop Navigation */}
@@ -61,12 +55,7 @@ export function TopNav() {
           
            <NavigationMenu>
             <NavigationMenuList>
-               <NavigationMenuItem>
-                  <NavigationMenuLink asChild className={cn(navigationMenuTriggerStyle(), 'font-semibold')}>
-                    <Link href="/financial-calculators">Financial</Link>
-                  </NavigationMenuLink>
-              </NavigationMenuItem>
-              {nonFinancialCategories.map(category => (
+              {mainCategories.map(category => (
                  <NavigationMenuItem key={category.name}>
                   <NavigationMenuTrigger aria-label={`Open ${category.name} menu`}>{category.name}</NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -136,16 +125,8 @@ export function TopNav() {
                 <Accordion type="single" collapsible className="w-full" aria-label="Calculator Categories">
                   {mainCategories.map((category) => (
                     <AccordionItem value={category.name} key={category.name}>
-                       <AccordionTrigger className="text-base font-semibold py-2" asChild>
-                         <Link href={category.href || '#'} onClick={(e) => {
-                            if (!category.href) e.preventDefault();
-                            else setIsOpen(false);
-                         }}>
-                            <span className="flex flex-1 items-center justify-between">
-                              {category.name}
-                              {category.href ? null : <span className="sr-only"> (opens sub-menu)</span>}
-                            </span>
-                         </Link>
+                       <AccordionTrigger className="text-base font-semibold py-2">
+                            {category.name}
                        </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex flex-col gap-1 pl-4">

@@ -19,7 +19,7 @@ export default function CoreAgeCalculatorsHub() {
           Your fundamental tools for calculating chronological age. Find your exact age in years, months, and days, or count down to your next birthday with our precise and easy-to-use calculators.
         </p>
       </div>
-      <CategoryHubClient categoryName="Core Age Calculators" />
+      <CategoryHubClient categoryName="Core Age & Time" />
     </main>
   );
 }

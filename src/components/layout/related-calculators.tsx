@@ -14,12 +14,13 @@ interface RelatedCalculatorsProps {
 
 function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculatorsProps) {
   const pathname = usePathname();
-  const category = categorizedNavItems().find(cat => cat.name === currentCategory);
+  // Find the category that includes the currentCategory as a substring
+  const category = categorizedNavItems().find(cat => cat.name.includes(currentCategory));
   if (!category) return null;
 
-  // Filter out the current page and the main category hub page
+  // Filter out the current page
   let relatedItems = category.items.filter(item => 
-    item.href !== currentHref && item.href !== category.href && item.href !== pathname
+    item.href !== currentHref && item.href !== pathname
   );
 
   if (relatedItems.length === 0) return null;

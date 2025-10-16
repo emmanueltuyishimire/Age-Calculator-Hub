@@ -19,7 +19,7 @@ export default function MathCalculatorsHub() {
           A comprehensive suite of tools to help with your mathematical needs. More calculators coming soon!
         </p>
       </div>
-      <CategoryHubClient categoryName="Math Calculators" />
+      <CategoryHubClient categoryName="Math & Other" />
     </main>
   );
 }
