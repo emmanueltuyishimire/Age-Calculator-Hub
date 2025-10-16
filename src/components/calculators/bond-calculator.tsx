@@ -120,7 +120,7 @@ const bondPricingSchema = z.object({
   frequency: z.enum(['annually', 'semiannually']),
   maturityDate: z.date(),
   settlementDate: z.date(),
-  dayCount: z.enum(['30/360', 'Actual/Actual']).default('Actual/Actual'),
+  dayCount: z.enum(['30/360', 'Actual/360', 'Actual/365', 'Actual/Actual']).default('Actual/Actual'),
 });
 type BondPricingFormData = z.infer<typeof bondPricingSchema>;
 interface BondPricingResult { dirtyPrice: number; cleanPrice: number; accruedInterest: number; accruedDays: number; }
@@ -141,8 +141,12 @@ function BondPricingCalculator() {
         const r = ytm / 100 / freqVal;
         
         let daysInPeriod;
-        if(dayCount === '30/360') {
+        if (dayCount === '30/360') {
             daysInPeriod = frequency === 'annually' ? 360 : 180;
+        } else if (dayCount === 'Actual/360') {
+            daysInPeriod = 360; // This is a simplification
+        } else if (dayCount === 'Actual/365') {
+            daysInPeriod = 365;
         } else { // Actual/Actual approximation
             daysInPeriod = frequency === 'annually' ? 365.25 : 365.25 / 2;
         }
@@ -186,7 +190,7 @@ function BondPricingCalculator() {
                             <FormField control={form.control} name="frequency" render={({ field }) => (<FormItem><FormLabel>Coupon Frequency</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="annually">Annually</SelectItem><SelectItem value="semiannually">Semiannually</SelectItem></SelectContent></Select></FormItem>)} />
                             <FormField control={form.control} name="maturityDate" render={({ field }) => (<FormItem><FormLabel>Maturity Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("w-full text-left font-normal", !field.value && "text-muted-foreground")}><CalendarIcon className="mr-2 h-4 w-4" />{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}</Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus/></PopoverContent></Popover></FormItem>)} />
                             <FormField control={form.control} name="settlementDate" render={({ field }) => (<FormItem><FormLabel>Settlement Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("w-full text-left font-normal", !field.value && "text-muted-foreground")}><CalendarIcon className="mr-2 h-4 w-4" />{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}</Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus/></PopoverContent></Popover></FormItem>)} />
-                             <FormField control={form.control} name="dayCount" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>Day-Count Convention</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="30/360">30/360</SelectItem><SelectItem value="Actual/Actual">Actual/Actual</SelectItem></SelectContent></Select></FormItem>)} />
+                             <FormField control={form.control} name="dayCount" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>Day-Count Convention</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="30/360">30/360</SelectItem><SelectItem value="Actual/360">Actual/360</SelectItem><SelectItem value="Actual/365">Actual/365</SelectItem><SelectItem value="Actual/Actual">Actual/Actual</SelectItem></SelectContent></Select></FormItem>)} />
                         </div>
                         <Button type="submit" className="w-full">Calculate</Button>
                     </form>
