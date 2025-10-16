@@ -47,7 +47,7 @@ export function TopNav() {
         </Link>
 
         {mainCategories.map(category => {
-          const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}-calculators`;
+          const categoryHref = `/${category.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`;
           return (
             <Link
               key={category.name}
