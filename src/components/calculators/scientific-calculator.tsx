@@ -230,6 +230,9 @@ const ScientificCalculator = () => {
             if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
                 return;
             }
+             if ((event.metaKey || event.ctrlKey) && ['c', 'v', 'a', 'r', 'l'].includes(event.key.toLowerCase())) {
+              return;
+            }
 
             const keyMappings: { [key: string]: string | (() => void) } = {
                 ...Object.fromEntries("0123456789.()".split('').map(k => [k, k])),
@@ -306,7 +309,7 @@ const ScientificCalculator = () => {
         <Button 
             key={value + index} 
             variant={getVariant(btn)} 
-            className={cn("h-10 text-xs p-1 text-base shadow-md hover:shadow-sm active:shadow-inner", style, {
+            className={cn("h-10 text-xs p-1 text-base shadow-md hover:shadow-sm active:shadow-inner active:translate-y-px", style, {
                 'bg-primary/80 text-primary-foreground': (value === 'Deg' && isDeg) || (value === 'Rad' && !isDeg),
                 'bg-destructive/80 hover:bg-destructive/90 text-white': value === 'AC'
             })}
@@ -319,13 +322,13 @@ const ScientificCalculator = () => {
   }
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-4 w-full max-w-[700px] mx-auto shadow-2xl">
-      <div className="bg-gray-800/50 dark:bg-gray-900/50 rounded p-2 mb-4 border-2 border-slate-800 shadow-inner">
+    <div className="bg-slate-700 dark:bg-green-950 border-4 border-slate-600 dark:border-green-800 rounded-xl p-2 sm:p-4 w-full max-w-[700px] mx-auto shadow-2xl">
+      <div className="bg-gray-800/50 dark:bg-gray-900/50 rounded p-2 mb-4 border-2 border-slate-800 dark:border-green-900 shadow-inner">
         <Input
             type="text"
             value={display}
             readOnly
-            className="w-full h-20 text-4xl text-right mb-2 bg-slate-200/10 pr-4 text-emerald-300 border-transparent font-mono tracking-wider"
+            className="w-full h-20 text-4xl text-right mb-2 bg-slate-200/10 dark:bg-green-900/50 pr-4 text-emerald-300 border-transparent font-mono tracking-wider"
             aria-label="Calculator display"
         />
       </div>
