@@ -197,10 +197,10 @@ export default function MatrixCalculator() {
                 case 'eigsA':
                     res = math.eigs(matA);
                     const eigenvalues = res.values.map(formatEigenvalue);
-                    const eigenvectors = res.eigenvectors.map((vec: any) => fromMatrix(vec.vector)[0].map(formatEigenvalue));
+                    const eigenvectors = res.eigenvectors.map((eVec: any) => eVec.vector);
                     const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
-                    eigenvectors.forEach((vec, i) => {
-                        eigResult.push([`Vector ${i+1}:` , ...vec]);
+                    eigenvectors.forEach((vec: (string | number)[], i: number) => {
+                        eigResult.push([`Vector ${i+1}:` , ...vec.map(v => math.format(v, {precision: 4}))]);
                     });
                     setResultMatrix(eigResult);
                     break;
@@ -218,10 +218,10 @@ export default function MatrixCalculator() {
                 case 'eigsB':
                     res = math.eigs(matB);
                     const eigenvaluesB = res.values.map(formatEigenvalue);
-                    const eigenvectorsB = res.eigenvectors.map((vec: any) => fromMatrix(vec.vector)[0].map(formatEigenvalue));
+                    const eigenvectorsB = res.eigenvectors.map((eVec: any) => eVec.vector);
                     const eigResultB: (string | number)[][] = [['Eigenvalues:'], eigenvaluesB];
-                    eigenvectorsB.forEach((vec, i) => {
-                        eigResultB.push([`Vector ${i+1}:` , ...vec]);
+                    eigenvectorsB.forEach((vec: (string | number)[], i: number) => {
+                         eigResultB.push([`Vector ${i+1}:` , ...vec.map(v => math.format(v, {precision: 4}))]);
                     });
                     setResultMatrix(eigResultB);
                     break;
