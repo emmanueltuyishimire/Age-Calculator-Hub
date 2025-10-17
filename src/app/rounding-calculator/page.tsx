@@ -65,6 +65,20 @@ export default function RoundingCalculatorPage() {
             
             <Card>
                 <CardHeader>
+                    <CardTitle>How to Use the Rounding Calculator</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                        <li><strong>Enter Number:</strong> Input the number you want to round.</li>
+                        <li><strong>Select Precision:</strong> Choose how you want to round the number (e.g., to the nearest tenth, hundred, or a fraction like 1/8).</li>
+                        <li><strong>Choose Method (Optional):</strong> Click the "Settings" button to select a specific rounding method, such as rounding up, down, or to the nearest even number. The default is "Round half up."</li>
+                        <li><strong>Click "Round":</strong> See the calculated result instantly.</li>
+                    </ol>
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
                     <CardTitle>What is Rounding?</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 text-muted-foreground">
