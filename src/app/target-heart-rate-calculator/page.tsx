@@ -8,7 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Flame, HeartPulse, Zap } from 'lucide-react';
 import Link from 'next/link';
 
@@ -115,16 +115,6 @@ export default function TargetHeartRateCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                  <Card>
                     <CardHeader>
-                        <CardTitle>Learn More About Health & Fitness</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                             <li><Link href="/articles/what-is-biological-age-and-how-to-improve-it" className="text-primary hover:underline">The Ultimate Guide to Your Biological Age</Link></li>
-                        </ul>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader>
                         <CardTitle>How to Use the Target Heart Rate Calculator</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -133,6 +123,17 @@ export default function TargetHeartRateCalculatorPage() {
                             <li><strong>Click “Calculate Zones”:</strong> Get an instant breakdown of your estimated maximum heart rate and your three key training zones.</li>
                             <li><strong>Plan Your Workout:</strong> Use the results to guide the intensity of your exercise, whether you're aiming for endurance, cardiovascular improvement, or peak performance.</li>
                         </ol>
+                    </CardContent>
+                </Card>
+                
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Learn More About Health & Fitness</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                             <li><Link href="/articles/what-is-biological-age-and-how-to-improve-it" className="text-primary hover:underline">The Ultimate Guide to Your Biological Age</Link></li>
+                        </ul>
                     </CardContent>
                 </Card>
 
@@ -203,5 +204,3 @@ export default function TargetHeartRateCalculatorPage() {
     </div>
   );
 }
-
-    

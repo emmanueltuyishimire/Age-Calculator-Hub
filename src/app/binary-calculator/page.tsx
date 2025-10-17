@@ -42,6 +42,17 @@ export default function BinaryCalculatorPage() {
         <section className="mt-12 space-y-8 animate-fade-in prose dark:prose-invert lg:prose-xl max-w-none">
           
           <Card>
+            <CardHeader><CardTitle>How to Use the Binary Calculators</CardTitle></CardHeader>
+            <CardContent>
+                <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                    <li><strong>For Arithmetic:</strong> Enter the two binary values in the top calculator, select your operation (+, -, ×, ÷), and click '=' to see the result.</li>
+                    <li><strong>For Binary to Decimal:</strong> Enter your binary value in the second calculator and click '=' to see its decimal equivalent.</li>
+                    <li><strong>For Decimal to Binary:</strong> Enter your decimal number in the third calculator and click '=' to see its binary equivalent.</li>
+                </ol>
+            </CardContent>
+          </Card>
+          
+          <Card>
             <CardHeader><CardTitle>What is The Binary System?</CardTitle></CardHeader>
             <CardContent className="space-y-4 text-muted-foreground">
               <p>The binary system is a numerical system that functions virtually identically to the decimal number system that people are likely more familiar with. While the decimal number system uses the number 10 as its base, the binary system uses 2. Furthermore, although the decimal system uses the digits 0 through 9, the binary system uses only 0 and 1, and each digit is referred to as a bit. Apart from these differences, operations such as addition, subtraction, multiplication, and division are all computed following the same rules as the decimal system.</p>

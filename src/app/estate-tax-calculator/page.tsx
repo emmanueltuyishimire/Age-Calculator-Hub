@@ -88,6 +88,20 @@ export default function EstateTaxCalculatorPage() {
 
                 <Card>
                     <CardHeader>
+                        <CardTitle>How to Use the Estate Tax Calculator</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Select Year of Death:</strong> Choose the relevant year to use the correct federal exemption amount.</li>
+                            <li><strong>Enter Assets:</strong> Input the estimated value of all assets, including real estate, investments, savings, retirement plans, and life insurance benefits.</li>
+                            <li><strong>Enter Liabilities:</strong> Input total debts, estimated funeral and administrative expenses, and any planned charitable contributions.</li>
+                            <li><strong>Click "Estimate Tax":</strong> Instantly see your estimated taxable estate and potential federal tax due.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
                         <CardTitle>How This Calculator Works</CardTitle>
                     </CardHeader>
                     <CardContent>

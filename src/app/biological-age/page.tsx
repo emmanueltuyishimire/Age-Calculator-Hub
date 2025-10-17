@@ -106,6 +106,18 @@ export default function BiologicalAgePage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 
                 <Card>
+                    <CardHeader><CardTitle>How to Use the Calculator</CardTitle></CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li>Enter your current age and select your gender.</li>
+                            <li>Answer the questions about your lifestyle, including diet, exercise, sleep, stress, and other habits. Be as honest as possible for the most accurate estimate.</li>
+                            <li>Click "Calculate Biological Age" to let our AI model analyze your inputs.</li>
+                            <li>Review your estimated biological age and read the personalized insights and tips for improvement.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+                
+                <Card>
                     <CardHeader><CardTitle>What is Biological Age vs. Chronological Age?</CardTitle></CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground mb-4">

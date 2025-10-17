@@ -101,16 +101,6 @@ export default function CatAgePage() {
 
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
-                    <CardHeader><CardTitle>Learn More About Your Cat's Health</CardTitle></CardHeader>
-                    <CardContent>
-                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/articles/understanding-cat-life-stages" className="text-primary hover:underline">Understanding Your Cat's Life Stages: From Kitten to Geriatric</Link></li>
-                            <li><Link href="/articles/common-health-problems-in-senior-cats" className="text-primary hover:underline">5 Common Health Problems in Senior Cats</Link></li>
-                            <li><Link href="/articles/introducing-a-new-cat" className="text-primary hover:underline">How to Introduce a New Cat to Your Home</Link></li>
-                        </ul>
-                    </CardContent>
-                </Card>
-                <Card>
                     <CardHeader><CardTitle>How to Use the Cat Age Calculator</CardTitle></CardHeader>
                     <CardContent>
                         <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
@@ -118,6 +108,17 @@ export default function CatAgePage() {
                             <li><strong>Click “Calculate”:</strong> Get an instant, accurate conversion to the equivalent human years.</li>
                             <li><strong>View Life Stage and Tips:</strong> The tool will display your cat's current life stage (e.g., Kitten, Senior) and provide a helpful, age-appropriate care tip.</li>
                         </ol>
+                    </CardContent>
+                </Card>
+                
+                <Card>
+                    <CardHeader><CardTitle>Learn More About Your Cat's Health</CardTitle></CardHeader>
+                    <CardContent>
+                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/understanding-cat-life-stages" className="text-primary hover:underline">Understanding Your Cat's Life Stages: From Kitten to Geriatric</Link></li>
+                            <li><Link href="/articles/common-health-problems-in-senior-cats" className="text-primary hover:underline">5 Common Health Problems in Senior Cats</Link></li>
+                            <li><Link href="/articles/introducing-a-new-cat" className="text-primary hover:underline">How to Introduce a New Cat to Your Home</Link></li>
+                        </ul>
                     </CardContent>
                 </Card>
 
