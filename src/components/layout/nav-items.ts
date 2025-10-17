@@ -687,7 +687,14 @@ export const navItems: NavItem[] = [
     icon: Grid,
     label: 'Matrix Calculator',
     category: 'Math',
-    description: 'Perform arithmetic, RREF, and other operations on matrices.'
+    description: 'Perform arithmetic and other operations on matrices.'
+  },
+  {
+    href: '/augmented-matrix-calculator',
+    icon: Grid,
+    label: 'Augmented Matrix Calculator',
+    category: 'Math',
+    description: 'Solve systems of linear equations using RREF on an augmented matrix.'
   },
 
   // Other Calculators
