@@ -21,9 +21,9 @@ const scientificButtonsConfig = [
 const basicButtonsConfig = [
     { label: 'AC', value: 'AC', style: "col-span-1" }, { label: <Trash2 key="backspace" className="h-5 w-5 mx-auto"/>, value: 'backspace', style: "col-span-1" }, { label: 'Ans', value: 'Ans', style: "col-span-1" }, { label: 'M+', value: 'M+', style: "col-span-1" }, { label: 'MR', value: 'MR', style: "col-span-1" },
     { label: '7', value: '7', style: "col-span-1" }, { label: '8', value: '8', style: "col-span-1" }, { label: '9', value: '9', style: "col-span-1" }, { label: '÷', value: '÷', style: "col-span-1" }, { label: 'M-', value: 'M-', style: "col-span-1" },
-    { label: '4', value: '4', style: "col-span-1" }, { label: '5', value: '5', style: "col-span-1" }, { label: '6', value: '6', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" }, { label: '=', value: '=', style: "row-span-3 h-auto col-start-5" },
-    { label: '1', value: '1', style: "col-span-1" }, { label: '2', value: '2', style: "col-span-1" }, { label: '3', value: '3', style: "col-span-1" }, { label: '−', value: '−', style: "col-span-1" },
-    { label: '0', value: '0', style: "col-span-1" }, { label: '.', value: '.', style: "col-span-1" }, { label: '±', value: '±', style: "col-span-1" }, { label: '×', value: '×', style: "col-span-1" },
+    { label: '4', value: '4', style: "col-span-1" }, { label: '5', value: '5', style: "col-span-1" }, { label: '6', value: '6', style: "col-span-1" }, { label: '±', value: '±', style: "col-span-1" }, { label: '=', value: '=', style: "row-span-3 h-auto col-start-5" },
+    { label: '1', value: '1', style: "col-span-1" }, { label: '2', value: '2', style: "col-span-1" }, { label: '3', value: '3', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" },
+    { label: '0', value: '0', style: "col-span-1" }, { label: '.', value: '.', style: "col-span-1" }, { label: '×', value: '×', style: "col-span-1" }, { label: '−', value: '−', style: "col-span-1" },
 ];
 
 
@@ -144,7 +144,7 @@ const ScientificCalculator = () => {
         };
 
         const getLastNumber = (expr: string): string => {
-            const match = expr.match(/(\(-[\d.e+-]+\)|[\d.e+-]+|pi|e)$/i);
+            const match = expr.match(/(\(-?[\d.e+-]+\)|[\d.e+-]+|pi|e)$/i);
             return match ? match[0] : '';
         };
 
@@ -298,7 +298,9 @@ const ScientificCalculator = () => {
       <Button
           key={config.value}
           variant={getVariant(config.value)}
-          className={cn("h-7 text-xs p-1 shadow-md hover:shadow-sm active:shadow-inner active:translate-y-px", config.style, {
+          className={cn(
+            "h-8 text-xs p-1 shadow-md hover:shadow-sm active:shadow-inner active:translate-y-px", 
+            config.style, {
               'bg-primary/80 text-primary-foreground': (config.value === 'Deg' && isDeg) || (config.value === 'Rad' && !isDeg),
           })}
           onClick={() => handleButtonClick(config.value)}
@@ -309,7 +311,7 @@ const ScientificCalculator = () => {
   );
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-3 w-full mx-auto shadow-2xl max-w-xl">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-3 w-full mx-auto shadow-2xl max-w-sm sm:max-w-2xl">
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner">
         <div className="text-right text-emerald-300/80 font-mono text-xs pr-2 h-5">
             {currentTime}
@@ -336,4 +338,3 @@ const ScientificCalculator = () => {
 
 export default ScientificCalculator;
 
-    
