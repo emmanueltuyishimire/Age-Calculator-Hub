@@ -61,6 +61,7 @@ import {
   Atom,
   FunctionSquare,
   Sigma,
+  SquareRoot
 } from 'lucide-react';
 
 export type NavItem = {
@@ -644,6 +645,13 @@ export const navItems: NavItem[] = [
     label: 'Half-Life Calculator',
     category: 'Math',
     description: 'Solve for half-life, initial quantity, remaining quantity, or time.'
+  },
+  {
+    href: '/root-calculator',
+    icon: SquareRoot,
+    label: 'Root Calculator',
+    category: 'Math',
+    description: 'Calculate the square, cube, or nth root of a number.'
   },
 
   // Other Calculators
