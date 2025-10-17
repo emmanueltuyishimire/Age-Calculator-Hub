@@ -186,13 +186,19 @@ export default function MatrixCalculator() {
 
             const processEigs = (eigsResult: any) => {
                 const eigenvalues = eigsResult.values.map(formatEigenvalue);
-                // Correctly extract and format eigenvectors
-                const eigenvectors = eigsResult.eigenvectors.map((eVec: any) => 
-                    eVec.vector.map((val: any) => math.format(val, { precision: 4 }))
-                );
+                
+                const eigenvectors = eigsResult.vectors.map((eVecObj: any) => {
+                  if (eVecObj.value) { // For real eigenvectors
+                    return eVecObj.value.map((v: number) => math.format(v, { precision: 4 }));
+                  } else if (eVecObj.vector) { // For complex eigenvectors
+                    return eVecObj.vector.map((v: any) => formatEigenvalue(v));
+                  }
+                  return [];
+                });
+            
                 const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
-                eigenvectors.forEach((vec: (string | number)[], i: number) => {
-                    eigResult.push([`Vector ${i+1}:` , ...vec]);
+                eigenvectors.forEach((vec: (string|number)[], i: number) => {
+                    eigResult.push([`Vector ${i+1}:`, ...vec]);
                 });
                 setResultMatrix(eigResult);
             };
