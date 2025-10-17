@@ -667,6 +667,13 @@ export const navItems: NavItem[] = [
     category: 'Math',
     description: 'Calculate the Greatest Common Factor of a set of numbers.'
   },
+  {
+    href: '/factor-calculator',
+    icon: Sigma,
+    label: 'Factor Calculator',
+    category: 'Math',
+    description: 'Find all factors and the prime factorization of an integer.'
+  },
 
   // Other Calculators
    {
