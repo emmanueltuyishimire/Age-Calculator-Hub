@@ -543,7 +543,7 @@ export const navItems: NavItem[] = [
   },
   {
     href: '/percentage-calculator',
-    icon: Calculator,
+    icon: Percent,
     label: 'Percentage Calculator',
     category: 'Math',
     description: 'A versatile tool for all types of percentage calculations.'

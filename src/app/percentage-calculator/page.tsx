@@ -8,7 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { CheckCircle2 } from 'lucide-react';
 
@@ -74,42 +74,44 @@ export default function PercentageCalculatorPage() {
 
             <PercentageCalculator />
 
-            <section className="mt-12 space-y-8 animate-fade-in">
+            <section className="mt-12 space-y-8 animate-fade-in prose dark:prose-invert lg:prose-xl max-w-none">
                 <Card>
                     <CardHeader>
-                        <CardTitle>How to Use the Percentage Calculators</CardTitle>
-                        <CardDescription>
-                            This page contains four distinct calculators. Here’s how each one works.
-                        </CardDescription>
+                        <CardTitle>What is a percentage?</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-6">
-                        <div>
-                            <h3 className="font-semibold text-lg">1. Standard Percentage Calculator</h3>
-                            <p className="text-muted-foreground">This solves the equation "[P]% of [X] = [Y]". Fill in any two of the three fields to calculate the missing value. For example, to find 25% of 200, enter '25' in the first box, '200' in the second, leave the third blank, and click 'Calculate'.</p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-lg">2. Percentage in Common Phrases</h3>
-                            <p className="text-muted-foreground">This tool lets you solve common percentage problems framed as everyday questions. Simply fill in the blanks for questions like "What is X% of Y?" or "X is what % of Y?" and click the question mark button to get the answer.</p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-lg">3. Percentage Difference Calculator</h3>
-                            <p className="text-muted-foreground">Use this to find the percentage difference between two numbers. This calculation treats both numbers equally, so the order you enter them in doesn't matter. It's useful for comparing two data points without implying one is an 'original' value.</p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-lg">4. Percentage Change Calculator</h3>
-                            <p className="text-muted-foreground">Use this to calculate the percentage increase or decrease from a starting value to an ending value. Enter the "From" (original) value and the "To" (new) value to see the change. The result will indicate whether it was an increase or a decrease.</p>
-                        </div>
+                    <CardContent className="space-y-4 text-muted-foreground">
+                         <p>In mathematics, a percentage is a number or ratio that represents a fraction of 100. It is one of the ways to represent a dimensionless relationship between two numbers; other methods include ratios, fractions, and decimals. Percentages are often denoted by the symbol "%" written after the number. They can also be denoted by writing "percent" or "pct" after the number. For example, 35% is equivalent to the decimal 0.35, or the fraction 35/100.</p>
+                        <p>Percentages are computed by multiplying the value of a ratio by 100. For example, if 25 out of 50 students in a classroom are male, the percentage of male students is 25/50 = 0.5, and multiplying this by 100 yields 50%. In other words, the ratio of 25 males to students in the classroom is equivalent to 50% of students in the classroom being male.</p>
+                    </CardContent>
+                </Card>
+                
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Percentage Formula</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4 text-muted-foreground">
+                        <p>Although the percentage formula can be written in different forms, it is essentially an algebraic equation involving three values:</p>
+                        <div className="p-4 bg-muted rounded-md font-mono text-center">P × V1 = V2</div>
+                        <p>P is the percentage, V1 is the first value that the percentage will modify, and V2 is the result of the percentage operating on V1. The calculator provided automatically converts the input percentage into a decimal to compute the solution. However, if solving for the percentage, the value returned will be the actual percentage, not its decimal representation.</p>
                     </CardContent>
                 </Card>
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Learn More About Math & Finance</CardTitle>
+                        <CardTitle>Percentage Difference Formula</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
-                        </ul>
+                    <CardContent className="space-y-4 text-muted-foreground">
+                        <p>The percentage difference between two values is calculated by dividing the absolute value of the difference between two numbers by the average of those two numbers. Multiplying the result by 100 will yield the solution in percent, rather than decimal form.</p>
+                        <div className="p-4 bg-muted rounded-md font-mono text-center">Percentage Difference = (|V1 - V2| / ((V1 + V2)/2)) × 100</div>
+                    </CardContent>
+                </Card>
+
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Percentage Change Formula</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4 text-muted-foreground">
+                        <p>Percentage increase and decrease are calculated by computing the difference between two values and comparing that difference to the initial value. Mathematically, this involves using the absolute value of the difference between two values then dividing the result by the initial value, essentially calculating how much the initial value has changed.</p>
                     </CardContent>
                 </Card>
 
