@@ -175,7 +175,14 @@ const ScientificCalculator = () => {
             case 'tan': setExpression(prev => prev + (isSecond ? 'atan(' : 'tan(')); break;
             case 'log': setExpression(prev => prev + (isSecond ? '10^(' : 'log(')); break;
             case 'ln': setExpression(prev => prev + (isSecond ? 'e^(' : 'ln(')); break;
-            case '√x': setExpression(prev => prev + (isSecond ? 'cbrt(' : 'sqrt(')); break;
+            case '√x':
+                if (isSecond) {
+                    setExpression(prev => `cbrt(${prev})`);
+                } else {
+                    setExpression(prev => `sqrt(${prev})`);
+                }
+                setTimeout(calculate, 0);
+                break;
             case '1/x': 
                 setExpression(prev => `(1/(${prev || '1'}))`);
                 setTimeout(calculate, 0);
@@ -354,7 +361,8 @@ const ScientificCalculator = () => {
     'x2', 'sin', 'cos', 'tan', '÷', 'n!', '%',
     'xy', '√x', '7', '8', '9', '×', 'log',
     'y√x', '1/x', '4', '5', '6', '−', 'ln',
-    'DegRad', '±', '0', '.', '=', '+', 'Ans',
+    'DegRad', '±', '1', '2', '3', '+', 'Ans',
+    'RND', '0', '.', '='
   ];
 
   const getButtonLabel = (key: string) => {
@@ -392,7 +400,7 @@ const ScientificCalculator = () => {
                   key={btn}
                   variant={getVariant(btn)}
                   className={cn("h-10 text-xs p-1 shadow-md hover:shadow-sm active:shadow-inner active:translate-y-px relative", {
-                    'col-span-2': ['='].includes(btn),
+                    'col-span-2': ['=', '0'].includes(btn),
                   })}
                   onClick={() => handleButtonClick(btn)}
                   aria-label={ariaLabels[btn] || btn}
@@ -407,4 +415,3 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
-
