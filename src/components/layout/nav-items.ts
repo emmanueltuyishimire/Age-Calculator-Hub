@@ -520,6 +520,13 @@ export const navItems: NavItem[] = [
 
   // Math Calculators
   {
+    href: '/simple-calculator',
+    icon: Calculator,
+    label: 'Simple Calculator',
+    category: 'Math',
+    description: 'A basic calculator for everyday arithmetic operations.'
+  },
+  {
     href: '/scientific-calculator',
     icon: FlaskConical,
     label: 'Scientific Calculator',

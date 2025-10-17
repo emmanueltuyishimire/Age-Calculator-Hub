@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
-import SimpleCalculator from '@/components/calculators/simple-calculator';
+import CalculatorDisplay from '@/components/calculators/calculator-display';
+import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -25,10 +26,15 @@ export default function Home() {
                 </div>
             </div>
              <div className="flex flex-col items-center">
-              <SimpleCalculator />
-              <Button asChild variant="link" className="mt-4 text-primary">
-                <Link href="/scientific-calculator">Need more power? Try our Scientific Calculator</Link>
-              </Button>
+                <CalculatorDisplay />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 w-full max-w-sm">
+                   <Button asChild size="lg" className="w-full">
+                       <Link href="/simple-calculator">Simple Calculator <ArrowRight className="ml-2 h-4 w-4"/></Link>
+                   </Button>
+                   <Button asChild size="lg" variant="secondary" className="w-full">
+                       <Link href="/scientific-calculator">Scientific Calculator <ArrowRight className="ml-2 h-4 w-4"/></Link>
+                   </Button>
+                </div>
             </div>
           </div>
         </div>
