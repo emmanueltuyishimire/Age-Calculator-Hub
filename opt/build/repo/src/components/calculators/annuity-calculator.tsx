@@ -52,6 +52,7 @@ type FormData = z.infer<typeof formSchema>;
 
 interface ScheduleRow {
     year: number;
+    startBalance: number;
     addition: number;
     return: number;
     endBalance: number;
@@ -93,20 +94,27 @@ export default function AnnuityCalculator() {
 
     for (let year = 1; year <= afterYears; year++) {
       const yearlyAddition = annualAddition + (monthlyAddition * 12);
+      const yearStartBalance = balance;
       
       let interest = 0;
+      let balanceWithAdditions = yearStartBalance;
+
       if (addAtBeginning) {
-        balance += yearlyAddition;
-        interest = balance * r;
-        balance += interest;
+        balanceWithAdditions += yearlyAddition;
+      }
+      
+      interest = balanceWithAdditions * r;
+
+      if (addAtBeginning) {
+        balance = balanceWithAdditions + interest;
       } else {
-        interest = balance * r;
-        balance += interest + yearlyAddition;
+        balance = balanceWithAdditions + interest + yearlyAddition;
       }
       
       totalAdditions += yearlyAddition;
       schedule.push({
         year,
+        startBalance: yearStartBalance,
         addition: yearlyAddition,
         return: interest,
         endBalance: balance,
@@ -129,7 +137,7 @@ export default function AnnuityCalculator() {
 
   const barChartData = result?.schedule.map(row => ({
       name: `Year ${row.year}`,
-      'Start Principal': form.getValues('startingPrincipal') + result.schedule.slice(0, row.year - 1).reduce((acc, r) => acc + r.addition, 0),
+      'Start Principal': row.startBalance,
       'Additions': row.addition,
       'Return/Interest': row.return,
   })) || [];
@@ -150,8 +158,8 @@ export default function AnnuityCalculator() {
                         <FormField control={form.control} name="afterYears" render={({ field }) => (<FormItem><FormLabel>After (years)</FormLabel><FormControl><Input type="number" {...field} /></FormControl></FormItem>)} />
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                        <Button type="submit" className="w-full"><Landmark className="mr-2 h-4 w-4"/>Calculate</Button>
-                        <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                        <Button type="submit" className="w-full" aria-label="Calculate Annuity"><Landmark className="mr-2 h-4 w-4"/>Calculate</Button>
+                        <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset Form"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
                     </div>
                 </form>
               </Form>
@@ -185,13 +193,13 @@ export default function AnnuityCalculator() {
                 <h3 className="text-lg font-bold text-center mb-4">Accumulation Schedule</h3>
                 <div className="h-[300px] w-full mb-4">
                      <ResponsiveContainer>
-                        <BarChart data={barChartData} stackOffset="sign">
-                            <CartesianGrid strokeDasharray="3 3" />
+                        <BarChart data={barChartData}>
+                           
                             <XAxis dataKey="name" tick={{ fontSize: 12 }}/>
                             <YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} />
                             <Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/>
                             <Legend />
-                            <Bar dataKey="Return/Interest" stackId="a" fill="hsl(var(--chart-3))" name="Return/Interest" radius={[0, 0, 4, 4]} />
+                            <Bar dataKey="Return/Interest" stackId="a" fill="hsl(var(--chart-3))" name="Return/Interest" />
                             <Bar dataKey="Additions" stackId="a" fill="hsl(var(--chart-2))" name="Additions" />
                             <Bar dataKey="Start Principal" stackId="a" fill="hsl(var(--chart-1))" name="Start Principal" radius={[4, 4, 0, 0]} />
                         </BarChart>

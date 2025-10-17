@@ -42,7 +42,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const formSchema = z.object({
   initialDeposit: z.coerce.number().min(1, "Deposit must be positive."),
@@ -51,6 +51,9 @@ const formSchema = z.object({
   depositLengthYears: z.coerce.number().min(0).max(50),
   depositLengthMonths: z.coerce.number().min(0).max(11).optional(),
   taxRate: z.coerce.number().min(0).max(100).optional(),
+}).refine(data => (data.depositLengthYears || 0) + (data.depositLengthMonths || 0) > 0, {
+  message: "Deposit length must be at least one month.",
+  path: ["depositLengthMonths"],
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -113,28 +116,30 @@ export default function CdCalculator() {
     const schedule: ScheduleRow[] = [];
     
     let cumulativeInterestThisYear = 0;
-    let cumulativeTaxThisYear = 0;
 
     for (let i = 1; i <= totalPeriods; i++) {
         const interestForPeriod = balance * r;
-        const taxOnInterest = interestForPeriod * actualTaxRate;
-        const netInterest = interestForPeriod - taxOnInterest;
-        
-        balance += netInterest;
+        balance += interestForPeriod;
         totalInterest += interestForPeriod;
-        totalTax += taxOnInterest;
+
+        // Apply tax based on compounding period. A more accurate approach.
+        const taxOnPeriodInterest = interestForPeriod * actualTaxRate;
+        balance -= taxOnPeriodInterest;
+        totalTax += taxOnPeriodInterest;
+
+        // For schedule table, aggregate by year
         cumulativeInterestThisYear += interestForPeriod;
-        cumulativeTaxThisYear += taxOnInterest;
 
         if (i % n === 0 || i === totalPeriods) {
+            const taxForYear = schedule.reduce((acc, curr) => acc + curr.tax, 0);
+            const currentYearTax = totalTax - taxForYear;
              schedule.push({
                 period: `Year ${Math.ceil(i/n)}`,
                 interest: cumulativeInterestThisYear,
-                tax: cumulativeTaxThisYear,
+                tax: currentYearTax,
                 endBalance: balance,
             });
             cumulativeInterestThisYear = 0;
-            cumulativeTaxThisYear = 0;
         }
     }
 
@@ -171,12 +176,14 @@ export default function CdCalculator() {
                     <FormItem><FormLabel>Deposit Length</FormLabel><div className="flex gap-2">
                         <FormField control={form.control} name="depositLengthYears" render={({ field }) => <FormControl><Input type="number" placeholder="Years" {...field} /></FormControl>} />
                         <FormField control={form.control} name="depositLengthMonths" render={({ field }) => <FormControl><Input type="number" placeholder="Months" {...field} /></FormControl>} />
-                    </div></FormItem>
+                    </div>
+                     <FormMessage>{form.formState.errors.depositLengthMonths?.message}</FormMessage>
+                    </FormItem>
                     <FormField control={form.control} name="taxRate" render={({ field }) => (<FormItem><FormLabel>Marginal Tax Rate (%)</FormLabel><FormControl><Input type="number" step="0.1" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     
                     <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                        <Button type="submit" className="w-full"><DollarSign className="mr-2 h-4 w-4"/>Calculate</Button>
-                        <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                        <Button type="submit" className="w-full" aria-label="Calculate CD"><DollarSign className="mr-2 h-4 w-4"/>Calculate</Button>
+                        <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset Form"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
                     </div>
                 </form>
               </Form>

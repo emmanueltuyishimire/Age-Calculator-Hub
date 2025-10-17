@@ -52,6 +52,7 @@ type FormData = z.infer<typeof formSchema>;
 
 interface ScheduleRow {
     year: number;
+    startBalance: number;
     deposit: number;
     interest: number;
     endBalance: number;
@@ -62,8 +63,6 @@ interface Result {
   totalPrincipal: number;
   totalContributions: number;
   totalInterest: number;
-  interestOfInitial: number;
-  interestOfContributions: number;
   buyingPower: number;
   schedule: ScheduleRow[];
 }
@@ -91,13 +90,11 @@ export default function SavingsCalculator() {
     const { initialDeposit, annualContribution = 0, annualIncrease = 0, monthlyContribution = 0, monthlyIncrease = 0, interestRate, compounding, yearsToSave, taxRate = 0, inflationRate = 0 } = values;
     
     const n = getCompoundingPeriods(compounding);
-    const totalPeriods = yearsToSave * n;
     const r = interestRate / 100 / n;
     const actualTaxRate = taxRate / 100;
     
     let balance = initialDeposit;
     let totalContributions = 0;
-    let totalInterest = 0;
     let currentAnnualContrib = annualContribution;
     let currentMonthlyContrib = monthlyContribution;
     const schedule: ScheduleRow[] = [];
@@ -105,45 +102,40 @@ export default function SavingsCalculator() {
     for (let year = 1; year <= yearsToSave; year++) {
         let yearlyDeposit = 0;
         let yearlyInterest = 0;
-        let yearStartBalance = balance;
+        const yearStartBalance = balance;
 
         for (let period = 1; period <= n; period++) {
-            const periodicContribution = (currentAnnualContrib / n) + currentMonthlyContrib * (12/n) / n * period; // simplistic monthly applied at each compound period
+            const periodicContribution = (currentAnnualContrib / n) + (currentMonthlyContrib * 12 / n);
+            balance += periodicContribution;
             yearlyDeposit += periodicContribution;
             
             const interestForPeriod = balance * r;
             const taxOnInterest = interestForPeriod * actualTaxRate;
             const netInterest = interestForPeriod - taxOnInterest;
             
-            balance += periodicContribution + netInterest;
+            balance += netInterest;
             yearlyInterest += netInterest;
         }
-
-        totalContributions += yearlyDeposit;
-        totalInterest += yearlyInterest;
         
         schedule.push({
             year: year,
+            startBalance: yearStartBalance,
             deposit: yearlyDeposit,
             interest: yearlyInterest,
             endBalance: balance,
         });
+        
+        totalContributions += yearlyDeposit;
 
         currentAnnualContrib *= (1 + (annualIncrease / 100));
         currentMonthlyContrib *= (1 + (monthlyIncrease / 100));
     }
     
-    // Simplified interest breakdown
-    const fvInitial = initialDeposit * Math.pow(1 + r * (1 - actualTaxRate), totalPeriods);
-    const interestOfInitial = fvInitial - initialDeposit;
-
     setResult({
         endBalance: balance,
         totalPrincipal: initialDeposit + totalContributions,
         totalContributions,
-        totalInterest,
-        interestOfInitial,
-        interestOfContributions: totalInterest - interestOfInitial,
+        totalInterest: balance - initialDeposit - totalContributions,
         buyingPower: balance / Math.pow(1 + inflationRate / 100, yearsToSave),
         schedule,
     });
@@ -157,8 +149,9 @@ export default function SavingsCalculator() {
   
   const barChartData = result?.schedule.map(row => ({
       name: `Year ${row.year}`,
-      'Initial & Contributions': form.getValues('initialDeposit') + result.schedule.slice(0, row.year).reduce((acc, r) => acc + r.deposit, 0) - row.deposit,
-      'Interest': result.schedule.slice(0, row.year).reduce((acc, r) => acc + r.interest, 0),
+      'Principal': row.startBalance,
+      'Interest': row.interest,
+      'Contributions': row.deposit,
   })) || [];
 
   return (
@@ -187,8 +180,8 @@ export default function SavingsCalculator() {
                     <FormField control={form.control} name="inflationRate" render={({ field }) => (<FormItem><FormLabel>Inflation rate (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl></FormItem>)} />
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                      <Button type="submit" className="w-full"><PiggyBank className="mr-2 h-4 w-4"/>Calculate</Button>
-                      <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                      <Button type="submit" className="w-full" aria-label="Calculate Savings"><PiggyBank className="mr-2 h-4 w-4"/>Calculate</Button>
+                      <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset Form"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
                   </div>
               </form>
               </Form>
@@ -222,7 +215,7 @@ export default function SavingsCalculator() {
              <div className="mt-8">
                 <h3 className="text-lg font-bold text-center mb-4">Accumulation Schedule</h3>
                 <div className="h-[300px] w-full mb-4">
-                    <ResponsiveContainer><BarChart data={barChartData} stackOffset="sign"><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" radius={[0, 0, 4, 4]} /><Bar dataKey="Initial & Contributions" stackId="a" fill="hsl(var(--chart-1))" name="Principal" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
+                    <ResponsiveContainer><BarChart data={barChartData} stackOffset="sign"><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" /><Bar dataKey="Contributions" stackId="a" fill="hsl(var(--chart-2))" /><Bar dataKey="Principal" stackId="a" fill="hsl(var(--chart-1))" name="Principal" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
                 </div>
                 <div className="h-[300px] overflow-y-auto border rounded-md">
                 <Table><TableHeader className="sticky top-0 bg-secondary"><TableRow><TableHead>Year</TableHead><TableHead className="text-right">Deposit</TableHead><TableHead className="text-right">Interest</TableHead><TableHead className="text-right">Ending balance</TableHead></TableRow></TableHeader>
