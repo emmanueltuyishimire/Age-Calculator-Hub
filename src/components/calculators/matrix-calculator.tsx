@@ -39,7 +39,7 @@ const fromMatrix = (matrix: any): (string | number)[][] => {
       }
     }
     
-    // Handle plain JS arrays passed from eigs.vectors
+    // Handle plain JS arrays
     if (Array.isArray(matrix)) {
         if (matrix.length > 0 && Array.isArray(matrix[0])) {
              return matrix.map(row => row.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell));
@@ -184,6 +184,19 @@ export default function MatrixCalculator() {
             const matB = toMatrix(matrixB);
             let res: any;
 
+            const processEigs = (eigsResult: any) => {
+                const eigenvalues = eigsResult.values.map(formatEigenvalue);
+                // Correctly extract and format eigenvectors
+                const eigenvectors = eigsResult.eigenvectors.map((eVec: any) => 
+                    eVec.vector.map((val: any) => math.format(val, { precision: 4 }))
+                );
+                const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
+                eigenvectors.forEach((vec: (string | number)[], i: number) => {
+                    eigResult.push([`Vector ${i+1}:` , ...vec]);
+                });
+                setResultMatrix(eigResult);
+            };
+
             switch(op) {
                 case 'transposeA': res = math.transpose(matA); setResultMatrix(fromMatrix(res)); break;
                 case 'powerA':
@@ -196,13 +209,7 @@ export default function MatrixCalculator() {
                 case 'rrefA': res = math.algebra.rref(matA); setResultMatrix(fromMatrix(res)); break;
                 case 'eigsA':
                     res = math.eigs(matA);
-                    const eigenvalues = res.values.map(formatEigenvalue);
-                    const eigenvectors = res.eigenvectors.map((eVec: any) => eVec.vector);
-                    const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
-                    eigenvectors.forEach((vec: (string | number)[], i: number) => {
-                        eigResult.push([`Vector ${i+1}:` , ...vec.map(v => math.format(v, {precision: 4}))]);
-                    });
-                    setResultMatrix(eigResult);
+                    processEigs(res);
                     break;
                 case 'scalarA': res = math.multiply(matA, scalarA); setResultMatrix(fromMatrix(res)); break;
                 
@@ -217,13 +224,7 @@ export default function MatrixCalculator() {
                 case 'rrefB': res = math.algebra.rref(matB); setResultMatrix(fromMatrix(res)); break;
                 case 'eigsB':
                     res = math.eigs(matB);
-                    const eigenvaluesB = res.values.map(formatEigenvalue);
-                    const eigenvectorsB = res.eigenvectors.map((eVec: any) => eVec.vector);
-                    const eigResultB: (string | number)[][] = [['Eigenvalues:'], eigenvaluesB];
-                    eigenvectorsB.forEach((vec: (string | number)[], i: number) => {
-                         eigResultB.push([`Vector ${i+1}:` , ...vec.map(v => math.format(v, {precision: 4}))]);
-                    });
-                    setResultMatrix(eigResultB);
+                    processEigs(res);
                     break;
                 case 'scalarB': res = math.multiply(matB, scalarB); setResultMatrix(fromMatrix(res)); break;
 
@@ -309,14 +310,18 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
             </div>
             <div className="flex gap-2 flex-wrap items-center">
                 <Button size="sm" onClick={() => performOp(`transpose${prefix}`)}><RotateCcw className="h-4 w-4 mr-1"/>Transpose</Button>
-                <Button size="sm" onClick={() => performOp(`power${prefix}`)}><Power className="h-4 w-4 mr-1"/>Power of</Button>
-                <Input type="number" value={power} onChange={e => setPower(parseInt(e.target.value) || 0)} className="w-16 h-9" />
+                <div className="flex gap-1 items-center">
+                  <Button size="sm" onClick={() => performOp(`power${prefix}`)}><Power className="h-4 w-4 mr-1"/>Power of</Button>
+                  <Input type="number" value={power} onChange={e => setPower(parseInt(e.target.value) || 0)} className="w-16 h-9" />
+                </div>
                  <Button size="sm" onClick={() => performOp(`determinant${prefix}`)}>Determinant</Button>
                 <Button size="sm" onClick={() => performOp(`inverse${prefix}`)}>Inverse</Button>
             </div>
              <div className="flex gap-2 flex-wrap items-center">
-                <Button size="sm" onClick={() => performOp(`scalar${prefix}`)}>× Scalar</Button>
-                <Input type="number" value={scalar} onChange={e => setScalar(parseInt(e.target.value) || 0)} className="w-16 h-9" />
+                <div className="flex gap-1 items-center">
+                  <Button size="sm" onClick={() => performOp(`scalar${prefix}`)}>× Scalar</Button>
+                  <Input type="number" value={scalar} onChange={e => setScalar(parseInt(e.target.value) || 0)} className="w-16 h-9" />
+                </div>
                 <Button size="sm" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
                 <Button size="sm" onClick={() => performOp(`eigs${prefix}`)}>Eigenvalues</Button>
             </div>
