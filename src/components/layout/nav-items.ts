@@ -53,6 +53,7 @@ import {
   Sailboat,
   Wallet,
   Heart,
+  Timer,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -538,6 +539,13 @@ export const navItems: NavItem[] = [
     label: 'Volume Calculator',
     category: 'Math',
     description: 'Calculate the volume of common 3D shapes like spheres, cubes, and cylinders.'
+  },
+   {
+    href: '/time-calculator',
+    icon: Timer,
+    label: 'Time Calculator',
+    category: 'Math',
+    description: 'Calculate duration between dates or add/subtract time.'
   },
   {
     href: '/sales-tax-calculator',
