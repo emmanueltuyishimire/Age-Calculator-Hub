@@ -5,8 +5,8 @@ import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 export const metadata: Metadata = {
-    title: 'Matrix Calculator – RREF, Inverse, Determinant, Eigenvalues',
-    description: 'A comprehensive free online Matrix Calculator. Perform addition, subtraction, multiplication, and find the inverse, determinant, RREF (Row Reduced Echelon Form), and eigenvalues of a matrix.',
+    title: 'Matrix Calculator – RREF, Inverse, Determinant & Eigenvalues',
+    description: 'A comprehensive free online Matrix Calculator. An alternative to Desmos for matrix operations. Perform addition, subtraction, multiplication, and find the inverse, determinant, RREF for augmented matrices, and eigenvalues for diagonalization.',
     alternates: {
         canonical: '/matrix-calculator',
     },
@@ -19,7 +19,7 @@ export default function MatrixCalculatorPage() {
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Matrix Calculator</h1>
           <p className="text-md md:text-lg text-muted-foreground">
-            A matrix, in a mathematical context, is a rectangular array of numbers, symbols, or expressions that are arranged in rows and columns. Matrices are often used in scientific fields such as physics, computer graphics, probability theory, statistics, calculus, numerical analysis, and more.
+            A powerful online tool to perform various matrix operations, including addition, multiplication, finding the determinant, inverse, Row Reduced Echelon Form (RREF), and eigenvalues.
           </p>
         </div>
 
@@ -35,6 +35,8 @@ export default function MatrixCalculatorPage() {
                     <li><strong>Perform Operations:</strong>
                         <ul className="list-disc list-inside ml-6">
                            <li>For single-matrix operations (like Transpose, Determinant, Inverse, RREF, or Eigenvalues), use the buttons directly under the matrix you want to analyze.</li>
+                           <li>To solve a system of linear equations, create an <strong>augmented matrix</strong> and use the <strong>RREF</strong> button.</li>
+                           <li>To find eigenvalues for diagonalization, use the <strong>Eigenvalues</strong> button.</li>
                            <li>For two-matrix operations (like A+B, A-B, or AB), use the buttons in the "Operations" section.</li>
                         </ul>
                     </li>
@@ -89,7 +91,7 @@ export default function MatrixCalculatorPage() {
           <Card>
             <CardHeader><CardTitle>Row Reduced Echelon Form (RREF)</CardTitle></CardHeader>
             <CardContent className="space-y-4 text-muted-foreground">
-                <p>RREF is a simplified form of a matrix obtained by performing a series of elementary row operations. It is particularly useful for solving systems of linear equations. To solve a system, you can create an "augmented matrix" where the last column contains the constants from your equations, and then find its RREF. The resulting matrix will give you the solutions.</p>
+                <p>RREF is a simplified form of a matrix obtained by performing a series of elementary row operations. It is particularly useful for solving systems of linear equations. To solve a system, you can create an "augmented matrix" and then find its RREF. The resulting matrix will give you the solutions.</p>
             </CardContent>
           </Card>
            <Card>
