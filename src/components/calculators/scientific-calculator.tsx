@@ -31,11 +31,10 @@ const ScientificCalculator = () => {
     const [expression, setExpression] = useState('');
     const [isError, setIsError] = useState(false);
     const [isResult, setIsResult] = useState(false);
-    const [isShifted, setIsShifted] = useState(false);
 
-    const ariaLabels: { [key: string]: string } = {
+     const ariaLabels: { [key: string]: string } = {
         'AC': 'All Clear',
-        'backspace': 'Backspace',
+        'Back': 'Backspace',
         '±': 'Toggle sign',
         '÷': 'Divide',
         '×': 'Multiply',
@@ -57,13 +56,14 @@ const ScientificCalculator = () => {
         'x3': 'Cube',
         'xy': 'Power',
         'y√x': 'nth root',
+        '√x': 'Square root',
+        '³√x': 'Cube root',
         '1/x': 'Reciprocal',
         'n!': 'Factorial',
         'ex': 'e to the power of x',
         '10x': '10 to the power of x',
         'Rad': 'Radians',
         'Deg': 'Degrees',
-        '2nd': 'Second function',
         'EXP': 'Exponent',
         '(': 'Open parenthesis',
         ')': 'Close parenthesis',
@@ -71,7 +71,8 @@ const ScientificCalculator = () => {
         'MC': 'Memory Clear',
         'MR': 'Memory Recall',
         'M+': 'Memory Add',
-        'M-': 'Memory Subtract'
+        'M-': 'Memory Subtract',
+        'RND': 'Random Number'
     };
 
     const calculate = () => {
@@ -126,7 +127,8 @@ const ScientificCalculator = () => {
 
         if (isResult && !isOperator && value !== '=' && value !== '±') {
              setIsResult(false);
-             if(!['1/x', 'x2', 'ex', '10x', 'n!'].includes(value)){
+             // Clear expression if starting a new calculation, unless using an operator that acts on the result
+             if(!['1/x', 'x2', 'x3', 'ex', '10x', 'n!'].includes(value)){
                  setExpression('');
              }
         }
@@ -153,7 +155,7 @@ const ScientificCalculator = () => {
 
         switch (value) {
             case 'AC': setExpression(''); setDisplay('0'); setIsError(false); setIsResult(false); setMemory(0); break;
-            case 'backspace': setExpression(prev => prev.slice(0, -1)); break;
+            case 'Back': setExpression(prev => prev.slice(0, -1)); break;
             case '=': calculate(); break;
             case '+': handleOperator('+'); break;
             case '−': handleOperator('−'); break;
@@ -168,28 +170,39 @@ const ScientificCalculator = () => {
             case '³√x': setExpression(prev => prev + 'cbrt('); break;
             case 'sin-1': setExpression(prev => prev + 'asin('); break;
             case 'cos-1': setExpression(prev => prev + 'acos('); break;
-            case 'atan-1': setExpression(prev => prev + 'atan('); break;
-            case '1/x': setExpression(prev => `(1/(${prev || '1'}))`); break;
-            case 'n!': setExpression(prev => `factorial(${prev || '0'})`); break;
+            case 'tan-1': setExpression(prev => prev + 'atan('); break;
+            case '1/x': 
+                setExpression(prev => `(1/(${prev || '1'}))`);
+                calculate();
+                break;
+            case 'n!': 
+                setExpression(prev => `factorial(${prev || '0'})`); 
+                calculate();
+                break;
             case 'π': setExpression(prev => prev + 'pi'); break;
             case 'e': setExpression(prev => prev + 'e'); break;
             case 'xy': handleOperator('^'); break;
             case 'x2': 
                  setExpression(prev => `((${prev || '0'})^2)`);
+                 calculate();
                 break;
             case 'x3': 
                  setExpression(prev => `((${prev || '0'})^3)`);
+                 calculate();
                 break;
             case 'ex': 
                 setExpression(prev => `(e^(${prev || '0'}))`);
+                calculate();
                 break;
             case '10x': 
                 setExpression(prev => `(10^(${prev || '0'}))`);
+                calculate();
                 break;
             case 'y√x':
                 setExpression(prev => {
                     const [lastNum] = getLastNumber(prev);
-                    return `nthRoot(${lastNum || '0'}, `;
+                    const base = prev.substring(0, prev.length - lastNum.length);
+                    return `${base}nthRoot(${lastNum}, `;
                 });
                 break;
             case 'Ans': setExpression(prev => prev + ans.toString()); break;
@@ -209,31 +222,42 @@ const ScientificCalculator = () => {
                 break;
             case 'MC': setMemory(0); break;
             case 'MR': setExpression(prev => prev + memory.toString()); break;
-            case '±':
+            case '%':
                  setExpression(prev => {
-                    if (isResult) {
-                        try {
-                           const currentVal = evaluate(prev);
-                           if (typeof currentVal === 'number') {
-                             return (-currentVal).toString();
-                           }
-                        } catch {
-                           return prev;
-                        }
-                    }
                     const [lastNum, lastNumIndex] = getLastNumber(prev);
                     if (lastNum) {
-                        const isNegativeInParens = lastNum.startsWith('(-') && lastNum.endsWith(')');
-                        const newNum = isNegativeInParens ? lastNum.slice(2, -1) : `(-${lastNum})`;
-                        return prev.slice(0, lastNumIndex) + newNum;
+                        const base = prev.substring(0, lastNumIndex);
+                        return `${base}(${lastNum}/100)`;
                     }
                     return prev;
                 });
                 break;
-            case 'Deg': setIsDeg(true); break;
-            case 'Rad': setIsDeg(false); break;
+            case 'RND':
+                const randomNum = Math.random();
+                if(isResult || expression === '0' || expression === '') {
+                    setExpression(randomNum.toString());
+                    setIsResult(false);
+                } else {
+                    setExpression(prev => prev + randomNum.toString());
+                }
+                break;
+            case '±':
+                if (isResult) {
+                    setExpression(prev => (-parseFloat(prev)).toString());
+                } else {
+                    setExpression(prev => {
+                        const [lastNum, lastNumIndex] = getLastNumber(prev);
+                        if (lastNum) {
+                            const isNegativeInParens = lastNum.startsWith('(-') && lastNum.endsWith(')');
+                            const newNum = isNegativeInParens ? lastNum.slice(2, -1) : `(-${lastNum})`;
+                            return prev.slice(0, lastNumIndex) + newNum;
+                        }
+                        return prev;
+                    });
+                }
+                break;
+            case 'DegRad': setIsDeg(prev => !prev); break;
             case 'EXP': setExpression(prev => prev + 'e+'); break;
-            case '2nd': setIsShifted(prev => !prev); break;
             case '(': case ')':
                 setExpression(prev => prev + value);
                 break;
@@ -247,7 +271,6 @@ const ScientificCalculator = () => {
                     }
                 }
         }
-        if (value !== '2nd') setIsShifted(false);
     };
     
     useEffect(() => {
@@ -264,7 +287,7 @@ const ScientificCalculator = () => {
                 ...Object.fromEntries("0123456789.()".split('').map(k => [k, k])),
                 '+': '+', '-': '−', '*': '×', '/': '÷',
                 'Enter': () => calculate(), '=': () => calculate(),
-                'Backspace': 'backspace', 'Escape': 'AC', 'c': 'AC',
+                'Backspace': 'Back', 'Escape': 'AC', 'c': 'AC',
                 '^': 'xy', '%': '%',
                 's': 'sin', 'p': 'π', 'e': 'e', 'l': 'log',
             };
@@ -305,42 +328,37 @@ const ScientificCalculator = () => {
   const getVariant = (btnValue: string): "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined => {
     if (['+', '−', '×', '÷', '='].includes(btnValue)) return 'default';
     if (btnValue === 'AC') return 'destructive';
-    if (['2nd', 'Deg', 'Rad'].includes(btnValue)) return 'ghost';
     return 'secondary';
   }
   
   const buttons = [
-    { primary: '2nd', shift: '2nd', label: <span key="2nd" className={cn(isShifted && "text-primary font-bold")}>2nd</span>},
-    { primary: 'π', shift: 'e', label: <><span className="absolute top-1 left-1 text-xs opacity-50">e</span>π</> },
-    { primary: 'AC', shift: 'AC', label: 'AC' },
-    { primary: 'backspace', shift: 'backspace', label: <Trash2 key="backspace" className="h-5 w-5 mx-auto"/> },
-    { primary: 'x2', shift: 'x3', label: <><span className="absolute top-1 left-1 text-xs opacity-50">x³</span>x²</> },
-    { primary: '1/x', shift: '1/x', label: '1/x' },
-    { primary: '(', shift: '(', label: '(' },
-    { primary: ')', shift: ')', label: ')' },
-    { primary: 'n!', shift: 'n!', label: 'n!' },
-    { primary: '÷', shift: '÷', label: '÷' },
-    { primary: 'xy', shift: 'y√x', label: <><span className="absolute top-1 left-1 text-xs opacity-50">y</span>√x</> },
-    { primary: '7', shift: '7', label: '7' },
-    { primary: '8', shift: '8', label: '8' },
-    { primary: '9', shift: '9', label: '9' },
-    { primary: '×', shift: '×', label: '×' },
-    { primary: '10x', shift: 'ex', label: <><span className="absolute top-1 left-1 text-xs opacity-50">eˣ</span>10ˣ</> },
-    { primary: '4', shift: '4', label: '4' },
-    { primary: '5', shift: '5', label: '5' },
-    { primary: '6', shift: '6', label: '6' },
-    { primary: '−', shift: '−', label: '−' },
-    { primary: 'log', shift: 'ln', label: <><span className="absolute top-1 left-1 text-xs opacity-50">ln</span>log</> },
-    { primary: '1', shift: '1', label: '1' },
-    { primary: '2', shift: '2', label: '2' },
-    { primary: '3', shift: '3', label: '3' },
-    { primary: '+', shift: '+', label: '+' },
-    { primary: 'Rad', shift: 'Deg', label: <><span className={cn("absolute top-1 left-1 text-xs", !isDeg && "text-primary font-bold")}>Rad</span><span className={cn(isDeg && "text-primary font-bold")}>Deg</span></> },
-    { primary: '±', shift: '±', label: '±' },
-    { primary: '0', shift: '0', label: '0' },
-    { primary: '.', shift: '.', label: '.' },
-    { primary: '=', shift: '=', label: '=' },
+    'sin', 'cos', 'tan', 'DegRad', 
+    'sin-1', 'cos-1', 'tan-1', 'π', 'e', 
+    'xy', 'x3', 'x2', 'ex', '10x', 
+    'y√x', '³√x', '√x', 'ln', 'log', 
+    '(', ')', '1/x', '%', 'n!', 
+    '7', '8', '9', '+', 'Back', 
+    '4', '5', '6', '−', 'Ans', 
+    '1', '2', '3', '×', 'M+', 
+    '0', '.', 'EXP', '÷', 'M-', 
+    '±', 'RND', 'AC', '=', 'MR',
   ];
+
+  const getButtonLabel = (key: string) => {
+    switch (key) {
+        case 'Back': return <Trash2 className="h-5 w-5 mx-auto"/>;
+        case 'xy': return <>x<sup>y</sup></>;
+        case 'x2': return <>x<sup>2</sup></>;
+        case 'x3': return <>x<sup>3</sup></>;
+        case 'ex': return <>e<sup>x</sup></>;
+        case '10x': return <>10<sup>x</sup></>;
+        case 'y√x': return <>{'ʸ√x'}</>;
+        case '³√x': return <>{'³√x'}</>;
+        case '√x': return <>{'√x'}</>;
+        case 'DegRad': return <span className="text-xs">{isDeg ? 'Deg' : 'Rad'}</span>;
+        default: return key;
+    }
+  }
 
   return (
     <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-sm">
@@ -354,24 +372,20 @@ const ScientificCalculator = () => {
         />
       </div>
        <div className="grid grid-cols-5 gap-1.5">
-          {buttons.map(btn => {
-            const value = isShifted ? btn.shift : btn.primary;
-            return (
+          {buttons.map(btn => (
               <Button
-                  key={btn.primary}
-                  variant={getVariant(value)}
-                  className={cn("h-12 text-sm p-1 shadow-md hover:shadow-sm active:shadow-inner active:translate-y-px relative", {
-                    'bg-primary/80 text-primary-foreground': (value === 'Deg' && isDeg) || (value === 'Rad' && !isDeg) || (value === '2nd' && isShifted),
-                    'col-span-2': value === '0',
-                    'bg-yellow-500 hover:bg-yellow-600': value === '2nd',
+                  key={btn}
+                  variant={getVariant(btn)}
+                  className={cn("h-10 text-xs p-1 shadow-md hover:shadow-sm active:shadow-inner active:translate-y-px relative", {
+                    'col-span-2': btn === '=',
                   })}
-                  onClick={() => handleButtonClick(value)}
-                  aria-label={ariaLabels[value] || value}
+                  onClick={() => handleButtonClick(btn)}
+                  aria-label={ariaLabels[btn] || btn}
               >
-                  {btn.label}
+                  {getButtonLabel(btn)}
               </Button>
             )
-          })}
+          )}
         </div>
     </div>
   );
