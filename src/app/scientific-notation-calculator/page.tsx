@@ -56,7 +56,7 @@ export default function ScientificNotationCalculatorPage() {
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Scientific Notation Calculator</h1>
           <p className="text-md md:text-lg text-muted-foreground">
-            A free online tool to perform arithmetic on numbers in scientific notation and convert between different formats, with step-by-step explanations.
+            Free online tools to convert numbers to scientific notation and perform arithmetic operations.
           </p>
         </div>
 
