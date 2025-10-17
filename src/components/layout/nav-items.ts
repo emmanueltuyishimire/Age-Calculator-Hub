@@ -674,6 +674,14 @@ export const navItems: NavItem[] = [
     category: 'Math',
     description: 'Find all factors and the prime factorization of an integer.'
   },
+  {
+    href: '/rounding-calculator',
+    icon: Sigma,
+    label: 'Rounding Calculator',
+    category: 'Math',
+    description: 'Round numbers using various methods like half up, ceiling, or to the nearest fraction.'
+  },
+
 
   // Other Calculators
    {
