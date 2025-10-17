@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { TopNav } from './top-nav';
 import { ThemeToggle } from './theme-toggle';
 import { Footer } from './footer';
+import Breadcrumbs from './breadcrumbs';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,6 +27,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </header>
+      <Breadcrumbs />
       <main className="flex-1">
         {children}
       </main>
