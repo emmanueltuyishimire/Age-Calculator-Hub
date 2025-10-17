@@ -8,28 +8,26 @@ import { SearchBar } from '@/components/layout/search-bar';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
 import { ArrowRight } from 'lucide-react';
+import ScientificCalculatorDisplay from '@/components/calculators/scientific-calculator';
 
 export default function Home() {
   return (
     <main role="main">
-      <section className="bg-muted/50 py-16 md:py-20">
+      <section className="bg-muted/50 py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="text-center md:text-left">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
               <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mt-4">
                   Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
               </p>
-              <div className="mt-8 mx-auto max-w-md">
+              <div className="mt-8 mx-auto md:mx-0 max-w-md">
                   <SearchBar />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 w-full max-w-sm mx-auto">
-                 <Button asChild size="lg" className="w-full">
-                     <Link href="/simple-calculator">Simple Calculator <ArrowRight className="ml-2 h-4 w-4"/></Link>
-                 </Button>
-                 <Button asChild size="lg" variant="secondary" className="w-full">
-                     <Link href="/scientific-calculator">Scientific Calculator <ArrowRight className="ml-2 h-4 w-4"/></Link>
-                 </Button>
-              </div>
+            </div>
+             <div className="flex justify-center">
+                <ScientificCalculatorDisplay />
+            </div>
           </div>
         </div>
       </section>

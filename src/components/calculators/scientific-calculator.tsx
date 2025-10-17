@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -22,7 +23,7 @@ const nthRoot = (base: number, root: number) => Math.pow(base, 1 / root);
 
 
 // --- Main Component ---
-const ScientificCalculator = () => {
+const ScientificCalculatorDisplay = () => {
     const [display, setDisplay] = useState('0');
     const [isDeg, setIsDeg] = useState(true);
     const [memory, setMemory] = useState(0);
@@ -266,7 +267,7 @@ const ScientificCalculator = () => {
                         setExpression(value);
                         setIsResult(false);
                     } else {
-                        setExpression(prev => (prev === '0' && value !== '.') ? value : prev + value);
+                         setExpression(prev => (prev === '0' && value !== '.') ? value : prev + value);
                     }
                 }
         }
@@ -390,4 +391,4 @@ const ScientificCalculator = () => {
   );
 };
 
-export default ScientificCalculator;
+export default ScientificCalculatorDisplay;
