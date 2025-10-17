@@ -72,6 +72,19 @@ export default function FourOhOneKCalculatorPage() {
             <section className="mt-12 space-y-8 animate-fade-in">
                 <Card>
                     <CardHeader>
+                        <CardTitle>How to Use the 401(k) Calculators</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Retirement Calculator:</strong> Enter your current financial situation, including age, salary, and existing balance, along with your contribution details and expected returns to project your total 401(k) balance at retirement.</li>
+                            <li><strong>Early Withdrawal Calculator:</strong> If you're considering taking money out before age 59½, use this tab to estimate the financial impact, including taxes and the 10% penalty.</li>
+                            <li><strong>Maximize Match Calculator:</strong> Input your salary and your employer's matching formula to find the minimum contribution percentage required to get the full employer match—ensuring you don't leave "free money" on the table.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
                         <CardTitle>401(k) Information</CardTitle>
                     </CardHeader>
                     <CardContent>

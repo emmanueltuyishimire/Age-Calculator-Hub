@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
     title: 'Root Calculator – Find Square, Cube & nth Roots',
-    description: 'A free online Root Calculator to find the square root, cube root, or any nth root of a number. Includes formulas and methods for estimating roots.',
+    description: 'A free online Root Calculator to find the square root, cube root, or any nth root of a number. Formulas and diagrams included for easy calculation.',
     alternates: {
         canonical: '/root-calculator',
     },
@@ -68,7 +68,19 @@ export default function RootCalculatorPage() {
         <RootCalculator />
 
         <section className="mt-12 space-y-8 animate-fade-in prose dark:prose-invert lg:prose-xl max-w-none">
-            
+            <Card>
+                <CardHeader>
+                    <CardTitle>How to Use the Root Calculators</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                        <li><strong>Square Root:</strong> Enter a number into the input field and click '=' to find its square root.</li>
+                        <li><strong>Cube Root:</strong> Enter a number and click '=' to find its cube root.</li>
+                        <li><strong>General Root:</strong> Enter the degree of the root (e.g., '4' for a 4th root) and the radicand (the number under the root sign), then click '=' to calculate.</li>
+                    </ol>
+                </CardContent>
+            </Card>
+
             <Card>
                 <CardHeader>
                     <CardTitle>What is a Root?</CardTitle>

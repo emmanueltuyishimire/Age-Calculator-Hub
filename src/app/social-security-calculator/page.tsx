@@ -91,7 +91,7 @@ export default function SocialSecurityCalculatorPage() {
                     <CardHeader><CardTitle>Learn More About Retirement Planning</CardTitle></CardHeader>
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li>First, find your Full Retirement Age with our <Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">Retirement Age Calculator</Link>.</li>
+                            <li>First, find your Full Retirement Age with our <Link href="/retirement" className="text-primary hover:underline">Retirement Age Calculator</Link>.</li>
                             <li><Link href="/articles/planning-for-retirement-at-any-age" className="text-primary hover:underline">Planning for Retirement: A Decade-by-Decade Guide</Link></li>
                         </ul>
                     </CardContent>

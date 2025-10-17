@@ -27,6 +27,19 @@ export default function AnnuityPayoutCalculatorPage() {
             <AnnuityPayoutCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>How to Use the Payout Calculator</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground mb-4">This tool has two modes to help you plan your annuity distributions:</p>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Fixed Length Tab:</strong> Use this if you know how long you want the payments to last. Enter your principal, interest rate, and desired payout duration (in years) to find out how much you can withdraw each period.</li>
+                            <li><strong>Fixed Payment Tab:</strong> Use this if you know how much you want to receive each period. Enter your principal, interest rate, and desired payout amount to calculate how long your annuity will last.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
                  <Card>
                     <CardHeader>
                         <CardTitle>Understanding the Payout Phase</CardTitle>

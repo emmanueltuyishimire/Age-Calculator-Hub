@@ -28,6 +28,22 @@ export default function AnnuityCalculatorPage() {
             <AnnuityCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>How to Use the Annuity Calculator</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Starting Principal:</strong> Enter the initial amount of your investment.</li>
+                            <li><strong>Annual/Monthly Addition:</strong> Input any regular contributions you plan to make.</li>
+                            <li><strong>Addition At:</strong> Specify whether you add funds at the beginning or end of each period.</li>
+                            <li><strong>Annual Growth Rate:</strong> Provide the expected annual rate of return for your annuity.</li>
+                            <li><strong>After (years):</strong> Set the number of years you want to project the growth for.</li>
+                            <li><strong>Click “Calculate”:</strong> Instantly see your estimated end balance and a detailed accumulation schedule.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
                  <Card>
                     <CardHeader>
                         <CardTitle>General Annuity Information</CardTitle>
