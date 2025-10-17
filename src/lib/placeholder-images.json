@@ -11,6 +11,12 @@
       "description": "An image for the simple calculator display area.",
       "imageUrl": "https://picsum.photos/seed/calc-display/400/500",
       "imageHint": "calculator display"
+    },
+    {
+      "id": "hero_background",
+      "description": "An abstract background image with numbers and data visualizations for the hero section.",
+      "imageUrl": "https://picsum.photos/seed/hero-bg/1920/1080",
+      "imageHint": "data abstract"
     }
   ]
 }

@@ -10,6 +10,8 @@ import ArticleList from '@/components/layout/article-list';
 import { ArrowRight } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import Image from 'next/image';
 
 const ScientificCalculatorDisplay = dynamic(() => import('@/components/calculators/scientific-calculator'), {
   ssr: false,
@@ -18,10 +20,22 @@ const ScientificCalculatorDisplay = dynamic(() => import('@/components/calculato
 
 
 export default function Home() {
+    const heroBgImage = PlaceHolderImages.find(img => img.id === 'hero_background');
+
   return (
     <main role="main">
-      <section className="bg-muted/50 py-12 md:py-16">
-        <div className="container mx-auto px-4">
+      <section className="relative bg-muted/50 py-12 md:py-16 overflow-hidden">
+        {heroBgImage && (
+            <Image
+                src={heroBgImage.imageUrl}
+                alt={heroBgImage.description}
+                fill
+                className="object-cover opacity-10 dark:opacity-5"
+                data-ai-hint={heroBgImage.imageHint}
+                priority
+            />
+        )}
+        <div className="container relative mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="text-center md:text-left">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
