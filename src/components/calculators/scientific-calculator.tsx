@@ -23,7 +23,7 @@ const nthRoot = (base: number, root: number) => Math.pow(base, 1 / root);
 
 
 // --- Main Component ---
-const ScientificCalculatorDisplay = () => {
+const ScientificCalculator = () => {
     const [display, setDisplay] = useState('0');
     const [isDeg, setIsDeg] = useState(true);
     const [memory, setMemory] = useState(0);
@@ -127,7 +127,6 @@ const ScientificCalculatorDisplay = () => {
 
         if (isResult && !isOperator && value !== '=' && value !== '±') {
              setIsResult(false);
-             // Clear expression if starting a new calculation, unless using an operator that acts on the result
              if(!['1/x', 'x2', 'x3', 'ex', '10x', 'n!'].includes(value)){
                  setExpression('');
              }
@@ -366,6 +365,7 @@ const ScientificCalculatorDisplay = () => {
             readOnly
             className="w-full h-12 text-2xl text-right mb-1 bg-transparent pr-4 text-emerald-300 border-transparent font-mono tracking-wider shadow-inner"
             aria-label="Calculator display"
+            aria-live="polite"
         />
       </div>
        <div className="grid grid-cols-7 gap-1.5">
@@ -388,4 +388,4 @@ const ScientificCalculatorDisplay = () => {
   );
 };
 
-export default ScientificCalculatorDisplay;
+export default ScientificCalculator;

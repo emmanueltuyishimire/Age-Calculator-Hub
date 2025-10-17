@@ -8,7 +8,14 @@ import { SearchBar } from '@/components/layout/search-bar';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
 import { ArrowRight } from 'lucide-react';
-import ScientificCalculatorDisplay from '@/components/calculators/scientific-calculator';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const ScientificCalculatorDisplay = dynamic(() => import('@/components/calculators/scientific-calculator'), {
+  ssr: false,
+  loading: () => <Skeleton className="h-[450px] w-full max-w-md sm:max-w-lg" />,
+});
+
 
 export default function Home() {
   return (

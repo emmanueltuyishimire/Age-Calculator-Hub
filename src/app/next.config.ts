@@ -43,10 +43,6 @@ const nextConfig: NextConfig = {
       }
     ];
   },
-  // This is required to allow the Next.js dev server to accept requests from the
-  // Firebase Studio preview environment.
-  // allowedDevOrigins was moved out of experimental for newer Next.js versions,
-  // but it seems to be causing issues with Turbopack. Temporarily removing it.
   experimental: { },
 };
 

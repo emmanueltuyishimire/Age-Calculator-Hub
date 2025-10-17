@@ -14,8 +14,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 
 const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
-  loading: () => <Skeleton className="h-[500px] w-full max-w-sm" />,
   ssr: false,
+  loading: () => <Skeleton className="h-[450px] w-full max-w-md sm:max-w-lg" />,
 });
 
 const faqs = [

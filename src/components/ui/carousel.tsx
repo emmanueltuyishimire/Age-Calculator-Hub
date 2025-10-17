@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -58,7 +59,7 @@ const Carousel = React.forwardRef<
     },
     ref
   ) => {
-    const [carouselRef, api] = useEmblaCarousel(
+    const [carouselRef, api] = useEmblaCarousel.default(
       {
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
