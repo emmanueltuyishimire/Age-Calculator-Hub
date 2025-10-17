@@ -157,7 +157,7 @@ export default function MatrixCalculator() {
         try {
             const matA = toMatrix(matrixA);
             const matB = toMatrix(matrixB);
-            let res: Matrix | number | { values: any[], vectors: Matrix[] };
+            let res: Matrix | number | { values: any[], eigenvectors: Matrix[] };
 
             switch(op) {
                 case 'transposeA': res = math.transpose(matA); setResultMatrix(fromMatrix(res as Matrix)); break;
@@ -168,7 +168,7 @@ export default function MatrixCalculator() {
                 case 'eigsA':
                     res = math.eigs(matA);
                     const eigenvalues = res.values.map((v: any) => math.format(v, { precision: 4 }));
-                    const eigenvectors = res.vectors.map(vec => fromMatrix(vec as Matrix)[0].map(v => math.format(v, { precision: 4 })));
+                    const eigenvectors = res.eigenvectors.map(vec => fromMatrix(vec as Matrix)[0].map(v => math.format(v, { precision: 4 })));
                     const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
                     eigenvectors.forEach((vec, i) => {
                         eigResult.push([`Vector ${i+1}:` , ...vec]);
@@ -185,7 +185,7 @@ export default function MatrixCalculator() {
                 case 'eigsB':
                     res = math.eigs(matB);
                     const eigenvaluesB = res.values.map((v: any) => math.format(v, { precision: 4 }));
-                    const eigenvectorsB = res.vectors.map(vec => fromMatrix(vec as Matrix)[0].map(v => math.format(v, { precision: 4 })));
+                    const eigenvectorsB = res.eigenvectors.map(vec => fromMatrix(vec as Matrix)[0].map(v => math.format(v, { precision: 4 })));
                     const eigResultB: (string | number)[][] = [['Eigenvalues:'], eigenvaluesB];
                     eigenvectorsB.forEach((vec, i) => {
                         eigResultB.push([`Vector ${i+1}:` , ...vec]);
@@ -291,3 +291,5 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
         </CardContent>
     </Card>
 );
+
+    
