@@ -98,8 +98,6 @@ function NotationConverter() {
                     <div className="mt-6 p-6 bg-muted rounded-lg space-y-4">
                         <div className="flex justify-between items-center">
                             <h3 className="text-lg font-semibold">Result</h3>
-                            {/* Placeholder for future save functionality */}
-                            {/* <Button variant="ghost" size="sm" disabled>Save this calculation</Button> */}
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
                             <div className="font-semibold text-muted-foreground">Scientific Notation:</div>
@@ -132,7 +130,8 @@ const arithmeticSchema = z.object({
 type ArithmeticFormData = z.infer<typeof arithmeticSchema>;
 
 interface ArithmeticResult {
-    value: { mantissa: string; exponent: number };
+    scientific: { mantissa: string; exponent: number };
+    real: string;
     operation: string;
 }
 
@@ -151,23 +150,39 @@ function ArithmeticCalculator() {
         try {
             math.config({ precision });
             const x = math.bignumber(baseX).mul(math.pow(10, expX));
-            const y = math.bignumber(baseY).mul(math.pow(10, expY));
             
             let res: any;
             let operation = '';
 
             switch(op) {
-                case 'add': res = math.add(x, y); operation = 'X + Y ='; break;
-                case 'subtract': res = math.subtract(x, y); operation = 'X - Y ='; break;
-                case 'multiply': res = math.multiply(x, y); operation = 'X × Y ='; break;
-                case 'divide': res = math.divide(x, y); operation = 'X / Y ='; break;
-                case 'power': res = math.pow(x, y); operation = 'X^Y ='; break;
+                case 'add': {
+                    const y = math.bignumber(baseY).mul(math.pow(10, expY));
+                    res = math.add(x, y); operation = 'X + Y ='; break;
+                }
+                case 'subtract': {
+                    const y = math.bignumber(baseY).mul(math.pow(10, expY));
+                    res = math.subtract(x, y); operation = 'X - Y ='; break;
+                }
+                case 'multiply': {
+                    const y = math.bignumber(baseY).mul(math.pow(10, expY));
+                    res = math.multiply(x, y); operation = 'X × Y ='; break;
+                }
+                case 'divide': {
+                     const y = math.bignumber(baseY).mul(math.pow(10, expY));
+                    res = math.divide(x, y); operation = 'X / Y ='; break;
+                }
+                case 'power': {
+                    const y = math.bignumber(baseY).mul(math.pow(10, expY));
+                    res = math.pow(x, y); operation = 'X^Y ='; break;
+                }
                 case 'sqrt': res = math.sqrt(x); operation = '√X ='; break;
                 case 'sq': res = math.pow(x, 2); operation = 'X² ='; break;
             }
             
-            const normalized = toScientific(res);
-            setResult({ value: normalized, operation });
+            const scientificResult = toScientific(res);
+            const realResult = math.format(res, { notation: 'fixed' });
+            
+            setResult({ scientific: scientificResult, real: realResult, operation });
 
         } catch (e) {
             console.error(e);
@@ -182,6 +197,15 @@ function ArithmeticCalculator() {
                 <CardDescription>Use the calculator below to perform calculations using scientific notation.</CardDescription>
             </CardHeader>
             <CardContent>
+                {result && (
+                    <div className="mb-6 p-4 bg-muted rounded-lg space-y-2">
+                        <h3 className="text-lg font-semibold">Result</h3>
+                        <div className="font-mono text-primary text-lg">
+                            <p><span className="text-muted-foreground">Scientific Notation:</span> {result.operation} {result.scientific.mantissa} × 10<sup>{result.scientific.exponent}</sup></p>
+                            <p><span className="text-muted-foreground">Real Number:</span> {result.operation} {result.real}</p>
+                        </div>
+                    </div>
+                )}
                 <Form {...form}>
                     <form className="space-y-4">
                         <div className="flex items-center gap-2">
@@ -210,14 +234,6 @@ function ArithmeticCalculator() {
                         </div>
                     </form>
                 </Form>
-                 {result && (
-                    <div className="mt-6 p-4 bg-muted rounded-lg space-y-2">
-                        <h3 className="text-lg font-semibold">Result:</h3>
-                        <p className="text-xl font-mono text-primary break-all">
-                            <span className="text-muted-foreground">{result.operation}</span> {result.value.mantissa} × 10<sup>{result.value.exponent}</sup>
-                        </p>
-                    </div>
-                )}
             </CardContent>
         </Card>
     );
