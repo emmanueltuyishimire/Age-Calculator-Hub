@@ -165,7 +165,10 @@ const ScientificCalculator = () => {
             case 'tan': setExpression(prev => prev + 'tan('); break;
             case 'log': setExpression(prev => prev + 'log('); break;
             case 'ln': setExpression(prev => prev + 'ln('); break;
-            case '√x': setExpression(prev => prev + 'sqrt('); break;
+            case '√x':
+                setExpression(prev => `sqrt(${prev || '0'})`);
+                calculate();
+                break;
             case '³√x': setExpression(prev => prev + 'cbrt('); break;
             case 'sin-1': setExpression(prev => prev + 'asin('); break;
             case 'cos-1': setExpression(prev => prev + 'acos('); break;
@@ -389,3 +392,5 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
+
+    
