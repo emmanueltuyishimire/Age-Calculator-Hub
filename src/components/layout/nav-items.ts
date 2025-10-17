@@ -660,6 +660,13 @@ export const navItems: NavItem[] = [
     category: 'Math',
     description: 'Calculate the Least Common Multiple of a set of numbers.'
   },
+  {
+    href: '/gcf-calculator',
+    icon: Sigma,
+    label: 'GCF Calculator',
+    category: 'Math',
+    description: 'Calculate the Greatest Common Factor of a set of numbers.'
+  },
 
   // Other Calculators
    {
