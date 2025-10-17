@@ -69,7 +69,7 @@ export default function PercentErrorCalculatorPage() {
 
             <PercentErrorCalculator />
 
-            <section className="mt-12 space-y-8 animate-fade-in">
+            <section className="mt-12 space-y-8 animate-fade-in prose dark:prose-invert lg:prose-xl max-w-none">
                 <Card>
                     <CardHeader>
                         <CardTitle>How to Use the Percent Error Calculator</CardTitle>
@@ -89,7 +89,7 @@ export default function PercentErrorCalculatorPage() {
                     </CardHeader>
                     <CardContent className="space-y-4 text-muted-foreground">
                         <p>Percentage error is a measurement of the discrepancy between an observed (measured) and a true (expected, accepted, known etc.) value. It is typically used to compare measured vs. known values as well as to assess whether the measurements taken are valid.</p>
-                        <p>When measuring data, whether it be the density of some material, standard acceleration due to gravity of a falling object, or something else entirely, the measured value often varies from the true value. Error can arise due to many different reasons that are often related to human error, but can also be due to estimations and limitations of devices used in measurement. Calculating the percentage error provides a means to quantify the degree by which a measured value varies relative to the true value. A small percentage error means that the observed and true value are close while a large percentage error indicates that the observed and true value vary greatly. In most cases, a small percentage error is desirable, while a large percentage error may indicate an error or that an experiment or measurement technique may need to be re-evaluated. If, for example, the measured value varies from the expected value by 90%, there is likely an error, or the method of measurement may not be accurate.</p>
+                        <p>When measuring data, whether it be the density of some material, standard acceleration due to gravity of a falling object, or something else entirely, the measured value often varies from the true value. Error can arise due to many different reasons that are often related to human error, but can also be due to estimations and limitations of devices used in measurement. Calculating the percentage error provides a means to quantify the degree by which a measured value varies relative to the true value. A small percentage error means that the observed and true value are close while a large percentage error indicates that the observed and true value vary greatly. In most cases, a small percentage error is desirable, while a large percentage error may indicate an error, or that an experiment or measurement technique may need to be re-evaluated. If, for example, the measured value varies from the expected value by 90%, there is likely an error, or the method of measurement may not be accurate.</p>
                     </CardContent>
                 </Card>
                 

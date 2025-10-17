@@ -31,7 +31,7 @@ const faqs = [
     },
     {
         question: "What's the difference between a deduction and a credit?",
-        answer: "A deduction reduces your taxable income, lowering your tax bill based on your tax bracket. A tax credit is a dollar-for-dollar reduction of your actual tax liability. This calculator factors in the Child Tax Credit and credit for other dependents."
+        answer: "A deduction reduces your taxable income, lowering your tax bill based on your tax bracket. A tax credit is a dollar-for-dollar reduction of your actual tax liability, making it more powerful."
     },
     {
         question: "How does checking the '2+ jobs' box affect my calculation?",
@@ -105,7 +105,7 @@ export default function TakeHomePayCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <p className="text-destructive-foreground font-semibold">
-                            This calculator provides a detailed estimate for educational purposes and is NOT a substitute for professional tax advice. It does not cover all tax situations. You should consult a qualified tax professional for advice on your specific circumstances.
+                            This calculator provides a detailed estimate for educational purposes only. It is NOT a substitute for professional tax advice or official tax preparation software. Tax laws are complex and this tool does not cover all tax situations. You should consult a qualified tax professional for advice on your specific circumstances.
                         </p>
                     </CardContent>
                 </Card>
@@ -133,6 +133,7 @@ export default function TakeHomePayCalculatorPage() {
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                             <li><Link href="/articles/understanding-your-paycheck" className="text-primary hover:underline">Understanding Your Paycheck: A Guide to Deductions and Net Pay</Link></li>
                             <li>See how this impacts your annual tax return with our <Link href="/income-tax-calculator" className="text-primary hover:underline">Income Tax Calculator</Link>.</li>
+                            <li>Convert your pay across different frequencies with the <Link href="/salary-calculator" className="text-primary hover:underline">Salary Calculator</Link>.</li>
                         </ul>
                     </CardContent>
                 </Card>

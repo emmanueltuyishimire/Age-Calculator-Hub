@@ -34,7 +34,7 @@ const faqs = [
     },
     {
         question: "Is this calculator suitable for complex cash flows?",
-        answer: "No. This calculator is for investments with a single initial cost and a single final return amount. For investments with multiple cash flows (like deposits and withdrawals), you should use an Internal Rate of Return (IRR) calculation with our <a href='/payback-period-calculator' class='text-primary hover:underline'>Payback Period Calculator</a>."
+        answer: "No. This calculator is for investments with a single initial cost and a single final return amount. For investments with multiple cash flows (like deposits and withdrawals), you should use an Internal Rate of Return (IRR) calculation with our <a href='/rental-property-calculator' class='text-primary hover:underline'>Rental Property Calculator</a>."
     }
 ];
 
@@ -76,7 +76,7 @@ export default function RoiCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                            <li><Link href="/compound-interest-calculator" className="text-primary hover:underline">Investment Calculator</Link></li>
+                            <li><Link href="/compound-interest-calculator" className="text-primary hover:underline">Compound Interest Calculator</Link></li>
                              <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
                         </ul>
                     </CardContent>

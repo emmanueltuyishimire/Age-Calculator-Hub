@@ -36,10 +36,10 @@ export default function AboutPage() {
             Calculators provides a comprehensive suite of tools, including:
           </p>
           <ul className="list-disc list-inside space-y-2">
-            <li><strong>Financial Calculators:</strong> Plan for loans, investments, retirement, and manage your budget with confidence.</li>
-            <li><strong>Health & Fitness Calculators:</strong> Track metrics like BMI, BMR, and body fat, or use our pregnancy tools to follow your journey to parenthood.</li>
-            <li><strong>Math Calculators:</strong> From basic arithmetic to complex statistics, find the tools you need for academic or professional use.</li>
-            <li><strong>Everyday Calculators:</strong> Solve daily problems with tools for conversions, time, and more.</li>
+            <li><strong><Link href="/financial-calculators" className="text-primary hover:underline font-semibold">Financial Calculators:</Link></strong> Plan for loans, investments, retirement, and manage your budget with confidence.</li>
+            <li><strong><Link href="/health-fitness-calculators" className="text-primary hover:underline font-semibold">Health & Fitness Calculators:</Link></strong> Track metrics like BMI, BMR, and body fat, or use our pregnancy tools to follow your journey to parenthood.</li>
+            <li><strong><Link href="/math-calculators" className="text-primary hover:underline font-semibold">Math Calculators:</Link></strong> From basic arithmetic to complex statistics, find the tools you need for academic or professional use.</li>
+            <li><strong><Link href="/other-calculators" className="text-primary hover:underline font-semibold">Everyday Calculators:</Link></strong> Solve daily problems with tools for conversions, time, and more.</li>
           </ul>
           
           <h2 className="text-2xl font-bold text-foreground pt-4">Our Commitment to Accuracy and Privacy</h2>

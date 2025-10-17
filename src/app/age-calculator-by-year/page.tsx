@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 const faqs = [
     { question: "How does the age by year calculator work?", answer: "It uses a simple formula: Current Year - Birth Year. This provides the age a person will be on their birthday in the current year." },
-    { question: "Is this calculator accurate?", answer: "It provides a good estimate, but it can be off by one year because it does not account for the month and day of birth. For exact age, use our full <a href='/age-calculator-by-date-of-birth' class='text-primary hover:underline'>Date of Birth Age Calculator</a>." },
+    { question: "Is this calculator accurate?", answer: "It provides a good estimate, but it can be off by one year because it does not account for the month and day of birth. For exact age, use our full <a href='/age-calculator' class='text-primary hover:underline'>Date of Birth Age Calculator</a>." },
     { question: "When should I use this calculator?", answer: "This tool is perfect for situations where you only need a quick, approximate age and don't have the full date of birth available." },
     { question: "Is this tool free to use?", answer: "Yes, this is a completely free online tool for anyone to use." },
     { question: "Can I use this for historical figures?", answer: "Yes, this is a great tool for quickly estimating the age of a historical figure during a specific event, as long as you know their birth year." },
@@ -129,4 +129,8 @@ export default function AgeCalculatorByYearPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="
+        <RelatedCalculators currentCategory="Core Age Calculators" currentHref="/age-calculator-by-year" />
+      </div>
+    </div>
+  );
+}

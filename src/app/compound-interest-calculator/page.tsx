@@ -30,7 +30,7 @@ const faqs = [
     },
     {
         question: "What is the 'Contribute at' setting for?",
-        answer: "This determines if your periodic contributions are made at the beginning or end of each period. Contributions made at the 'beginning' will have slightly more time to earn interest, resulting in a higher final balance."
+        answer: "This determines if your periodic deposits are made at the beginning or end of each period. Contributions made at the 'beginning' will have slightly more time to earn interest, resulting in a higher final balance."
     },
     {
         question: "How do taxes and inflation affect my end balance?",
@@ -76,7 +76,7 @@ export default function CompoundInterestCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
-                           Interest is the cost of using borrowed money, or more specifically, the amount a lender receives for advancing money to a borrower. Simple interest is earned only on the principal, while compound interest is interest earned on both the principal and on the accumulated interest. Because lenders earn interest on interest, earnings compound over time like an exponentially growing snowball. Therefore, compound interest can financially reward lenders generously over time. The longer the interest compounds for any investment, the greater the growth.
+                           Interest is the cost of using borrowed money, or more specifically, the amount a lender receives for advancing money to a borrower. <Link href="/simple-interest-calculator" className="text-primary hover:underline">Simple interest</Link> is earned only on the principal, while compound interest is interest earned on both the principal and on the accumulated interest. Because lenders earn interest on interest, earnings compound over time like an exponentially growing snowball. Therefore, compound interest can financially reward lenders generously over time. The longer the interest compounds for any investment, the greater the growth.
                         </p>
                         <p className="text-muted-foreground mt-2">
                             To learn more, read our detailed <Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">article on the power of compound interest</Link>.

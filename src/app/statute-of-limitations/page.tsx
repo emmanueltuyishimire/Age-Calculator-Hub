@@ -120,14 +120,14 @@ export default function StatuteOfLimitationsPage() {
                                 <BookOpen className="h-8 w-8 text-primary mt-1 shrink-0"/>
                                 <div>
                                     <h3 className="font-semibold">The Discovery Rule</h3>
-                                    <p className="text-sm text-muted-foreground">In many cases, the clock doesn't start until the injury or harm is actually discovered (or reasonably should have been discovered).</p>
+                                    <p className="text-sm text-muted-foreground">In many cases, the clock doesn't start until the injury or harm is actually discovered (or reasonably should have been discovered). Read our <Link href="/articles/understanding-the-discovery-rule" className="text-primary hover:underline">guide on the Discovery Rule</Link>.</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
                                 <Scale className="h-8 w-8 text-primary mt-1 shrink-0"/>
                                 <div>
                                     <h3 className="font-semibold">Tolling for Minors</h3>
-                                    <p className="text-sm text-muted-foreground">For minors, the statute of limitations is often paused ('tolled') until they reach the age of 18.</p>
+                                    <p className="text-sm text-muted-foreground">For minors, the statute of limitations is often paused ('tolled') until they reach the age of 18. Learn more about <Link href="/articles/understanding-tolling-statute-of-limitations" className="text-primary hover:underline">tolling here</Link>.</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">

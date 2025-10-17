@@ -105,7 +105,7 @@ export default function FourOhOneKCalculatorPage() {
                                 <li>Tax-deferred growth on investments.</li>
                                 <li>Employer matching contributions are like "free money".</li>
                                 <li>Contributions are tax-deductible, lowering your taxable income now.</li>
-                                <li>High annual contribution limits compared to IRAs.</li>
+                                <li>High annual contribution limits compared to <Link href="/ira-calculator" className="text-primary hover:underline">IRAs</Link>.</li>
                                 <li>Funds are generally protected from bankruptcy creditors.</li>
                             </ul>
                         </div>

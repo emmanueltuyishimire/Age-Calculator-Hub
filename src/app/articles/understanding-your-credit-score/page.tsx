@@ -123,7 +123,7 @@ export default function CreditScorePage() {
             <CardHeader><CardTitle>Why Your Credit Score Matters</CardTitle></CardHeader>
             <CardContent>
                 <p className="text-muted-foreground">
-                   A good credit score can save you thousands of dollars over your lifetime. It gives you access to lower interest rates on major purchases like a home or a car, which directly impacts your monthly payments and the total interest you'll pay. A better score means you're seen as a lower risk, which translates to better financial products and opportunities. You can see the impact of interest rates with our <Link href="/loan-payoff-calculator" className="font-bold text-primary hover:underline">Loan Payoff Calculator</Link>.
+                   A good credit score can save you thousands of dollars over your lifetime. It gives you access to lower interest rates on major purchases like a home or a car, which directly impacts your monthly payments and the total interest you'll pay. A better score means you're seen as a lower risk, which translates to better financial products and opportunities. You can see the impact of interest rates with our <Link href="/payment-calculator" className="font-bold text-primary hover:underline">Loan Payment Calculator</Link>.
                 </p>
             </CardContent>
           </Card>

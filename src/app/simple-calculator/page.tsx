@@ -3,6 +3,7 @@ import SimpleCalculator from '@/components/calculators/simple-calculator';
 import { type Metadata } from 'next';
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Free Simple Calculator Online',
@@ -35,6 +36,7 @@ export default function SimpleCalculatorPage() {
                         <li><strong>Input:</strong> Click the number and operator buttons, or use the number keys, +, -, *, and / on your keyboard.</li>
                         <li><strong>Calculate:</strong> Click the '=' button or press the 'Enter' key to see the result.</li>
                         <li><strong>Clear:</strong> Use 'AC' (All Clear) or the 'Escape' key to reset the calculator. Use the backspace button or the 'Backspace' key to delete the last character.</li>
+                         <li><strong>For advanced functions</strong> like trigonometry or logarithms, try our <Link href="/scientific-calculator" className="text-primary hover:underline">Scientific Calculator</Link>.</li>
                     </ul>
                 </CardContent>
               </Card>

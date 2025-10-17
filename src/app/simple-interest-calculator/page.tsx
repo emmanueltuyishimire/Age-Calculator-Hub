@@ -76,7 +76,7 @@ export default function SimpleInterestCalculatorPage() {
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground">
-                           Simple interest is a straightforward method for calculating the interest charge on a loan or investment. Unlike compound interest, it is calculated only on the original principal amount. The amount of interest earned is the same for every period of the term.
+                           Simple interest is a straightforward method for calculating the interest charge on a loan or investment. Unlike <Link href="/compound-interest-calculator" className="text-primary hover:underline">compound interest</Link>, it is calculated only on the original principal amount. The amount of interest earned is the same for every period of the term.
                         </p>
                     </CardContent>
                 </Card>

@@ -34,7 +34,7 @@ export default function MortgagePayoffCalculatorPage() {
                     </CardHeader>
                     <CardContent className="space-y-4 text-muted-foreground">
                         <p>
-                            In the context of a loan, amortization is a way of spreading the loan into a series of payments over a period of time. Using this technique, the loan balance will fall with each payment, and the borrower will pay off the balance after completing the series of scheduled payments.
+                            In the context of a loan, amortization is a way of spreading the loan into a series of payments over a period of time. Using this technique, the loan balance will fall with each payment, and the borrower will pay off the balance after completing the series of scheduled payments. You can see a full schedule with our <Link href="/amortization-calculator" className="text-primary hover:underline">Amortization Calculator</Link>.
                         </p>
                         <p>
                            In most cases, the amortized payments are fixed monthly payments spread evenly throughout the loan term. Each payment is composed of two parts, interest and principal. Interest is the fee for borrowing the money, usually a percentage of the outstanding loan balance. The principal is the portion of the payment devoted to paying down the loan balance.

@@ -27,7 +27,7 @@ const faqs = [
     },
     {
         question: "What is amortization?",
-        answer: "Amortization is the process of paying off a loan over time with regular, fixed payments. In the beginning, a larger portion of your payment goes to interest. Over time, more of it goes toward reducing the principal balance."
+        answer: "Amortization is the process of paying off a loan over time with regular, fixed payments. In the beginning, a larger portion of your payment goes to interest. Over time, more of it goes toward reducing the principal balance. You can see a full schedule with our <a href='/amortization-calculator' class='text-primary hover:underline'>Amortization Calculator</a>."
     },
     {
         question: "How can I reduce my monthly payment?",

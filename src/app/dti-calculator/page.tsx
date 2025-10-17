@@ -39,7 +39,7 @@ const faqs = [
     },
     {
         question: "How can I lower my DTI ratio?",
-        answer: "You can lower your DTI by either reducing your monthly debt payments (by paying off loans) or increasing your gross monthly income. Refinancing to a lower monthly payment can also help, but be mindful of extending the loan term."
+        answer: "You can lower your DTI by either reducing your monthly debt payments (by paying off loans) or increasing your gross monthly income. Refinancing to a lower monthly payment can also help, but be mindful of extending the loan term. Our <a href='/debt-consolidation-calculator' class='text-primary hover:underline'>Debt Consolidation Calculator</a> can help you explore options."
     }
 ];
 
@@ -107,9 +107,9 @@ export default function DtiCalculatorPage() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <ul className="space-y-3">
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Pay Down Debt:</strong> The most direct way. Focus on paying off high-interest loans or credit cards to reduce your total monthly payments.</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Increase Your Income:</strong> Look for opportunities to increase your earnings, such as a side hustle, negotiating a raise, or finding a higher-paying job.</span></li>
-                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Avoid New Debt:</strong> Before making a major purchase that requires financing, hold off on taking on any new debts like a car loan or new credit cards.</span></li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Pay Down Debt:</strong> The most direct way. Focus on paying off high-interest loans or credit cards to reduce your total monthly payments.</li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Increase Your Income:</strong> Look for opportunities to increase your earnings, such as a side hustle, negotiating a raise, or finding a higher-paying job.</li>
+                            <li className="flex items-start"><CheckCircle2 className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong>Avoid New Debt:</strong> Before making a major purchase that requires financing, hold off on taking on any new debts like a car loan or new credit cards.</li>
                         </ul>
                     </CardContent>
                 </Card>
@@ -121,7 +121,7 @@ export default function DtiCalculatorPage() {
                              <AccordionItem value={`item-${index}`} key={index}>
                                 <AccordionTrigger>{faq.question}</AccordionTrigger>
                                 <AccordionContent>
-                                    <p>{faq.answer}</p>
+                                     <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
                                 </AccordionContent>
                             </AccordionItem>
                         ))}

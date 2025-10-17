@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'VAT Calculator – Calculate Value Added Tax',
@@ -33,7 +34,7 @@ const faqs = [
     },
     {
         question: "What's the difference between VAT and Sales Tax?",
-        answer: "VAT is collected at every stage of production and distribution, whereas sales tax is only collected at the final point of sale to the consumer. The end result for the consumer is often similar, but the collection process is different."
+        answer: "VAT is collected at every stage of production and distribution, whereas sales tax is only collected at the final point of sale to the consumer. The end result for the consumer is often similar, but the collection process is different. You can explore our <a href='/sales-tax-calculator' class='text-primary hover:underline'>Sales Tax Calculator</a> for U.S. based calculations."
     }
 ];
 
@@ -90,7 +91,7 @@ export default function VatCalculatorPage() {
                              <AccordionItem value={`item-${index}`} key={index}>
                                 <AccordionTrigger>{faq.question}</AccordionTrigger>
                                 <AccordionContent>
-                                    <p>{faq.answer}</p>
+                                     <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
                                 </AccordionContent>
                             </AccordionItem>
                         ))}

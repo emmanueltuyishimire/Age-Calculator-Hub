@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
   ssr: false,
-  loading: () => <Skeleton className="h-[450px] w-full max-w-md sm:max-w-lg" />,
+  loading: () => <Skeleton className="h-[450px] w-full max-w-xs" />,
 });
 
 const faqs = [
@@ -64,7 +64,7 @@ export function ClientPage() {
                         </CardHeader>
                         <CardContent>
                             <p className="text-muted-foreground">
-                                A scientific calculator is a type of calculator designed to help you solve problems in science, engineering, and mathematics. Unlike a basic calculator, it has a wider range of functions, such as logarithmic, trigonometric, and exponential operations. This free online scientific calculator provides all these features in an easy-to-use interface, making it a great alternative to physical devices like a Casio or TI-84 calculator.
+                                A scientific calculator is a type of calculator designed to help you solve problems in science, engineering, and mathematics. Unlike a <Link href="/simple-calculator" className="text-primary hover:underline">basic calculator</Link>, it has a wider range of functions, such as logarithmic, trigonometric, and exponential operations. This free online scientific calculator provides all these features in an easy-to-use interface, making it a great alternative to physical devices like a Casio or TI-84 calculator.
                             </p>
                         </CardContent>
                     </Card>
@@ -78,9 +78,9 @@ export function ClientPage() {
                             <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-4">
                                 <li><strong>Input Numbers & Basic Operations:</strong> Use the number pad and standard operators (+, −, ×, ÷). The calculator respects the standard order of operations (PEMDAS/BODMAS).</li>
                                 <li><strong>Trigonometric Functions:</strong> Use the `sin`, `cos`, and `tan` buttons for trigonometric calculations. Ensure you are in the correct mode (`Deg` for degrees or `Rad` for radians) using the `Deg/Rad` toggle button. The inverse functions `sin-1`, `cos-1`, and `tan-1` are also available.</li>
-                                 <li><strong>Logarithms:</strong> Use `ln` for the natural logarithm and `log` for the base-10 logarithm.</li>
-                                 <li><strong>Exponents and Roots:</strong> Use `x²` for squaring, `x³` for cubing, and `xʸ` for other powers. Use `√x` for square root, `³√x` for cube root, and `ʸ√x` for other roots.</li>
-                                 <li><strong>Fractions:</strong> To work with fractions, simply use the division (÷) key. For example, to calculate 1/2 + 1/4, you would enter `1 ÷ 2 + 1 ÷ 4`.</li>
+                                 <li><strong>Logarithms:</strong> Use `ln` for the natural logarithm and `log` for the base-10 logarithm. See our <Link href="/log-calculator" className="text-primary hover:underline">Log Calculator</Link> for more options.</li>
+                                 <li><strong>Exponents and Roots:</strong> Use `x²` for squaring, `x³` for cubing, and `xʸ` for other powers. Use `√x` for square root, `³√x` for cube root, and `ʸ√x` for other roots. Explore more with our <Link href="/exponent-calculator" className="text-primary hover:underline">Exponent</Link> and <Link href="/root-calculator" className="text-primary hover:underline">Root</Link> calculators.</li>
+                                 <li><strong>Fractions:</strong> To work with fractions, simply use the division (÷) key. For example, to calculate 1/2 + 1/4, you would enter `1 ÷ 2 + 1 ÷ 4`. Our <Link href="/fraction-calculator" className="text-primary hover:underline">Fraction Calculator</Link> offers more advanced functionality.</li>
                                 <li><strong>Keyboard Support:</strong> Standard number and operator keys work as expected. Use 'Enter' for '=' and 'Backspace' to delete the last character.</li>
                             </ol>
                         </CardContent>

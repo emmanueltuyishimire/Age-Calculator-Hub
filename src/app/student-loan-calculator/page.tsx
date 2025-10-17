@@ -77,6 +77,7 @@ export default function StudentLoanCalculatorPage() {
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                             <li><Link href="/articles/how-to-pay-off-debt-faster" className="text-primary hover:underline">The Power of Extra Payments: How to Pay Off Your Loans Faster</Link></li>
+                            <li>Explore payoff strategies with our <Link href="/debt-payoff-calculator" className="text-primary hover:underline">Debt Payoff Calculator</Link>.</li>
                         </ul>
                     </CardContent>
                 </Card>
