@@ -388,20 +388,20 @@ const ScientificCalculator = () => {
     }
   }
 
-  const firstRow = ['2nd', 'Deg', 'Rad', 'MC', 'MR', 'M+', 'M-'];
+  const topRow = ['2nd', 'Deg', 'Rad', 'MC', 'MR', 'M+', 'M-'];
   
   const buttonLayout = [
-      ['(', ')', 'n!', '%', 'AC', 'Delete', '÷'],
-      ['sin', 'cos', 'tan', '1/x', '7', '8', '9', '×'],
-      ['log', 'ln', 'e', 'π', '4', '5', '6', '−'],
-      ['x2', '√x', 'xy', 'Ans', '1', '2', '3', '+'],
-      ['RND', 'EXP', '±', '0', '.', '=']
+      ['(', ')', 'n!', 'x2', 'AC', 'Delete', '÷'],
+      ['sin', 'cos', 'tan', 'xy', '7', '8', '9', '×'],
+      ['log', 'ln', 'e', '√x', '4', '5', '6', '−'],
+      ['1/x', 'π', 'EXP', 'Ans', '1', '2', '3', '+'],
+      ['RND', '±', '0', '.', '=']
   ];
 
 
   return (
     <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-xs">
-      <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[96px] flex flex-col justify-end text-right font-mono">
+      <div className="bg-slate-800/50 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[96px] flex flex-col justify-end text-right font-mono">
         <div className="flex-grow overflow-y-auto flex flex-col justify-end items-end pr-2 text-emerald-300/50 text-xs opacity-75">
             {history.map((line, index) => (
                 <div key={index} className="truncate w-full text-right">
@@ -415,7 +415,7 @@ const ScientificCalculator = () => {
       </div>
       
        <div className="grid grid-cols-7 gap-1">
-            {firstRow.map(btn => (
+            {topRow.map(btn => (
                 <Button key={btn} variant={getVariant(btn)} className="h-8 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
             ))}
        </div>
@@ -443,3 +443,5 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
+
+    
