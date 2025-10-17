@@ -59,6 +59,7 @@ import {
   Flame,
   Binary,
   Atom,
+  FunctionSquare
 } from 'lucide-react';
 
 export type NavItem = {
@@ -580,6 +581,13 @@ export const navItems: NavItem[] = [
     category: 'Math',
     description: 'Solve for base, exponent, or result in an exponential equation.'
   },
+  {
+    href: '/quadratic-calculator',
+    icon: FunctionSquare,
+    label: 'Quadratic Calculator',
+    category: 'Math',
+    description: 'Solve quadratic equations using the quadratic formula.'
+   },
    {
     href: '/binary-calculator',
     icon: Hash,
