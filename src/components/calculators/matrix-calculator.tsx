@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,8 @@ const math = create(all, { number: 'Fraction' });
 function rref(matrix: (number | string)[][]): number[][] {
   let mat = matrix.map(row => row.map(cell => {
       try {
-        return evaluate(cell.toString());
+        const evaluated = evaluate(cell.toString());
+        return typeof evaluated === 'object' ? evaluated.re : Number(evaluated);
       } catch {
         return 0;
       }
@@ -62,9 +63,8 @@ function rref(matrix: (number | string)[][]): number[][] {
 const toMatrix = (data: (number|string)[][]): Matrix => math.matrix(data.map(row => row.map(cell => {
     try {
         const evaluated = evaluate(cell.toString());
-        // mathjs might return objects for complex numbers, ensure it's a number
         if (typeof evaluated === 'object' && evaluated.re !== undefined) {
-          return evaluated; // keep as complex object
+          return evaluated; 
         }
         return Number(evaluated);
     } catch {
@@ -86,8 +86,8 @@ const fromMatrix = (matrix: any): string[][] => {
         if (cell && typeof cell === 'object' && cell.re !== undefined) {
              const realPart = Math.abs(cell.re) < 1e-10 ? 0 : cell.re;
              const imagPart = Math.abs(cell.im) < 1e-10 ? 0 : cell.im;
-            if(imagPart === 0) return mathFormat(realPart, { notation: 'fixed', precision: 4 });
-            return `${mathFormat(realPart, { notation: 'fixed', precision: 2 })} ${imagPart > 0 ? '+' : '-'} ${mathFormat(Math.abs(imagPart), {notation: 'fixed', precision: 2})}i`;
+            if(imagPart === 0) return math.format(realPart, { notation: 'fixed', precision: 4 }).replace(/\.?0+$/, "");
+            return `${math.format(realPart, { notation: 'fixed', precision: 2 })} ${imagPart > 0 ? '+' : '-'} ${math.format(Math.abs(imagPart), {notation: 'fixed', precision: 2})}i`;
         }
         
         const f = math.fraction(cell);
@@ -116,16 +116,16 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: (number | string)[][], set
     const handleBlur = (rowIndex: number, colIndex: number, value: string) => {
        const newMatrix = [...matrix];
        try {
-           evaluate(value); // test if it's a valid math expression
+           evaluate(value);
            newMatrix[rowIndex][colIndex] = value;
        } catch {
-           newMatrix[rowIndex][colIndex] = 0; // default to 0 if invalid
+           newMatrix[rowIndex][colIndex] = "0"; 
        }
        setMatrix(newMatrix);
     }
     
     return (
-        <div className="space-y-1 overflow-x-auto">
+        <div className="space-y-1 overflow-x-auto p-1 bg-muted rounded-md">
             {matrix.map((row, rIdx) => (
                 <div key={rIdx} className="flex gap-1">
                     {row.map((cell, cIdx) => (
@@ -144,10 +144,10 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: (number | string)[][], set
     );
 };
 
-const MatrixDisplay = ({ matrix, title }: { matrix: string[][], title: string }) => (
+const MatrixDisplay = ({ matrix, title, onCopyToA, onCopyToB }: { matrix: string[][], title: string, onCopyToA: () => void, onCopyToB: () => void }) => (
     <Card>
         <CardHeader><CardTitle className="text-center">{title}</CardTitle></CardHeader>
-        <CardContent className="flex justify-center items-center">
+        <CardContent className="flex flex-col items-center gap-4">
              <div className="p-2 border rounded-md bg-muted overflow-x-auto">
                  <div className="space-y-1">
                     {matrix.map((row, rIdx) => (
@@ -158,6 +158,10 @@ const MatrixDisplay = ({ matrix, title }: { matrix: string[][], title: string })
                         </div>
                     ))}
                 </div>
+            </div>
+            <div className="flex gap-2">
+                <Button onClick={onCopyToA} variant="outline" size="sm">Copy to A</Button>
+                <Button onClick={onCopyToB} variant="outline" size="sm">Copy to B</Button>
             </div>
         </CardContent>
     </Card>
@@ -200,10 +204,9 @@ export default function MatrixCalculator() {
     const [rowsB, setRowsB] = useState(4);
     const [colsB, setColsB] = useState(4);
     const [matrixB, setMatrixB] = useState<(number|string)[][]>(createMatrix(4, 4, 'random'));
-    const [powerB, setPowerB] = useState('2');
-    const [scalarB, setScalarB] = useState('3');
     
     const [resultMatrix, setResultMatrix] = useState<string[][] | null>(null);
+    const [resultTitle, setResultTitle] = useState("");
     const [resultScalar, setResultScalar] = useState<number | string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -233,40 +236,64 @@ export default function MatrixCalculator() {
         setError(null);
         setResultMatrix(null);
         setResultScalar(null);
+        setResultTitle("");
+
         try {
             const matA = toMatrix(matrixA);
             const matB = toMatrix(matrixB);
             let res: any;
+            let title = "";
 
             switch(op) {
-                case 'add': res = math.add(matA, matB); break;
-                case 'subtract': res = math.subtract(matA, matB); break;
-                case 'multiply': res = math.multiply(matA, matB); break;
+                case 'add': res = math.add(matA, matB); title = "A + B ="; break;
+                case 'subtract': res = math.subtract(matA, matB); title = "A - B ="; break;
+                case 'multiply': res = math.multiply(matA, matB); title = "A × B ="; break;
                 
-                case 'transposeA': res = math.transpose(matA); break;
-                case 'powerA': res = math.pow(matA, parseInt(powerA)); break;
-                case 'detA': setResultScalar(math.det(matA)); return;
-                case 'invA': res = math.inv(matA); break;
-                case 'scalarA': res = math.multiply(matA, parseFloat(scalarA)); break;
-                case 'rrefA': res = rref(matrixA); break;
-
-                case 'transposeB': res = math.transpose(matB); break;
-                case 'powerB': res = math.pow(matB, parseInt(powerB)); break;
-                case 'detB': setResultScalar(math.det(matB)); return;
-                case 'invB': res = math.inv(matB); break;
-                case 'scalarB': res = math.multiply(matB, parseFloat(scalarB)); break;
-                case 'rrefB': res = rref(matrixB); break;
+                case 'transposeA': res = math.transpose(matA); title = "Transpose(A) ="; break;
+                case 'powerA': res = math.pow(matA, parseInt(powerA)); title = `A^${powerA} =`; break;
+                case 'detA': setResultScalar(math.det(matA)); setResultTitle("det(A) ="); return;
+                case 'invA': res = math.inv(matA); title = "inv(A) ="; break;
+                case 'scalarA': res = math.multiply(matA, parseFloat(scalarA)); title = `${scalarA} × A =`; break;
+                case 'rrefA': res = rref(matrixA); title = "RREF(A) ="; break;
+                
+                case 'transposeB': res = math.transpose(matB); title = "Transpose(B) ="; break;
+                case 'powerB': res = math.pow(matB, parseInt(powerA)); title = `B^${powerA} =`; break;
+                case 'detB': setResultScalar(math.det(matB)); setResultTitle("det(B) ="); return;
+                case 'invB': res = math.inv(matB); title = "inv(B) ="; break;
+                case 'scalarB': res = math.multiply(matB, parseFloat(scalarA)); title = `${scalarA} × B =`; break;
+                case 'rrefB': res = rref(matrixB); title = "RREF(B) ="; break;
 
                 case 'swap': 
-                    const tempMatrixA = [...matrixA]; const tempRowsA = rowsA; const tempColsA = colsA;
-                    setMatrixA([...matrixB]); setRowsA(rowsB); setColsA(colsB);
+                    const tempMatrixA = JSON.parse(JSON.stringify(matrixA)); 
+                    const tempRowsA = rowsA; const tempColsA = colsA;
+                    setMatrixA(JSON.parse(JSON.stringify(matrixB))); setRowsA(rowsB); setColsA(colsB);
                     setMatrixB(tempMatrixA); setRowsB(tempRowsA); setColsB(tempColsA);
                     return;
                 default: return;
             }
-            if(res) setResultMatrix(fromMatrix(res));
+            if(res) {
+                setResultMatrix(fromMatrix(res));
+                setResultTitle(title);
+            }
         } catch (e: any) {
             setError(e.message || "An error occurred. Check matrix dimensions and values.");
+        }
+    };
+    
+    const handleCopyTo = (target: 'A' | 'B') => {
+        if (!resultMatrix) return;
+        const newMatrix = resultMatrix.map(row => row.map(cell => cell.toString()));
+        const newRows = newMatrix.length;
+        const newCols = newMatrix[0]?.length || 0;
+
+        if (target === 'A') {
+            setMatrixA(newMatrix);
+            setRowsA(newRows);
+            setColsA(newCols);
+        } else {
+            setMatrixB(newMatrix);
+            setRowsB(newRows);
+            setColsB(newCols);
         }
     };
     
@@ -286,25 +313,25 @@ export default function MatrixCalculator() {
                     setMatrix={setMatrixB} matrix={matrixB}
                     handleResize={(type: 'row' | 'col', delta: number) => handleResize(setMatrixB, rowsB, setRowsB, colsB, setColsB, type, delta)}
                     performOp={performOperation} prefix="B" 
-                    powerValue={powerB} setPowerValue={setPowerB}
-                    scalarValue={scalarB} setScalarValue={setScalarB}
+                    powerValue={powerA} setPowerValue={setPowerA}
+                    scalarValue={scalarA} setScalarValue={setScalarA}
                 />
             </div>
             
             <Card>
-                <CardHeader><CardTitle className="text-center">Operations</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="text-center">Binary Operations</CardTitle></CardHeader>
                 <CardContent className="flex justify-center gap-2 flex-wrap">
                     <Button onClick={() => performOperation('add')}>A + B</Button>
                     <Button onClick={() => performOperation('subtract')}>A – B</Button>
-                    <Button onClick={() => performOperation('multiply')}>AB</Button>
+                    <Button onClick={() => performOperation('multiply')}>A × B</Button>
                     <Button onClick={() => performOperation('swap')} variant="secondary"><ArrowRightLeft className="h-4 w-4 mr-2"/> A ↔ B</Button>
                 </CardContent>
             </Card>
 
             {error && <Alert variant="destructive"><AlertCircle className="h-4 w-4" /><AlertTitle>Error</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
 
-            {resultMatrix && <MatrixDisplay matrix={resultMatrix} title="Result" />}
-            {resultScalar !== null && <ScalarDisplay scalar={resultScalar} title="Scalar Result" />}
+            {resultMatrix && <MatrixDisplay matrix={resultMatrix} title={resultTitle || "Result"} onCopyToA={() => handleCopyTo('A')} onCopyToB={() => handleCopyTo('B')} />}
+            {resultScalar !== null && <ScalarDisplay scalar={resultScalar} title={resultTitle || "Result"} />}
         </div>
     );
 }
@@ -318,11 +345,17 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
                 <CardTitle className="flex justify-between items-center">
                     <span>{title}</span>
                     <div className="flex items-center gap-2 text-sm">
-                        <span>{rows} × {cols}</span>
-                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => handleResize('row', -1)}><Minus className="h-3 w-3" /></Button>
-                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => handleResize('row', 1)}><Plus className="h-3 w-3" /></Button>
-                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => handleResize('col', -1)}><Minus className="h-3 w-3" /></Button>
-                        <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => handleResize('col', 1)}><Plus className="h-3 w-3" /></Button>
+                         <div className="flex items-center gap-1">
+                            <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => handleResize('row', -1)}><Minus className="h-3 w-3" /></Button>
+                            <span>{rows}</span>
+                            <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => handleResize('row', 1)}><Plus className="h-3 w-3" /></Button>
+                         </div>
+                         <span>×</span>
+                         <div className="flex items-center gap-1">
+                             <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => handleResize('col', -1)}><Minus className="h-3 w-3" /></Button>
+                             <span>{cols}</span>
+                             <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => handleResize('col', 1)}><Plus className="h-3 w-3" /></Button>
+                        </div>
                     </div>
                 </CardTitle>
             </CardHeader>
@@ -335,16 +368,18 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
                     <Button variant="outline" size="sm" onClick={() => performOp(`transpose${prefix}`)}>Transpose</Button>
                 </div>
                  <div className="grid grid-cols-2 gap-2 items-center">
-                    <Button variant="outline" size="sm" onClick={() => performOp(`power${prefix}`)} disabled={!isSquare}>Power of</Button>
-                    <Input type="number" value={powerValue} onChange={e => setPowerValue(e.target.value)} className="h-9" disabled={!isSquare}/>
+                    <div className="flex items-center gap-2">
+                         <Button variant="outline" size="sm" className="flex-1" onClick={() => performOp(`power${prefix}`)} disabled={!isSquare}>Power</Button>
+                         <Input type="number" value={powerValue} onChange={e => setPowerValue(e.target.value)} className="w-16 h-9" disabled={!isSquare}/>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm" className="flex-1" onClick={() => performOp(`scalar${prefix}`)}>Scalar ×</Button>
+                        <Input type="number" value={scalarValue} onChange={e => setScalarValue(e.target.value)} className="w-16 h-9" />
+                    </div>
                 </div>
                  <div className="grid grid-cols-2 gap-2">
                      <Button variant="outline" size="sm" onClick={() => performOp(`det${prefix}`)} disabled={!isSquare}>Determinant</Button>
                      <Button variant="outline" size="sm" onClick={() => performOp(`inv${prefix}`)} disabled={!isSquare}>Inverse</Button>
-                </div>
-                 <div className="grid grid-cols-2 gap-2 items-center">
-                    <Button variant="outline" size="sm" onClick={() => performOp(`scalar${prefix}`)}>× (Scalar)</Button>
-                    <Input type="number" value={scalarValue} onChange={e => setScalarValue(e.target.value)} className="h-9" />
                 </div>
                 <div>
                      <Button variant="outline" size="sm" className="w-full" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
