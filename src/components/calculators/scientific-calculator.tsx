@@ -383,7 +383,7 @@ const ScientificCalculator = () => {
         case 'x2': return isSecond ? <>{'x'}<sup>3</sup></> : <>{'x'}<sup>2</sup></>;
         case '√x': return isSecond ? <>{'³√x'}</> : '√x';
         case 'xy': return isSecond ? <>{'ʸ√x'}</> : <>{'x'}<sup>y</sup></>;
-        case 'Delete': return <Trash2 className="h-5 w-5"/>;
+        case 'Delete': return <Trash2 className="h-4 w-4"/>;
         default: return key;
     }
   }
@@ -405,8 +405,8 @@ const ScientificCalculator = () => {
 
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-md">
-      <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[96px] flex flex-col justify-end text-right font-mono">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-xs">
+      <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[88px] flex flex-col justify-end text-right font-mono">
         <div className="flex-grow overflow-y-auto flex flex-col justify-end items-end pr-2 text-emerald-300/50 text-xs opacity-75">
             {history.map((line, index) => (
                 <div key={index} className="truncate w-full text-right">
@@ -421,36 +421,36 @@ const ScientificCalculator = () => {
       
        <div className="grid grid-cols-7 gap-1">
             {firstRow.map(btn => (
-                <Button key={btn} variant={getVariant(btn)} className="h-9 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+                <Button key={btn} variant={getVariant(btn)} className="h-8 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
             ))}
        </div>
        <div className="grid grid-cols-7 gap-1 mt-1">
             {/* Function Pad */}
             <div className="col-span-4 grid grid-cols-4 gap-1">
                 {functions.map(btn => (
-                    <Button key={btn} variant={getVariant(btn)} className="h-9 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+                    <Button key={btn} variant={getVariant(btn)} className="h-8 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
                 ))}
             </div>
             {/* Main Pad */}
             <div className="col-span-3 grid grid-cols-3 gap-1">
-                 <Button variant={getVariant('AC')} className="h-9 text-sm p-1" onClick={() => handleButtonClick('AC')}>AC</Button>
-                 <Button variant={getVariant('Delete')} className="h-9 text-sm p-1" onClick={() => handleButtonClick('Delete')}><Trash2 className="h-5 w-5"/></Button>
-                 <Button variant={getVariant('÷')} className="h-9 text-lg p-1" onClick={() => handleButtonClick('÷')}>÷</Button>
+                 <Button variant={getVariant('AC')} className="h-8 text-sm p-1" onClick={() => handleButtonClick('AC')}>AC</Button>
+                 <Button variant={getVariant('Delete')} className="h-8 text-sm p-1" onClick={() => handleButtonClick('Delete')}><Trash2 className="h-5 w-5"/></Button>
+                 <Button variant={getVariant('÷')} className="h-8 text-lg p-1" onClick={() => handleButtonClick('÷')}>÷</Button>
                  
-                 <Button variant={getVariant('7')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('7')}>7</Button>
-                 <Button variant={getVariant('8')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('8')}>8</Button>
-                 <Button variant={getVariant('9')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('9')}>9</Button>
+                 <Button variant={getVariant('7')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('7')}>7</Button>
+                 <Button variant={getVariant('8')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('8')}>8</Button>
+                 <Button variant={getVariant('9')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('9')}>9</Button>
                  
-                 <Button variant={getVariant('4')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('4')}>4</Button>
-                 <Button variant={getVariant('5')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('5')}>5</Button>
-                 <Button variant={getVariant('6')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('6')}>6</Button>
+                 <Button variant={getVariant('4')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('4')}>4</Button>
+                 <Button variant={getVariant('5')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('5')}>5</Button>
+                 <Button variant={getVariant('6')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('6')}>6</Button>
 
-                 <Button variant={getVariant('1')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('1')}>1</Button>
-                 <Button variant={getVariant('2')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('2')}>2</Button>
-                 <Button variant={getVariant('3')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('3')}>3</Button>
+                 <Button variant={getVariant('1')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('1')}>1</Button>
+                 <Button variant={getVariant('2')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('2')}>2</Button>
+                 <Button variant={getVariant('3')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('3')}>3</Button>
                  
-                 <Button variant={getVariant('0')} className="h-9 text-base font-bold p-1 col-span-2" onClick={() => handleButtonClick('0')}>0</Button>
-                 <Button variant={getVariant('.')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('.')}>.</Button>
+                 <Button variant={getVariant('0')} className="h-8 text-base font-bold p-1 col-span-2" onClick={() => handleButtonClick('0')}>0</Button>
+                 <Button variant={getVariant('.')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('.')}>.</Button>
             </div>
             {/* Operator Column */}
             <div className="col-start-7 grid grid-rows-4 gap-1">
@@ -460,9 +460,9 @@ const ScientificCalculator = () => {
                  <Button variant={getVariant('=')} className="h-full text-lg p-1" onClick={() => handleButtonClick('=')}>=</Button>
             </div>
              <div className="col-span-7 grid grid-cols-7 gap-1 mt-1">
-               <Button variant={getVariant('Ans')} className="h-9 text-sm p-1" onClick={() => handleButtonClick('Ans')}>Ans</Button>
-                <Button variant={getVariant('EXP')} className="h-9 text-sm p-1" onClick={() => handleButtonClick('EXP')}>EXP</Button>
-                 <Button variant={getVariant('±')} className="h-9 text-sm p-1" onClick={() => handleButtonClick('±')}>±</Button>
+               <Button variant={getVariant('Ans')} className="h-8 text-sm p-1" onClick={() => handleButtonClick('Ans')}>Ans</Button>
+                <Button variant={getVariant('EXP')} className="h-8 text-sm p-1" onClick={() => handleButtonClick('EXP')}>EXP</Button>
+                 <Button variant={getVariant('±')} className="h-8 text-sm p-1" onClick={() => handleButtonClick('±')}>±</Button>
             </div>
        </div>
     </div>
