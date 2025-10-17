@@ -54,6 +54,7 @@ import {
   Wallet,
   Heart,
   Timer,
+  Divide,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -532,6 +533,13 @@ export const navItems: NavItem[] = [
     label: 'Scientific Calculator',
     category: 'Math',
     description: 'An online scientific calculator with advanced functions.'
+  },
+  {
+    href: '/fraction-calculator',
+    icon: Divide,
+    label: 'Fraction Calculator',
+    category: 'Math',
+    description: 'A tool for fraction arithmetic, simplification, and conversion.'
   },
   {
     href: '/percentage-calculator',
