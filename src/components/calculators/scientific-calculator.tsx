@@ -64,8 +64,8 @@ const ScientificCalculator = () => {
         'n!': 'Factorial',
         'ex': 'e to the power of x',
         '10x': '10 to the power of x',
-        'Rad': 'Radians',
-        'Deg': 'Degrees',
+        'Rad': 'Radians mode',
+        'Deg': 'Degrees mode',
         'EXP': 'Exponent',
         '(': 'Open parenthesis',
         ')': 'Close parenthesis',
@@ -176,7 +176,14 @@ const ScientificCalculator = () => {
             case 'log': setExpression(prev => prev + (isSecond ? '10^(' : 'log(')); break;
             case 'ln': setExpression(prev => prev + (isSecond ? 'e^(' : 'ln(')); break;
             case '√x':
-                setExpression(prev => 'sqrt(' + prev);
+                 setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        return `${prev.substring(0, lastNumIndex)}sqrt(${lastNum})`;
+                    }
+                    return `sqrt(${prev})`;
+                });
+                setTimeout(calculate, 0);
                 break;
             case '1/x': 
                 setExpression(prev => `(1/(${prev || '1'}))`);
@@ -273,7 +280,8 @@ const ScientificCalculator = () => {
                     return prev;
                 });
                 break;
-            case 'DegRad': setIsDeg(prev => !prev); break;
+            case 'Deg': setIsDeg(true); break;
+            case 'Rad': setIsDeg(false); break;
             case '2nd': setIsSecond(prev => !prev); break;
             case 'EXP': setExpression(prev => prev + 'e+'); break;
             case '(': case ')':
@@ -309,8 +317,14 @@ const ScientificCalculator = () => {
                 '^': 'xy', '%': '%',
                 's': 'sin', 'p': 'π', 'e': 'e', 'l': 'log',
                 'r': () => {
-                     setExpression(prev => 'sqrt(' + prev);
-                     setTimeout(calculate, 0);
+                    setExpression(prev => {
+                        const [lastNum, lastNumIndex] = getLastNumber(prev);
+                        if (lastNum) {
+                            return `${prev.substring(0, lastNumIndex)}sqrt(${lastNum})`;
+                        }
+                        return `sqrt(${prev})`;
+                    });
+                    setTimeout(calculate, 0);
                 }
             };
 
@@ -350,34 +364,33 @@ const ScientificCalculator = () => {
   const getVariant = (btnValue: string): "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined => {
     if (['+', '−', '×', '÷', '='].includes(btnValue)) return 'default';
     if (btnValue === 'AC') return 'destructive';
-    if (['MC', 'MR', 'M+', 'M-'].includes(btnValue)) return 'outline';
-    if (['sin', 'cos', 'tan', 'log', 'ln', 'xy', '√x', 'y√x', 'n!', '1/x', 'π', 'e'].includes(btnValue)) return "ghost";
+    if (btnValue === 'Deg' && isDeg) return 'default';
+    if (btnValue === 'Rad' && !isDeg) return 'default';
     if (btnValue === '2nd' && isSecond) return "default";
     return 'secondary';
   }
   
   const buttons = [
-    '2nd', 'π', 'e', 'AC', 'Back', '(', ')',
-    'x2', 'sin', 'cos', 'tan', '÷', 'n!', '%',
-    'xy', '√x', '7', '8', '9', '×', 'log',
-    'y√x', '1/x', '4', '5', '6', '−', 'ln',
-    'DegRad', '±', '1', '2', '3', '+', 'Ans',
-    'RND', '0', '.', '='
+    '(', ')', 'MC', 'M+', 'M-', 'MR', 'AC',
+    '2nd', 'x2', 'xy', 'sin', 'cos', 'tan', '÷',
+    'y√x', '10x', '7', '8', '9', '×', 'log',
+    '√x', 'n!', '4', '5', '6', '−', 'ln',
+    'Deg', 'Rad', '1', '2', '3', '+', '±',
+    'RND', 'Ans', '0', '.', '='
   ];
 
   const getButtonLabel = (key: string) => {
     switch (key) {
-        case 'Back': return <Trash2 className="h-5 w-5 mx-auto"/>;
         case 'sin': return isSecond ? <>{'sin'}<sup>-1</sup></> : 'sin';
         case 'cos': return isSecond ? <>{'cos'}<sup>-1</sup></> : 'cos';
         case 'tan': return isSecond ? <>{'tan'}<sup>-1</sup></> : 'tan';
-        case 'log': return isSecond ? <>{'10'}<sup>x</sup></> : 'log';
+        case '10x': return isSecond ? <>{'2'}<sup>x</sup></> : <>{'10'}<sup>x</sup></>;
+        case 'log': return isSecond ? <>{'log'}<sub>y</sub></> : 'log';
         case 'ln': return isSecond ? <>{'e'}<sup>x</sup></> : 'ln';
         case 'x2': return isSecond ? <>{'x'}<sup>3</sup></> : <>{'x'}<sup>2</sup></>;
         case '√x': return isSecond ? <>{'³√x'}</> : <>{'√x'}</>;
         case 'xy': return <>{'x'}<sup>y</sup></>;
         case 'y√x': return <>{'ʸ√x'}</>;
-        case 'DegRad': return <span className={cn("text-xs", isDeg ? 'text-primary' : '')}>Deg</span>;
         default: return key;
     }
   }
