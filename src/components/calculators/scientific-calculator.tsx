@@ -119,11 +119,9 @@ const ScientificCalculator = () => {
         
         const isOperator = ['+', '−', '×', '÷', '^'].includes(value);
 
-        if (isResult && !isOperator && value !== '=') {
+        if (isResult && !isOperator && value !== '=' && value !== '±') {
              setIsResult(false);
-             if(!['±'].includes(value)){
-                 setExpression('');
-             }
+             setExpression('');
         }
         
         const lastChar = expression.slice(-1);
@@ -163,16 +161,54 @@ const ScientificCalculator = () => {
             case 'cos-1': setExpression(prev => prev + 'acos('); break;
             case 'atan-1': setExpression(prev => prev + 'atan('); break;
             case '1/x':
-                setExpression(prev => `(1/(${prev || '1'}))`);
+                 setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        return prev.slice(0, lastNumIndex) + `(1/${lastNum})`;
+                    }
+                    return `(1/(${prev || '1'}))`;
+                });
                 break;
-            case 'n!': setExpression(prev => `factorial(${prev || '0'})`); break;
+            case 'n!': 
+                setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        return prev.slice(0, lastNumIndex) + `factorial(${lastNum})`;
+                    }
+                    return `factorial(${prev || '0'})`;
+                });
+                break;
             case 'π': setExpression(prev => prev + 'pi'); break;
             case 'e': setExpression(prev => prev + 'e'); break;
             case 'xy': handleOperator('^'); break;
-            case 'x2': setExpression(prev => `((${prev || '0'})^2)`); break;
-            case 'ex': setExpression(prev => `(e^(${prev || '0'}))`); break;
-            case '10x': setExpression(prev => `(10^(${prev || '0'}))`); break;
-            case 'y√x': setExpression(prev => prev + ' nthRoot('); break;
+            case 'x2': 
+                 setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        return prev.slice(0, lastNumIndex) + `(${lastNum}^2)`;
+                    }
+                    return `((${prev || '0'})^2)`;
+                });
+                break;
+            case 'ex': 
+                 setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        return prev.slice(0, lastNumIndex) + `(e^${lastNum})`;
+                    }
+                    return `(e^(${prev || '0'}))`;
+                });
+                break;
+            case '10x': 
+                setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        return prev.slice(0, lastNumIndex) + `(10^${lastNum})`;
+                    }
+                    return `(10^(${prev || '0'}))`;
+                });
+                break;
+            case 'y√x': handleOperator(' nthRoot('); break; // Note space for parsing
             case 'Ans': setExpression(prev => prev + ans.toString()); break;
             case 'M+':
                 try { 
@@ -190,9 +226,9 @@ const ScientificCalculator = () => {
                 break;
             case 'MR': setExpression(prev => prev + memory.toString()); break;
             case '±':
-                setExpression(prev => {
+                 setExpression(prev => {
                     if (isResult) {
-                        return prev.startsWith('-') ? prev.substring(1) : `(-${prev})`;
+                        return prev.startsWith('(-') && prev.endsWith(')') ? prev.slice(2, -1) : `(-${prev})`;
                     }
                     const [lastNum, lastNumIndex] = getLastNumber(prev);
                     if (lastNum) {
@@ -215,6 +251,7 @@ const ScientificCalculator = () => {
                 if (/[\d.]/.test(value)) {
                     if (isResult) {
                         setExpression(value);
+                        setIsResult(false);
                     } else {
                         setExpression(prev => (prev === '0' && value !== '.') ? value : prev + value);
                     }
@@ -325,5 +362,3 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
-
-    
