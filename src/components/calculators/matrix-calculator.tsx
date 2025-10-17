@@ -25,14 +25,16 @@ const math = create(all, { number: 'Fraction' });
 const toMatrix = (data: number[][]): Matrix => math.matrix(data);
 
 // Helper to convert Matrix to 2D array
-const fromMatrix = (matrix: Matrix | number[] | number[][]): number[][] => {
-    const arrayData = (matrix as Matrix).toArray();
-    if (Array.isArray(arrayData) && arrayData.length > 0 && Array.isArray(arrayData[0])) {
+const fromMatrix = (matrix: Matrix | number[] | number[][] | { toArray: () => any }): number[][] => {
+    const arrayData = 'toArray' in matrix && typeof matrix.toArray === 'function' ? matrix.toArray() : matrix;
+    if (Array.isArray(arrayData)) {
+      if (arrayData.length === 0) return [];
+      if (Array.isArray(arrayData[0])) {
         return arrayData as number[][];
+      }
+      return [arrayData as number[]];
     }
-    if(Array.isArray(arrayData)) { // Handle vectors
-        return [arrayData as number[]];
-    }
+    // Handle single number result
     return [[arrayData as number]];
 };
 
@@ -40,22 +42,15 @@ const fromMatrix = (matrix: Matrix | number[] | number[][]): number[][] => {
 const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m: number[][]) => void }) => {
     const handleCellChange = (rowIndex: number, colIndex: number, value: string) => {
         const newValue = parseFloat(value);
-        if (!isNaN(newValue)) {
-            const newMatrix = matrix.map((row, rIdx) => 
-                row.map((cell, cIdx) => 
-                    rIdx === rowIndex && cIdx === colIndex ? newValue : cell
-                )
-            );
-            setMatrix(newMatrix);
-        } else {
-            // Handle case where input is cleared
-             const newMatrix = matrix.map((row, rIdx) => 
-                row.map((cell, cIdx) => 
-                    rIdx === rowIndex && cIdx === colIndex ? 0 : cell
-                )
-            );
-            setMatrix(newMatrix);
-        }
+        const newMatrix = matrix.map((row, rIdx) => 
+            row.map((cell, cIdx) => {
+                if (rIdx === rowIndex && cIdx === colIndex) {
+                    return isNaN(newValue) ? 0 : newValue;
+                }
+                return cell;
+            })
+        );
+        setMatrix(newMatrix);
     };
     
     return (
@@ -106,6 +101,17 @@ const createMatrix = (rows: number, cols: number, fill: 'zero' | 'one' | 'random
     );
 };
 
+const formatEigenvalue = (v: any) => {
+    if (typeof v === 'number') {
+        return math.format(v, { precision: 4 });
+    }
+    if (v && typeof v === 'object' && 're' in v && 'im' in v) {
+        if (Math.abs(v.im) < 1e-9) return math.format(v.re, { precision: 4 });
+        return `${math.format(v.re, { precision: 4 })} ${v.im > 0 ? '+' : '-'} ${math.format(Math.abs(v.im), { precision: 4 })}i`;
+    }
+    return String(v);
+}
+
 
 export default function MatrixCalculator() {
     const MAX_DIM = 10;
@@ -129,6 +135,7 @@ export default function MatrixCalculator() {
 
     const handleResize = (
         type: 'row' | 'col',
+        matrix: number[][],
         matrixSetter: React.Dispatch<React.SetStateAction<number[][]>>,
         currentRows: number,
         setCurrentRows: React.Dispatch<React.SetStateAction<number>>,
@@ -138,16 +145,18 @@ export default function MatrixCalculator() {
     ) => {
         let newRows = currentRows;
         let newCols = currentCols;
+        if (type === 'row') newRows = Math.max(MIN_DIM, Math.min(MAX_DIM, currentRows + delta));
+        else newCols = Math.max(MIN_DIM, Math.min(MAX_DIM, currentCols + delta));
 
-        if (type === 'row') {
-            newRows = Math.max(MIN_DIM, Math.min(MAX_DIM, currentRows + delta));
-        } else {
-            newCols = Math.max(MIN_DIM, Math.min(MAX_DIM, currentCols + delta));
-        }
+        const newMatrix = Array.from({ length: newRows }, (_, r) => 
+            Array.from({ length: newCols }, (_, c) => 
+                matrix[r] && matrix[r][c] !== undefined ? matrix[r][c] : 0
+            )
+        );
         
         setCurrentRows(newRows);
         setCurrentCols(newCols);
-        matrixSetter(createMatrix(newRows, newCols, 'random'));
+        matrixSetter(newMatrix);
     };
 
     const performOperation = (op: string) => {
@@ -157,56 +166,69 @@ export default function MatrixCalculator() {
         try {
             const matA = toMatrix(matrixA);
             const matB = toMatrix(matrixB);
-            let res: Matrix | number | { values: any[], eigenvectors: Matrix[] };
+            let res: any;
 
             switch(op) {
-                case 'transposeA': res = math.transpose(matA); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'powerA': res = math.pow(matA, powerA); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'determinantA': res = math.det(matA); setResultScalar(math.format(res as number, { fraction: 'ratio', precision: 4 })); break;
-                case 'inverseA': res = math.inv(matA); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'rrefA': res = math.rref(matA); setResultMatrix(fromMatrix(res as Matrix)); break;
+                case 'transposeA': res = math.transpose(matA); setResultMatrix(fromMatrix(res)); break;
+                case 'powerA':
+                    if (powerA === 0) {
+                        res = math.identity(rowsA);
+                    } else {
+                        res = math.pow(matA, powerA);
+                    }
+                    setResultMatrix(fromMatrix(res));
+                    break;
+                case 'determinantA': res = math.det(matA); setResultScalar(math.format(res, { fraction: 'ratio', precision: 4 })); break;
+                case 'inverseA': res = math.inv(matA); setResultMatrix(fromMatrix(res)); break;
+                case 'rrefA': res = math.rref(matA); setResultMatrix(fromMatrix(res)); break;
                 case 'eigsA':
                     res = math.eigs(matA);
-                    const eigenvalues = res.values.map((v: any) => math.format(v, { precision: 4 }));
-                    const eigenvectors = res.eigenvectors.map(vec => fromMatrix(vec as Matrix)[0].map(v => math.format(v, { precision: 4 })));
+                    const eigenvalues = res.values.map(formatEigenvalue);
+                    const eigenvectors = res.eigenvectors.map((vec: Matrix) => fromMatrix(vec)[0].map(formatEigenvalue));
                     const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
                     eigenvectors.forEach((vec, i) => {
                         eigResult.push([`Vector ${i+1}:` , ...vec]);
                     });
                     setResultMatrix(eigResult);
                     break;
-                case 'scalarA': res = math.multiply(matA, scalarA); setResultMatrix(fromMatrix(res as Matrix)); break;
+                case 'scalarA': res = math.multiply(matA, scalarA); setResultMatrix(fromMatrix(res)); break;
                 
-                case 'transposeB': res = math.transpose(matB); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'powerB': res = math.pow(matB, powerB); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'determinantB': res = math.det(matB); setResultScalar(math.format(res as number, { fraction: 'ratio', precision: 4 })); break;
-                case 'inverseB': res = math.inv(matB); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'rrefB': res = math.rref(matB); setResultMatrix(fromMatrix(res as Matrix)); break;
+                case 'transposeB': res = math.transpose(matB); setResultMatrix(fromMatrix(res)); break;
+                case 'powerB':
+                    if (powerB === 0) {
+                        res = math.identity(rowsB);
+                    } else {
+                        res = math.pow(matB, powerB);
+                    }
+                    setResultMatrix(fromMatrix(res));
+                    break;
+                case 'determinantB': res = math.det(matB); setResultScalar(math.format(res, { fraction: 'ratio', precision: 4 })); break;
+                case 'inverseB': res = math.inv(matB); setResultMatrix(fromMatrix(res)); break;
+                case 'rrefB': res = math.rref(matB); setResultMatrix(fromMatrix(res)); break;
                 case 'eigsB':
                     res = math.eigs(matB);
-                    const eigenvaluesB = res.values.map((v: any) => math.format(v, { precision: 4 }));
-                    const eigenvectorsB = res.eigenvectors.map(vec => fromMatrix(vec as Matrix)[0].map(v => math.format(v, { precision: 4 })));
+                    const eigenvaluesB = res.values.map(formatEigenvalue);
+                    const eigenvectorsB = res.eigenvectors.map((vec: Matrix) => fromMatrix(vec)[0].map(formatEigenvalue));
                     const eigResultB: (string | number)[][] = [['Eigenvalues:'], eigenvaluesB];
                     eigenvectorsB.forEach((vec, i) => {
                         eigResultB.push([`Vector ${i+1}:` , ...vec]);
                     });
                     setResultMatrix(eigResultB);
                     break;
-                case 'scalarB': res = math.multiply(matB, scalarB); setResultMatrix(fromMatrix(res as Matrix)); break;
+                case 'scalarB': res = math.multiply(matB, scalarB); setResultMatrix(fromMatrix(res)); break;
 
-                case 'add': res = math.add(matA, matB); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'subtract': res = math.subtract(matA, matB); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'multiply': res = math.multiply(matA, matB); setResultMatrix(fromMatrix(res as Matrix)); break;
+                case 'add': res = math.add(matA, matB); setResultMatrix(fromMatrix(res)); break;
+                case 'subtract': res = math.subtract(matA, matB); setResultMatrix(fromMatrix(res)); break;
+                case 'multiply': res = math.multiply(matA, matB); setResultMatrix(fromMatrix(res)); break;
                 case 'swap': 
-                    const tempMatrixA = [...matrixA];
-                    const tempMatrixB = [...matrixB];
-                    const tempRowsA = rowsA, tempColsA = colsA;
+                    const tempMatrixA = [...matrixA]; const tempMatrixB = [...matrixB];
+                    const tempRowsA = rowsA; const tempColsA = colsA;
                     setMatrixA(tempMatrixB); setRowsA(rowsB); setColsA(colsB);
                     setMatrixB(tempMatrixA); setRowsB(tempRowsA); setColsB(tempColsA);
                     break;
             }
         } catch (e: any) {
-            setError(e.message);
+            setError(e.message || "An error occurred. Check matrix dimensions and values.");
         }
     };
     
@@ -216,12 +238,12 @@ export default function MatrixCalculator() {
                 <MatrixCard title="Matrix A" 
                     rows={rowsA} cols={colsA} 
                     setMatrix={setMatrixA} matrix={matrixA}
-                    handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, setMatrixA, rowsA, setRowsA, colsA, setColsA, delta)}
+                    handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, matrixA, setMatrixA, rowsA, setRowsA, colsA, setColsA, delta)}
                     performOp={performOperation} prefix="A" scalar={scalarA} setScalar={setScalarA} power={powerA} setPower={setPowerA} />
                 <MatrixCard title="Matrix B" 
                     rows={rowsB} cols={colsB} 
                     setMatrix={setMatrixB} matrix={matrixB}
-                    handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, setMatrixB, rowsB, setRowsB, colsB, setColsB, delta)}
+                    handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, matrixB, setMatrixB, rowsB, setRowsB, colsB, setColsB, delta)}
                     performOp={performOperation} prefix="B" scalar={scalarB} setScalar={setScalarB} power={powerB} setPower={setPowerB} />
             </div>
             
