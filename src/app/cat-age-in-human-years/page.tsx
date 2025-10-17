@@ -74,7 +74,7 @@ const ageChart = [
 
 const lifeStages = [
     { stage: "Kitten (0–1 year / 0-15 human years)", description: "A period of rapid growth and high energy. Play is essential for their development. They need kitten-specific food that's high in calories and protein, and they must complete their initial vaccination series." },
-    { stage: "Junior (1–2 years / 15-24 human years)", description: "Your cat is developing their adult personality. This is an ideal time for spaying or neutering." },
+    { stage: "Junior (1–2 years / 15-24 human years)", description: "Your cat is an adolescent. They've reached full size but are still maturing mentally. This is the prime time for spaying or neutering." },
     { stage: "Prime (3–6 years / 28-40 human years)", description: "Your cat is in the prime of their life—healthy, active, and with a settled personality. Focus on maintaining a balanced diet, regular play, and annual wellness checkups." },
     { stage: "Mature (7–10 years / 44-56 human years)", description: "Your cat may start to slow down. It's a good time to monitor their diet to prevent weight gain, and pay attention to dental health." },
     { stage: "Senior (11–14 years / 60-72 human years)", description: "Your cat is now a senior citizen. Health issues like arthritis, kidney disease, or thyroid problems become more common. Increase vet visits to twice a year." },
@@ -88,7 +88,7 @@ export default function CatAgePage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Cat Age Calculator – Convert Cat Years to Human Years Instantly</h1>

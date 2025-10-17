@@ -90,7 +90,7 @@ export default function DogAgePage() {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Dog Age Calculator (Works for Mixed Breeds)</h1>
