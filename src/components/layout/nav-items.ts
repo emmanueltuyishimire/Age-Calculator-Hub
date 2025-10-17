@@ -687,14 +687,7 @@ export const navItems: NavItem[] = [
     icon: Grid,
     label: 'Matrix Calculator',
     category: 'Math',
-    description: 'Perform arithmetic and other operations on matrices.'
-  },
-  {
-    href: '/rref-calculator',
-    icon: Grid,
-    label: 'RREF Calculator',
-    category: 'Math',
-    description: 'Solve systems of linear equations using Reduced Row Echelon Form.'
+    description: 'Perform arithmetic, RREF, and other operations on matrices.'
   },
 
   // Other Calculators

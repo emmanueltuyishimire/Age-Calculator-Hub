@@ -12,6 +12,48 @@ import { create, all, type Matrix } from 'mathjs';
 
 const math = create(all, { number: 'Fraction' });
 
+// --- RREF Algorithm ---
+function rref(matrix: number[][]): number[][] {
+  let mat = matrix.map(row => [...row]);
+  if (!mat || mat.length === 0) {
+    return [];
+  }
+  let rowCount = mat.length;
+  let colCount = mat[0].length;
+  let lead = 0;
+
+  for (let r = 0; r < rowCount; r++) {
+    if (lead >= colCount) return mat;
+
+    let i = r;
+    while (mat[i][lead] === 0) {
+      i++;
+      if (i === rowCount) {
+        i = r;
+        lead++;
+        if (lead === colCount) return mat;
+      }
+    }
+
+    [mat[i], mat[r]] = [mat[r], mat[i]];
+
+    let val = mat[r][lead];
+    if (val !== 0) {
+        mat[r] = mat[r].map(x => x / val);
+    }
+    
+    for (let j = 0; j < rowCount; j++) {
+      if (j !== r) {
+        let val2 = mat[j][lead];
+        mat[j] = mat[j].map((x, k) => x - val2 * mat[r][k]);
+      }
+    }
+    lead++;
+  }
+  return mat;
+}
+
+
 // Helper to convert 2D array to Matrix
 const toMatrix = (data: number[][]): Matrix => math.matrix(data);
 
@@ -29,18 +71,17 @@ const fromMatrix = (matrix: any): string[][] => {
         if (f.d !== 1 && Math.abs(f.n) < 10000 && f.d < 10000) {
             return math.format(f, { fraction: 'ratio' });
         }
-        return math.format(Number(math.format(cell)), { notation: 'fixed', precision: 4 });
+        const num = Number(math.format(cell));
+        return num.toString();
       } catch {
-        return math.format(Number(math.format(cell)), { notation: 'fixed', precision: 4 });
+        const num = Number(math.format(cell));
+        return num.toString();
       }
   }));
 };
 
 const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m: number[][]) => void }) => {
     const handleCellChange = (rowIndex: number, colIndex: number, value: string) => {
-        const isNumeric = /^-?\d*\.?\d*$/.test(value);
-        if (!isNumeric && value !== '' && value !== '-') return;
-
         const newMatrix = matrix.map((row, rIdx) => 
             row.map((cell, cIdx) => {
                 if (rIdx === rowIndex && cIdx === colIndex) {
@@ -60,7 +101,7 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m:
                     {row.map((cell, cIdx) => (
                         <Input
                             key={cIdx}
-                            type="text"
+                            type="number"
                             value={matrix[rIdx][cIdx]}
                             onChange={e => handleCellChange(rIdx, cIdx, e.target.value)}
                             className="w-16 h-8 text-center min-w-[4rem]"
@@ -170,12 +211,14 @@ export default function MatrixCalculator() {
                 case 'detA': setResultScalar(math.det(matA)); return;
                 case 'invA': res = math.inv(matA); break;
                 case 'scalarA': res = math.multiply(matA, parseFloat(scalarA)); break;
+                case 'rrefA': res = rref(matrixA); break;
 
                 case 'transposeB': res = math.transpose(matB); break;
                 case 'powerB': res = math.pow(matB, parseInt(powerB)); break;
                 case 'detB': setResultScalar(math.det(matB)); return;
                 case 'invB': res = math.inv(matB); break;
                 case 'scalarB': res = math.multiply(matB, parseFloat(scalarB)); break;
+                case 'rrefB': res = rref(matrixB); break;
 
                 case 'swap': 
                     const tempMatrixA = [...matrixA]; const tempRowsA = rowsA; const tempColsA = colsA;
@@ -255,6 +298,7 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
                  <div className="grid grid-cols-2 gap-2">
                      <Button variant="outline" size="sm" onClick={() => performOp(`det${prefix}`)}>Determinant</Button>
                      <Button variant="outline" size="sm" onClick={() => performOp(`inv${prefix}`)}>Inverse</Button>
+                     <Button variant="outline" size="sm" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
                 </div>
                 <div className="grid grid-cols-2 gap-2 items-center">
                     <Button variant="outline" size="sm" onClick={() => performOp(`power${prefix}`)}>Power of</Button>
