@@ -115,7 +115,7 @@ export default function AgeCalculatorAppArticle() {
             </CardHeader>
             <CardContent className="space-y-3">
                  <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong><Link href="/age-calculator" className="text-primary hover:underline">Chronological Age Calculator:</Link></strong> Our most popular and powerful tool. Find your age in years, months, days, and watch it update in real-time.</span></li>
-                 <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong><Link href="/birthday-age-calculator" className="text-primary hover:underline">Birthday Calculator:</Link></strong> Not only calculates your age but also provides a fun, live countdown to your next birthday celebration.</span></li>
+                 <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong><Link href="/how-old-is" className="text-primary hover:underline">"How Old Is" Calculator:</Link></strong> A fast and simple tool for figuring out someone else's age.</span></li>
                  <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong><Link href="/age-calculator-by-year" className="text-primary hover:underline">Age by Year Calculator:</Link></strong> Need a quick estimate without a full birth date? This tool provides an approximate age using only the year of birth.</span></li>
             </CardContent>
           </Card>
@@ -177,7 +177,7 @@ export default function AgeCalculatorAppArticle() {
                 <CardTitle>Tools in this Category</CardTitle>
             </CardHeader>
             <CardContent>
-                <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong><Link href="/social-security-retirement-age-calculator" className="text-primary hover:underline">Retirement Age Calculator:</Link></strong> Find your full retirement age according to the U.S. Social Security Administration (SSA).</span></li>
+                <li className="flex items-start"><Check className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" /><span><strong><Link href="/retirement" className="text-primary hover:underline">Retirement Age Calculator:</Link></strong> Find your full retirement age according to the U.S. Social Security Administration (SSA).</span></li>
             </CardContent>
           </Card>
           

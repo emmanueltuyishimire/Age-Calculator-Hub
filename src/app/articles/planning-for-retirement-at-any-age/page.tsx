@@ -37,7 +37,7 @@ const decades = [
     },
     { 
         title: "In Your 50s: The 'Catch-Up' Decade", 
-        content: "You're in the final stretch. The IRS allows for 'catch-up' contributions, letting you save even more in your 401(k) and IRA accounts once you turn 50. Take full advantage of these. Start to create a detailed retirement budget. Use our <a href='/social-security-retirement-age-calculator' class='text-primary hover:underline font-semibold'>Retirement Age Calculator</a> to understand your Social Security benefits, which are a key part of your retirement income puzzle." 
+        content: "You're in the final stretch. The IRS allows for 'catch-up' contributions, letting you save even more in your 401(k) and IRA accounts once you turn 50. Take full advantage of these. Start to create a detailed retirement budget. Use our <a href='/retirement' class='text-primary hover:underline font-semibold'>Retirement Age Calculator</a> to understand your Social Security benefits, which are a key part of your retirement income puzzle." 
     },
     { 
         title: "In Your 60s: The Transition to Decumulation", 
@@ -60,7 +60,7 @@ const faqs = [
     },
     {
         question: "What is my 'full retirement age' for Social Security?",
-        answer: "It depends on your birth year. For anyone born in 1960 or later, it's 67. You can start taking benefits as early as 62, but they will be permanently reduced. Our <a href='/social-security-retirement-age-calculator' class='text-primary hover:underline font-semibold'>Social Security Retirement Age Calculator</a> can give you your exact age."
+        answer: "It depends on your birth year. For anyone born in 1960 or later, it's 67. You can start taking benefits as early as 62, but they will be permanently reduced. Our <a href='/retirement' class='text-primary hover:underline font-semibold'>Social Security Retirement Age Calculator</a> can give you your exact age."
     }
 ];
 
@@ -119,7 +119,7 @@ export default function RetirementPlanningArticle() {
           </p>
           
           <div className="my-10 text-center">
-            <Link href="/retirement-calculators">
+            <Link href="/financial-calculators">
                 <Button size="lg" className="text-lg">Explore Retirement Calculators</Button>
             </Link>
             <p className="text-sm text-muted-foreground mt-2">The first step in any retirement plan is knowing your target.</p>
@@ -147,7 +147,7 @@ export default function RetirementPlanningArticle() {
                     No matter your age, the best time to start or re-evaluate your retirement plan is now. Whether you're just starting your career or are nearing the finish line, understanding the priorities for your current decade allows you to make smart, informed decisions that will pay dividends for years to come.
                 </p>
                 <p className="text-muted-foreground mt-4">
-                    Use our <Link href="/retirement-calculators" className="font-bold text-primary hover:underline">retirement calculators</Link> to anchor your plan with key dates and information.
+                    Use our <Link href="/financial-calculators" className="font-bold text-primary hover:underline">retirement calculators</Link> to anchor your plan with key dates and information.
                 </p>
             </CardContent>
           </Card>

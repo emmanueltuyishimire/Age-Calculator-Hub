@@ -37,7 +37,7 @@ const faqs = [
     },
     {
         question: "Does my Social Security retirement age matter for my savings goal?",
-        answer: "Yes, it's a key part of the puzzle. Knowing your Full Retirement Age helps you decide when to claim Social Security benefits. Delaying your benefits can significantly increase your monthly payout, which might mean you need a smaller personal nest egg to meet your income needs. Find your FRA with our <a href='/social-security-retirement-age-calculator' class='text-primary hover:underline font-semibold'>Social Security Age Calculator</a>."
+        answer: "Yes, it's a key part of the puzzle. Knowing your Full Retirement Age helps you decide when to claim Social Security benefits. Delaying your benefits can significantly increase your monthly payout, which might mean you need a smaller personal nest egg to meet your income needs. Find your FRA with our <a href='/retirement' class='text-primary hover:underline font-semibold'>Social Security Age Calculator</a>."
     }
 ];
 

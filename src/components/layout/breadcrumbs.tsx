@@ -19,8 +19,6 @@ pathLabelMap.set('/financial-calculators', 'Financial Calculators');
 pathLabelMap.set('/health-fitness-calculators', 'Health & Fitness Calculators');
 pathLabelMap.set('/math-calculators', 'Math Calculators');
 pathLabelMap.set('/other-calculators', 'Other Calculators');
-pathLabelMap.set('/retirement-calculators', 'Retirement & Financial Calculators');
-pathLabelMap.set('/pet-age-calculators', 'Pet Age Calculators');
 
 
 export default function Breadcrumbs() {
