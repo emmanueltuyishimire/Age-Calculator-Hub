@@ -77,7 +77,7 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m:
     );
 };
 
-const MatrixDisplay = ({ matrix, title }: { matrix: (number | string)[][], title: string }) => (
+const MatrixDisplay = ({ matrix, title }: { matrix: (string | number)[][], title: string }) => (
     <Card>
         <CardHeader><CardTitle className="text-center">{title}</CardTitle></CardHeader>
         <CardContent className="flex justify-center items-center">
@@ -157,7 +157,7 @@ export default function MatrixCalculator() {
         try {
             const matA = toMatrix(matrixA);
             const matB = toMatrix(matrixB);
-            let res: Matrix | number | { values: any[], vectors: Matrix };
+            let res: Matrix | number | { values: any[], vectors: Matrix[] };
 
             switch(op) {
                 case 'transposeA': res = math.transpose(matA); setResultMatrix(fromMatrix(res as Matrix)); break;
@@ -167,7 +167,13 @@ export default function MatrixCalculator() {
                 case 'rrefA': res = math.rref(matA); setResultMatrix(fromMatrix(res as Matrix)); break;
                 case 'eigsA':
                     res = math.eigs(matA);
-                    setResultMatrix([['Eigenvalues:'], res.values.map((v: any) => math.format(v, { precision: 4 }))]);
+                    const eigenvalues = res.values.map((v: any) => math.format(v, { precision: 4 }));
+                    const eigenvectors = res.vectors.map(vec => fromMatrix(vec as Matrix)[0].map(v => math.format(v, { precision: 4 })));
+                    const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
+                    eigenvectors.forEach((vec, i) => {
+                        eigResult.push([`Vector ${i+1}:` , ...vec]);
+                    });
+                    setResultMatrix(eigResult);
                     break;
                 case 'scalarA': res = math.multiply(matA, scalarA); setResultMatrix(fromMatrix(res as Matrix)); break;
                 
@@ -178,7 +184,13 @@ export default function MatrixCalculator() {
                 case 'rrefB': res = math.rref(matB); setResultMatrix(fromMatrix(res as Matrix)); break;
                 case 'eigsB':
                     res = math.eigs(matB);
-                    setResultMatrix([['Eigenvalues:'], res.values.map((v: any) => math.format(v, { precision: 4 }))]);
+                    const eigenvaluesB = res.values.map((v: any) => math.format(v, { precision: 4 }));
+                    const eigenvectorsB = res.vectors.map(vec => fromMatrix(vec as Matrix)[0].map(v => math.format(v, { precision: 4 })));
+                    const eigResultB: (string | number)[][] = [['Eigenvalues:'], eigenvaluesB];
+                    eigenvectorsB.forEach((vec, i) => {
+                        eigResultB.push([`Vector ${i+1}:` , ...vec]);
+                    });
+                    setResultMatrix(eigResultB);
                     break;
                 case 'scalarB': res = math.multiply(matB, scalarB); setResultMatrix(fromMatrix(res as Matrix)); break;
 
@@ -200,7 +212,7 @@ export default function MatrixCalculator() {
     
     return (
         <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <MatrixCard title="Matrix A" 
                     rows={rowsA} cols={colsA} 
                     setMatrix={setMatrixA} matrix={matrixA}
@@ -220,6 +232,7 @@ export default function MatrixCalculator() {
                     <Button onClick={() => performOperation('subtract')}>A – B</Button>
                     <Button onClick={() => performOperation('multiply')}>AB</Button>
                     <Button onClick={() => performOperation('swap')} variant="secondary">A ↔ B</Button>
+                    <Button onClick={() => { setMatrixA(createMatrix(rowsA, colsA)); setMatrixB(createMatrix(rowsB, colsB)); setResultMatrix(null); setResultScalar(null); setError(null); }} variant="destructive">Clear All</Button>
                 </CardContent>
             </Card>
 

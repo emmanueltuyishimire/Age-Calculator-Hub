@@ -3,6 +3,8 @@ import MatrixCalculator from '@/components/calculators/matrix-calculator';
 import { type Metadata } from 'next';
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Matrix Calculator – RREF, Inverse, Determinant & Eigenvalues',
@@ -91,13 +93,13 @@ export default function MatrixCalculatorPage() {
           <Card>
             <CardHeader><CardTitle>Row Reduced Echelon Form (RREF)</CardTitle></CardHeader>
             <CardContent className="space-y-4 text-muted-foreground">
-                <p>RREF is a simplified form of a matrix obtained by performing a series of elementary row operations. It is particularly useful for solving systems of linear equations. To solve a system, you can create an "augmented matrix" and then find its RREF. The resulting matrix will give you the solutions.</p>
+                <p>RREF is a simplified form of a matrix obtained by performing a series of elementary row operations. It is particularly useful for solving systems of linear equations. To solve a system, you can create an "augmented matrix" (where the final column represents the constants of the equations) and then find its RREF. The resulting matrix will give you the solutions.</p>
             </CardContent>
           </Card>
            <Card>
             <CardHeader><CardTitle>Eigenvalues and Eigenvectors</CardTitle></CardHeader>
             <CardContent className="space-y-4 text-muted-foreground">
-                <p>For a given square matrix A, an eigenvector is a non-zero vector that, when multiplied by A, yields a scaled version of the original vector. The scaling factor is the eigenvalue. They are crucial in many areas of math and physics, including in the process of diagonalization. This calculator computes the eigenvalues for a given matrix.</p>
+                <p>For a given square matrix A, an eigenvector is a non-zero vector that, when multiplied by A, yields a scaled version of the original vector. The scaling factor is the eigenvalue. They are crucial in many areas of math and physics, including in the process of diagonalization. This calculator computes both the eigenvalues and their corresponding eigenvectors for a given matrix.</p>
             </CardContent>
           </Card>
         </section>
