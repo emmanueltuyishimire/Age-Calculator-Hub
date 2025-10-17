@@ -389,23 +389,9 @@ const ScientificCalculator = () => {
   }
 
   const topRow = ['2nd', 'Deg', 'Rad', 'MC', 'MR', 'M+', 'M-'];
-  
-  const functions = [
-    ['sin', 'cos', 'tan'],
-    ['ln', 'log', 'n!'],
-    ['π', 'e', '1/x'],
-    ['(', ')', 'Ans'],
-    ['x2', 'xy', '√x'],
-  ];
-
-  const numpad = [
-    'AC', 'Delete', '%', '÷',
-    '7', '8', '9', '×',
-    '4', '5', '6', '−',
-    '1', '2', '3', '+',
-    '0', '.', '±', '=',
-  ];
-
+  const functions = ['(', ')', 'n!', '%', '1/x', 'sin', 'cos', 'tan', 'ln', 'log', 'e', 'π', 'x2', 'xy', '√x',];
+  const numpad = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.', '±'];
+  const operators = ['AC', 'Delete', '÷', '×', '−', '+', '='];
 
   return (
     <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-sm">
@@ -429,17 +415,28 @@ const ScientificCalculator = () => {
       </div>
 
        <div className="flex gap-1">
-            <div className="grid grid-cols-3 gap-1 w-[45%]">
-                {functions.flat().map(btn => (
+            <div className="grid grid-cols-5 gap-1 w-[70%]">
+                {functions.map(btn => (
                      <Button key={btn} variant={getVariant(btn)} className="h-8 text-sm p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
                 ))}
-            </div>
-            <div className="grid grid-cols-4 gap-1 w-[55%]">
-                {numpad.map(btn => (
+                 {numpad.map(btn => (
                     <Button
                         key={btn}
                         variant={getVariant(btn)}
                         className={cn("h-8 text-sm p-1", { 'col-span-2': btn === '0' })}
+                        onClick={() => handleButtonClick(btn)}
+                        aria-label={ariaLabels[btn] || btn}
+                    >
+                        {getButtonLabel(btn)}
+                    </Button>
+                ))}
+            </div>
+            <div className="grid grid-cols-1 gap-1 w-[30%]">
+                {operators.map(btn => (
+                    <Button
+                        key={btn}
+                        variant={getVariant(btn)}
+                        className={cn("h-8 text-sm p-1", {'h-full': btn === '='})}
                         onClick={() => handleButtonClick(btn)}
                         aria-label={ariaLabels[btn] || btn}
                     >
@@ -453,5 +450,3 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
-
-    

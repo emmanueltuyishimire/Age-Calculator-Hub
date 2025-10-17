@@ -41,7 +41,7 @@ export function SearchBar() {
 
   const searchableItems: SearchableItem[] = React.useMemo(() => {
     const calculatorItems = navItems
-      .filter(item => item.href.startsWith('/') && !['/', '/articles', '/about', '/contact', '/privacy', '/terms', '/disclaimer'].includes(item.href) && !item.href.endsWith('-calculators'))
+      .filter(item => item.href.startsWith('/') && !['/', '/articles', '/about', '/contact', '/privacy', '/terms', '/disclaimer', '/faq'].includes(item.href) && !item.href.endsWith('-calculators'))
       .map(item => ({
         title: item.label,
         href: item.href,
