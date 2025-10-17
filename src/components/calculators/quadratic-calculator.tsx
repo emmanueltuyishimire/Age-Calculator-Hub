@@ -10,7 +10,6 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -33,6 +32,7 @@ interface Result {
   x1: string;
   x2: string;
   discriminant: number;
+  formulaSteps: { a: number, b: number, c: number };
 }
 
 export default function QuadraticCalculator() {
@@ -41,7 +41,7 @@ export default function QuadraticCalculator() {
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: { a: '1', b: '1', c: '1/4' },
+    defaultValues: { a: '1', b: '-4', c: '4' },
   });
 
   const evaluateSafely = (expr: string): number | null => {
@@ -70,11 +70,9 @@ export default function QuadraticCalculator() {
     const discriminant = b * b - 4 * a * c;
     let x1, x2;
 
-    if (discriminant > 0) {
+    if (discriminant >= 0) {
       x1 = ((-b + Math.sqrt(discriminant)) / (2 * a)).toLocaleString(undefined, { maximumFractionDigits: 5 });
       x2 = ((-b - Math.sqrt(discriminant)) / (2 * a)).toLocaleString(undefined, { maximumFractionDigits: 5 });
-    } else if (discriminant === 0) {
-      x1 = x2 = (-b / (2 * a)).toLocaleString(undefined, { maximumFractionDigits: 5 });
     } else { // Complex roots
       const realPart = (-b / (2 * a)).toFixed(5);
       const imagPart = (Math.sqrt(-discriminant) / (2 * a)).toFixed(5);
@@ -82,7 +80,7 @@ export default function QuadraticCalculator() {
       x2 = `${realPart} - ${imagPart}i`;
     }
     
-    setResult({ x1, x2, discriminant });
+    setResult({ x1, x2, discriminant, formulaSteps: { a, b, c } });
   }
 
   return (
@@ -115,13 +113,17 @@ export default function QuadraticCalculator() {
         {result && (
           <div className="p-4 bg-muted rounded-lg text-center mt-6 space-y-4 animate-fade-in">
             <h3 className="text-xl font-bold text-foreground">Solutions for x</h3>
+            
+             <div className="p-4 border rounded-lg bg-background text-sm font-mono break-all">
+                <p>x = [-b ± √(b² - 4ac)] / 2a</p>
+                <p>x = [-({result.formulaSteps.b}) ± √(({result.formulaSteps.b})² - 4({result.formulaSteps.a})({result.formulaSteps.c}))] / 2({result.formulaSteps.a})</p>
+                <p>x = [{ -result.formulaSteps.b } ± √({result.discriminant})] / { 2 * result.formulaSteps.a }</p>
+            </div>
+
             <div className="p-2 border rounded-lg bg-background">
                 <p className="text-lg font-bold text-primary">x₁ = {result.x1}</p>
                 <p className="text-lg font-bold text-primary">x₂ = {result.x2}</p>
             </div>
-            <p className="text-sm text-muted-foreground">
-                Discriminant (b² - 4ac) = {result.discriminant.toLocaleString(undefined, { maximumFractionDigits: 5 })}
-            </p>
           </div>
         )}
       </CardContent>
