@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
-import CalculatorDisplay from '@/components/calculators/calculator-display';
 import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
@@ -15,27 +14,22 @@ export default function Home() {
     <main role="main">
       <section className="bg-muted/50 py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="text-center lg:text-left">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
-                <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mt-4">
-                    Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
-                </p>
-                <div className="mt-8 mx-auto lg:mx-0 max-w-md">
-                    <SearchBar />
-                </div>
-            </div>
-             <div className="flex flex-col items-center">
-                <CalculatorDisplay />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 w-full max-w-sm">
-                   <Button asChild size="lg" className="w-full">
-                       <Link href="/simple-calculator">Simple Calculator <ArrowRight className="ml-2 h-4 w-4"/></Link>
-                   </Button>
-                   <Button asChild size="lg" variant="secondary" className="w-full">
-                       <Link href="/scientific-calculator">Scientific Calculator <ArrowRight className="ml-2 h-4 w-4"/></Link>
-                   </Button>
-                </div>
-            </div>
+          <div className="max-w-3xl mx-auto text-center">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
+              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mt-4">
+                  Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
+              </p>
+              <div className="mt-8 mx-auto max-w-md">
+                  <SearchBar />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 w-full max-w-sm mx-auto">
+                 <Button asChild size="lg" className="w-full">
+                     <Link href="/simple-calculator">Simple Calculator <ArrowRight className="ml-2 h-4 w-4"/></Link>
+                 </Button>
+                 <Button asChild size="lg" variant="secondary" className="w-full">
+                     <Link href="/scientific-calculator">Scientific Calculator <ArrowRight className="ml-2 h-4 w-4"/></Link>
+                 </Button>
+              </div>
           </div>
         </div>
       </section>
