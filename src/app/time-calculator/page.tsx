@@ -8,6 +8,8 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Time Calculator – Duration Between Dates & Time Adder/Subtractor',
@@ -28,7 +30,7 @@ const faqs = [
     },
     {
         question: "Can this calculator handle different time zones?",
-        answer: "The calculations are based on the date and time values you enter and do not automatically adjust for time zones. For best results, use a consistent time reference."
+        answer: "The calculations are based on the date and time values you enter and do not automatically adjust for time zones. For best results, use a consistent time reference for both start and end points."
     },
     {
         question: "Is this calculator accurate for billing or legal purposes?",
@@ -68,6 +70,48 @@ export default function TimeCalculatorPage() {
             <TimeCalculator />
 
             <section className="mt-12 space-y-8 animate-fade-in">
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>How to Use the Time Calculator</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4 text-muted-foreground">
+                       <p>Our calculator has two main functions. Select the tab that fits your needs:</p>
+                        <div>
+                            <h3 className="font-semibold text-foreground">1. Time Between Dates</h3>
+                             <ol className="list-decimal list-inside space-y-2 mt-2">
+                                <li><strong>Set the Start Date & Time:</strong> Use the calendar and time inputs for the beginning of your period.</li>
+                                <li><strong>Set the End Date & Time:</strong> Enter the end point of your duration.</li>
+                                <li><strong>Click "Calculate Duration":</strong> Instantly see the total time elapsed, broken down into years, months, days, hours, minutes, and seconds.</li>
+                            </ol>
+                        </div>
+                         <div>
+                            <h3 className="font-semibold text-foreground">2. Add or Subtract Time</h3>
+                             <ol className="list-decimal list-inside space-y-2 mt-2">
+                                <li><strong>Set the Start Date & Time:</strong> Enter the initial date you want to calculate from.</li>
+                                <li><strong>Choose Operation:</strong> Select whether you want to "Add" or "Subtract" time.</li>
+                                <li><strong>Enter Duration:</strong> Input the amount of years, months, days, etc., you want to add or subtract. You can use multiple fields at once.</li>
+                                <li><strong>Click "Calculate New Date":</strong> The calculator will show you the exact resulting date and time.</li>
+                            </ol>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Practical Uses for the Time Calculator</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">This tool is useful for a wide range of everyday and professional tasks:</p>
+                        <ul className="list-disc list-inside space-y-2 mt-2 text-muted-foreground">
+                            <li><strong>Project Management:</strong> Calculate project durations and estimate deadlines.</li>
+                            <li><strong>Event Planning:</strong> Determine the time remaining until a wedding, vacation, or other important event.</li>
+                             <li><strong>Personal Milestones:</strong> Find out exactly how old you are in days, or how long you've been at a job. For your precise age, try our <Link href="/age-calculator" className="text-primary hover:underline">Age Calculator</Link>.</li>
+                            <li><strong>Logistics and Scheduling:</strong> Calculate travel times or work back from a deadline to set start dates.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
                 <div>
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
                     <Accordion type="single" collapsible className="w-full">
@@ -88,3 +132,4 @@ export default function TimeCalculatorPage() {
     </div>
   );
 }
+
