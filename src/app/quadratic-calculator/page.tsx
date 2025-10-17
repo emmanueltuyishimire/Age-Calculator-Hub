@@ -45,6 +45,16 @@ const faqSchema = {
     }))
 };
 
+const derivationSteps = [
+    { step: 1, formula: "ax² + bx + c = 0", explanation: "Start with the standard form of the quadratic equation." },
+    { step: 2, formula: "ax² + bx = -c", explanation: "Move the constant term 'c' to the other side of the equation." },
+    { step: 3, formula: "x² + (b/a)x = -c/a", explanation: "Divide the entire equation by 'a' to make the coefficient of x² equal to 1." },
+    { step: 4, formula: "x² + (b/a)x + (b/2a)² = -c/a + (b/2a)²", explanation: "Complete the square by adding (b/2a)² to both sides. This makes the left side a perfect square trinomial." },
+    { step: 5, formula: "(x + b/2a)² = (b² - 4ac) / 4a²", explanation: "Factor the left side and combine the terms on the right side under a common denominator." },
+    { step: 6, formula: "x + b/2a = ±√(b² - 4ac) / 2a", explanation: "Take the square root of both sides. Remember to include both the positive and negative roots (±)." },
+    { step: 7, formula: "x = [-b ± √(b² - 4ac)] / 2a", explanation: "Isolate 'x' by subtracting b/2a from both sides to arrive at the quadratic formula." },
+];
+
 export default function QuadraticCalculatorPage() {
   return (
     <div className="container mx-auto px-4 py-8">
@@ -96,14 +106,16 @@ export default function QuadraticCalculatorPage() {
                 <CardHeader>
                     <CardTitle>Derivation of the Quadratic Formula</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4 text-muted-foreground p-6 bg-muted rounded-md font-mono text-sm leading-loose">
-                    <p>ax² + bx + c = 0</p>
-                    <p>ax² + bx = -c</p>
-                    <p>x² + (b/a)x = -c/a</p>
-                    <p>x² + (b/a)x + (b/2a)² = -c/a + (b/2a)²</p>
-                    <p>(x + b/2a)² = (b² - 4ac) / 4a²</p>
-                    <p>x + b/2a = ±√(b² - 4ac) / 2a</p>
-                    <p>x = [-b ± √(b² - 4ac)] / 2a</p>
+                 <CardContent className="space-y-6 text-muted-foreground p-6 bg-muted rounded-md">
+                   {derivationSteps.map((item) => (
+                       <div key={item.step} className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                           <div className="w-8 h-8 flex-shrink-0 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold">{item.step}</div>
+                           <div className="flex-1">
+                               <p className="font-mono text-sm leading-loose bg-background/50 p-3 rounded-md">{item.formula}</p>
+                               <p className="text-xs italic mt-1">{item.explanation}</p>
+                           </div>
+                       </div>
+                   ))}
                 </CardContent>
             </Card>
 
