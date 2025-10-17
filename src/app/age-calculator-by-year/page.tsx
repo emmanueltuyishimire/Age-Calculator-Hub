@@ -129,8 +129,4 @@ export default function AgeCalculatorByYearPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Core Age Calculators" currentHref="/age-calculator-by-year" />
-      </div>
-    </div>
-  );
-}
+        <RelatedCalculators currentCategory="
