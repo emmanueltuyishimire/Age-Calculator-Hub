@@ -111,7 +111,8 @@ export default function RrefCalculator() {
         setResultMatrix(null);
         try {
             const mat = toMatrix(matrix);
-            const res = math.algebra.rref(mat);
+            // Corrected function call
+            const res = math.rref(mat); 
             setResultMatrix(fromMatrix(res));
         } catch (e: any) {
             setError(e.message || "An error occurred during RREF calculation.");
