@@ -33,6 +33,47 @@ const ScientificCalculator = () => {
     const [isResult, setIsResult] = useState(false);
     const [isShifted, setIsShifted] = useState(false);
 
+    const ariaLabels: { [key: string]: string } = {
+        'AC': 'All Clear',
+        'backspace': 'Backspace',
+        '±': 'Toggle sign',
+        '÷': 'Divide',
+        '×': 'Multiply',
+        '−': 'Subtract',
+        '+': 'Add',
+        '=': 'Equals',
+        '.': 'Decimal point',
+        'sin': 'Sine',
+        'cos': 'Cosine',
+        'tan': 'Tangent',
+        'sin-1': 'Inverse sine',
+        'cos-1': 'Inverse cosine',
+        'tan-1': 'Inverse tangent',
+        'ln': 'Natural logarithm',
+        'log': 'Logarithm base 10',
+        'π': 'Pi',
+        'e': 'Euler\'s number',
+        'x2': 'Square',
+        'x3': 'Cube',
+        'xy': 'Power',
+        'y√x': 'nth root',
+        '1/x': 'Reciprocal',
+        'n!': 'Factorial',
+        'ex': 'e to the power of x',
+        '10x': '10 to the power of x',
+        'Rad': 'Radians',
+        'Deg': 'Degrees',
+        '2nd': 'Second function',
+        'EXP': 'Exponent',
+        '(': 'Open parenthesis',
+        ')': 'Close parenthesis',
+        'Ans': 'Answer',
+        'MC': 'Memory Clear',
+        'MR': 'Memory Recall',
+        'M+': 'Memory Add',
+        'M-': 'Memory Subtract'
+    };
+
     const calculate = () => {
         if (!expression) return;
         try {
@@ -337,5 +378,3 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
-
-    
