@@ -61,7 +61,12 @@ function rref(matrix: (number | string)[][]): number[][] {
 // Helper to convert 2D array to Matrix
 const toMatrix = (data: (number|string)[][]): Matrix => math.matrix(data.map(row => row.map(cell => {
     try {
-        return evaluate(cell.toString());
+        const evaluated = evaluate(cell.toString());
+        // mathjs might return objects for complex numbers, ensure it's a number
+        if (typeof evaluated === 'object' && evaluated.re !== undefined) {
+          return evaluated; // keep as complex object
+        }
+        return Number(evaluated);
     } catch {
         return 0;
     }
@@ -78,7 +83,7 @@ const fromMatrix = (matrix: any): string[][] => {
   
   return arrayData.map((row: any[]) => row.map(cell => {
       try {
-        if (cell.re !== undefined || cell.im !== undefined) {
+        if (cell && typeof cell === 'object' && cell.re !== undefined) {
              const realPart = Math.abs(cell.re) < 1e-10 ? 0 : cell.re;
              const imagPart = Math.abs(cell.im) < 1e-10 ? 0 : cell.im;
             if(imagPart === 0) return mathFormat(realPart, { notation: 'fixed', precision: 4 });
@@ -94,8 +99,8 @@ const fromMatrix = (matrix: any): string[][] => {
         if (Math.abs(num) < 1e-10) return "0";
         return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
       } catch {
-        const num = Number(math.format(cell));
-        return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
+        const num = Number(cell);
+        return isNaN(num) ? 'Error' : num.toLocaleString(undefined, { maximumFractionDigits: 4 });
       }
   }));
 };
@@ -103,13 +108,7 @@ const fromMatrix = (matrix: any): string[][] => {
 const MatrixInput = ({ matrix, setMatrix }: { matrix: (number | string)[][], setMatrix: (m: (number | string)[][]) => void }) => {
     const handleCellChange = (rowIndex: number, colIndex: number, value: string) => {
         const newMatrix = matrix.map((row, rIdx) => 
-            row.map((cell, cIdx) => {
-                if (rIdx === rowIndex && cIdx === colIndex) {
-                    // Allow valid partial inputs like '-', '.', '3/', but evaluate on blur.
-                    return value;
-                }
-                return cell;
-            })
+            row.map((cell, cIdx) => (rIdx === rowIndex && cIdx === colIndex) ? value : cell)
         );
         setMatrix(newMatrix);
     };
@@ -311,6 +310,8 @@ export default function MatrixCalculator() {
 }
 
 const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, performOp, prefix, powerValue, setPowerValue, scalarValue, setScalarValue }: any) => {
+    const isSquare = rows === cols;
+
     return (
         <Card>
             <CardHeader>
@@ -334,16 +335,19 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
                     <Button variant="outline" size="sm" onClick={() => performOp(`transpose${prefix}`)}>Transpose</Button>
                 </div>
                  <div className="grid grid-cols-2 gap-2 items-center">
-                    <Button variant="outline" size="sm" onClick={() => performOp(`power${prefix}`)}>Power of</Button>
-                    <Input type="number" value={powerValue} onChange={e => setPowerValue(e.target.value)} className="h-9" />
+                    <Button variant="outline" size="sm" onClick={() => performOp(`power${prefix}`)} disabled={!isSquare}>Power of</Button>
+                    <Input type="number" value={powerValue} onChange={e => setPowerValue(e.target.value)} className="h-9" disabled={!isSquare}/>
                 </div>
                  <div className="grid grid-cols-2 gap-2">
-                     <Button variant="outline" size="sm" onClick={() => performOp(`det${prefix}`)}>Determinant</Button>
-                     <Button variant="outline" size="sm" onClick={() => performOp(`inv${prefix}`)}>Inverse</Button>
+                     <Button variant="outline" size="sm" onClick={() => performOp(`det${prefix}`)} disabled={!isSquare}>Determinant</Button>
+                     <Button variant="outline" size="sm" onClick={() => performOp(`inv${prefix}`)} disabled={!isSquare}>Inverse</Button>
                 </div>
                  <div className="grid grid-cols-2 gap-2 items-center">
                     <Button variant="outline" size="sm" onClick={() => performOp(`scalar${prefix}`)}>× (Scalar)</Button>
                     <Input type="number" value={scalarValue} onChange={e => setScalarValue(e.target.value)} className="h-9" />
+                </div>
+                <div>
+                     <Button variant="outline" size="sm" className="w-full" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
                 </div>
             </CardContent>
         </Card>
