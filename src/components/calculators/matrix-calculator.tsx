@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { AlertCircle, Trash, Plus, Minus, ArrowRightLeft, RefreshCcw, Power, Crosshair, IterationCcw } from 'lucide-react';
-import { create, all, type Matrix } from 'mathjs';
+import { create, all, type Matrix, fraction, format as mathFormat } from 'mathjs';
 
 const math = create(all, { number: 'Fraction' });
 
@@ -15,8 +15,8 @@ const math = create(all, { number: 'Fraction' });
 function rref(matrix: (number | string)[][]): number[][] {
   let mat = matrix.map(row => row.map(cell => {
       try {
-        const evaluated = evaluate(cell.toString());
-        return typeof evaluated === 'object' ? evaluated.re : Number(evaluated);
+        const evaluated = math.evaluate(cell.toString());
+        return typeof evaluated === 'object' && 're' in evaluated ? (evaluated as any).re : Number(evaluated);
       } catch {
         return 0;
       }
@@ -62,11 +62,7 @@ function rref(matrix: (number | string)[][]): number[][] {
 // Helper to convert 2D array to Matrix
 const toMatrix = (data: (number|string)[][]): Matrix => math.matrix(data.map(row => row.map(cell => {
     try {
-        const evaluated = evaluate(cell.toString());
-        if (typeof evaluated === 'object' && evaluated.re !== undefined) {
-          return evaluated; 
-        }
-        return Number(evaluated);
+        return math.evaluate(cell.toString());
     } catch {
         return 0;
     }
@@ -86,16 +82,16 @@ const fromMatrix = (matrix: any): string[][] => {
         if (cell && typeof cell === 'object' && cell.re !== undefined) {
              const realPart = Math.abs(cell.re) < 1e-10 ? 0 : cell.re;
              const imagPart = Math.abs(cell.im) < 1e-10 ? 0 : cell.im;
-            if(imagPart === 0) return math.format(realPart, { notation: 'fixed', precision: 4 }).replace(/\.?0+$/, "");
-            return `${math.format(realPart, { notation: 'fixed', precision: 2 })} ${imagPart > 0 ? '+' : '-'} ${math.format(Math.abs(imagPart), {notation: 'fixed', precision: 2})}i`;
+            if(imagPart === 0) return mathFormat(realPart, { notation: 'fixed', precision: 4 }).replace(/\.?0+$/, "");
+            return `${mathFormat(realPart, { notation: 'fixed', precision: 2 })} ${imagPart > 0 ? '+' : '-'} ${mathFormat(Math.abs(imagPart), {notation: 'fixed', precision: 2})}i`;
         }
         
-        const f = math.fraction(cell);
+        const f = fraction(cell);
         if (f.d !== 1 && Math.abs(f.n) < 10000 && f.d < 10000) {
-            return math.format(f, { fraction: 'ratio' });
+            return mathFormat(f, { fraction: 'ratio' });
         }
         
-        const num = Number(math.format(cell));
+        const num = Number(mathFormat(cell));
         if (Math.abs(num) < 1e-10) return "0";
         return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
       } catch {
@@ -116,7 +112,7 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: (number | string)[][], set
     const handleBlur = (rowIndex: number, colIndex: number, value: string) => {
        const newMatrix = [...matrix];
        try {
-           evaluate(value);
+           math.evaluate(value);
            newMatrix[rowIndex][colIndex] = value;
        } catch {
            newMatrix[rowIndex][colIndex] = "0"; 
