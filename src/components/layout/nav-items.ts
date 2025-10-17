@@ -174,7 +174,7 @@ export const navItems: NavItem[] = [
   
   // Financial Calculators Hub
   {
-    href: '/social-security-retirement-age-calculator',
+    href: '/retirement',
     icon: PiggyBank,
     label: 'Retirement Age Calculator',
     category: 'Financial',
@@ -330,7 +330,7 @@ export const navItems: NavItem[] = [
   {
     href: '/cash-back-or-low-interest-calculator',
     icon: Car,
-    label: 'Cash Back or Low Interest',
+    label: 'Cash Back or Low Interest Calculator',
     category: 'Financial',
     description: 'Compare a cash back rebate vs. low interest rate car deal.'
   },
@@ -563,16 +563,9 @@ export const navItems: NavItem[] = [
     description: 'Calculates age from date of birth in years, months, and days.'
   },
   {
-    href: '/birthday-age-calculator',
-    icon: Cake,
-    label: 'Birthday Calculator',
-    category: 'Other Calculators',
-    description: 'Find your exact age and see a live countdown to your next birthday.'
-  },
-  {
     href: '/how-old-is',
     icon: HelpCircle,
-    label: 'How Old Is...?',
+    label: 'How Old Is Calculator',
     category: 'Other Calculators',
     description: 'A quick age finder to determine how old someone is from their birth date.'
   },
