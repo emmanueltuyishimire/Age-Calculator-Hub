@@ -22,8 +22,8 @@ const basicButtonsConfig = [
     { label: 'AC', value: 'AC', style: "col-span-1" }, { label: <Trash2 key="backspace" className="h-5 w-5 mx-auto"/>, value: 'backspace', style: "col-span-1" }, { label: 'Ans', value: 'Ans', style: "col-span-1" }, { label: 'M+', value: 'M+', style: "col-span-1" }, { label: 'MR', value: 'MR', style: "col-span-1" },
     { label: '7', value: '7', style: "col-span-1" }, { label: '8', value: '8', style: "col-span-1" }, { label: '9', value: '9', style: "col-span-1" }, { label: '÷', value: '÷', style: "col-span-1" }, { label: 'M-', value: 'M-', style: "col-span-1" },
     { label: '4', value: '4', style: "col-span-1" }, { label: '5', value: '5', style: "col-span-1" }, { label: '6', value: '6', style: "col-span-1" }, { label: '−', value: '−', style: "col-span-1" }, { label: '=', value: '=', style: "row-span-3 h-auto col-start-5" },
-    { label: '1', value: '1', style: "col-span-1" }, { label: '2', value: '2', style: "col-span-1" }, { label: '3', value: '3', style: "col-span-1" }, { label: '×', value: '×', style: "col-span-1" },
-    { label: '±', value: '±', style: "col-span-1" }, { label: '0', value: '0', style: "col-span-1" }, { label: '.', value: '.', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" },
+    { label: '1', value: '1', style: "col-span-1" }, { label: '2', value: '2', style: "col-span-1" }, { label: '3', value: '3', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" },
+    { label: '±', value: '±', style: "col-span-1" }, { label: '0', value: '0', style: "col-span-1" }, { label: '.', value: '.', style: "col-span-1" }, { label: '×', value: '×', style: "col-span-1" },
 ];
 
 const ariaLabels: Record<string, string> = {
@@ -266,6 +266,7 @@ const ScientificCalculator = () => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [calculate]);
     
     useEffect(() => {
@@ -320,12 +321,11 @@ const ScientificCalculator = () => {
             aria-label="Calculator display"
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="grid grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-black">
+      <div className="grid grid-cols-10 md:grid-cols-10 gap-2">
+        <div className="col-span-10 grid grid-cols-4 sm:grid-cols-5 md:grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-black/20">
             {scientificButtonsConfig.map(btn => renderButton(btn))}
         </div>
-
-        <div className="grid grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-black">
+        <div className="col-span-10 grid grid-cols-5 gap-2 p-2 rounded-lg bg-slate-600/20 dark:bg-black/20">
             {basicButtonsConfig.map(btn => renderButton(btn))}
         </div>
       </div>
@@ -334,3 +334,5 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
+
+    
