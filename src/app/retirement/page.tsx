@@ -1,147 +1,180 @@
-"use client";
 
-import { useState } from 'react';
+import SocialSecurityRetirementAgeCalculator from "@/components/calculators/social-security-retirement-age-calculator";
+import { type Metadata } from 'next';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
-import ShareButton from '../share-button';
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import RelatedCalculators from "@/components/layout/related-calculators";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
-interface RetirementInfo {
-  fullRetirementAge: { years: number; months: number };
-  earlyBenefitReduction: number;
-  delayedBenefitIncrease: number;
-}
-
-const getFullRetirementAge = (birthYear: number): { years: number; months: number } => {
-  if (birthYear <= 1937) return { years: 65, months: 0 };
-  if (birthYear === 1938) return { years: 65, months: 2 };
-  if (birthYear === 1939) return { years: 65, months: 4 };
-  if (birthYear === 1940) return { years: 65, months: 6 };
-  if (birthYear === 1941) return { years: 65, months: 8 };
-  if (birthYear === 1942) return { years: 65, months: 10 };
-  if (birthYear >= 1943 && birthYear <= 1954) return { years: 66, months: 0 };
-  if (birthYear === 1955) return { years: 66, months: 2 };
-  if (birthYear === 1956) return { years: 66, months: 4 };
-  if (birthYear === 1957) return { years: 66, months: 6 };
-  if (birthYear === 1958) return { years: 66, months: 8 };
-  if (birthYear === 1959) return { years: 66, months: 10 };
-  return { years: 67, months: 0 }; // 1960 or later
+export const metadata: Metadata = {
+    title: 'Social Security Retirement Age Calculator – Find Full Retirement Age by Birth Year',
+    description: 'Use our free Social Security Retirement Age Calculator to determine your full retirement age (FRA) and benefit eligibility. Plan when to start or delay your retirement benefits effectively.',
+    alternates: {
+        canonical: '/retirement',
+    },
 };
 
-const getBenefitAdjustments = (fra: {years: number, months: number}): { reduction: number, increase: number } => {
-    const fraInMonths = fra.years * 12 + fra.months;
-    const monthsEarly = fraInMonths - (62 * 12);
-    
-    let reduction = 0;
-    if (monthsEarly <= 36) {
-        reduction = monthsEarly * (5/9);
-    } else {
-        reduction = 36 * (5/9) + (monthsEarly - 36) * (5/12);
+const faqs = [
+    {
+        question: "What is the full retirement age for Social Security?",
+        answer: "It depends on your birth year. For those born in 1960 or later, the full retirement age is 67. For those born between 1943 and 1954, it is 66, with incremental increases for birth years between 1955 and 1959. Our calculator determines this for you."
+    },
+    {
+        question: "Can I claim benefits before my full retirement age?",
+        answer: "Yes. You can start receiving retirement benefits as early as age 62. However, your monthly benefit will be permanently reduced if you claim before your full retirement age. The reduction can be up to 30% if your FRA is 67."
+    },
+    {
+        question: "What happens if I delay claiming benefits past my FRA?",
+        answer: "Your benefits will increase by a certain percentage for each month you delay after your full retirement age, up until you reach age 70. This can result in a significantly higher monthly payout for the rest of your life."
+    },
+    {
+        question: "Does this calculator show my benefit amount?",
+        answer: "No, this tool is designed to calculate your age eligibility only. To get a personalized estimate of your benefit amount based on your earnings history, you should create an account on the official <a href='https://www.ssa.gov/myaccount/' target='_blank' rel='noopener noreferrer' class='text-primary hover:underline'>my Social Security</a> website."
+    },
+     {
+        question: "Is my FRA the same for all types of Social Security benefits?",
+        answer: "Your Full Retirement Age is the same for retirement and spousal benefits. However, eligibility for disability or survivor benefits follows different rules."
     }
+];
 
-    const monthsDelayed = (70*12) - fraInMonths;
-    const increase = (monthsDelayed / 12) * 8;
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+        }
+    }))
+};
 
-    return { reduction, increase };
-}
+const fraChart = [
+    { birthYear: "1943-1954", fra: "66 years" },
+    { birthYear: "1955", fra: "66 years and 2 months" },
+    { birthYear: "1956", fra: "66 years and 4 months" },
+    { birthYear: "1957", fra: "66 years and 6 months" },
+    { birthYear: "1958", fra: "66 years and 8 months" },
+    { birthYear: "1959", fra: "66 years and 10 months" },
+    { birthYear: "1960 or later", fra: "67 years" },
+];
 
-
-export default function SocialSecurityRetirementAgeCalculator() {
-  const [birthYear, setBirthYear] = useState('');
-  const [retirementInfo, setRetirementInfo] = useState<RetirementInfo | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleCalculate = () => {
-    const year = parseInt(birthYear, 10);
-
-    if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
-      setError("Please enter a valid birth year.");
-      setRetirementInfo(null);
-      return;
-    }
-    setError(null);
-
-    const fullRetirementAge = getFullRetirementAge(year);
-    const adjustments = getBenefitAdjustments(fullRetirementAge);
-    
-    setRetirementInfo({
-      fullRetirementAge,
-      earlyBenefitReduction: Math.round(adjustments.reduction),
-      delayedBenefitIncrease: Math.round(adjustments.increase),
-    });
-  };
-
+export default function SocialSecurityRetirementPage() {
   return (
-    <Card className="w-full max-w-xl mx-auto shadow-lg animate-fade-in">
-      <CardHeader className="text-center">
-        <CardTitle>Calculate Your Full Retirement Age</CardTitle>
-        <CardDescription>
-          Enter your birth year to find your Social Security retirement details.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {error && (
-            <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-            </Alert>
-        )}
-        <div className="space-y-2">
-            <Label htmlFor="birth-year-ss">Your Birth Year</Label>
-            <div className="flex gap-2">
-                <Input 
-                    id="birth-year-ss"
-                    placeholder="YYYY" 
-                    value={birthYear} 
-                    onChange={e => setBirthYear(e.target.value)} 
-                    aria-label="Year of Birth"
-                />
-                <Button onClick={handleCalculate} className="w-full sm:w-auto">Calculate</Button>
-                 <ShareButton title="Social Security Retirement Calculator" text="Find out your full retirement age for Social Security!" url="/social-security-retirement-age-calculator" />
+    <div className="container mx-auto px-4 py-8">
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <div className="max-w-4xl mx-auto">
+        <main role="main">
+            <div className="text-center mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Social Security Retirement Age Calculator</h1>
+            <p className="text-md md:text-lg text-muted-foreground">
+                Use our free Social Security Retirement Age Calculator to find your Full Retirement Age (FRA) based on your birth year. Instantly see your FRA and understand your options for claiming early or delayed retirement benefits.
+            </p>
             </div>
-        </div>
 
-        {retirementInfo && (
-          
-            <div className="p-6 bg-muted rounded-lg space-y-6 animate-fade-in mt-4">
-              <div className="text-center">
-                <h3 className="text-lg font-medium text-muted-foreground">Your Full Retirement Age is:</h3>
-                <div className="flex justify-center items-baseline space-x-2">
-                  <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirementAge.years}</span>
-                  <span className="text-xl text-muted-foreground">years</span>
-                  {retirementInfo.fullRetirementAge.months > 0 && (
-                    <>
-                      <span className="text-4xl font-bold text-primary">{retirementInfo.fullRetirementAge.months}</span>
-                      <span className="text-xl text-muted-foreground">months</span>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
-                  <div className="p-4 border rounded-lg">
-                      <h4 className="font-semibold">Early Retirement (Age 62)</h4>
-                      <p className="text-sm text-muted-foreground">You can start benefits at age 62, but they will be reduced by approximately <strong className="text-foreground">{retirementInfo.earlyBenefitReduction}%</strong>.</p>
-                  </div>
-                  <div className="p-4 border rounded-lg">
-                      <h4 className="font-semibold">Delayed Retirement (Age 70)</h4>
-                      <p className="text-sm text-muted-foreground">If you wait until age 70, your benefits will increase by about <strong className="text-foreground">{retirementInfo.delayedBenefitIncrease}%</strong> over your full retirement amount.</p>
-                  </div>
-              </div>
-            </div>
+            <SocialSecurityRetirementAgeCalculator />
             
-        )}
-      </CardContent>
-    </Card>
+            <section className="mt-12 space-y-8 animate-fade-in">
+                <Card>
+                    <CardHeader><CardTitle>Learn More About Retirement</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><Link href="/articles/planning-for-retirement-at-any-age" className="text-primary hover:underline">Planning for Retirement: A Decade-by-Decade Guide</Link></li>
+                            <li><Link href="/articles/guide-to-retirement-savings" className="text-primary hover:underline">A Guide to Retirement Savings: How Much Do You Really Need?</Link></li>
+                             <li>Compare claiming strategies with our <Link href="/social-security-calculator" className="text-primary hover:underline">Social Security Break-Even Calculator</Link>.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader><CardTitle>How to Use the Calculator</CardTitle></CardHeader>
+                    <CardContent>
+                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Enter Your Birth Year:</strong> Input the 4-digit year you were born.</li>
+                            <li><strong>Click "Calculate":</strong> Press the button to get your results.</li>
+                            <li><strong>Review Your Retirement Details:</strong> The tool will show your Full Retirement Age (FRA) and the approximate reduction or increase in benefits for claiming early or delaying.</li>
+                        </ol>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader><CardTitle>How is Social Security Retirement Age Determined?</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">
+                        Your Full Retirement Age (FRA)—the age at which you are entitled to 100% of your Social Security benefits—is determined by the year you were born. The age has gradually increased by law from 65 to 67. Our calculator uses the official Social Security Administration (SSA) rules to pinpoint your exact FRA. Knowing this date is the first and most critical step in making a smart claiming decision.
+                        </p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader><CardTitle>Full Retirement Age (FRA) by Birth Year</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground mb-4">This chart from the SSA shows how the FRA changes based on your birth year.</p>
+                         <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Year of Birth</TableHead>
+                                    <TableHead>Full Retirement Age (FRA)</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {fraChart.map((row) => (
+                                    <TableRow key={row.birthYear}>
+                                        <TableCell className="font-medium">{row.birthYear}</TableCell>
+                                        <TableCell>{row.fra}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader><CardTitle>Smart Retirement Planning Tips</CardTitle></CardHeader>
+                    <CardContent>
+                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            <li><strong>Estimate Your Benefits:</strong> Your benefit amount is based on your lifetime earnings. Create an account on the official SSA website to get a personalized estimate.</li>
+                            <li><strong>Consider Delaying:</strong> If you are in good health and have other sources of income, delaying your benefits until age 70 will maximize your monthly payout for the rest of your life. This provides valuable longevity insurance.</li>
+                            <li><strong>Coordinate with Your Spouse:</strong> If you are married, there are many strategies for coordinating benefits to maximize your combined lifetime income. Consider consulting a financial advisor.</li>
+                            <li><strong>Understand the Earnings Test:</strong> If you claim benefits early and continue to work, your benefits may be temporarily reduced if your earnings exceed a certain limit.</li>
+                            <li><strong>Read More:</strong> For more decade-specific tips, check out our <Link href="/articles/planning-for-retirement-at-any-age" className="text-primary hover:underline">guide to retirement planning</Link>.</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                <div>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions (FAQs)</h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        {faqs.map((faq, index) => (
+                            <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                                <AccordionContent>
+                                    <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
+            </section>
+        </main>
+        <RelatedCalculators currentCategory="Financial" currentHref="/retirement" />
+      </div>
+    </div>
   );
 }

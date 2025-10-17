@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-    { question: "How do I use the baby age calculator by date of birth?", answer: "Simply enter your baby's date of birth into the calculator and click 'Calculate'. The tool will instantly show you their chronological age in multiple formats: years/months/days, total weeks, and total months." },
+    { question: "How do I use the baby age calculator by date of birth?", answer: "Simply enter your baby's date of birth into the calculator and click 'Calculate'. The tool will instantly show you their chronological age in multiple formats: total weeks, total months, and a standard years/months/days breakdown." },
     { question: "How do I count baby months after birth?", answer: "A baby's age in months corresponds to their birth date each month. For example, a baby born on March 5th will be 1 month old on April 5th, 2 months old on May 5th, and so on. Our calculator does this for you automatically." },
     { question: "Is my baby 3 months old at 12 weeks?", answer: "Not exactly, and this is a common point of confusion. Since months have more than 4 weeks, a baby is 3 months old after 3 full calendar months have passed, which is closer to 13 weeks. Our calculator shows you both formats to avoid confusion." },
     { question: "How old is 36 months in years?", answer: "36 months is exactly 3 years old, as there are 12 months in a year." },
@@ -158,6 +158,7 @@ export default function BabyAgeCalculatorPage() {
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                             <li><Link href="/articles/navigating-pregnancy-milestones" className="text-primary hover:underline">Navigating Your Pregnancy: A Trimester-by-Trimester Milestone Guide</Link></li>
                             <li>Trying to conceive? Use our <Link href="/ovulation-calculator" className="text-primary hover:underline">Ovulation Calculator</Link> to find your fertile window.</li>
+                            <li>Already know your due date? Use the <Link href="/due-date-calculator" className="text-primary hover:underline">Due Date Calculator</Link> to see your timeline.</li>
                         </ul>
                     </CardContent>
                 </Card>

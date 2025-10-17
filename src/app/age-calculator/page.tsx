@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Gift } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ const faqs = [
         answer: "The easiest way is to use a reliable online tool like this Age Calculator. It automatically handles all the complexities like month lengths and leap years. Just enter the date of birth and get an instant, accurate result."
     },
     {
-        question: "How do age calculators work?",
+        question: "How does an age calculator work?",
         answer: "Age calculators work by finding the precise time interval between a starting date (the date of birth) and an ending date (usually today's date). A good calculator accounts for all calendar variations, including leap years, to provide an exact age in years, months, and days."
     },
     {
@@ -70,9 +70,9 @@ export default function AgeCalculatorPage() {
       <div className="max-w-4xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Age Calculator – Calculate Your Exact Age Online</h1>
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Age Calculator</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
-                    Our age calculator allows you to calculate your exact age by date of birth, by year, or by birthday. This online age calculator is easy to use and provides instant results for anyone looking to track their age accurately. It's a useful tool for official documents, understanding age-related milestones, or simply celebrating another year of life.
+                    A real-time age calculator that provides precise results in years, months, days, and even seconds from a date of birth. Our online tool is easy to use, instantly calculates your age, and is useful for official documents, understanding age-related milestones, or simply celebrating another year of life.
                 </p>
             </div>
 
@@ -153,8 +153,9 @@ export default function AgeCalculatorPage() {
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                             <li><Link href="/articles/understanding-chronological-age" className="text-primary hover:underline">Understanding Chronological Age: More Than Just a Number</Link></li>
-                            <li><Link href="/articles/how-to-calculate-age-from-year-of-birth" className="text-primary hover:underline">How to Calculate Age From Year of Birth: The Simple Formula and Its Limits</Link></li>
+                            <li><Link href="/articles/how-to-calculate-age-from-year-of-birth" className="text-primary hover:underline">How to Calculate Age From Year of Birth</Link></li>
                             <li><Link href="/articles/what-is-biological-age-and-how-to-improve-it" className="text-primary hover:underline">The Ultimate Guide to Your Biological Age</Link></li>
+                            <li>Need a quick estimate? Try our <Link href="/age-calculator-by-year" className="text-primary hover:underline">Age by Year Calculator</Link>.</li>
                         </ul>
                     </CardContent>
                 </Card>
