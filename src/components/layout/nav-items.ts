@@ -63,7 +63,7 @@ import {
   Sigma,
   Radical,
   Grid,
-  Sitemap
+  Network
 } from 'lucide-react';
 
 export type NavItem = {
@@ -780,7 +780,7 @@ export const navItems: NavItem[] = [
   },
   {
     href: '/sitemap-page',
-    icon: Sitemap,
+    icon: Network,
     label: 'Sitemap',
     category: 'Legal',
     description: 'View all pages on the site.'
