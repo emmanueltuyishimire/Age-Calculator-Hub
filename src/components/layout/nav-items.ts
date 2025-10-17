@@ -653,6 +653,13 @@ export const navItems: NavItem[] = [
     category: 'Math',
     description: 'Calculate the square, cube, or nth root of a number.'
   },
+  {
+    href: '/lcm-calculator',
+    icon: Sigma,
+    label: 'LCM Calculator',
+    category: 'Math',
+    description: 'Calculate the Least Common Multiple of a set of numbers.'
+  },
 
   // Other Calculators
    {
