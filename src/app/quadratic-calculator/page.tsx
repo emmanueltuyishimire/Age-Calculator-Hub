@@ -4,7 +4,6 @@ import { type Metadata } from 'next';
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import Image from 'next/image';
 
 export const metadata: Metadata = {
     title: 'Quadratic Formula Calculator',
@@ -80,8 +79,16 @@ export default function QuadraticCalculatorPage() {
                 <CardHeader>
                     <CardTitle>The Quadratic Formula</CardTitle>
                 </CardHeader>
-                <CardContent className="flex justify-center">
-                    <Image src="https://www.calculatorsoup.com/images/formulas/quadratic-formula.png" alt="The Quadratic Formula" width={300} height={100} />
+                <CardContent className="flex justify-center items-center p-6 bg-muted rounded-md">
+                   <svg viewBox="0 0 300 100" width="300" height="100" xmlns="http://www.w3.org/2000/svg" className="fill-current text-foreground">
+                      <text x="5" y="55" fontFamily="monospace" fontSize="24">x =</text>
+                      <text x="50" y="35" fontFamily="monospace" fontSize="24">-b ±</text>
+                      <path d="M 125 35 L 130 55 L 135 20" stroke="currentColor" fill="none" strokeWidth="2" />
+                      <text x="138" y="35" fontFamily="monospace" fontSize="24">b² - 4ac</text>
+                      <line x1="125" y1="18" x2="245" y2="18" stroke="currentColor" strokeWidth="2" />
+                      <line x1="45" y1="65" x2="255" y2="65" stroke="currentColor" strokeWidth="2" />
+                      <text x="145" y="85" fontFamily="monospace" fontSize="24">2a</text>
+                    </svg>
                 </CardContent>
             </Card>
 
@@ -89,9 +96,14 @@ export default function QuadraticCalculatorPage() {
                 <CardHeader>
                     <CardTitle>Derivation of the Quadratic Formula</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                     <p className="text-muted-foreground">The quadratic formula is derived from the standard form of a quadratic equation by completing the square.</p>
-                     <Image src="https://www.calculatorsoup.com/images/formulas/quadratic-formula-derivation.png" alt="Derivation of the quadratic formula" width={500} height={400} className="mx-auto" />
+                <CardContent className="space-y-4 text-muted-foreground p-6 bg-muted rounded-md font-mono text-sm leading-loose">
+                    <p>ax² + bx + c = 0</p>
+                    <p>ax² + bx = -c</p>
+                    <p>x² + (b/a)x = -c/a</p>
+                    <p>x² + (b/a)x + (b/2a)² = -c/a + (b/2a)²</p>
+                    <p>(x + b/2a)² = (b² - 4ac) / 4a²</p>
+                    <p>x + b/2a = ±√(b² - 4ac) / 2a</p>
+                    <p>x = [-b ± √(b² - 4ac)] / 2a</p>
                 </CardContent>
             </Card>
 
