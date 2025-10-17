@@ -56,6 +56,7 @@ import {
   Timer,
   Divide,
   Shuffle,
+  Flame,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -569,6 +570,13 @@ export const navItems: NavItem[] = [
     label: 'Volume Calculator',
     category: 'Math',
     description: 'Calculate the volume of common 3D shapes like spheres, cubes, and cylinders.'
+  },
+  {
+    href: '/exponent-calculator',
+    icon: Flame,
+    label: 'Exponent Calculator',
+    category: 'Math',
+    description: 'Solve for base, exponent, or result in an exponential equation.'
   },
    {
     href: '/time-calculator',
