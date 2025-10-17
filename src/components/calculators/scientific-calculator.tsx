@@ -35,7 +35,7 @@ const ScientificCalculator = () => {
 
     const ariaLabels: { [key: string]: string } = {
         'AC': 'All Clear',
-        'Back': 'Backspace',
+        'Delete': 'Backspace',
         '±': 'Toggle sign',
         '÷': 'Divide',
         '×': 'Multiply',
@@ -156,7 +156,7 @@ const ScientificCalculator = () => {
 
         switch (value) {
             case 'AC': setExpression(''); setDisplay('0'); setIsError(false); setIsResult(false); setMemory(0); break;
-            case 'Back': 
+            case 'Delete': 
                 if (isError) {
                     setExpression('');
                     setDisplay('0');
@@ -313,19 +313,10 @@ const ScientificCalculator = () => {
                 ...Object.fromEntries("0123456789.()".split('').map(k => [k, k])),
                 '+': '+', '-': '−', '*': '×', '/': '÷',
                 'Enter': () => calculate(), '=': () => calculate(),
-                'Backspace': 'Back', 'Escape': 'AC', 'c': 'AC',
+                'Backspace': 'Delete', 'Escape': 'AC', 'c': 'AC',
                 '^': 'xy', '%': '%',
                 's': 'sin', 'p': 'π', 'e': 'e', 'l': 'log',
-                'r': () => {
-                    setExpression(prev => {
-                        const [lastNum, lastNumIndex] = getLastNumber(prev);
-                        if (lastNum) {
-                            return `${prev.substring(0, lastNumIndex)}sqrt(${lastNum})`;
-                        }
-                        return `sqrt(${prev})`;
-                    });
-                    setTimeout(calculate, 0);
-                }
+                'r': '√x',
             };
 
             const action = keyMappings[event.key];
@@ -372,11 +363,11 @@ const ScientificCalculator = () => {
   
   const buttons = [
     '(', ')', 'MC', 'M+', 'M-', 'MR', 'AC',
-    '2nd', 'x2', 'xy', 'sin', 'cos', 'tan', '÷',
+    '2nd', 'x2', 'xy', 'sin', 'cos', '÷', 'tan',
     'y√x', '10x', '7', '8', '9', '×', 'log',
     '√x', 'n!', '4', '5', '6', '−', 'ln',
     'Deg', 'Rad', '1', '2', '3', '+', '±',
-    'RND', 'Ans', '0', '.', '='
+    'RND', 'Ans', '0', '.', 'Delete', '='
   ];
 
   const getButtonLabel = (key: string) => {
@@ -391,6 +382,7 @@ const ScientificCalculator = () => {
         case '√x': return isSecond ? <>{'³√x'}</> : <>{'√x'}</>;
         case 'xy': return <>{'x'}<sup>y</sup></>;
         case 'y√x': return <>{'ʸ√x'}</>;
+        case 'Delete': return <Trash2 className="h-5 w-5"/>;
         default: return key;
     }
   }
