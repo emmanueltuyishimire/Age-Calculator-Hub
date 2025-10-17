@@ -65,7 +65,7 @@ export function TopNav() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const categories = categorizedNavItems();
-  const mainCategories = categories.filter(cat => cat.href && !['/', '/articles'].includes(cat.href) && !['Company', 'Legal', 'Navigation'].includes(cat.name));
+  const mainCategories = categories.filter(cat => cat.href);
   const navigationLinks = categories.find(c => c.name === 'Navigation')?.items || [];
   
   return (
