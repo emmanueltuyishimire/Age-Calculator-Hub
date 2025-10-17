@@ -224,9 +224,13 @@ const ScientificCalculator = () => {
             case '±':
                  setExpression(prev => {
                     if (isResult) {
-                         const currentVal = parseFloat(prev);
-                        if (!isNaN(currentVal)) {
-                            return (-currentVal).toString();
+                        try {
+                           const currentVal = evaluate(prev);
+                           if (typeof currentVal === 'number') {
+                             return (-currentVal).toString();
+                           }
+                        } catch {
+                           return prev;
                         }
                     }
                     const [lastNum, lastNumIndex] = getLastNumber(prev);
