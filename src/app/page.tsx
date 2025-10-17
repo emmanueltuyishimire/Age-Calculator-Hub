@@ -1,47 +1,26 @@
 
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/layout/search-bar';
 import CalculatorHub from '@/components/layout/calculator-hub';
 import ArticleList from '@/components/layout/article-list';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-
-const calculatorImage = PlaceHolderImages.find(img => img.id === 'scientific_calculator_hero');
 
 export default function Home() {
   return (
     <main role="main">
-      <section className="bg-muted/50 py-12 md:py-16">
+      <section className="bg-muted/50 py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="flex justify-center">
-              <Link href="/scientific-calculator" className="block w-full max-w-sm">
-                {calculatorImage && (
-                  <Image
-                    src={calculatorImage.imageUrl}
-                    alt={calculatorImage.description}
-                    width={400}
-                    height={500}
-                    priority
-                    className="rounded-xl shadow-2xl border-4 border-slate-600 dark:border-slate-700"
-                    data-ai-hint={calculatorImage.imageHint}
-                  />
-                )}
-              </Link>
-            </div>
-            <div className="text-center md:text-left">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
-                <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-xl mx-auto md:mx-0 mt-4">
-                    Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
-                </p>
-                <div className="mt-8 mx-auto md:mx-0 max-w-md">
-                    <SearchBar />
-                </div>
-            </div>
+          <div className="text-center">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-foreground/80 text-transparent bg-clip-text">Calculators</h1>
+              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mt-4">
+                  Your central hub for free, accurate online calculators. From finance and health to math and everyday conversions, find the tool you need.
+              </p>
+              <div className="mt-8 mx-auto max-w-md">
+                  <SearchBar />
+              </div>
           </div>
         </div>
       </section>
