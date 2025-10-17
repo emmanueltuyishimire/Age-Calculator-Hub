@@ -154,7 +154,15 @@ const ScientificCalculator = () => {
 
         switch (value) {
             case 'AC': setExpression(''); setDisplay('0'); setIsError(false); setIsResult(false); setMemory(0); break;
-            case 'Back': setExpression(prev => prev.slice(0, -1)); break;
+            case 'Back': 
+                if (isError) {
+                    setExpression('');
+                    setDisplay('0');
+                    setIsError(false);
+                } else {
+                    setExpression(prev => prev.slice(0, -1));
+                }
+                break;
             case '=': calculate(); break;
             case '+': handleOperator('+'); break;
             case '−': handleOperator('−'); break;
@@ -166,8 +174,16 @@ const ScientificCalculator = () => {
             case 'log': setExpression(prev => prev + 'log('); break;
             case 'ln': setExpression(prev => prev + 'ln('); break;
             case '√x':
-                setExpression(prev => `sqrt(${prev || '0'})`);
-                calculate();
+                setExpression(prev => {
+                    try {
+                        const num = evaluate(prev);
+                        return `sqrt(${num})`;
+                    } catch {
+                        return `sqrt(${prev || '0'})`;
+                    }
+                });
+                // Using a timeout to ensure the state update is processed before calculating
+                setTimeout(calculate, 0);
                 break;
             case '³√x': setExpression(prev => prev + 'cbrt('); break;
             case 'sin-1': setExpression(prev => prev + 'asin('); break;
@@ -175,30 +191,30 @@ const ScientificCalculator = () => {
             case 'tan-1': setExpression(prev => prev + 'atan('); break;
             case '1/x': 
                 setExpression(prev => `(1/(${prev || '1'}))`);
-                calculate();
+                setTimeout(calculate, 0);
                 break;
             case 'n!': 
                 setExpression(prev => `factorial(${prev || '0'})`); 
-                calculate();
+                setTimeout(calculate, 0);
                 break;
             case 'π': setExpression(prev => prev + 'pi'); break;
             case 'e': setExpression(prev => prev + 'e'); break;
             case 'xy': handleOperator('^'); break;
             case 'x2': 
                  setExpression(prev => `((${prev || '0'})^2)`);
-                 calculate();
+                 setTimeout(calculate, 0);
                 break;
             case 'x3': 
                  setExpression(prev => `((${prev || '0'})^3)`);
-                 calculate();
+                 setTimeout(calculate, 0);
                 break;
             case 'ex': 
                 setExpression(prev => `(e^(${prev || '0'}))`);
-                calculate();
+                setTimeout(calculate, 0);
                 break;
             case '10x': 
                 setExpression(prev => `(10^(${prev || '0'}))`);
-                calculate();
+                setTimeout(calculate, 0);
                 break;
             case 'y√x':
                 setExpression(prev => {
@@ -207,7 +223,14 @@ const ScientificCalculator = () => {
                     return `${base}nthRoot(${lastNum}, `;
                 });
                 break;
-            case 'Ans': setExpression(prev => prev + ans.toString()); break;
+            case 'Ans': 
+                if(isResult || expression === '0' || expression === '') {
+                     setExpression(ans.toString());
+                     setIsResult(false);
+                } else {
+                     setExpression(prev => prev + ans.toString());
+                }
+                break;
             case 'M+':
                 try { 
                     const currentValue = evaluate(expression || display);
@@ -244,19 +267,19 @@ const ScientificCalculator = () => {
                 }
                 break;
             case '±':
-                if (isResult) {
-                    setExpression(prev => (-parseFloat(prev)).toString());
-                } else {
-                    setExpression(prev => {
-                        const [lastNum, lastNumIndex] = getLastNumber(prev);
-                        if (lastNum) {
-                            const isNegativeInParens = lastNum.startsWith('(-') && lastNum.endsWith(')');
-                            const newNum = isNegativeInParens ? lastNum.slice(2, -1) : `(-${lastNum})`;
-                            return prev.slice(0, lastNumIndex) + newNum;
-                        }
-                        return prev;
-                    });
-                }
+                setExpression(prev => {
+                    if (isResult) {
+                       return (-parseFloat(prev)).toString();
+                    }
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        const isNegativeInParens = lastNum.startsWith('(-') && lastNum.endsWith(')');
+                        const baseExpression = prev.slice(0, lastNumIndex);
+                        const newNum = isNegativeInParens ? lastNum.slice(2, -1) : `(-${lastNum.replace(/[()]/g, '')})`;
+                        return baseExpression + newNum;
+                    }
+                    return prev;
+                });
                 break;
             case 'DegRad': setIsDeg(prev => !prev); break;
             case 'EXP': setExpression(prev => prev + 'e+'); break;
@@ -393,4 +416,5 @@ const ScientificCalculator = () => {
 
 export default ScientificCalculator;
 
+    
     
