@@ -76,15 +76,13 @@ export function TopNav() {
           <NavigationMenuList>
              {navigationLinks.map(link => (
                 <NavigationMenuItem key={link.href}>
-                  <Link href={link.href} passHref>
-                    <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), {
-                        'bg-accent/50': pathname === link.href,
-                      })}
-                    >
+                  <NavigationMenuLink asChild className={cn(navigationMenuTriggerStyle(), {
+                      'bg-accent/50': pathname === link.href,
+                    })}>
+                    <Link href={link.href}>
                       {link.label}
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
 
@@ -95,7 +93,7 @@ export function TopNav() {
                     'bg-accent/50': pathname.startsWith(category.href),
                   })}
                 >
-                  <Link href={category.href} className="hover:no-underline">{category.name}</Link>
+                  {category.name}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
