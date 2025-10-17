@@ -25,17 +25,19 @@ const math = create(all, { number: 'Fraction' });
 const toMatrix = (data: number[][]): Matrix => math.matrix(data);
 
 // Helper to convert Matrix to 2D array
-const fromMatrix = (matrix: Matrix | number[] | number[][] | { toArray: () => any }): number[][] => {
-    const arrayData = 'toArray' in matrix && typeof matrix.toArray === 'function' ? matrix.toArray() : matrix;
-    if (Array.isArray(arrayData)) {
-      if (arrayData.length === 0) return [];
-      if (Array.isArray(arrayData[0])) {
-        return arrayData as number[][];
+const fromMatrix = (matrix: any): number[][] => {
+    if (matrix && typeof matrix.toArray === 'function') {
+      const arrayData = matrix.toArray();
+      if (Array.isArray(arrayData)) {
+        if (arrayData.length === 0) return [];
+        if (Array.isArray(arrayData[0])) {
+          return arrayData.map((row: any[]) => row.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell));
+        }
+        return [arrayData.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell)];
       }
-      return [arrayData as number[]];
+      return [[(arrayData && typeof arrayData.toNumber === 'function') ? arrayData.toNumber() : arrayData]];
     }
-    // Handle single number result
-    return [[arrayData as number]];
+    return matrix;
 };
 
 
@@ -110,7 +112,7 @@ const formatEigenvalue = (v: any) => {
         return `${math.format(v.re, { precision: 4 })} ${v.im > 0 ? '+' : '-'} ${math.format(Math.abs(v.im), { precision: 4 })}i`;
     }
     return String(v);
-}
+};
 
 
 export default function MatrixCalculator() {
@@ -184,7 +186,7 @@ export default function MatrixCalculator() {
                 case 'eigsA':
                     res = math.eigs(matA);
                     const eigenvalues = res.values.map(formatEigenvalue);
-                    const eigenvectors = res.eigenvectors.map((vec: Matrix) => fromMatrix(vec)[0].map(formatEigenvalue));
+                    const eigenvectors = res.eigenvectors.map((vec: { toJSON: () => { data: any[]; }; }) => fromMatrix(vec.toJSON().data)[0].map(formatEigenvalue));
                     const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
                     eigenvectors.forEach((vec, i) => {
                         eigResult.push([`Vector ${i+1}:` , ...vec]);
@@ -208,7 +210,7 @@ export default function MatrixCalculator() {
                 case 'eigsB':
                     res = math.eigs(matB);
                     const eigenvaluesB = res.values.map(formatEigenvalue);
-                    const eigenvectorsB = res.eigenvectors.map((vec: Matrix) => fromMatrix(vec)[0].map(formatEigenvalue));
+                    const eigenvectorsB = res.eigenvectors.map((vec: { toJSON: () => { data: any[]; }; }) => fromMatrix(vec.toJSON().data)[0].map(formatEigenvalue));
                     const eigResultB: (string | number)[][] = [['Eigenvalues:'], eigenvaluesB];
                     eigenvectorsB.forEach((vec, i) => {
                         eigResultB.push([`Vector ${i+1}:` , ...vec]);
