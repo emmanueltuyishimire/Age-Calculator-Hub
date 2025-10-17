@@ -25,33 +25,10 @@ const toMatrix = (data: number[][]): Matrix => math.matrix(data);
 
 // Helper to convert Matrix or plain array to 2D array
 const fromMatrix = (matrix: any): (string | number)[][] => {
-    // Handle mathjs matrix objects
     if (matrix && typeof matrix.toArray === 'function') {
       const arrayData = matrix.toArray();
-      if (Array.isArray(arrayData)) {
-        if (arrayData.length === 0) return [];
-        // Check if it's a matrix (2D array) or vector (1D array)
-        if (Array.isArray(arrayData[0])) {
-          return arrayData.map((row: any[]) => row.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell));
-        }
-        // It's a 1D array, wrap it in a 2D array
-        return [arrayData.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell)];
-      }
+      return arrayData.map((row: any[]) => row.map(cell => math.format(cell, { fraction: 'ratio', precision: 4 })));
     }
-    
-    // Handle plain JS arrays
-    if (Array.isArray(matrix)) {
-        if (matrix.length > 0 && Array.isArray(matrix[0])) {
-             return matrix.map(row => row.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell));
-        }
-        return [matrix.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell)];
-    }
-    
-    // Handle scalar numbers
-    if (typeof matrix === 'number' || (matrix && typeof matrix.toNumber === 'function')) {
-        return [[(matrix && typeof matrix.toNumber === 'function') ? matrix.toNumber() : matrix]];
-    }
-    
     return [];
 };
 
@@ -117,18 +94,6 @@ const createMatrix = (rows: number, cols: number, fill: 'zero' | 'one' | 'random
     );
 };
 
-const formatEigenvalue = (v: any) => {
-    if (typeof v === 'number') {
-        return math.format(v, { precision: 4 });
-    }
-    if (v && typeof v === 'object' && 're' in v && 'im' in v) {
-        if (Math.abs(v.im) < 1e-9) return math.format(v.re, { precision: 4 });
-        return `${math.format(v.re, { precision: 4 })} ${v.im > 0 ? '+' : '-'} ${math.format(Math.abs(v.im), { precision: 4 })}i`;
-    }
-    return String(v);
-};
-
-
 export default function MatrixCalculator() {
     const MAX_DIM = 10;
     const MIN_DIM = 1;
@@ -141,12 +106,9 @@ export default function MatrixCalculator() {
     const [matrixB, setMatrixB] = useState<number[][]>(createMatrix(4, 4, 'random'));
 
     const [scalarA, setScalarA] = useState(3);
-    const [powerA, setPowerA] = useState(2);
     const [scalarB, setScalarB] = useState(3);
-    const [powerB, setPowerB] = useState(2);
     
     const [resultMatrix, setResultMatrix] = useState<(string | number)[][] | null>(null);
-    const [resultScalar, setResultScalar] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const handleResize = (
@@ -178,62 +140,14 @@ export default function MatrixCalculator() {
     const performOperation = (op: string) => {
         setError(null);
         setResultMatrix(null);
-        setResultScalar(null);
         try {
             const matA = toMatrix(matrixA);
             const matB = toMatrix(matrixB);
             let res: any;
 
-            const processEigs = (eigsResult: any) => {
-                const eigenvalues = eigsResult.values.map(formatEigenvalue);
-                
-                const eigenvectors = eigsResult.vectors.map((eVecObj: any) => {
-                  if (eVecObj.value) { // For real eigenvectors
-                    return eVecObj.value.map((v: number) => math.format(v, { precision: 4 }));
-                  } else if (eVecObj.vector) { // For complex eigenvectors
-                    return eVecObj.vector.map((v: any) => formatEigenvalue(v));
-                  }
-                  return [];
-                });
-            
-                const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
-                eigenvectors.forEach((vec: (string|number)[], i: number) => {
-                    eigResult.push([`Vector ${i+1}:`, ...vec]);
-                });
-                setResultMatrix(eigResult);
-            };
-
             switch(op) {
-                case 'transposeA': res = math.transpose(matA); setResultMatrix(fromMatrix(res)); break;
-                case 'powerA':
-                    if (powerA === 0) { res = math.identity(rowsA); } 
-                    else { res = math.pow(matA, powerA); }
-                    setResultMatrix(fromMatrix(res));
-                    break;
-                case 'determinantA': res = math.det(matA); setResultScalar(math.format(res, { fraction: 'ratio', precision: 4 })); break;
-                case 'inverseA': res = math.inv(matA); setResultMatrix(fromMatrix(res)); break;
-                case 'rrefA': res = math.algebra.rref(matA); setResultMatrix(fromMatrix(res)); break;
-                case 'eigsA':
-                    res = math.eigs(matA);
-                    processEigs(res);
-                    break;
                 case 'scalarA': res = math.multiply(matA, scalarA); setResultMatrix(fromMatrix(res)); break;
-                
-                case 'transposeB': res = math.transpose(matB); setResultMatrix(fromMatrix(res)); break;
-                case 'powerB':
-                    if (powerB === 0) { res = math.identity(rowsB); } 
-                    else { res = math.pow(matB, powerB); }
-                    setResultMatrix(fromMatrix(res));
-                    break;
-                case 'determinantB': res = math.det(matB); setResultScalar(math.format(res, { fraction: 'ratio', precision: 4 })); break;
-                case 'inverseB': res = math.inv(matB); setResultMatrix(fromMatrix(res)); break;
-                case 'rrefB': res = math.algebra.rref(matB); setResultMatrix(fromMatrix(res)); break;
-                case 'eigsB':
-                    res = math.eigs(matB);
-                    processEigs(res);
-                    break;
                 case 'scalarB': res = math.multiply(matB, scalarB); setResultMatrix(fromMatrix(res)); break;
-
                 case 'add': res = math.add(matA, matB); setResultMatrix(fromMatrix(res)); break;
                 case 'subtract': res = math.subtract(matA, matB); setResultMatrix(fromMatrix(res)); break;
                 case 'multiply': res = math.multiply(matA, matB); setResultMatrix(fromMatrix(res)); break;
@@ -256,12 +170,12 @@ export default function MatrixCalculator() {
                     rows={rowsA} cols={colsA} 
                     setMatrix={setMatrixA} matrix={matrixA}
                     handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, matrixA, setMatrixA, rowsA, setRowsA, colsA, setColsA, delta)}
-                    performOp={performOperation} prefix="A" scalar={scalarA} setScalar={setScalarA} power={powerA} setPower={setPowerA} />
+                    performOp={performOperation} prefix="A" scalar={scalarA} setScalar={setScalarA} />
                 <MatrixCard title="Matrix B" 
                     rows={rowsB} cols={colsB} 
                     setMatrix={setMatrixB} matrix={matrixB}
                     handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, matrixB, setMatrixB, rowsB, setRowsB, colsB, setColsB, delta)}
-                    performOp={performOperation} prefix="B" scalar={scalarB} setScalar={setScalarB} power={powerB} setPower={setPowerB} />
+                    performOp={performOperation} prefix="B" scalar={scalarB} setScalar={setScalarB} />
             </div>
             
             <Card>
@@ -271,24 +185,18 @@ export default function MatrixCalculator() {
                     <Button onClick={() => performOperation('subtract')}>A – B</Button>
                     <Button onClick={() => performOperation('multiply')}>AB</Button>
                     <Button onClick={() => performOperation('swap')} variant="secondary"><ArrowRightLeft className="h-4 w-4 mr-2"/> A ↔ B</Button>
-                    <Button onClick={() => { setMatrixA(createMatrix(rowsA, colsA)); setMatrixB(createMatrix(rowsB, colsB)); setResultMatrix(null); setResultScalar(null); setError(null); }} variant="destructive"><RefreshCcw className="h-4 w-4 mr-2" />Clear All</Button>
+                    <Button onClick={() => { setMatrixA(createMatrix(rowsA, colsA)); setMatrixB(createMatrix(rowsB, colsB)); setResultMatrix(null); setError(null); }} variant="destructive"><RefreshCcw className="h-4 w-4 mr-2" />Clear All</Button>
                 </CardContent>
             </Card>
 
             {error && <Alert variant="destructive"><AlertCircle className="h-4 w-4" /><AlertTitle>Error</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
 
             {resultMatrix && <MatrixDisplay matrix={resultMatrix} title="Result" />}
-            {resultScalar !== null && (
-                <Card>
-                    <CardHeader><CardTitle className="text-center">Scalar Result</CardTitle></CardHeader>
-                    <CardContent className="text-center text-2xl font-bold text-primary">{resultScalar}</CardContent>
-                </Card>
-            )}
         </div>
     );
 }
 
-const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, performOp, prefix, scalar, setScalar, power, setPower }: any) => (
+const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, performOp, prefix, scalar, setScalar }: any) => (
      <Card>
         <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>{title}</CardTitle>
@@ -313,26 +221,11 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
                 <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'zero'))}><Trash className="h-4 w-4 mr-1"/>Clear</Button>
                 <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'one'))}>All 1</Button>
                 <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'random'))}><Shuffle className="h-4 w-4 mr-1"/>Random</Button>
-            </div>
-            <div className="flex gap-2 flex-wrap items-center">
-                <Button size="sm" onClick={() => performOp(`transpose${prefix}`)}><RotateCcw className="h-4 w-4 mr-1"/>Transpose</Button>
-                <div className="flex gap-1 items-center">
-                  <Button size="sm" onClick={() => performOp(`power${prefix}`)}><Power className="h-4 w-4 mr-1"/>Power of</Button>
-                  <Input type="number" value={power} onChange={e => setPower(parseInt(e.target.value) || 0)} className="w-16 h-9" />
-                </div>
-                 <Button size="sm" onClick={() => performOp(`determinant${prefix}`)}>Determinant</Button>
-                <Button size="sm" onClick={() => performOp(`inverse${prefix}`)}>Inverse</Button>
-            </div>
-             <div className="flex gap-2 flex-wrap items-center">
-                <div className="flex gap-1 items-center">
+                 <div className="flex gap-1 items-center">
                   <Button size="sm" onClick={() => performOp(`scalar${prefix}`)}>× Scalar</Button>
                   <Input type="number" value={scalar} onChange={e => setScalar(parseInt(e.target.value) || 0)} className="w-16 h-9" />
                 </div>
-                <Button size="sm" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
-                <Button size="sm" onClick={() => performOp(`eigs${prefix}`)}>Eigenvalues</Button>
             </div>
         </CardContent>
     </Card>
 );
-
-    

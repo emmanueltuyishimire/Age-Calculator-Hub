@@ -665,8 +665,8 @@ export const navItems: NavItem[] = [
     href: '/gcf-calculator',
     icon: Sigma,
     label: 'GCF Calculator',
+    description: 'Calculate the Greatest Common Factor of a set of numbers.',
     category: 'Math',
-    description: 'Calculate the Greatest Common Factor of a set of numbers.'
   },
   {
     href: '/factor-calculator',
@@ -687,7 +687,14 @@ export const navItems: NavItem[] = [
     icon: Grid,
     label: 'Matrix Calculator',
     category: 'Math',
-    description: 'Perform addition, subtraction, multiplication, and other matrix operations.'
+    description: 'Perform addition, subtraction, and multiplication on matrices.'
+  },
+  {
+    href: '/rref-calculator',
+    icon: Grid,
+    label: 'RREF Calculator',
+    category: 'Math',
+    description: 'Calculate the Reduced Row Echelon Form of a matrix.'
   },
 
   // Other Calculators
