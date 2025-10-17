@@ -23,9 +23,9 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
     item.href !== currentHref && item.href !== pathname
   );
   
-  // Shuffle and take the first 3
+  // Take the first 3 items without randomizing to prevent hydration errors
   if (relatedItems.length > 3) {
-    relatedItems = relatedItems.sort(() => 0.5 - Math.random()).slice(0, 3);
+    relatedItems = relatedItems.slice(0, 3);
   }
   
   if (relatedItems.length === 0) return null;
