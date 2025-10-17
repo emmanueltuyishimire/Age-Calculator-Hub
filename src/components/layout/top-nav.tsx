@@ -76,7 +76,7 @@ export function TopNav() {
           <NavigationMenuList>
              {navigationLinks.map(link => (
                 <NavigationMenuItem key={link.href}>
-                  <Link href={link.href} passHref>
+                  <Link href={link.href} passHref legacyBehavior>
                     <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), {
                       'bg-accent/50': pathname === link.href,
                     })}>
