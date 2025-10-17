@@ -15,7 +15,7 @@ import Image from 'next/image';
 
 const ScientificCalculatorDisplay = dynamic(() => import('@/components/calculators/scientific-calculator'), {
   ssr: false,
-  loading: () => <Skeleton className="h-[450px] w-full max-w-md sm:max-w-lg" />,
+  loading: () => <Skeleton className="h-[450px] w-full max-w-xs" />,
 });
 
 
