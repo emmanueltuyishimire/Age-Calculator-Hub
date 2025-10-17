@@ -55,6 +55,7 @@ import {
   Heart,
   Timer,
   Divide,
+  Shuffle,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -547,6 +548,13 @@ export const navItems: NavItem[] = [
     label: 'Percentage Calculator',
     category: 'Math',
     description: 'A versatile tool for all types of percentage calculations.'
+  },
+   {
+    href: '/random-number-generator',
+    icon: Shuffle,
+    label: 'Random Number Generator',
+    category: 'Math',
+    description: 'Generate random integers or decimals within a specified range.'
   },
   {
     href: '/volume-calculator',
