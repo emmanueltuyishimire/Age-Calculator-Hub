@@ -20,7 +20,7 @@ const faqs = [
     },
     {
         question: "How do you use the quadratic formula?",
-        answer: "To use the quadratic formula, you identify the coefficients a, b, and c from your equation and substitute them into the formula: x = [-b ± sqrt(b² - 4ac)] / 2a. Our calculator does this for you automatically."
+        answer: "To use the quadratic formula, you identify the coefficients a, b, and c from your equation and substitute them into the formula: x = [-b ± √(b² - 4ac)] / 2a. Our calculator does this for you automatically."
     },
     {
         question: "What does the discriminant (b² - 4ac) tell you?",
@@ -89,16 +89,10 @@ export default function QuadraticCalculatorPage() {
                 <CardHeader>
                     <CardTitle>The Quadratic Formula</CardTitle>
                 </CardHeader>
-                <CardContent className="flex justify-center items-center p-6 bg-muted rounded-md">
-                   <svg viewBox="0 0 300 100" width="300" height="100" xmlns="http://www.w3.org/2000/svg" className="fill-current text-foreground">
-                      <text x="5" y="55" fontFamily="monospace" fontSize="24">x =</text>
-                      <text x="50" y="35" fontFamily="monospace" fontSize="24">-b ±</text>
-                      <path d="M 125 35 L 130 55 L 135 20" stroke="currentColor" fill="none" strokeWidth="2" />
-                      <text x="138" y="35" fontFamily="monospace" fontSize="24">b² - 4ac</text>
-                      <line x1="125" y1="18" x2="245" y2="18" stroke="currentColor" strokeWidth="2" />
-                      <line x1="45" y1="65" x2="255" y2="65" stroke="currentColor" strokeWidth="2" />
-                      <text x="145" y="85" fontFamily="monospace" fontSize="24">2a</text>
-                    </svg>
+                <CardContent className="p-6 bg-muted rounded-md text-center">
+                   <p className="text-xl md:text-2xl font-mono">
+                    x = [-b ± √(b² - 4ac)] / 2a
+                   </p>
                 </CardContent>
             </Card>
 
