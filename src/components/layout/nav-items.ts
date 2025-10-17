@@ -61,7 +61,7 @@ import {
   Atom,
   FunctionSquare,
   Sigma,
-  SquareRoot
+  Radical
 } from 'lucide-react';
 
 export type NavItem = {
@@ -648,7 +648,7 @@ export const navItems: NavItem[] = [
   },
   {
     href: '/root-calculator',
-    icon: SquareRoot,
+    icon: Radical,
     label: 'Root Calculator',
     category: 'Math',
     description: 'Calculate the square, cube, or nth root of a number.'
