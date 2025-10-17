@@ -34,6 +34,7 @@ const ScientificCalculator = () => {
     const [isError, setIsError] = useState(false);
     const [isResult, setIsResult] = useState(false);
     const [dateTime, setDateTime] = useState(new Date());
+    const [history, setHistory] = useState<string[]>([]);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -118,6 +119,7 @@ const ScientificCalculator = () => {
               throw new Error('Invalid expression');
             }
             const resultString = mathFormat(result, { precision: 10 });
+            setHistory(prev => [...prev, `${expression} = ${resultString}`].slice(-3)); // Keep last 3
             setAns(result);
             setDisplay(resultString);
             setExpression(resultString);
@@ -164,7 +166,7 @@ const ScientificCalculator = () => {
         };
 
         switch (value) {
-            case 'AC': setExpression(''); setDisplay('0'); setIsError(false); setIsResult(false); setMemory(0); break;
+            case 'AC': setExpression(''); setDisplay('0'); setIsError(false); setIsResult(false); setMemory(0); setHistory([]); break;
             case 'Delete': 
                 if (isError) {
                     setExpression('');
@@ -185,7 +187,19 @@ const ScientificCalculator = () => {
             case 'log': setExpression(prev => prev + (isSecond ? '10^(' : 'log(')); break;
             case 'ln': setExpression(prev => prev + (isSecond ? 'e^(' : 'ln(')); break;
             case '√x':
-                 setExpression(prev => prev + (isSecond ? 'nthRoot(' : 'sqrt('));
+                setExpression(prev => {
+                    if (isResult) {
+                       return `sqrt(${prev})`;
+                    }
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        return `${prev.substring(0, lastNumIndex)}sqrt(${lastNum})`;
+                    }
+                    return prev + 'sqrt(';
+                });
+                if(isResult) {
+                    setTimeout(calculate, 0);
+                }
                 break;
             case '1/x': 
                 setExpression(prev => `(1/(${prev || '1'}))`);
@@ -199,11 +213,14 @@ const ScientificCalculator = () => {
             case 'e': setExpression(prev => prev + 'e'); break;
             case 'xy': handleOperator('^'); break;
             case 'x2': 
-                if (isSecond) {
-                    setExpression(prev => `((${prev || '0'})^3)`);
-                } else {
-                    setExpression(prev => `((${prev || '0'})^2)`);
-                }
+                setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        const base = prev.substring(0, lastNumIndex);
+                        return `${base}(${lastNum})^` + (isSecond ? '3' : '2');
+                    }
+                    return prev + (isSecond ? '^3' : '^2');
+                });
                 setTimeout(calculate, 0);
                 break;
             case 'y√x':
@@ -392,12 +409,18 @@ const ScientificCalculator = () => {
           {formatDate(dateTime, 'MMM dd, yyyy HH:mm:ss')}
         </p>
       </div>
-      <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner">
+      <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[112px] flex flex-col justify-end">
+        <div className="h-1/3 text-emerald-300/50 text-right pr-4 text-xs font-mono truncate">
+          {history.length > 0 ? history[history.length - 1] : ''}
+        </div>
+        <div className="h-1/3 text-emerald-300/30 text-right pr-4 text-xs font-mono truncate">
+           <span className="mr-4">M={memory}</span><span>Ans={ans}</span>
+        </div>
         <Input
             type="text"
             value={display}
             readOnly
-            className="w-full h-12 text-2xl text-right mb-1 bg-transparent pr-4 text-emerald-300 border-transparent font-mono tracking-wider shadow-inner"
+            className="w-full h-1/3 text-2xl text-right bg-transparent pr-4 text-emerald-300 border-transparent font-mono tracking-wider focus-visible:ring-0 focus-visible:ring-offset-0"
             aria-label="Calculator display"
             aria-live="polite"
         />
@@ -423,3 +446,5 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
+
+    
