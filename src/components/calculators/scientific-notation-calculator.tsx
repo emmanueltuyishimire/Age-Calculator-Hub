@@ -83,7 +83,7 @@ function NotationConverter() {
         <Card>
             <CardHeader>
                 <CardTitle>Scientific Notation Converter</CardTitle>
-                <CardDescription>Enter a number to see it in various scientific formats.</CardDescription>
+                <CardDescription>Provide a number below to get its scientific notation, E-notation, engineering notation, and real number format. It accepts numbers in formats like 3672.2, 2.3e11, or 3.5x10^-12.</CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
@@ -95,11 +95,25 @@ function NotationConverter() {
                     </form>
                 </Form>
                 {result && (
-                    <div className="mt-4 p-4 bg-muted rounded-lg space-y-2">
-                        <div className="text-sm"><strong className="text-muted-foreground">Scientific Notation:</strong> <span className="font-mono text-primary">{result.scientific.mantissa} × 10<sup>{result.scientific.exponent}</sup></span></div>
-                        <div className="text-sm"><strong className="text-muted-foreground">E-notation:</strong> <span className="font-mono text-primary">{result.eNotation}</span></div>
-                        <div className="text-sm"><strong className="text-muted-foreground">Engineering Notation:</strong> <span className="font-mono text-primary">{result.engineering.mantissa} × 10<sup>{result.engineering.exponent}</sup></span></div>
-                        <div className="text-sm"><strong className="text-muted-foreground">Real Number:</strong> <span className="font-mono text-primary break-all">{result.real}</span></div>
+                    <div className="mt-6 p-6 bg-muted rounded-lg space-y-4">
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-lg font-semibold">Result</h3>
+                            {/* Placeholder for future save functionality */}
+                            {/* <Button variant="ghost" size="sm" disabled>Save this calculation</Button> */}
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                            <div className="font-semibold text-muted-foreground">Scientific Notation:</div>
+                            <div className="font-mono text-primary text-right">{result.scientific.mantissa} × 10<sup>{result.scientific.exponent}</sup></div>
+
+                            <div className="font-semibold text-muted-foreground">E-Notation:</div>
+                            <div className="font-mono text-primary text-right">{result.eNotation}</div>
+                            
+                            <div className="font-semibold text-muted-foreground">Engineering Notation:</div>
+                            <div className="font-mono text-primary text-right">{result.engineering.mantissa} × 10<sup>{result.engineering.exponent}</sup></div>
+
+                            <div className="font-semibold text-muted-foreground">Real Number:</div>
+                            <div className="font-mono text-primary text-right break-all">{result.real}</div>
+                        </div>
                     </div>
                 )}
             </CardContent>
@@ -165,7 +179,7 @@ function ArithmeticCalculator() {
         <Card>
             <CardHeader>
                 <CardTitle>Scientific Notation Calculator</CardTitle>
-                <CardDescription>Perform calculations using scientific notation.</CardDescription>
+                <CardDescription>Use the calculator below to perform calculations using scientific notation.</CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
@@ -180,22 +194,25 @@ function ArithmeticCalculator() {
                             <span className="self-end pb-2">× 10<sup></sup></span>
                             <FormField control={form.control} name="expY" render={({ field }) => <FormItem className="w-16"><FormLabel className="invisible">exp</FormLabel><FormControl><Input type="number" {...field} /></FormControl></FormItem>} />
                         </div>
-                        <FormField control={form.control} name="precision" render={({ field }) => <FormItem><FormLabel>Precision (digits)</FormLabel><FormControl><Input type="number" {...field} /></FormControl></FormItem>} />
+                        <FormField control={form.control} name="precision" render={({ field }) => <FormItem><FormLabel>Precision</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormDescription className="text-xs">digits after the decimal place in the result</FormDescription></FormItem>} />
                         
-                        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 pt-2">
-                            <Button type="button" onClick={() => calculateOperation('add')}>X + Y</Button>
-                            <Button type="button" onClick={() => calculateOperation('subtract')}>X – Y</Button>
-                            <Button type="button" onClick={() => calculateOperation('multiply')}>X × Y</Button>
-                            <Button type="button" onClick={() => calculateOperation('divide')}>X / Y</Button>
-                            <Button type="button" onClick={() => calculateOperation('power')}>X<sup>Y</sup></Button>
-                            <Button type="button" onClick={() => calculateOperation('sqrt')}>√X</Button>
-                            <Button type="button" onClick={() => calculateOperation('sq')}>X²</Button>
+                        <div className="pt-2">
+                            <Label>Click the buttons below to calculate</Label>
+                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 pt-2">
+                                <Button type="button" onClick={() => calculateOperation('add')}>X + Y</Button>
+                                <Button type="button" onClick={() => calculateOperation('subtract')}>X – Y</Button>
+                                <Button type="button" onClick={() => calculateOperation('multiply')}>X × Y</Button>
+                                <Button type="button" onClick={() => calculateOperation('divide')}>X / Y</Button>
+                                <Button type="button" onClick={() => calculateOperation('power')}>X<sup>Y</sup></Button>
+                                <Button type="button" onClick={() => calculateOperation('sqrt')}>√X</Button>
+                                <Button type="button" onClick={() => calculateOperation('sq')}>X²</Button>
+                            </div>
                         </div>
                     </form>
                 </Form>
                  {result && (
                     <div className="mt-6 p-4 bg-muted rounded-lg space-y-2">
-                        <h3 className="text-lg font-bold">Result:</h3>
+                        <h3 className="text-lg font-semibold">Result:</h3>
                         <p className="text-xl font-mono text-primary break-all">
                             <span className="text-muted-foreground">{result.operation}</span> {result.value.mantissa} × 10<sup>{result.value.exponent}</sup>
                         </p>
