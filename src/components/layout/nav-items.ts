@@ -59,7 +59,8 @@ import {
   Flame,
   Binary,
   Atom,
-  FunctionSquare
+  FunctionSquare,
+  Sigma,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -580,6 +581,13 @@ export const navItems: NavItem[] = [
     label: 'Exponent Calculator',
     category: 'Math',
     description: 'Solve for base, exponent, or result in an exponential equation.'
+  },
+  {
+    href: '/log-calculator',
+    icon: Sigma,
+    label: 'Log Calculator',
+    category: 'Math',
+    description: 'Solve logarithmic equations for base, argument, or result.'
   },
   {
     href: '/quadratic-calculator',

@@ -80,7 +80,13 @@ const comprehensiveSchema = z.object({
     count: z.coerce.number().int().min(1).max(100),
     type: z.enum(['integer', 'decimal']),
     precision: z.coerce.number().int().min(1).max(999),
-}).refine(data => math.larger(math.bignumber(data.upperLimit), math.bignumber(data.lowerLimit)), {
+}).refine(data => {
+    try {
+        return math.larger(math.bignumber(data.upperLimit), math.bignumber(data.lowerLimit));
+    } catch {
+        return false;
+    }
+}, {
   message: "Upper limit must be greater than lower limit.",
   path: ["upperLimit"],
 });
@@ -105,7 +111,7 @@ function ComprehensiveGenerator() {
             if (type === 'integer') {
                 generated.push(math.randomInt(low, high.add(1)).toString());
             } else {
-                 generated.push(math.format(math.add(math.multiply(math.random(), math.subtract(high, low)), low))));
+                 generated.push(math.format(math.add(math.multiply(math.random(), math.subtract(high, low)), low)));
             }
         }
         setResults(generated);
