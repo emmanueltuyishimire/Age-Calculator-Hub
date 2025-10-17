@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { AlertCircle, Trash, Plus, Minus, ArrowRightLeft, RefreshCcw, Power, Crosshair, IterationCcw } from 'lucide-react';
 import { create, all, type Matrix } from 'mathjs';
@@ -13,8 +12,14 @@ import { create, all, type Matrix } from 'mathjs';
 const math = create(all, { number: 'Fraction' });
 
 // --- RREF Algorithm ---
-function rref(matrix: number[][]): number[][] {
-  let mat = matrix.map(row => [...row]);
+function rref(matrix: (number | string)[][]): number[][] {
+  let mat = matrix.map(row => row.map(cell => {
+      try {
+        return evaluate(cell.toString());
+      } catch {
+        return 0;
+      }
+  }));
   if (!mat || mat.length === 0) {
     return [];
   }
@@ -54,7 +59,14 @@ function rref(matrix: number[][]): number[][] {
 }
 
 // Helper to convert 2D array to Matrix
-const toMatrix = (data: number[][]): Matrix => math.matrix(data);
+const toMatrix = (data: (number|string)[][]): Matrix => math.matrix(data.map(row => row.map(cell => {
+    try {
+        return evaluate(cell.toString());
+    } catch {
+        return 0;
+    }
+})));
+
 
 // Helper to convert Matrix or plain array to 2D array of formatted strings
 const fromMatrix = (matrix: any): string[][] => {
@@ -66,43 +78,50 @@ const fromMatrix = (matrix: any): string[][] => {
   
   return arrayData.map((row: any[]) => row.map(cell => {
       try {
-        // Attempt to format as a fraction for cleaner display
+        if (cell.re !== undefined || cell.im !== undefined) {
+             const realPart = Math.abs(cell.re) < 1e-10 ? 0 : cell.re;
+             const imagPart = Math.abs(cell.im) < 1e-10 ? 0 : cell.im;
+            if(imagPart === 0) return mathFormat(realPart, { notation: 'fixed', precision: 4 });
+            return `${mathFormat(realPart, { notation: 'fixed', precision: 2 })} ${imagPart > 0 ? '+' : '-'} ${mathFormat(Math.abs(imagPart), {notation: 'fixed', precision: 2})}i`;
+        }
+        
         const f = math.fraction(cell);
         if (f.d !== 1 && Math.abs(f.n) < 10000 && f.d < 10000) {
             return math.format(f, { fraction: 'ratio' });
         }
-        // Fallback to number with fixed precision
+        
         const num = Number(math.format(cell));
         if (Math.abs(num) < 1e-10) return "0";
         return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
       } catch {
-        // Final fallback for any other case
         const num = Number(math.format(cell));
         return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
       }
   }));
 };
 
-const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m: number[][]) => void }) => {
+const MatrixInput = ({ matrix, setMatrix }: { matrix: (number | string)[][], setMatrix: (m: (number | string)[][]) => void }) => {
     const handleCellChange = (rowIndex: number, colIndex: number, value: string) => {
         const newMatrix = matrix.map((row, rIdx) => 
             row.map((cell, cIdx) => {
                 if (rIdx === rowIndex && cIdx === colIndex) {
-                    // Allow empty input, treat as 0 for calculation
-                    if (value === '' || value === '-') return value;
-                    const numValue = parseFloat(value);
-                    return isNaN(numValue) ? cell : numValue; // Keep old value if parse fails
+                    // Allow valid partial inputs like '-', '.', '3/', but evaluate on blur.
+                    return value;
                 }
                 return cell;
             })
         );
-        setMatrix(newMatrix as number[][]); // Casting because temp state can have strings
+        setMatrix(newMatrix);
     };
 
     const handleBlur = (rowIndex: number, colIndex: number, value: string) => {
        const newMatrix = [...matrix];
-       const numValue = parseFloat(value);
-       newMatrix[rowIndex][colIndex] = isNaN(numValue) ? 0 : numValue;
+       try {
+           evaluate(value); // test if it's a valid math expression
+           newMatrix[rowIndex][colIndex] = value;
+       } catch {
+           newMatrix[rowIndex][colIndex] = 0; // default to 0 if invalid
+       }
        setMatrix(newMatrix);
     }
     
@@ -113,7 +132,7 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m:
                     {row.map((cell, cIdx) => (
                         <Input
                             key={cIdx}
-                            type="text" // Use text to allow for intermediate states like '-'
+                            type="text"
                             value={matrix[rIdx][cIdx]}
                             onChange={e => handleCellChange(rIdx, cIdx, e.target.value)}
                             onBlur={e => handleBlur(rIdx, cIdx, e.target.value)}
@@ -160,7 +179,7 @@ const ScalarDisplay = ({ scalar, title }: { scalar: number | string, title: stri
     );
 };
 
-const createMatrix = (rows: number, cols: number, fill: 'zero' | 'one' | 'random' = 'zero'): number[][] => {
+const createMatrix = (rows: number, cols: number, fill: 'zero' | 'one' | 'random' = 'zero'): (number|string)[][] => {
     return Array.from({ length: rows }, () => 
         Array.from({ length: cols }, () => {
             if (fill === 'random') return Math.floor(Math.random() * 10);
@@ -175,20 +194,22 @@ export default function MatrixCalculator() {
     const MIN_DIM = 1;
     const [rowsA, setRowsA] = useState(4);
     const [colsA, setColsA] = useState(4);
-    const [matrixA, setMatrixA] = useState<number[][]>(createMatrix(4, 4, 'random'));
+    const [matrixA, setMatrixA] = useState<(number|string)[][]>(createMatrix(4, 4, 'random'));
     const [powerA, setPowerA] = useState('2');
     const [scalarA, setScalarA] = useState('3');
 
     const [rowsB, setRowsB] = useState(4);
     const [colsB, setColsB] = useState(4);
-    const [matrixB, setMatrixB] = useState<number[][]>(createMatrix(4, 4, 'random'));
+    const [matrixB, setMatrixB] = useState<(number|string)[][]>(createMatrix(4, 4, 'random'));
+    const [powerB, setPowerB] = useState('2');
+    const [scalarB, setScalarB] = useState('3');
     
     const [resultMatrix, setResultMatrix] = useState<string[][] | null>(null);
     const [resultScalar, setResultScalar] = useState<number | string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const handleResize = (
-        matrixSetter: React.Dispatch<React.SetStateAction<number[][]>>,
+        matrixSetter: React.Dispatch<React.SetStateAction<(number|string)[][]>>,
         currentRows: number, setCurrentRows: React.Dispatch<React.SetStateAction<number>>,
         currentCols: number, setCurrentCols: React.Dispatch<React.SetStateAction<number>>,
         type: 'row' | 'col',
@@ -231,8 +252,10 @@ export default function MatrixCalculator() {
                 case 'rrefA': res = rref(matrixA); break;
 
                 case 'transposeB': res = math.transpose(matB); break;
+                case 'powerB': res = math.pow(matB, parseInt(powerB)); break;
                 case 'detB': setResultScalar(math.det(matB)); return;
                 case 'invB': res = math.inv(matB); break;
+                case 'scalarB': res = math.multiply(matB, parseFloat(scalarB)); break;
                 case 'rrefB': res = rref(matrixB); break;
 
                 case 'swap': 
@@ -264,6 +287,8 @@ export default function MatrixCalculator() {
                     setMatrix={setMatrixB} matrix={matrixB}
                     handleResize={(type: 'row' | 'col', delta: number) => handleResize(setMatrixB, rowsB, setRowsB, colsB, setColsB, type, delta)}
                     performOp={performOperation} prefix="B" 
+                    powerValue={powerB} setPowerValue={setPowerB}
+                    scalarValue={scalarB} setScalarValue={setScalarB}
                 />
             </div>
             
@@ -302,29 +327,24 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
             </CardHeader>
             <CardContent className="space-y-4">
                 <MatrixInput matrix={matrix} setMatrix={setMatrix} />
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'zero'))}>Clear</Button>
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'one'))}>All 1</Button>
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'random'))}>Random</Button>
                     <Button variant="outline" size="sm" onClick={() => performOp(`transpose${prefix}`)}>Transpose</Button>
                 </div>
+                 <div className="grid grid-cols-2 gap-2 items-center">
+                    <Button variant="outline" size="sm" onClick={() => performOp(`power${prefix}`)}>Power of</Button>
+                    <Input type="number" value={powerValue} onChange={e => setPowerValue(e.target.value)} className="h-9" />
+                </div>
                  <div className="grid grid-cols-2 gap-2">
                      <Button variant="outline" size="sm" onClick={() => performOp(`det${prefix}`)}>Determinant</Button>
                      <Button variant="outline" size="sm" onClick={() => performOp(`inv${prefix}`)}>Inverse</Button>
-                     <Button variant="outline" size="sm" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
                 </div>
-                {prefix === 'A' && (
-                    <>
-                        <div className="grid grid-cols-2 gap-2 items-center">
-                            <Button variant="outline" size="sm" onClick={() => performOp(`power${prefix}`)}>Power of</Button>
-                            <Input type="number" value={powerValue} onChange={e => setPowerValue(e.target.value)} className="h-9" />
-                        </div>
-                        <div className="grid grid-cols-2 gap-2 items-center">
-                            <Button variant="outline" size="sm" onClick={() => performOp(`scalar${prefix}`)}>× (Scalar)</Button>
-                            <Input type="number" value={scalarValue} onChange={e => setScalarValue(e.target.value)} className="h-9" />
-                        </div>
-                    </>
-                )}
+                 <div className="grid grid-cols-2 gap-2 items-center">
+                    <Button variant="outline" size="sm" onClick={() => performOp(`scalar${prefix}`)}>× (Scalar)</Button>
+                    <Input type="number" value={scalarValue} onChange={e => setScalarValue(e.target.value)} className="h-9" />
+                </div>
             </CardContent>
         </Card>
     );
