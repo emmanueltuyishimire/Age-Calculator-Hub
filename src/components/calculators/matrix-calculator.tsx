@@ -11,12 +11,11 @@ import { create, all, type Matrix, fraction, format as mathFormat } from 'mathjs
 
 const math = create(all, { number: 'Fraction' });
 
-// --- RREF Algorithm based on user's logic ---
+// --- RREF Algorithm ---
 function rref(matrix: (number | string)[][]): number[][] {
   let A = matrix.map(row => row.map(cell => {
     try {
       const evaluated = math.evaluate(cell.toString());
-      // Handle potential complex numbers from evaluation if needed, though rref is for real numbers
       if (typeof evaluated === 'object' && 're' in evaluated) {
         return (evaluated as any).im === 0 ? (evaluated as any).re : NaN;
       }
@@ -27,7 +26,7 @@ function rref(matrix: (number | string)[][]): number[][] {
   }));
 
   if (A.some(row => row.some(isNaN))) {
-      throw new Error("Invalid number format in matrix.");
+      throw new Error("Invalid number format in matrix. Use numbers or fractions like '3/4'.");
   }
   
   if (!A || A.length === 0) return [];
@@ -71,13 +70,12 @@ function rref(matrix: (number | string)[][]): number[][] {
   return A;
 }
 
-
 // Helper to convert 2D array to Matrix
 const toMatrix = (data: (number|string)[][]): Matrix => math.matrix(data.map(row => row.map(cell => {
     try {
         return math.evaluate(cell.toString());
     } catch {
-        return 0;
+        return 0; // Fallback, though validation should prevent this.
     }
 })));
 
@@ -87,12 +85,11 @@ const fromMatrix = (matrix: any): string[][] => {
   const arrayData = typeof matrix.toArray === 'function' ? matrix.toArray() : matrix;
   
   if (!Array.isArray(arrayData) || (arrayData.length > 0 && !Array.isArray(arrayData[0]))) {
-    return [];
+    return [['Error']];
   }
   
   return arrayData.map((row: any[]) => row.map(cell => {
       try {
-        // Handle complex numbers from mathjs
         if (cell && typeof cell === 'object' && cell.re !== undefined && cell.im !== undefined) {
              const realPart = Math.abs(cell.re) < 1e-10 ? 0 : cell.re;
              const imagPart = Math.abs(cell.im) < 1e-10 ? 0 : cell.im;
@@ -100,13 +97,11 @@ const fromMatrix = (matrix: any): string[][] => {
             return `${mathFormat(realPart, { notation: 'fixed', precision: 2 })} ${imagPart > 0 ? '+' : '-'} ${mathFormat(Math.abs(imagPart), {notation: 'fixed', precision: 2})}i`;
         }
         
-        // Attempt to format as a fraction
         const f = fraction(cell);
         if (f.d !== 1 && Math.abs(f.n) < 10000 && f.d < 10000) {
             return mathFormat(f, { fraction: 'ratio' });
         }
         
-        // Format as a number
         const num = Number(mathFormat(cell));
         if (Math.abs(num) < 1e-10) return "0";
         return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
@@ -182,11 +177,15 @@ const MatrixDisplay = ({ matrix, title, onCopyToA, onCopyToB }: { matrix: string
 const ScalarDisplay = ({ scalar, title }: { scalar: any, title: string }) => {
     let displayValue;
     try {
-        // mathjs can return a Fraction object for determinants
-        if (typeof scalar === 'object' && scalar.n !== undefined && scalar.d !== undefined) {
-             displayValue = mathFormat(scalar, { fraction: 'ratio' });
+        if (typeof scalar === 'object' && scalar && 'n' in scalar && 'd' in scalar) {
+            displayValue = mathFormat(scalar, { fraction: 'ratio' });
         } else {
-            displayValue = mathFormat(scalar, { precision: 5 });
+            const num = Number(scalar);
+             if (Math.abs(num) < 1e-10) {
+                 displayValue = "0";
+             } else {
+                displayValue = num.toLocaleString(undefined, { maximumFractionDigits: 5 });
+             }
         }
     } catch {
         displayValue = "Error";
@@ -277,7 +276,7 @@ export default function MatrixCalculator() {
                 case 'rrefA': res = rref(matrixA); title = "RREF(A) ="; break;
                 
                 case 'transposeB': res = math.transpose(matB); title = "Transpose(B) ="; break;
-                case 'powerB': res = math.pow(matB, parseInt(powerA)); title = `B^${powerA} =`; break; // Using powerA for B as well
+                case 'powerB': res = math.pow(matB, parseInt(powerA)); title = `B^${powerA} =`; break; // Re-using powerA for B as well
                 case 'detB': setResultScalar(math.det(matB)); setResultTitle("det(B) ="); return;
                 case 'invB': res = math.inv(matB); title = "inv(B) ="; break;
                 case 'scalarB': res = math.multiply(matB, parseFloat(scalarA)); title = `${scalarA} × B =`; break;
@@ -381,13 +380,13 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
             </CardHeader>
             <CardContent className="space-y-4">
                 <MatrixInput matrix={matrix} setMatrix={setMatrix} />
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'zero'))}>Clear</Button>
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'one'))}>All 1</Button>
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'random'))}>Random</Button>
                     <Button variant="outline" size="sm" onClick={() => performOp(`transpose${prefix}`)}>Transpose</Button>
-                </div>
-                 <div className="grid grid-cols-2 gap-2 items-center">
+                    <Button variant="outline" size="sm" onClick={() => performOp(`det${prefix}`)} disabled={!isSquare}>Determinant</Button>
+                    <Button variant="outline" size="sm" onClick={() => performOp(`inv${prefix}`)} disabled={!isSquare}>Inverse</Button>
                     <div className="flex items-center gap-2">
                          <Button variant="outline" size="sm" className="flex-1" onClick={() => performOp(`power${prefix}`)} disabled={!isSquare}>Power</Button>
                          <Input type="number" value={powerValue} onChange={e => setPowerValue(e.target.value)} className="w-16 h-9" disabled={!isSquare}/>
@@ -396,13 +395,7 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
                         <Button variant="outline" size="sm" className="flex-1" onClick={() => performOp(`scalar${prefix}`)}>Scalar ×</Button>
                         <Input type="number" value={scalarValue} onChange={e => setScalarValue(e.target.value)} className="w-16 h-9" />
                     </div>
-                </div>
-                 <div className="grid grid-cols-2 gap-2">
-                     <Button variant="outline" size="sm" onClick={() => performOp(`det${prefix}`)} disabled={!isSquare}>Determinant</Button>
-                     <Button variant="outline" size="sm" onClick={() => performOp(`inv${prefix}`)} disabled={!isSquare}>Inverse</Button>
-                </div>
-                <div>
-                     <Button variant="outline" size="sm" className="w-full" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
+                    <Button variant="outline" size="sm" className="w-full lg:col-span-1" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
                 </div>
             </CardContent>
         </Card>
