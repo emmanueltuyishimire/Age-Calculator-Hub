@@ -15,20 +15,16 @@ const math = create(all, { number: 'Fraction' });
 function rref(matrix: (number | string)[][]): number[][] {
   let A = matrix.map(row => row.map(cell => {
     try {
-      const evaluated = math.evaluate(cell.toString());
-      if (typeof evaluated === 'object' && 're' in evaluated) {
-        return (evaluated as any).im === 0 ? (evaluated as any).re : NaN;
-      }
-      return Number(evaluated);
+      return Number(math.evaluate(cell.toString()));
     } catch {
-      return NaN;
+      throw new Error(`Invalid matrix cell value: "${cell}". Please use numbers or fractions like '3/4'.`);
     }
   }));
 
   if (A.some(row => row.some(isNaN))) {
-      throw new Error("Invalid number format in matrix. Use numbers or fractions like '3/4'.");
+    throw new Error("Invalid number format in matrix. Use numbers or fractions like '3/4'.");
   }
-  
+
   if (!A || A.length === 0) return [];
 
   const rows = A.length;
@@ -36,48 +32,50 @@ function rref(matrix: (number | string)[][]): number[][] {
   let lead = 0;
 
   for (let r = 0; r < rows; r++) {
-      if (lead >= cols) break;
+    if (lead >= cols) break;
 
-      let i = r;
-      while (A[i][lead] === 0) {
-          i++;
-          if (i === rows) {
-              i = r;
-              lead++;
-              if (cols === lead) return A;
-          }
+    let i = r;
+    while (Math.abs(A[i][lead]) < 1e-10) { // Use tolerance for zero check
+      i++;
+      if (i === rows) {
+        i = r;
+        lead++;
+        if (cols === lead) return A;
       }
+    }
 
-      [A[i], A[r]] = [A[r], A[i]]; // Swap rows
+    [A[i], A[r]] = [A[r], A[i]];
 
-      const pivotVal = A[r][lead];
-      if (pivotVal !== 0) {
-          for (let j = 0; j < cols; j++) {
-              A[r][j] /= pivotVal;
-          }
+    const pivotVal = A[r][lead];
+    if (Math.abs(pivotVal) > 1e-10) {
+      for (let j = 0; j < cols; j++) {
+        A[r][j] /= pivotVal;
       }
-      
-      for (let i = 0; i < rows; i++) {
-          if (i !== r) {
-              const factor = A[i][lead];
-              for (let j = 0; j < cols; j++) {
-                  A[i][j] -= factor * A[r][j];
-              }
-          }
+    }
+    
+    for (let i = 0; i < rows; i++) {
+      if (i !== r) {
+        const factor = A[i][lead];
+        for (let j = 0; j < cols; j++) {
+          A[i][j] -= factor * A[r][j];
+        }
       }
-      lead++;
+    }
+    lead++;
   }
   return A;
 }
 
 // Helper to convert 2D array to Matrix
-const toMatrix = (data: (number|string)[][]): Matrix => math.matrix(data.map(row => row.map(cell => {
-    try {
-        return math.evaluate(cell.toString());
-    } catch {
-        return 0; // Fallback, though validation should prevent this.
-    }
-})));
+const toMatrix = (data: (number|string)[][]): Matrix => {
+    return math.matrix(data.map(row => row.map(cell => {
+        try {
+            return math.evaluate(cell.toString());
+        } catch {
+            throw new Error(`Invalid input: "${cell}". Please use numbers or fractions.`);
+        }
+    })));
+};
 
 
 // Helper to convert Matrix or plain array to 2D array of formatted strings
@@ -263,22 +261,37 @@ export default function MatrixCalculator() {
             let res: any;
             let title = "";
 
+            const checkSquare = (mat: Matrix, opName: string) => {
+                const size = mat.size();
+                if (size.length !== 2 || size[0] !== size[1]) {
+                    throw new Error(`Matrix must be square for ${opName} operation.`);
+                }
+            };
+
             switch(op) {
                 case 'add': res = math.add(matA, matB); title = "A + B ="; break;
-                case 'subtract': res = math.subtract(matA, matB); title = "A - B ="; break;
+                case 'subtract': res = math.subtract(matA, matB); title = "A – B ="; break;
                 case 'multiply': res = math.multiply(matA, matB); title = "A × B ="; break;
                 
                 case 'transposeA': res = math.transpose(matA); title = "Transpose(A) ="; break;
-                case 'powerA': res = math.pow(matA, parseInt(powerA)); title = `A^${powerA} =`; break;
-                case 'detA': setResultScalar(math.det(matA)); setResultTitle("det(A) ="); return;
-                case 'invA': res = math.inv(matA); title = "inv(A) ="; break;
+                case 'powerA': checkSquare(matA, 'Power'); res = math.pow(matA, parseInt(powerA)); title = `A^${powerA} =`; break;
+                case 'detA': checkSquare(matA, 'Determinant'); setResultScalar(math.det(matA)); setResultTitle("det(A) ="); return;
+                case 'invA': 
+                    checkSquare(matA, 'Inverse'); 
+                    if (math.abs(math.det(matA)) < 1e-10) throw new Error("Matrix is singular and cannot be inverted.");
+                    res = math.inv(matA); title = "inv(A) ="; 
+                    break;
                 case 'scalarA': res = math.multiply(matA, parseFloat(scalarA)); title = `${scalarA} × A =`; break;
                 case 'rrefA': res = rref(matrixA); title = "RREF(A) ="; break;
                 
                 case 'transposeB': res = math.transpose(matB); title = "Transpose(B) ="; break;
-                case 'powerB': res = math.pow(matB, parseInt(powerA)); title = `B^${powerA} =`; // Re-using powerA for B as well
-                case 'detB': setResultScalar(math.det(matB)); setResultTitle("det(B) ="); return;
-                case 'invB': res = math.inv(matB); title = "inv(B) ="; break;
+                case 'powerB': checkSquare(matB, 'Power'); res = math.pow(matB, parseInt(powerA)); title = `B^${powerA} =`; break;
+                case 'detB': checkSquare(matB, 'Determinant'); setResultScalar(math.det(matB)); setResultTitle("det(B) ="); return;
+                case 'invB': 
+                    checkSquare(matB, 'Inverse'); 
+                    if (math.abs(math.det(matB)) < 1e-10) throw new Error("Matrix is singular and cannot be inverted.");
+                    res = math.inv(matB); title = "inv(B) ="; 
+                    break;
                 case 'scalarB': res = math.multiply(matB, parseFloat(scalarA)); title = `${scalarA} × B =`; break;
                 case 'rrefB': res = rref(matrixB); title = "RREF(B) ="; break;
 
@@ -332,8 +345,8 @@ export default function MatrixCalculator() {
                     setMatrix={setMatrixB} matrix={matrixB}
                     handleResize={(type: 'row' | 'col', delta: number) => handleResize(setMatrixB, rowsB, setRowsB, colsB, setColsB, type, delta)}
                     performOp={performOperation} prefix="B" 
-                    powerValue={powerA} setPowerValue={setPowerA} // Re-using powerA for B for simplicity
-                    scalarValue={scalarA} setScalarValue={setScalarA} // Re-using scalarA for B
+                    powerValue={powerA} setPowerValue={setPowerA}
+                    scalarValue={scalarA} setScalarValue={setScalarA}
                 />
             </div>
             
