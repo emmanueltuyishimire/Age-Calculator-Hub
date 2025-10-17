@@ -176,12 +176,7 @@ const ScientificCalculator = () => {
             case 'log': setExpression(prev => prev + (isSecond ? '10^(' : 'log(')); break;
             case 'ln': setExpression(prev => prev + (isSecond ? 'e^(' : 'ln(')); break;
             case '√x':
-                if (isSecond) {
-                    setExpression(prev => `cbrt(${prev})`);
-                } else {
-                    setExpression(prev => `sqrt(${prev})`);
-                }
-                setTimeout(calculate, 0);
+                setExpression(prev => 'sqrt(' + prev);
                 break;
             case '1/x': 
                 setExpression(prev => `(1/(${prev || '1'}))`);
@@ -240,7 +235,12 @@ const ScientificCalculator = () => {
                         const base = prev.substring(0, lastNumIndex);
                         const precedingChar = base.slice(-1);
                         if(['+', '−'].includes(precedingChar)) {
-                            return `${base}(${lastNum}/100*${base.slice(0, -1)})`;
+                            try {
+                                const baseVal = evaluate(base.slice(0, -1));
+                                return `${base}(${lastNum}/100*${baseVal})`;
+                            } catch {
+                                return `${base}(${lastNum}/100)`;
+                            }
                         }
                         return `${base}(${lastNum}/100)`;
                     } else if(lastNum) {
@@ -377,7 +377,7 @@ const ScientificCalculator = () => {
         case '√x': return isSecond ? <>{'³√x'}</> : <>{'√x'}</>;
         case 'xy': return <>{'x'}<sup>y</sup></>;
         case 'y√x': return <>{'ʸ√x'}</>;
-        case 'DegRad': return <span className="text-xs">{isDeg ? 'Deg' : 'Rad'}</span>;
+        case 'DegRad': return <span className={cn("text-xs", isDeg ? 'text-primary' : '')}>Deg</span>;
         default: return key;
     }
   }
