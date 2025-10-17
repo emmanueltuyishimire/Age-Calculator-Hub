@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -10,7 +11,7 @@ import ArticleList from '@/components/layout/article-list';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
-  loading: () => <Skeleton className="h-[500px] w-full max-w-xs mx-auto" />,
+  loading: () => <Skeleton className="h-[500px] w-full max-w-sm md:max-w-4xl mx-auto" />,
   ssr: false,
 });
 
@@ -48,11 +49,11 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="flex justify-center">
-              <div className="w-full max-w-2xl min-h-[500px]" ref={calculatorRef}>
+              <div className="w-full min-h-[300px] md:min-h-[500px]" ref={calculatorRef}>
                 {loadCalculator ? (
                   <ScientificCalculator />
                 ) : (
-                  <Skeleton className="h-[500px] w-full max-w-xs mx-auto" />
+                  <Skeleton className="h-[500px] w-full max-w-sm md:max-w-4xl mx-auto" />
                 )}
               </div>
             </div>
