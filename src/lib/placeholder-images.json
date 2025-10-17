@@ -9,7 +9,7 @@
     {
       "id": "scientific_calculator_hero",
       "description": "A static image of a scientific calculator for the homepage hero section.",
-      "imageUrl": "https://picsum.photos/seed/calc-hero/400/500",
+      "imageUrl": "https://picsum.photos/seed/calc-hero/400/112",
       "imageHint": "calculator tech"
     }
   ]
