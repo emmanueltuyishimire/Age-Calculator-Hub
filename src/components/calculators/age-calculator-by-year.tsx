@@ -68,7 +68,7 @@ export default function AgeCalculatorByYear() {
             </div>
         </div>
         <div className="flex flex-col md:flex-row gap-2">
-        <Button onClick={handleCalculate} className="w-full">Calculate Age</Button>
+        <Button onClick={handleCalculate} className="w-full" aria-label="Calculate estimated age">Calculate Age</Button>
         <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
             <RefreshCcw className="mr-2 h-4 w-4" /> Reset
         </Button>
@@ -77,10 +77,10 @@ export default function AgeCalculatorByYear() {
 
         {age !== null && (
           
-            <div className="p-6 bg-muted rounded-lg text-center space-y-2 animate-fade-in mt-4">
+            <div className="p-6 bg-muted rounded-lg text-center space-y-2 animate-fade-in mt-4" role="region" aria-live="polite">
                 <div>
-                <h3 className="text-lg font-medium text-muted-foreground">Estimated Age in {new Date().getFullYear()}:</h3>
-                <div className="flex justify-center items-baseline space-x-2">
+                <h3 id="estimated-age-heading" className="text-lg font-medium text-muted-foreground">Estimated Age in {new Date().getFullYear()}:</h3>
+                <div aria-labelledby="estimated-age-heading" className="flex justify-center items-baseline space-x-2">
                     <span className="text-4xl font-bold text-primary">{age}</span>
                     <span className="text-xl text-muted-foreground">years old</span>
                 </div>

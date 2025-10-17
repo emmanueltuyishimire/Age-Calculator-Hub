@@ -234,7 +234,7 @@ export default function ChronologicalAgeCalculatorForm() {
         </div>
 
         <div className="flex flex-col md:flex-row gap-2">
-            <Button onClick={handleCalculate} className="w-full" aria-label="Calculate Age">Calculate Age</Button>
+            <Button onClick={handleCalculate} className="w-full" aria-label="Calculate your precise age">Calculate Age</Button>
             <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                 <RefreshCcw className="mr-2 h-4 w-4" /> Reset
             </Button>
@@ -243,7 +243,7 @@ export default function ChronologicalAgeCalculatorForm() {
 
         {age && (
           
-            <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 animate-fade-in">
+            <div className="p-4 sm:p-6 bg-muted rounded-lg text-center space-y-4 animate-fade-in" role="region" aria-live="polite">
               <div>
                 <h3 className="text-md sm:text-lg font-medium mb-2 text-foreground" id="exact-age-heading">Your Exact Age:</h3>
                 <div aria-labelledby="exact-age-heading" className="flex justify-center items-baseline flex-wrap gap-x-2 sm:gap-x-4 gap-y-2">
