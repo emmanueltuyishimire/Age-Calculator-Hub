@@ -158,8 +158,8 @@ export default function AnnuityCalculator() {
                         <FormField control={form.control} name="afterYears" render={({ field }) => (<FormItem><FormLabel>After (years)</FormLabel><FormControl><Input type="number" {...field} /></FormControl></FormItem>)} />
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                        <Button type="submit" className="w-full"><Landmark className="mr-2 h-4 w-4"/>Calculate</Button>
-                        <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                        <Button type="submit" className="w-full" aria-label="Calculate Annuity"><Landmark className="mr-2 h-4 w-4"/>Calculate</Button>
+                        <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset Form"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
                     </div>
                 </form>
               </Form>

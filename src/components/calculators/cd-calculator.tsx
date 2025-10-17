@@ -42,7 +42,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const formSchema = z.object({
   initialDeposit: z.coerce.number().min(1, "Deposit must be positive."),
@@ -182,8 +182,8 @@ export default function CdCalculator() {
                     <FormField control={form.control} name="taxRate" render={({ field }) => (<FormItem><FormLabel>Marginal Tax Rate (%)</FormLabel><FormControl><Input type="number" step="0.1" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     
                     <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                        <Button type="submit" className="w-full"><DollarSign className="mr-2 h-4 w-4"/>Calculate</Button>
-                        <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                        <Button type="submit" className="w-full" aria-label="Calculate CD"><DollarSign className="mr-2 h-4 w-4"/>Calculate</Button>
+                        <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset Form"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
                     </div>
                 </form>
               </Form>

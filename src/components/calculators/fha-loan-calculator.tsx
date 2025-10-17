@@ -207,7 +207,7 @@ export default function FhaLoanCalculator() {
                     </FormItem>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                    <Button type="submit" className="w-full"><Home className="mr-2 h-4 w-4"/>Calculate</Button>
+                    <Button type="submit" className="w-full" aria-label="Calculate FHA Loan"><Home className="mr-2 h-4 w-4"/>Calculate</Button>
                     <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
                 </div>
             </form>
@@ -261,4 +261,3 @@ export default function FhaLoanCalculator() {
     </Card>
   );
 }
-
