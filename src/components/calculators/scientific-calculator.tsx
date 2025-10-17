@@ -23,7 +23,7 @@ const basicButtonsConfig = [
     { label: '7', value: '7', style: "col-span-1" }, { label: '8', value: '8', style: "col-span-1" }, { label: '9', value: '9', style: "col-span-1" }, { label: '÷', value: '÷', style: "col-span-1" }, { label: 'M-', value: 'M-', style: "col-span-1" },
     { label: '4', value: '4', style: "col-span-1" }, { label: '5', value: '5', style: "col-span-1" }, { label: '6', value: '6', style: "col-span-1" }, { label: '−', value: '−', style: "col-span-1" }, { label: '=', value: '=', style: "row-span-3 h-auto col-start-5" },
     { label: '1', value: '1', style: "col-span-1" }, { label: '2', value: '2', style: "col-span-1" }, { label: '3', value: '3', style: "col-span-1" }, { label: '×', value: '×', style: "col-span-1" },
-    { label: '0', value: '0', style: "col-span-2" }, { label: '.', value: '.', style: "col-span-1" }, { label: '±', value: '±', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" },
+    { label: '0', value: '0', style: "col-span-2" }, { label: '.', value: '.', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" }, { label: '±', value: '±', style: "col-span-1" },
 ];
 
 const ariaLabels: Record<string, string> = {
