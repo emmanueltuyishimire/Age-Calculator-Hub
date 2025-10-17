@@ -109,7 +109,7 @@ const ScientificCalculator = () => {
             if (typeof result === 'undefined' || result === null || typeof result === 'function') {
               throw new Error('Invalid expression');
             }
-            const resultString = mathFormat(result, { precision: 10 });
+            const resultString = mathFormat(result, { notation: 'auto', precision: 10 });
             setHistory(prev => [`${expression} = ${resultString}`, ...prev].slice(0, 5));
             setAns(result);
             setDisplay(resultString);
@@ -176,14 +176,26 @@ const ScientificCalculator = () => {
             case 'cos': setExpression(prev => prev + (isSecond ? 'acos(' : 'cos(')); break;
             case 'tan': setExpression(prev => prev + (isSecond ? 'atan(' : 'tan(')); break;
             case 'log': setExpression(prev => prev + (isSecond ? '10^(' : 'log(')); break;
-            case 'ln': setExpression(prev => prev + (isSecond ? 'e^(' : 'ln(')); break;
+            case 'ln': setExpression(prev => prev + (isSecond ? 'exp(' : 'ln(')); break;
             case '√x': setExpression(prev => prev + 'sqrt('); break;
             case '1/x': 
-                setExpression(prev => `(1/(${prev || '1'}))`);
+                setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        return `${prev.substring(0, lastNumIndex)}(1/${lastNum})`;
+                    }
+                    return `(1/(${prev || '1'}))`;
+                });
                 setTimeout(calculate, 0);
                 break;
             case 'n!': 
-                setExpression(prev => `factorial(${prev || '0'})`); 
+                setExpression(prev => {
+                     const [lastNum, lastNumIndex] = getLastNumber(prev);
+                     if (lastNum) {
+                         return `${prev.substring(0, lastNumIndex)}factorial(${lastNum})`
+                     }
+                     return `factorial(${prev || '0'})`
+                }); 
                 setTimeout(calculate, 0);
                 break;
             case 'π': setExpression(prev => prev + 'pi'); break;
@@ -201,14 +213,15 @@ const ScientificCalculator = () => {
                 setTimeout(calculate, 0);
                 break;
             case 'y√x':
-                setExpression(prev => prev + "nthRoot(");
+                setExpression(prev => prev + ",");
                 break;
             case 'Ans': 
+                const ansStr = ans.toString();
                 if(isResult || expression === '0' || expression === '') {
-                     setExpression(ans.toString());
+                     setExpression(ansStr);
                      setIsResult(false);
                 } else {
-                     setExpression(prev => prev + ans.toString());
+                     setExpression(prev => prev + ansStr);
                 }
                 break;
             case 'M+':
@@ -259,10 +272,10 @@ const ScientificCalculator = () => {
                 break;
             case '±':
                 setExpression(prev => {
-                    const [lastNum, lastNumIndex] = getLastNumber(prev);
                     if (isResult) {
                        return `(-${prev.replace(/[()]/g, '')})`
                     }
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
                     if (lastNum) {
                         const isNegativeInParens = lastNum.startsWith('(-') && lastNum.endsWith(')');
                         const baseExpression = prev.slice(0, lastNumIndex);
@@ -277,7 +290,12 @@ const ScientificCalculator = () => {
             case '2nd': setIsSecond(prev => !prev); break;
             case 'EXP': setExpression(prev => prev + 'e+'); break;
             case '(': case ')':
-                setExpression(prev => prev + value);
+                if (isResult) {
+                    setExpression(value);
+                    setIsResult(false);
+                } else {
+                    setExpression(prev => prev + value);
+                }
                 break;
             default:
                 if (/[\d.]/.test(value)) {
@@ -345,7 +363,7 @@ const ScientificCalculator = () => {
     }, [expression, isError]);
 
   const getVariant = (btnValue: string): "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined => {
-    if (['+', '−', '×', '÷', '='].includes(btnValue)) return 'default';
+    if (['÷', '×', '−', '+', '='].includes(btnValue)) return 'default';
     if (btnValue === 'AC') return 'destructive';
     if (btnValue === 'Deg' && isDeg) return 'default';
     if (btnValue === 'Rad' && !isDeg) return 'default';
@@ -354,12 +372,13 @@ const ScientificCalculator = () => {
   }
   
   const buttons = [
-    '(', ')', 'MC', 'M+', 'M-', 'MR', 'AC',
-    '2nd', 'x2', 'xy', 'sin', 'cos', 'tan', '÷',
-    'y√x', '10x', '7', '8', '9', '×',
-    '√x', 'n!', '4', '5', '6', '−',
-    'Deg', 'Rad', '1', '2', '3', '+',
-    'RND', 'Ans', '0', '.', 'Delete', '='
+    '2nd', 'Deg', 'Rad', 'MC', 'MR', 'M+', 'M-',
+    'sin', 'cos', 'tan', 'log', 'ln', '(', ')',
+    'x2', '√x', 'n!', 'π', 'e', '1/x', 'xy',
+    '7', '8', '9', 'AC', 'Delete', 'Ans', '÷',
+    '4', '5', '6', 'RND', '%', '±', '×',
+    '1', '2', '3', 'EXP',  '.', '0', '=', '−',
+    '+'
   ];
 
   const getButtonLabel = (key: string) => {
@@ -371,13 +390,36 @@ const ScientificCalculator = () => {
         case 'log': return isSecond ? <>{'log'}<sub>y</sub></> : 'log';
         case 'ln': return isSecond ? <>{'e'}<sup>x</sup></> : 'ln';
         case 'x2': return isSecond ? <>{'x'}<sup>3</sup></> : <>{'x'}<sup>2</sup></>;
-        case '√x': return isSecond ? <>{'³√x'}</> : <>{'√x'}</>;
+        case '√x': return isSecond ? <>{'³√x'}</> : '√x';
         case 'xy': return <>{'x'}<sup>y</sup></>;
         case 'y√x': return <>{'ʸ√x'}</>;
         case 'Delete': return <Trash2 className="h-5 w-5"/>;
         default: return key;
     }
   }
+
+  const gridTemplate = [
+    // Row 1
+    { key: '2nd', span: 1 }, { key: 'Deg', span: 1 }, { key: 'Rad', span: 1 },
+    { key: 'MC', span: 1 }, { key: 'MR', span: 1 }, { key: 'M+', span: 1 }, { key: 'M-', span: 1 },
+    // Row 2
+    { key: 'sin', span: 1 }, { key: 'cos', span: 1 }, { key: 'tan', span: 1 },
+    { key: 'log', span: 1 }, { key: 'ln', span: 1 }, { key: '(', span: 1 }, { key: ')', span: 1 },
+    // Row 3
+    { key: 'x2', span: 1 }, { key: '√x', span: 1 }, { key: 'n!', span: 1 },
+    { key: 'π', span: 1 }, { key: 'e', span: 1 }, { key: '1/x', span: 1 }, { key: 'xy', span: 1 },
+     // Row 4
+    { key: '7', span: 1 }, { key: '8', span: 1 }, { key: '9', span: 1 },
+    { key: 'AC', span: 1 }, { key: 'Delete', span: 1 }, { key: 'Ans', span: 1 }, { key: '÷', span: 1 },
+    // Row 5
+    { key: '4', span: 1 }, { key: '5', span: 1 }, { key: '6', span: 1 },
+    { key: 'RND', span: 1 }, { key: '%', span: 1 }, { key: '±', span: 1 }, { key: '×', span: 1 },
+    // Row 6
+    { key: '1', span: 1 }, { key: '2', span: 1 }, { key: '3', span: 1 },
+    { key: 'EXP', span: 1 }, { key: '.', span: 1 }, { key: '0', span: 1 }, { key: '=', span: 1 },
+    // Row 7 - Just the plus
+    { key: '+', span: 1}, { key: '−', span: 1} // Example placement
+  ];
 
   return (
     <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-md sm:max-w-lg">
@@ -394,25 +436,40 @@ const ScientificCalculator = () => {
         </div>
       </div>
        <div className="grid grid-cols-7 gap-1.5">
-          {buttons.map(btn => (
-              <Button
-                  key={btn}
-                  variant={getVariant(btn)}
-                  className={cn("h-10 text-xs p-1 shadow-md hover:shadow-sm active:shadow-inner active:translate-y-px relative", {
-                    'col-span-2': ['=', '0'].includes(btn),
-                  })}
-                  onClick={() => handleButtonClick(btn)}
-                  aria-label={ariaLabels[btn] || btn}
-              >
-                  {getButtonLabel(btn)}
-              </Button>
-            )
-          )}
+          {/* Row 1 */}
+          {['2nd', 'Deg', 'Rad', 'MC', 'MR', 'M+', 'M-'].map(btn => (
+              <Button key={btn} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+          ))}
+          {/* Row 2 */}
+          {['sin', 'cos', 'tan', 'log', 'ln', '(', ')'].map(btn => (
+              <Button key={btn} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+          ))}
+           {/* Row 3 */}
+          {['x2', '√x', 'n!', 'π', 'e', '1/x', 'xy'].map(btn => (
+              <Button key={btn} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+          ))}
+          {/* Row 4 */}
+          {['7', '8', '9', 'AC', 'Delete', 'Ans', '÷'].map(btn => (
+              <Button key={btn} variant={getVariant(btn)} className={cn("h-10 text-sm p-1", {'text-base font-bold': /\d/.test(btn)})} onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+          ))}
+          {/* Row 5 */}
+          {['4', '5', '6', 'RND', '%', '±', '×'].map(btn => (
+              <Button key={btn} variant={getVariant(btn)} className={cn("h-10 text-sm p-1", {'text-base font-bold': /\d/.test(btn)})} onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+          ))}
+           {/* Row 6 */}
+          <Button variant={getVariant('1')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('1')}>1</Button>
+          <Button variant={getVariant('2')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('2')}>2</Button>
+          <Button variant={getVariant('3')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('3')}>3</Button>
+          <Button variant={getVariant('0')} className="h-10 text-base font-bold p-1 col-span-2" onClick={() => handleButtonClick('0')}>0</Button>
+          <Button variant={getVariant('.')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('.')}>.</Button>
+          <Button variant={getVariant('+')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('+')}>+</Button>
+          
+          {/* Row 7 */}
+          <Button variant={getVariant('−')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('−')}>−</Button>
+          <Button variant={getVariant('=')} className="h-10 text-base font-bold p-1 col-span-2" onClick={() => handleButtonClick('=')}>=</Button>
         </div>
     </div>
   );
 };
 
 export default ScientificCalculator;
-
-    
