@@ -13,7 +13,7 @@ import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Mortgage Amortization Calculator – Estimate Your Monthly House Payment',
+    title: 'Mortgage Calculator – Estimate Your Monthly House Payment',
     description: 'Use our free Mortgage Calculator to estimate your monthly payment, including principal, interest, taxes, insurance (PITI), and other costs. View a full amortization schedule.',
     alternates: {
         canonical: '/mortgage-calculator',
@@ -62,7 +62,7 @@ export default function MortgageCalculatorPage() {
       <div className="max-w-5xl mx-auto">
         <main role="main">
             <div className="text-center mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Mortgage Amortization Calculator</h1>
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Mortgage Calculator</h1>
                 <p className="text-md md:text-lg text-muted-foreground">
                     Estimate your monthly mortgage payment and see a breakdown of principal, interest, taxes, insurance, and other costs.
                 </p>

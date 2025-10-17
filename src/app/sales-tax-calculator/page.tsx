@@ -2,7 +2,7 @@
 import SalesTaxCalculator from '@/components/calculators/sales-tax-calculator';
 import { type Metadata } from 'next';
 import RelatedCalculators from '@/components/layout/related-calculators';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
   TableBody,

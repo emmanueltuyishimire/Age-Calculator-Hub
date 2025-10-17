@@ -2,16 +2,8 @@
 import MortgagePayoffCalculator from '@/components/calculators/mortgage-payoff-calculator';
 import { type Metadata } from 'next';
 import RelatedCalculators from '@/components/layout/related-calculators';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 
 export const metadata: Metadata = {
     title: 'Mortgage Payoff Calculator – Pay Off Your Mortgage Faster',
@@ -100,4 +92,3 @@ export default function MortgagePayoffCalculatorPage() {
     </div>
   );
 }
-

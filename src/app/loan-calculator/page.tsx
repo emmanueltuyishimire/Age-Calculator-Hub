@@ -2,7 +2,7 @@
 import LoanCalculator from '@/components/calculators/loan-calculator';
 import { type Metadata } from 'next';
 import RelatedCalculators from '@/components/layout/related-calculators';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -98,7 +98,6 @@ export default function LoanCalculatorPage() {
                 <Card>
                     <CardHeader>
                         <CardTitle>Consumer Loans</CardTitle>
-                        <CardDescription>There are two basic kinds of consumer loans: secured or unsecured.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4 text-muted-foreground">
                         <div>

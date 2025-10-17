@@ -1,12 +1,6 @@
 
 import FhaLoanCalculator from '@/components/calculators/fha-loan-calculator';
 import { type Metadata } from 'next';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import Link from 'next/link';
