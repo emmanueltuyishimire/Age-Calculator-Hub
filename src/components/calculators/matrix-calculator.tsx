@@ -7,20 +7,17 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import { AlertCircle, Trash, Plus, Minus, ArrowRightLeft, RefreshCcw, Power, Shuffle, RotateCcw } from 'lucide-react';
+import { AlertCircle, Trash, Plus, Minus, ArrowRightLeft, RefreshCcw } from 'lucide-react';
 import { create, all, type Matrix } from 'mathjs';
 
 const math = create(all, { number: 'Fraction' });
 
 // --- RREF Algorithm ---
 function rref(matrix: number[][]): number[][] {
-  if (!matrix || matrix.length === 0) {
-    return [];
-  }
   let mat = matrix.map(row => [...row]);
-  let rowCount = mat.length;
-  let colCount = mat[0].length;
   let lead = 0;
+  const rowCount = mat.length;
+  const colCount = mat[0].length;
 
   for (let r = 0; r < rowCount; r++) {
     if (lead >= colCount) {
@@ -41,14 +38,14 @@ function rref(matrix: number[][]): number[][] {
 
     [mat[i], mat[r]] = [mat[r], mat[i]];
 
-    let val = mat[r][lead];
+    const val = mat[r][lead];
     for (let j = 0; j < colCount; j++) {
       mat[r][j] /= val;
     }
 
     for (let j = 0; j < rowCount; j++) {
       if (j !== r) {
-        let val2 = mat[j][lead];
+        const val2 = mat[j][lead];
         for (let k = 0; k < colCount; k++) {
           mat[j][k] -= val2 * mat[r][k];
         }
@@ -59,38 +56,29 @@ function rref(matrix: number[][]): number[][] {
   return mat;
 }
 
+
 // Helper to convert 2D array to Matrix
 const toMatrix = (data: number[][]): Matrix => math.matrix(data);
 
-// Helper to convert Matrix or plain array to 2D array
-const fromMatrix = (matrix: any): (string | number)[][] => {
+// Helper to convert Matrix or plain array to 2D array of formatted strings
+const fromMatrix = (matrix: any): string[][] => {
   if (!matrix) return [];
   const arrayData = typeof matrix.toArray === 'function' ? matrix.toArray() : matrix;
-
-  if (!Array.isArray(arrayData) || !Array.isArray(arrayData[0])) {
-    // Handle special cases like eigenvalues object
-    if (arrayData.values && arrayData.vectors) {
-        const values = arrayData.values.map((v: any) => math.format(v, { notation: 'fixed', precision: 4 }));
-        
-        // This is a simplified representation for display
-        const vectors = arrayData.vectors.map((vec: any) => {
-             const vectorData = vec.map((v: any) => math.format(v, { notation: 'fixed', precision: 4 }))
-             return `[${vectorData.join(', ')}]`;
-        });
-
-        const combined: string[][] = [
-            ['Eigenvalues:', ...values],
-            ['Eigenvectors:', ...vectors]
-        ];
-        return combined;
-    }
+  
+  if (!Array.isArray(arrayData) || (arrayData.length > 0 && !Array.isArray(arrayData[0]))) {
     return [];
   }
   
   return arrayData.map((row: any[]) => row.map(cell => {
       try {
-        return math.format(cell, { fraction: 'ratio' });
+        const f = math.fraction(cell);
+        // Only show as fraction if it's not a whole number.
+        if (f.d !== 1) {
+            return math.format(f, { fraction: 'ratio' });
+        }
+        return math.format(f.n, { notation: 'fixed', precision: 4 });
       } catch {
+        // Fallback for non-fractional numbers or formatting errors
         return math.format(cell, { notation: 'fixed', precision: 4 });
       }
   }));
@@ -98,11 +86,16 @@ const fromMatrix = (matrix: any): (string | number)[][] => {
 
 const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m: number[][]) => void }) => {
     const handleCellChange = (rowIndex: number, colIndex: number, value: string) => {
-        const newValue = parseFloat(value);
+        // Allow empty string for easy editing, treat as 0 for calculation
+        const isNumeric = /^-?\d*\.?\d*$/.test(value);
+        if (!isNumeric && value !== '' && value !== '-') return;
+
         const newMatrix = matrix.map((row, rIdx) => 
             row.map((cell, cIdx) => {
                 if (rIdx === rowIndex && cIdx === colIndex) {
-                    return isNaN(newValue) ? 0 : newValue;
+                    // Store as number, but handle empty string input
+                    const numValue = parseFloat(value);
+                    return isNaN(numValue) ? 0 : numValue;
                 }
                 return cell;
             })
@@ -117,7 +110,7 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m:
                     {row.map((cell, cIdx) => (
                         <Input
                             key={cIdx}
-                            type="number"
+                            type="text" // Use text to allow for intermediate states like "-"
                             value={cell}
                             onChange={e => handleCellChange(rIdx, cIdx, e.target.value)}
                             className="w-16 h-8 text-center min-w-[4rem]"
@@ -129,7 +122,7 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m:
     );
 };
 
-const MatrixDisplay = ({ matrix, title }: { matrix: (string | number)[][], title: string }) => (
+const MatrixDisplay = ({ matrix, title }: { matrix: (string)[][], title: string }) => (
     <Card>
         <CardHeader><CardTitle className="text-center">{title}</CardTitle></CardHeader>
         <CardContent className="flex justify-center items-center">
@@ -138,7 +131,7 @@ const MatrixDisplay = ({ matrix, title }: { matrix: (string | number)[][], title
                     {matrix.map((row, rIdx) => (
                         <div key={rIdx} className="flex gap-1">
                             {row.map((cell, cIdx) => (
-                                <Input key={cIdx} value={cell.toString()} readOnly className="w-16 h-8 text-center bg-background min-w-[4rem]"/>
+                                <Input key={cIdx} value={cell} readOnly className="w-16 h-8 text-center bg-background min-w-[4rem]"/>
                             ))}
                         </div>
                     ))}
@@ -148,10 +141,9 @@ const MatrixDisplay = ({ matrix, title }: { matrix: (string | number)[][], title
     </Card>
 );
 
-const createMatrix = (rows: number, cols: number, fill: 'zero' | 'one' | 'random' = 'zero'): number[][] => {
+const createMatrix = (rows: number, cols: number, fill: 'zero' | 'random' = 'zero'): number[][] => {
     return Array.from({ length: rows }, () => 
         Array.from({ length: cols }, () => {
-            if (fill === 'one') return 1;
             if (fill === 'random') return Math.floor(Math.random() * 10);
             return 0;
         })
@@ -159,7 +151,7 @@ const createMatrix = (rows: number, cols: number, fill: 'zero' | 'one' | 'random
 };
 
 export default function MatrixCalculator() {
-    const MAX_DIM = 10;
+    const MAX_DIM = 8;
     const MIN_DIM = 1;
     const [rowsA, setRowsA] = useState(3);
     const [colsA, setColsA] = useState(4);
@@ -169,38 +161,35 @@ export default function MatrixCalculator() {
     const [colsB, setColsB] = useState(3);
     const [matrixB, setMatrixB] = useState<number[][]>(createMatrix(4, 3, 'random'));
     
-    const [resultMatrix, setResultMatrix] = useState<(string | number)[][] | null>(null);
-    const [resultScalar, setResultScalar] = useState<string | null>(null);
+    const [resultMatrix, setResultMatrix] = useState<string[][] | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const handleResize = (
-        type: 'row' | 'col',
-        matrix: number[][],
         matrixSetter: React.Dispatch<React.SetStateAction<number[][]>>,
-        currentRows: number,
-        setCurrentRows: React.Dispatch<React.SetStateAction<number>>,
-        currentCols: number,
-        setCurrentCols: React.Dispatch<React.SetStateAction<number>>,
+        currentRows: number, setCurrentRows: React.Dispatch<React.SetStateAction<number>>,
+        currentCols: number, setCurrentCols: React.Dispatch<React.SetStateAction<number>>,
+        type: 'row' | 'col',
         delta: number
     ) => {
         const newRows = type === 'row' ? Math.max(MIN_DIM, Math.min(MAX_DIM, currentRows + delta)) : currentRows;
         const newCols = type === 'col' ? Math.max(MIN_DIM, Math.min(MAX_DIM, currentCols + delta)) : currentCols;
 
-        const newMatrix = Array.from({ length: newRows }, (_, r) => 
-            Array.from({ length: newCols }, (_, c) => 
-                matrix[r] && matrix[r][c] !== undefined ? matrix[r][c] : 0
-            )
-        );
+        matrixSetter(prevMatrix => {
+            const newMatrix = Array.from({ length: newRows }, (_, r) => 
+                Array.from({ length: newCols }, (_, c) => 
+                    prevMatrix[r] && prevMatrix[r][c] !== undefined ? prevMatrix[r][c] : 0
+                )
+            );
+            return newMatrix;
+        });
         
         setCurrentRows(newRows);
         setCurrentCols(newCols);
-        matrixSetter(newMatrix);
     };
     
     const performOperation = (op: string) => {
         setError(null);
         setResultMatrix(null);
-        setResultScalar(null);
         try {
             const matA = toMatrix(matrixA);
             const matB = toMatrix(matrixB);
@@ -218,6 +207,7 @@ export default function MatrixCalculator() {
                     setMatrixA(tempMatrixB); setRowsA(rowsB); setColsA(colsB);
                     setMatrixB(tempMatrixA); setRowsB(tempRowsA); setColsB(tempColsA);
                     return;
+                default: return;
             }
             if(res) setResultMatrix(fromMatrix(res));
         } catch (e: any) {
@@ -231,12 +221,12 @@ export default function MatrixCalculator() {
                 <MatrixCard title="Matrix A" 
                     rows={rowsA} cols={colsA} 
                     setMatrix={setMatrixA} matrix={matrixA}
-                    handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, matrixA, setMatrixA, rowsA, setRowsA, colsA, setColsA, delta)}
+                    handleResize={(type: 'row' | 'col', delta: number) => handleResize(setMatrixA, rowsA, setRowsA, colsA, setColsA, type, delta)}
                     performOp={performOperation} prefix="A" />
                 <MatrixCard title="Matrix B" 
                     rows={rowsB} cols={colsB} 
                     setMatrix={setMatrixB} matrix={matrixB}
-                    handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, matrixB, setMatrixB, rowsB, setRowsB, colsB, setColsB, delta)}
+                    handleResize={(type: 'row' | 'col', delta: number) => handleResize(setMatrixB, rowsB, setRowsB, colsB, setColsB, type, delta)}
                     performOp={performOperation} prefix="B" />
             </div>
             
@@ -263,7 +253,7 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
         <Card>
             <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>{title}</CardTitle>
-                <div className="flex gap-4 items-center text-sm">
+                 <div className="flex gap-4 items-center text-sm">
                     <div className="flex items-center gap-1">
                         <Label>Rows:</Label>
                         <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleResize('row', -1)}><Minus className="h-4 w-4" /></Button>
@@ -283,7 +273,7 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
                 <div className="flex gap-2 flex-wrap justify-between">
                   <div className="flex gap-2 flex-wrap">
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'zero'))}><Trash className="h-4 w-4 mr-1"/>Clear</Button>
-                    <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'random'))}><Shuffle className="h-4 w-4 mr-1"/>Random</Button>
+                    <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'random'))}><RefreshCcw className="h-4 w-4 mr-1"/>Random</Button>
                   </div>
                   <div className="flex gap-2 flex-wrap">
                      <Button variant="outline" size="sm" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
