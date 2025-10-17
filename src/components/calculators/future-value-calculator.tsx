@@ -106,6 +106,7 @@ export default function FutureValueCalculator() {
 
     for (let i = 1; i <= totalPeriods; i++) {
         let interestForPeriod = 0;
+        const yearStartBalance = (i === 1) ? initialInvestment : schedule[schedule.length - 1].endBalance;
 
         if (isBeginning) {
             balance += periodicContribution;
@@ -124,10 +125,12 @@ export default function FutureValueCalculator() {
         totalContributions += periodicContribution;
         
         if (i % n === 0 || i === totalPeriods) {
+            const lastYearEndBalance = schedule.length > 0 ? schedule[schedule.length - 1].endBalance : initialInvestment;
+            const depositThisYear = periodicContribution * n;
             schedule.push({
                 period: Math.ceil(i/n),
-                deposit: periodicContribution * n,
-                interest: (balance - (schedule.length > 0 ? schedule[schedule.length - 1].endBalance : initialInvestment) - (periodicContribution * n)),
+                deposit: depositThisYear,
+                interest: balance - lastYearEndBalance - depositThisYear,
                 endBalance: balance,
             });
         }
@@ -151,8 +154,8 @@ export default function FutureValueCalculator() {
 
   const barChartData = result?.schedule.map(row => ({
       name: `Year ${row.period}`,
-      Initial: form.getValues('initialInvestment') + result.schedule.slice(0, row.period - 1).reduce((acc, r) => acc + r.deposit, 0),
-      Contributions: result.schedule.slice(0, row.period).reduce((acc, r) => acc + r.deposit, 0) - result.schedule.slice(0, row.period - 1).reduce((acc, r) => acc + r.deposit, 0),
+      Principal: (row.period === 1 ? form.getValues('initialInvestment') : result.schedule[row.period - 2].endBalance),
+      Contributions: row.deposit,
       Interest: row.interest,
   })) || [];
 
@@ -183,8 +186,8 @@ export default function FutureValueCalculator() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                      <Button type="submit" className="w-full"><PiggyBank className="mr-2 h-4 w-4"/>Calculate</Button>
-                      <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                      <Button type="submit" className="w-full" aria-label="Calculate Future Value"><PiggyBank className="mr-2 h-4 w-4"/>Calculate</Button>
+                      <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset Form"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
                   </div>
               </form>
               </Form>
@@ -219,7 +222,7 @@ export default function FutureValueCalculator() {
              <div className="mt-8">
                 <h3 className="text-lg font-bold text-center mb-4">Accumulation Schedule</h3>
                 <div className="h-[300px] w-full mb-4">
-                    <ResponsiveContainer><BarChart data={barChartData}><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Contributions" stackId="a" fill="hsl(var(--chart-2))" radius={[0, 0, 0, 0]} /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
+                    <ResponsiveContainer><BarChart data={barChartData} stackOffset="sign"><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" /><Bar dataKey="Contributions" stackId="a" fill="hsl(var(--chart-2))" /><Bar dataKey="Principal" stackId="a" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
                 </div>
                 <div className="h-[300px] overflow-y-auto border rounded-md">
                 <Table><TableHeader className="sticky top-0 bg-secondary"><TableRow><TableHead>Year</TableHead><TableHead>Deposit</TableHead><TableHead>Interest</TableHead><TableHead>Ending balance</TableHead></TableRow></TableHeader>

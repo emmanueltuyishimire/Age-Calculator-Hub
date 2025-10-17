@@ -32,7 +32,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
@@ -103,27 +103,30 @@ export default function AnnuityPayoutCalculator() {
     defaultValues: { principal: 500000, interestRate: 6, payoutAmount: 5000, payoutFrequency: 'monthly' },
   });
 
-  function calculateAmortization(principal: number, periodicRate: number, numberOfPeriods: number, periodicPayment: number): AmortizationRow[] {
+  function calculateAmortization(principal: number, periodicRate: number, numberOfPeriods: number, periodicPayment: number, payoutFrequency: 'monthly' | 'quarterly' | 'annually'): AmortizationRow[] {
     let balance = principal;
     const schedule: AmortizationRow[] = [];
-    const periodsPerYear = payoutFrequencies[fixedLengthForm.getValues('payoutFrequency') as keyof typeof payoutFrequencies];
+    const periodsPerYear = payoutFrequencies[payoutFrequency];
     
-    let annualInterest = 0;
-    
-    for (let i = 1; i <= numberOfPeriods; i++) {
-        const interestForPeriod = balance * periodicRate;
-        balance = balance + interestForPeriod - periodicPayment;
-        annualInterest += interestForPeriod;
+    let yearStartBalance = principal;
+
+    for (let year = 1; year <= Math.ceil(numberOfPeriods / periodsPerYear); year++) {
+        let annualInterest = 0;
+        const periodsThisYear = (year * periodsPerYear > numberOfPeriods) ? numberOfPeriods % periodsPerYear : periodsPerYear;
         
-        if (i % periodsPerYear === 0 || i === numberOfPeriods) {
-            schedule.push({
-                year: Math.ceil(i/periodsPerYear),
-                beginningBalance: balance + periodicPayment * (i % periodsPerYear || periodsPerYear) - annualInterest,
-                interestReturn: annualInterest,
-                endingBalance: balance > 0 ? balance : 0,
-            });
-            annualInterest = 0;
+        for (let period = 1; period <= periodsThisYear; period++) {
+            const interestForPeriod = balance * periodicRate;
+            balance = balance + interestForPeriod - periodicPayment;
+            annualInterest += interestForPeriod;
         }
+
+        schedule.push({
+            year: year,
+            beginningBalance: yearStartBalance,
+            interestReturn: annualInterest,
+            endingBalance: balance > 0 ? balance : 0,
+        });
+        yearStartBalance = balance > 0 ? balance : 0;
     }
     return schedule;
   }
@@ -144,7 +147,7 @@ export default function AnnuityPayoutCalculator() {
     
     const totalPayments = payoutAmount * numberOfPeriods;
     const totalInterest = totalPayments - principal;
-    const amortizationSchedule = calculateAmortization(principal, periodicRate, numberOfPeriods, payoutAmount);
+    const amortizationSchedule = calculateAmortization(principal, periodicRate, numberOfPeriods, payoutAmount, payoutFrequency);
 
     setResult({ payoutAmount, totalPayments, totalInterest, amortizationSchedule });
   }
@@ -155,7 +158,7 @@ export default function AnnuityPayoutCalculator() {
       const periodsPerYear = payoutFrequencies[payoutFrequency];
       const periodicRate = interestRate / 100 / periodsPerYear;
       
-      if (payoutAmount <= principal * periodicRate) {
+      if (periodicRate > 0 && payoutAmount <= principal * periodicRate) {
           setError("Payout amount is too low to cover interest. The annuity will never deplete.");
           setResult(null);
           return;
@@ -169,9 +172,9 @@ export default function AnnuityPayoutCalculator() {
       }
 
       const totalYears = numberOfPeriods / periodsPerYear;
-      const totalPayments = payoutAmount * numberOfPeriods;
+      const totalPayments = payoutAmount * Math.ceil(numberOfPeriods);
       const totalInterest = totalPayments - principal;
-      const amortizationSchedule = calculateAmortization(principal, periodicRate, Math.ceil(numberOfPeriods), payoutAmount);
+      const amortizationSchedule = calculateAmortization(principal, periodicRate, Math.ceil(numberOfPeriods), payoutAmount, payoutFrequency);
 
       setResult({ payoutYears: totalYears, totalPayments, totalInterest, amortizationSchedule });
   }
@@ -236,8 +239,8 @@ function AnnuityForm({ form, onSubmit, onReset, isLengthMode, result, pieChartDa
                     <FormField control={form.control} name="payoutFrequency" render={({ field }) => (<FormItem><FormLabel>Payout Frequency</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="monthly">Monthly</SelectItem><SelectItem value="quarterly">Quarterly</SelectItem><SelectItem value="annually">Annually</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                     
                     <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                        <Button type="submit" className="w-full"><Landmark className="mr-2 h-4 w-4"/>Calculate</Button>
-                        <Button onClick={onReset} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                        <Button type="submit" className="w-full" aria-label="Calculate Payout"><Landmark className="mr-2 h-4 w-4"/>Calculate</Button>
+                        <Button onClick={onReset} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset Form"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
                     </div>
                 </form>
                 </Form>
@@ -299,15 +302,15 @@ function AnnuityForm({ form, onSubmit, onReset, isLengthMode, result, pieChartDa
                  <div className="md:col-span-2 mt-8">
                     <h3 className="text-lg font-bold text-center mb-4">Annuity Balances Over Time</h3>
                     <div className="h-[300px]">
-                        <ChartContainer config={{}} className="w-full h-full">
+                        <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={result.amortizationSchedule}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="year" tickFormatter={(val) => `Year ${val}`} />
                                 <YAxis tickFormatter={(val) => currencySymbol + (val/1000) + 'k'} />
                                 <Tooltip content={<ChartTooltipContent formatter={(value) => currencySymbol + Number(value).toFixed(2)}/>} />
-                                <Line type="monotone" dataKey="endingBalance" name="Balance" stroke="hsl(var(--chart-1))" />
+                                <Line type="monotone" dataKey="endingBalance" name="Balance" stroke="hsl(var(--chart-1))" dot={false} />
                             </LineChart>
-                        </ChartContainer>
+                        </ResponsiveContainer>
                     </div>
                     <div className="h-[300px] overflow-y-auto border rounded-md mt-4">
                     <Table>

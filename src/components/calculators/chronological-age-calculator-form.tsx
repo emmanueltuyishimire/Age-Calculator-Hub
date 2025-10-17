@@ -117,7 +117,7 @@ export default function ChronologicalAgeCalculatorForm() {
     const totalMinutes = differenceInMinutes(endOfCalculation, dobDate);
     const totalHours = differenceInHours(endOfCalculation, dobDate);
     const totalDays = differenceInDays(endOfCalculation, dobDate);
-    const totalWeeks = differenceInWeeks(endOfCalculation, dobDate);
+    const totalWeeks = differenceInWeeks(endOfCalculation, dobDate, { roundingMethod: 'floor' });
     const totalMonths = differenceInMonths(endOfCalculation, dobDate);
 
     setAge({
