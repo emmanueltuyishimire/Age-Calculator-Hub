@@ -23,7 +23,7 @@ const basicButtonsConfig = [
     { label: '7', value: '7', style: "col-span-1" }, { label: '8', value: '8', style: "col-span-1" }, { label: '9', value: '9', style: "col-span-1" }, { label: '÷', value: '÷', style: "col-span-1" }, { label: 'M-', value: 'M-', style: "col-span-1" },
     { label: '4', value: '4', style: "col-span-1" }, { label: '5', value: '5', style: "col-span-1" }, { label: '6', value: '6', style: "col-span-1" }, { label: '×', value: '×', style: "col-span-1" }, { label: '=', value: '=', style: "row-span-3 h-auto col-start-5" },
     { label: '1', value: '1', style: "col-span-1" }, { label: '2', value: '2', style: "col-span-1" }, { label: '3', value: '3', style: "col-span-1" }, { label: '−', value: '−', style: "col-span-1" },
-    { label: '0', value: '0', style: "col-span-1" }, { label: '.', value: '.', style: "col-span-1" }, { label: '±', value: '±', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" },
+    { label: '0', value: '0', style: "col-span-1" }, { label: '.', value: '.', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" }, { label: '±', value: '±', style: "col-span-1" },
 ];
 
 
@@ -64,7 +64,7 @@ const ScientificCalculator = () => {
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setCurrentTime(new Date().toLocaleTimeString());
+            setCurrentTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
         }, 1000);
         return () => clearInterval(timer);
     }, []);
@@ -312,7 +312,7 @@ const ScientificCalculator = () => {
   );
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-3 w-full mx-auto shadow-2xl max-w-sm sm:max-w-none md:max-w-2xl">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-sm sm:max-w-md md:max-w-4xl">
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner">
         <div className="text-right text-emerald-300/80 font-mono text-xs pr-2 h-5">
             {currentTime}
@@ -321,18 +321,20 @@ const ScientificCalculator = () => {
             type="text"
             value={display}
             readOnly
-            className="w-full h-12 text-xl text-right mb-1 bg-transparent pr-4 text-emerald-300 border-transparent font-mono tracking-wider shadow-inner"
+            className="w-full h-10 text-xl text-right mb-1 bg-transparent pr-4 text-emerald-300 border-transparent font-mono tracking-wider shadow-inner"
             aria-label="Calculator display"
         />
       </div>
-       <div className="grid grid-cols-10 gap-1.5">
-        {scientificButtonsConfig.map(btn => renderButton(btn))}
-        {basicButtonsConfig.map(btn => renderButton(btn))}
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div className="grid grid-cols-5 gap-1.5">
+          {scientificButtonsConfig.map(btn => renderButton(btn))}
+        </div>
+         <div className="grid grid-cols-5 grid-rows-4 gap-1.5">
+          {basicButtonsConfig.map(btn => renderButton(btn))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default ScientificCalculator;
-
-    
