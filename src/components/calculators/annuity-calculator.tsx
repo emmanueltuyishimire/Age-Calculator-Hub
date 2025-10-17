@@ -52,6 +52,7 @@ type FormData = z.infer<typeof formSchema>;
 
 interface ScheduleRow {
     year: number;
+    startBalance: number;
     addition: number;
     return: number;
     endBalance: number;
@@ -93,21 +94,27 @@ export default function AnnuityCalculator() {
 
     for (let year = 1; year <= afterYears; year++) {
       const yearlyAddition = annualAddition + (monthlyAddition * 12);
-      let yearStartBalance = balance;
+      const yearStartBalance = balance;
       
       let interest = 0;
+      let balanceBeforeInterest = yearStartBalance;
+
       if (addAtBeginning) {
-        balance += yearlyAddition;
-        interest = balance * r;
-        balance += interest;
+        balanceBeforeInterest += yearlyAddition;
+      }
+      
+      interest = balanceBeforeInterest * r;
+
+      if (addAtBeginning) {
+        balance = balanceBeforeInterest + interest;
       } else {
-        interest = balance * r;
-        balance += interest + yearlyAddition;
+        balance = balanceBeforeInterest + interest + yearlyAddition;
       }
       
       totalAdditions += yearlyAddition;
       schedule.push({
         year,
+        startBalance: yearStartBalance,
         addition: yearlyAddition,
         return: interest,
         endBalance: balance,
@@ -130,7 +137,7 @@ export default function AnnuityCalculator() {
 
   const barChartData = result?.schedule.map(row => ({
       name: `Year ${row.year}`,
-      'Start Principal': form.getValues('startingPrincipal') + result.schedule.slice(0, row.year - 1).reduce((acc, r) => acc + r.addition, 0),
+      'Start Principal': row.startBalance,
       'Additions': row.addition,
       'Return/Interest': row.return,
   })) || [];
