@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Trash2 } from 'lucide-react';
 import { evaluate, format as mathFormat } from 'mathjs';
+import { format as formatDate } from 'date-fns';
 
 // --- Helper Functions ---
 const factorial = (n: number): number => {
@@ -32,6 +33,14 @@ const ScientificCalculator = () => {
     const [expression, setExpression] = useState('');
     const [isError, setIsError] = useState(false);
     const [isResult, setIsResult] = useState(false);
+    const [dateTime, setDateTime] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setDateTime(new Date());
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
 
     const ariaLabels: { [key: string]: string } = {
         'AC': 'All Clear',
@@ -128,10 +137,10 @@ const ScientificCalculator = () => {
         const isOperator = ['+', '−', '×', '÷', '^'].includes(value);
 
         if (isResult && !isOperator && value !== '=' && value !== '±' && value !== '%') {
-             setIsResult(false);
-             if(!['1/x', 'x2', 'x3', 'ex', '10x', 'n!'].includes(value)){
+             if(!['1/x', 'x2', 'x3', 'ex', '10x', 'n!', '√x'].includes(value)){
                  setExpression('');
              }
+             setIsResult(false);
         }
         
         const lastChar = expression.slice(-1);
@@ -176,14 +185,7 @@ const ScientificCalculator = () => {
             case 'log': setExpression(prev => prev + (isSecond ? '10^(' : 'log(')); break;
             case 'ln': setExpression(prev => prev + (isSecond ? 'e^(' : 'ln(')); break;
             case '√x':
-                 setExpression(prev => {
-                    const [lastNum, lastNumIndex] = getLastNumber(prev);
-                    if (lastNum) {
-                        return `${prev.substring(0, lastNumIndex)}sqrt(${lastNum})`;
-                    }
-                    return `sqrt(${prev})`;
-                });
-                setTimeout(calculate, 0);
+                 setExpression(prev => prev + (isSecond ? 'nthRoot(' : 'sqrt('));
                 break;
             case '1/x': 
                 setExpression(prev => `(1/(${prev || '1'}))`);
@@ -205,11 +207,7 @@ const ScientificCalculator = () => {
                 setTimeout(calculate, 0);
                 break;
             case 'y√x':
-                setExpression(prev => {
-                    const [lastNum] = getLastNumber(prev);
-                    const base = prev.substring(0, prev.length - lastNum.length);
-                    return `${base}nthRoot(${lastNum}, `;
-                });
+                setExpression(prev => prev + "nthRoot(");
                 break;
             case 'Ans': 
                 if(isResult || expression === '0' || expression === '') {
@@ -363,7 +361,7 @@ const ScientificCalculator = () => {
   
   const buttons = [
     '(', ')', 'MC', 'M+', 'M-', 'MR', 'AC',
-    '2nd', 'x2', 'xy', 'sin', 'cos', '÷', 'tan',
+    '2nd', 'x2', 'xy', 'sin', 'cos', 'tan', '÷',
     'y√x', '10x', '7', '8', '9', '×', 'log',
     '√x', 'n!', '4', '5', '6', '−', 'ln',
     'Deg', 'Rad', '1', '2', '3', '+', '±',
@@ -389,6 +387,11 @@ const ScientificCalculator = () => {
 
   return (
     <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-md sm:max-w-lg">
+      <div className="bg-black/20 rounded px-2 py-1 mb-2 text-right">
+        <p className="text-emerald-300 font-mono text-xs">
+          {formatDate(dateTime, 'MMM dd, yyyy HH:mm:ss')}
+        </p>
+      </div>
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner">
         <Input
             type="text"
