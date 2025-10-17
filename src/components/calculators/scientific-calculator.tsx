@@ -177,13 +177,26 @@ const ScientificCalculator = () => {
                 setExpression(prev => {
                     try {
                         const num = evaluate(prev);
-                        return `sqrt(${num})`;
+                        const result = Math.sqrt(num);
+                        if (isNaN(result)) throw new Error("Invalid sqrt");
+                        return result.toString();
                     } catch {
-                        return `sqrt(${prev || '0'})`;
+                        // If evaluating the whole expression fails, try just the last number
+                        const [lastNumStr, lastNumIndex] = getLastNumber(prev);
+                        if (lastNumStr) {
+                            try {
+                                const num = evaluate(lastNumStr);
+                                const result = Math.sqrt(num);
+                                if (isNaN(result)) throw new Error("Invalid sqrt");
+                                const baseExpr = prev.substring(0, lastNumIndex);
+                                return baseExpr + result.toString();
+                            } catch {
+                                return prev; // Do nothing if last part is invalid
+                            }
+                        }
+                        return prev;
                     }
                 });
-                // Using a timeout to ensure the state update is processed before calculating
-                setTimeout(calculate, 0);
                 break;
             case '³√x': setExpression(prev => prev + 'cbrt('); break;
             case 'sin-1': setExpression(prev => prev + 'asin('); break;
@@ -415,6 +428,3 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
-
-    
-    
