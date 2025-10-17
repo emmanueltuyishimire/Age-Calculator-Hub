@@ -28,12 +28,12 @@ const faqs = [
         answer: "This button switches the calculator's mode between Degrees (Deg) and Radians (Rad). This is crucial for trigonometric functions like sin, cos, and tan, as the results will differ based on the selected mode."
     },
     {
-        question: "How do the memory functions (M+, M-, MR, MC) work?",
-        answer: "M+ adds the current display value to memory. M- subtracts it. MR (Memory Recall) puts the memory value on the display. MC (Memory Clear) resets the memory to zero."
+        question: "Is this a good alternative to a physical calculator app from Casio or Texas Instruments?",
+        answer: "Yes, for many high school and college-level math problems, this free online tool is an excellent alternative to a physical calculator or a paid app. It provides all the core scientific functions without needing to install anything."
     },
     {
-        question: "What is 'Ans'?",
-        answer: "The 'Ans' button recalls the result of the last completed calculation, allowing you to use it in your next operation."
+        question: "How do the memory functions (M+, M-, MR, MC) work?",
+        answer: "M+ adds the current display value to memory. M- subtracts it. MR (Memory Recall) puts the memory value on the display. MC (Memory Clear) resets the memory to zero."
     },
     {
         question: "Can I use keyboard shortcuts?",
@@ -46,9 +46,9 @@ export function ClientPage() {
         <div className="container mx-auto px-4 py-8">
             <main role="main" className="max-w-5xl mx-auto">
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Scientific Calculator</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Free Scientific Calculator Online</h1>
                     <p className="text-md md:text-lg text-muted-foreground">
-                        A powerful online scientific calculator for all your advanced mathematical needs.
+                        A powerful online scientific calculator with advanced functions for trigonometry, logarithms, fractions, and more. A perfect free tool for students and professionals.
                     </p>
                 </div>
 
@@ -57,6 +57,35 @@ export function ClientPage() {
                 </div>
 
                 <section className="mt-12 space-y-8 animate-fade-in max-w-4xl mx-auto">
+                    
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>What is a Scientific Calculator?</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground">
+                                A scientific calculator is a type of calculator designed to help you solve problems in science, engineering, and mathematics. Unlike a basic calculator, it has a wider range of functions, such as logarithmic, trigonometric, and exponential operations. This free online scientific calculator provides all these features in an easy-to-use interface, making it a great alternative to physical devices like a Casio or TI-84 calculator.
+                            </p>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>How to Use This Online Scientific Calculator</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground">This calculator mimics a physical scientific calculator. You can click the buttons or use your keyboard for input.</p>
+                            <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-4">
+                                <li><strong>Input Numbers & Basic Operations:</strong> Use the number pad and standard operators (+, −, ×, ÷). The calculator respects the standard order of operations (PEMDAS/BODMAS).</li>
+                                <li><strong>Trigonometric Functions:</strong> Use the `sin`, `cos`, and `tan` buttons for trigonometric calculations. Ensure you are in the correct mode (`Deg` for degrees or `Rad` for radians) using the `Deg/Rad` toggle button. The inverse functions `sin-1`, `cos-1`, and `tan-1` are also available.</li>
+                                 <li><strong>Logarithms:</strong> Use `ln` for the natural logarithm and `log` for the base-10 logarithm.</li>
+                                 <li><strong>Exponents and Roots:</strong> Use `x²` for squaring, `x³` for cubing, and `xʸ` for other powers. Use `√x` for square root, `³√x` for cube root, and `ʸ√x` for other roots.</li>
+                                 <li><strong>Fractions:</strong> To work with fractions, simply use the division (÷) key. For example, to calculate 1/2 + 1/4, you would enter `1 ÷ 2 + 1 ÷ 4`.</li>
+                                <li><strong>Keyboard Support:</strong> Standard number and operator keys work as expected. Use 'Enter' for '=' and 'Backspace' to delete the last character.</li>
+                            </ol>
+                        </CardContent>
+                    </Card>
+
                     <Card>
                         <CardHeader>
                             <CardTitle>Learn More About Math & Finance</CardTitle>
@@ -66,26 +95,6 @@ export function ClientPage() {
                                 <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
                                 <li>Solve for percentages with our <Link href="/percentage-calculator" className="text-primary hover:underline">Percentage Calculator</Link>.</li>
                             </ul>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>How to Use the Scientific Calculator</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-muted-foreground">This calculator mimics a physical scientific calculator. You can click the buttons or use your keyboard for input.</p>
-                            <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-4">
-                                <li><strong>Input Numbers:</strong> Use the number pad (0-9) and the decimal point (.).</li>
-                                <li><strong>Perform Operations:</strong> Use the standard operators (+, −, ×, ÷). The calculator respects the order of operations.</li>
-                                <li><strong>Use Scientific Functions:</strong>
-                                    <ul className="list-disc list-inside pl-6 mt-1">
-                                        <li>For functions like sin, enter the function, then the number inside parentheses e.g., `sin(30)`.</li>
-                                        <li>For power functions like x<sup>y</sup>, use the `^` symbol.</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Toggle Modes:</strong> Use the `Deg/Rad` button to switch between degrees and radians for trigonometric calculations. The active mode is highlighted.</li>
-                                <li><strong>Keyboard Support:</strong> Standard number and operator keys work as expected. Use 'Enter' for '=' and 'Backspace' to delete the last character.</li>
-                            </ol>
                         </CardContent>
                     </Card>
 
