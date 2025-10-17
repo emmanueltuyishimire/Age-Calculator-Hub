@@ -15,7 +15,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { AlertCircle, Trash, RefreshCcw, Power, Shuffle, RotateCcw, Plus, Minus, ArrowRightLeft } from 'lucide-react';
 
@@ -24,22 +23,37 @@ const math = create(all, { number: 'Fraction' });
 // Helper to convert 2D array to Matrix
 const toMatrix = (data: number[][]): Matrix => math.matrix(data);
 
-// Helper to convert Matrix to 2D array
-const fromMatrix = (matrix: any): number[][] => {
+// Helper to convert Matrix or plain array to 2D array
+const fromMatrix = (matrix: any): (string | number)[][] => {
+    // Handle mathjs matrix objects
     if (matrix && typeof matrix.toArray === 'function') {
       const arrayData = matrix.toArray();
       if (Array.isArray(arrayData)) {
         if (arrayData.length === 0) return [];
+        // Check if it's a matrix (2D array) or vector (1D array)
         if (Array.isArray(arrayData[0])) {
           return arrayData.map((row: any[]) => row.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell));
         }
+        // It's a 1D array, wrap it in a 2D array
         return [arrayData.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell)];
       }
-      return [[(arrayData && typeof arrayData.toNumber === 'function') ? arrayData.toNumber() : arrayData]];
     }
-    return matrix;
+    
+    // Handle plain JS arrays passed from eigs.vectors
+    if (Array.isArray(matrix)) {
+        if (matrix.length > 0 && Array.isArray(matrix[0])) {
+             return matrix.map(row => row.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell));
+        }
+        return [matrix.map(cell => (cell && typeof cell.toNumber === 'function') ? cell.toNumber() : cell)];
+    }
+    
+    // Handle scalar numbers
+    if (typeof matrix === 'number' || (matrix && typeof matrix.toNumber === 'function')) {
+        return [[(matrix && typeof matrix.toNumber === 'function') ? matrix.toNumber() : matrix]];
+    }
+    
+    return [];
 };
-
 
 const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m: number[][]) => void }) => {
     const handleCellChange = (rowIndex: number, colIndex: number, value: string) => {
@@ -173,20 +187,17 @@ export default function MatrixCalculator() {
             switch(op) {
                 case 'transposeA': res = math.transpose(matA); setResultMatrix(fromMatrix(res)); break;
                 case 'powerA':
-                    if (powerA === 0) {
-                        res = math.identity(rowsA);
-                    } else {
-                        res = math.pow(matA, powerA);
-                    }
+                    if (powerA === 0) { res = math.identity(rowsA); } 
+                    else { res = math.pow(matA, powerA); }
                     setResultMatrix(fromMatrix(res));
                     break;
                 case 'determinantA': res = math.det(matA); setResultScalar(math.format(res, { fraction: 'ratio', precision: 4 })); break;
                 case 'inverseA': res = math.inv(matA); setResultMatrix(fromMatrix(res)); break;
-                case 'rrefA': res = math.rref(matA); setResultMatrix(fromMatrix(res)); break;
+                case 'rrefA': res = math.algebra.rref(matA); setResultMatrix(fromMatrix(res)); break;
                 case 'eigsA':
                     res = math.eigs(matA);
                     const eigenvalues = res.values.map(formatEigenvalue);
-                    const eigenvectors = res.eigenvectors.map((vec: { toJSON: () => { data: any[]; }; }) => fromMatrix(vec.toJSON().data)[0].map(formatEigenvalue));
+                    const eigenvectors = res.eigenvectors.map((vec: any) => fromMatrix(vec.vector)[0].map(formatEigenvalue));
                     const eigResult: (string | number)[][] = [['Eigenvalues:'], eigenvalues];
                     eigenvectors.forEach((vec, i) => {
                         eigResult.push([`Vector ${i+1}:` , ...vec]);
@@ -197,20 +208,17 @@ export default function MatrixCalculator() {
                 
                 case 'transposeB': res = math.transpose(matB); setResultMatrix(fromMatrix(res)); break;
                 case 'powerB':
-                    if (powerB === 0) {
-                        res = math.identity(rowsB);
-                    } else {
-                        res = math.pow(matB, powerB);
-                    }
+                    if (powerB === 0) { res = math.identity(rowsB); } 
+                    else { res = math.pow(matB, powerB); }
                     setResultMatrix(fromMatrix(res));
                     break;
                 case 'determinantB': res = math.det(matB); setResultScalar(math.format(res, { fraction: 'ratio', precision: 4 })); break;
                 case 'inverseB': res = math.inv(matB); setResultMatrix(fromMatrix(res)); break;
-                case 'rrefB': res = math.rref(matB); setResultMatrix(fromMatrix(res)); break;
+                case 'rrefB': res = math.algebra.rref(matB); setResultMatrix(fromMatrix(res)); break;
                 case 'eigsB':
                     res = math.eigs(matB);
                     const eigenvaluesB = res.values.map(formatEigenvalue);
-                    const eigenvectorsB = res.eigenvectors.map((vec: { toJSON: () => { data: any[]; }; }) => fromMatrix(vec.toJSON().data)[0].map(formatEigenvalue));
+                    const eigenvectorsB = res.eigenvectors.map((vec: any) => fromMatrix(vec.vector)[0].map(formatEigenvalue));
                     const eigResultB: (string | number)[][] = [['Eigenvalues:'], eigenvaluesB];
                     eigenvectorsB.forEach((vec, i) => {
                         eigResultB.push([`Vector ${i+1}:` , ...vec]);
