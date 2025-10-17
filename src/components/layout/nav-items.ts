@@ -569,6 +569,13 @@ export const navItems: NavItem[] = [
     description: 'Generate random integers or decimals within a specified range.'
   },
   {
+    href: '/ratio-calculator',
+    icon: Scale,
+    label: 'Ratio Calculator',
+    category: 'Math',
+    description: 'Solve proportions and scale ratios up or down.'
+  },
+  {
     href: '/volume-calculator',
     icon: Cuboid,
     label: 'Volume Calculator',
