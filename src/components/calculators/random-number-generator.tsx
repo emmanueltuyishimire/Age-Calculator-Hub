@@ -109,9 +109,9 @@ function ComprehensiveGenerator() {
         const generated: string[] = [];
         for (let i = 0; i < count; i++) {
             if (type === 'integer') {
-                generated.push(math.randomInt(low, high.add(1)).toString());
+                generated.push(math.randomInt(low, math.add(high, 1)).toString());
             } else {
-                 generated.push(math.format(math.add(math.multiply(math.random(), math.subtract(high, low)), low)));
+                 generated.push(math.format(math.add(math.multiply(math.bignumber(math.random()), math.subtract(high, low)), low)));
             }
         }
         setResults(generated);
