@@ -15,7 +15,7 @@ const ptSans = PT_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://innerpeacejournals.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://innerpeacejournals.com'),
   title: {
     default: 'Calculators – Free Online Financial, Health & Math Calculators',
     template: '%s',
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
     },
   },
    alternates: {
-    canonical: 'https://innerpeacejournals.com',
+    canonical: '/',
   },
   openGraph: {
     title: 'Calculators – Free Online Financial, Health & Math Calculators',
     description: 'Your central hub for free, accurate online calculators. From financial and health tools to math and everyday conversions, find the calculator you need.',
     type: 'website',
-    url: 'https://innerpeacejournals.com',
+    url: '/',
     siteName: 'Calculators',
     images: [
       {
@@ -100,10 +100,10 @@ export default function RootLayout({
         />
         <Script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID}`}
           crossOrigin="anonymous"
-          strategy="lazyOnload"
-        ></Script>
+          strategy="afterInteractive"
+        />
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <ThemeProvider
@@ -116,7 +116,7 @@ export default function RootLayout({
           <Toaster />
         </ThemeProvider>
          <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
         />
         <Script
@@ -127,7 +127,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-7XVG2YF7MY');
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
           `,
           }}
         />

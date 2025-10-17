@@ -1,18 +1,8 @@
 
 import { MetadataRoute } from 'next';
 
-const getBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
-    return 'https://innerpeacejournals.com';
-  }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-  return `http://localhost:${process.env.PORT || 3000}`;
-}
-
 export async function GET(request: Request) {
-  const baseUrl = getBaseUrl();
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const sitemapUrl = `${baseUrl}/sitemap.xml`;
 
   const content = `User-agent: *
