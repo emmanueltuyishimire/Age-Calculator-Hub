@@ -53,7 +53,6 @@ function rref(matrix: number[][]): number[][] {
   return mat;
 }
 
-
 // Helper to convert 2D array to Matrix
 const toMatrix = (data: number[][]): Matrix => math.matrix(data);
 
@@ -67,15 +66,19 @@ const fromMatrix = (matrix: any): string[][] => {
   
   return arrayData.map((row: any[]) => row.map(cell => {
       try {
+        // Attempt to format as a fraction for cleaner display
         const f = math.fraction(cell);
         if (f.d !== 1 && Math.abs(f.n) < 10000 && f.d < 10000) {
             return math.format(f, { fraction: 'ratio' });
         }
+        // Fallback to number with fixed precision
         const num = Number(math.format(cell));
-        return num.toString();
+        if (Math.abs(num) < 1e-10) return "0";
+        return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
       } catch {
+        // Final fallback for any other case
         const num = Number(math.format(cell));
-        return num.toString();
+        return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
       }
   }));
 };
@@ -85,14 +88,23 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m:
         const newMatrix = matrix.map((row, rIdx) => 
             row.map((cell, cIdx) => {
                 if (rIdx === rowIndex && cIdx === colIndex) {
+                    // Allow empty input, treat as 0 for calculation
+                    if (value === '' || value === '-') return value;
                     const numValue = parseFloat(value);
-                    return isNaN(numValue) ? 0 : numValue;
+                    return isNaN(numValue) ? cell : numValue; // Keep old value if parse fails
                 }
                 return cell;
             })
         );
-        setMatrix(newMatrix);
+        setMatrix(newMatrix as number[][]); // Casting because temp state can have strings
     };
+
+    const handleBlur = (rowIndex: number, colIndex: number, value: string) => {
+       const newMatrix = [...matrix];
+       const numValue = parseFloat(value);
+       newMatrix[rowIndex][colIndex] = isNaN(numValue) ? 0 : numValue;
+       setMatrix(newMatrix);
+    }
     
     return (
         <div className="space-y-1 overflow-x-auto">
@@ -101,9 +113,10 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m:
                     {row.map((cell, cIdx) => (
                         <Input
                             key={cIdx}
-                            type="number"
+                            type="text" // Use text to allow for intermediate states like '-'
                             value={matrix[rIdx][cIdx]}
                             onChange={e => handleCellChange(rIdx, cIdx, e.target.value)}
+                            onBlur={e => handleBlur(rIdx, cIdx, e.target.value)}
                             className="w-16 h-8 text-center min-w-[4rem]"
                         />
                     ))}
@@ -132,14 +145,20 @@ const MatrixDisplay = ({ matrix, title }: { matrix: string[][], title: string })
     </Card>
 );
 
-const ScalarDisplay = ({ scalar, title }: { scalar: number | string, title: string }) => (
-    <Card>
-        <CardHeader><CardTitle className="text-center">{title}</CardTitle></CardHeader>
-        <CardContent className="text-center">
-            <p className="text-2xl font-mono p-4 bg-muted rounded-md">{scalar}</p>
-        </CardContent>
-    </Card>
-);
+const ScalarDisplay = ({ scalar, title }: { scalar: number | string, title: string }) => {
+    let displayValue = scalar;
+    if (typeof scalar === 'number') {
+        displayValue = scalar.toLocaleString(undefined, {maximumFractionDigits: 5});
+    }
+    return (
+        <Card>
+            <CardHeader><CardTitle className="text-center">{title}</CardTitle></CardHeader>
+            <CardContent className="text-center">
+                <p className="text-2xl font-mono p-4 bg-muted rounded-md">{displayValue}</p>
+            </CardContent>
+        </Card>
+    );
+};
 
 const createMatrix = (rows: number, cols: number, fill: 'zero' | 'one' | 'random' = 'zero'): number[][] => {
     return Array.from({ length: rows }, () => 
@@ -163,8 +182,6 @@ export default function MatrixCalculator() {
     const [rowsB, setRowsB] = useState(4);
     const [colsB, setColsB] = useState(4);
     const [matrixB, setMatrixB] = useState<number[][]>(createMatrix(4, 4, 'random'));
-    const [powerB, setPowerB] = useState('2');
-    const [scalarB, setScalarB] = useState('3');
     
     const [resultMatrix, setResultMatrix] = useState<string[][] | null>(null);
     const [resultScalar, setResultScalar] = useState<number | string | null>(null);
@@ -214,10 +231,8 @@ export default function MatrixCalculator() {
                 case 'rrefA': res = rref(matrixA); break;
 
                 case 'transposeB': res = math.transpose(matB); break;
-                case 'powerB': res = math.pow(matB, parseInt(powerB)); break;
                 case 'detB': setResultScalar(math.det(matB)); return;
                 case 'invB': res = math.inv(matB); break;
-                case 'scalarB': res = math.multiply(matB, parseFloat(scalarB)); break;
                 case 'rrefB': res = rref(matrixB); break;
 
                 case 'swap': 
@@ -249,8 +264,6 @@ export default function MatrixCalculator() {
                     setMatrix={setMatrixB} matrix={matrixB}
                     handleResize={(type: 'row' | 'col', delta: number) => handleResize(setMatrixB, rowsB, setRowsB, colsB, setColsB, type, delta)}
                     performOp={performOperation} prefix="B" 
-                    powerValue={powerB} setPowerValue={setPowerB}
-                    scalarValue={scalarB} setScalarValue={setScalarB}
                 />
             </div>
             
@@ -293,21 +306,25 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'zero'))}>Clear</Button>
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'one'))}>All 1</Button>
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'random'))}>Random</Button>
-                     <Button variant="outline" size="sm" onClick={() => performOp(`transpose${prefix}`)}>Transpose</Button>
+                    <Button variant="outline" size="sm" onClick={() => performOp(`transpose${prefix}`)}>Transpose</Button>
                 </div>
                  <div className="grid grid-cols-2 gap-2">
                      <Button variant="outline" size="sm" onClick={() => performOp(`det${prefix}`)}>Determinant</Button>
                      <Button variant="outline" size="sm" onClick={() => performOp(`inv${prefix}`)}>Inverse</Button>
                      <Button variant="outline" size="sm" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
                 </div>
-                <div className="grid grid-cols-2 gap-2 items-center">
-                    <Button variant="outline" size="sm" onClick={() => performOp(`power${prefix}`)}>Power of</Button>
-                    <Input type="number" value={powerValue} onChange={e => setPowerValue(e.target.value)} className="h-9" />
-                </div>
-                 <div className="grid grid-cols-2 gap-2 items-center">
-                    <Button variant="outline" size="sm" onClick={() => performOp(`scalar${prefix}`)}>× (Scalar)</Button>
-                    <Input type="number" value={scalarValue} onChange={e => setScalarValue(e.target.value)} className="h-9" />
-                </div>
+                {prefix === 'A' && (
+                    <>
+                        <div className="grid grid-cols-2 gap-2 items-center">
+                            <Button variant="outline" size="sm" onClick={() => performOp(`power${prefix}`)}>Power of</Button>
+                            <Input type="number" value={powerValue} onChange={e => setPowerValue(e.target.value)} className="h-9" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 items-center">
+                            <Button variant="outline" size="sm" onClick={() => performOp(`scalar${prefix}`)}>× (Scalar)</Button>
+                            <Input type="number" value={scalarValue} onChange={e => setScalarValue(e.target.value)} className="h-9" />
+                        </div>
+                    </>
+                )}
             </CardContent>
         </Card>
     );
