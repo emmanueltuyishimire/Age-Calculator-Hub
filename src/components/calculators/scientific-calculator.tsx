@@ -389,12 +389,13 @@ const ScientificCalculator = () => {
   }
 
   const firstRow = ['2nd', 'Deg', 'Rad', 'MC', 'MR', 'M+', 'M-'];
-  const buttonGrid = [
-    '(', ')', 'n!', '%', 'AC', 'Delete', '÷',
-    'sin', 'cos', 'tan', '1/x', '7', '8', '9', '×',
-    'log', 'ln', 'e', 'π', '4', '5', '6', '−',
-    'x2', '√x', 'xy', 'Ans', '1', '2', '3', '+',
-    'RND', 'EXP', '±', '0', '.', '='
+  
+  const buttonLayout = [
+      ['(', ')', 'n!', '%', 'AC', 'Delete', '÷'],
+      ['sin', 'cos', 'tan', '1/x', '7', '8', '9', '×'],
+      ['log', 'ln', 'e', 'π', '4', '5', '6', '−'],
+      ['x2', '√x', 'xy', 'Ans', '1', '2', '3', '+'],
+      ['RND', 'EXP', '±', '0', '.', '=']
   ];
 
 
@@ -419,40 +420,23 @@ const ScientificCalculator = () => {
             ))}
        </div>
        <div className="grid grid-cols-7 gap-1 mt-1">
-            {/* Main Grid */}
-            <div className="col-span-4 grid grid-cols-4 gap-1">
-                {['(', ')', 'n!', '%', 'sin', 'cos', 'tan', '1/x', 'log', 'ln', 'e', 'π', 'x2', '√x', 'xy', 'Ans', 'RND', 'EXP', '±'].map(btn => (
-                    <Button key={btn} variant={getVariant(btn)} className="h-8 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
-                ))}
-            </div>
-            {/* Right Pad */}
-            <div className="col-span-3 grid grid-cols-3 gap-1">
-                 <Button variant={getVariant('AC')} className="h-8 text-sm p-1" onClick={() => handleButtonClick('AC')}>AC</Button>
-                 <Button variant={getVariant('Delete')} className="h-8 text-sm p-1" onClick={() => handleButtonClick('Delete')}><Trash2 className="h-4 w-4"/></Button>
-                 <Button variant={getVariant('÷')} className="h-8 text-lg p-1" onClick={() => handleButtonClick('÷')}>÷</Button>
-                 
-                 <Button variant={getVariant('7')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('7')}>7</Button>
-                 <Button variant={getVariant('8')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('8')}>8</Button>
-                 <Button variant={getVariant('9')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('9')}>9</Button>
-                 
-                 <Button variant={getVariant('4')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('4')}>4</Button>
-                 <Button variant={getVariant('5')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('5')}>5</Button>
-                 <Button variant={getVariant('6')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('6')}>6</Button>
-
-                 <Button variant={getVariant('1')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('1')}>1</Button>
-                 <Button variant={getVariant('2')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('2')}>2</Button>
-                 <Button variant={getVariant('3')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('3')}>3</Button>
-                 
-                 <Button variant={getVariant('0')} className="h-8 text-base font-bold p-1 col-span-2" onClick={() => handleButtonClick('0')}>0</Button>
-                 <Button variant={getVariant('.')} className="h-8 text-base font-bold p-1" onClick={() => handleButtonClick('.')}>.</Button>
-            </div>
-             {/* Operator Column on Far Right */}
-            <div className="absolute right-2 top-[164px] grid grid-rows-4 gap-1 h-[148px]">
-                 <Button variant={getVariant('×')} className="h-full text-lg p-1" onClick={() => handleButtonClick('×')}>×</Button>
-                 <Button variant={getVariant('−')} className="h-full text-lg p-1" onClick={() => handleButtonClick('−')}>−</Button>
-                 <Button variant={getVariant('+')} className="h-full text-lg p-1" onClick={() => handleButtonClick('+')}>+</Button>
-                 <Button variant={getVariant('=')} className="h-full text-lg p-1" onClick={() => handleButtonClick('=')}>=</Button>
-            </div>
+            {buttonLayout.map((row, rowIndex) => (
+                <React.Fragment key={rowIndex}>
+                    {row.map(btn => (
+                        <Button
+                            key={btn}
+                            variant={getVariant(btn)}
+                            className={cn("h-8 text-sm p-1", {
+                                'col-span-2': btn === '0'
+                            })}
+                            onClick={() => handleButtonClick(btn)}
+                            aria-label={ariaLabels[btn] || btn}
+                        >
+                            {getButtonLabel(btn)}
+                        </Button>
+                    ))}
+                </React.Fragment>
+            ))}
        </div>
     </div>
   );
