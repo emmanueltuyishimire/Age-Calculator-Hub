@@ -8,9 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
 } from '@/components/ui/card';
 import {
   Form,
@@ -36,7 +33,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { AreaChart, Area, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
 const formSchema = z.object({
   initialInvestment: z.coerce.number().min(0),
@@ -55,6 +52,7 @@ type FormData = z.infer<typeof formSchema>;
 
 interface ScheduleRow {
     period: number;
+    startBalance: number;
     deposit: number;
     interest: number;
     endBalance: number;
@@ -65,8 +63,6 @@ interface Result {
   totalPrincipal: number;
   totalContributions: number;
   totalInterest: number;
-  interestOfInitial: number;
-  interestOfContributions: number;
   buyingPower: number;
   schedule: ScheduleRow[];
 }
@@ -96,7 +92,7 @@ export default function FutureValueCalculator() {
     const n = getCompoundingPeriods(compounding);
     const totalMonths = investmentLengthYears * 12 + investmentLengthMonths;
     const totalYears = totalMonths / 12;
-    const totalPeriods = totalYears * n;
+    const totalPeriods = Math.ceil(totalYears * n);
     
     const r = interestRate / 100 / n;
     const actualTaxRate = taxRate / 100;
@@ -104,21 +100,18 @@ export default function FutureValueCalculator() {
     const periodicContribution = (annualContribution / n) + (monthlyContribution * (12/n));
 
     let balance = initialInvestment;
-    let totalContributions = 0;
-    let totalInterest = 0;
-    let schedule: ScheduleRow[] = [];
+    const schedule: ScheduleRow[] = [];
 
     const isBeginning = contributionAt === 'beginning';
 
     for (let i = 1; i <= totalPeriods; i++) {
         let periodStartBalance = balance;
-        let interestForPeriod = 0;
-
+        
         if (isBeginning) {
             balance += periodicContribution;
         }
 
-        interestForPeriod = balance * r;
+        const interestForPeriod = balance * r;
         const taxOnInterest = interestForPeriod * actualTaxRate;
         const netInterest = interestForPeriod - taxOnInterest;
 
@@ -127,30 +120,26 @@ export default function FutureValueCalculator() {
         if (!isBeginning) {
             balance += periodicContribution;
         }
-
-        totalContributions += periodicContribution;
-        totalInterest += netInterest;
         
         if (i % n === 0 || i === totalPeriods) {
+            const periodNum = Math.ceil(i/n);
             schedule.push({
-                period: Math.ceil(i/n),
-                deposit: (totalContributions - (schedule.reduce((acc, r) => acc + r.deposit, 0))),
-                interest: (totalInterest - (schedule.reduce((acc, r) => acc + r.interest, 0))),
+                period: periodNum,
+                startBalance: periodStartBalance,
+                deposit: periodicContribution * n, // This is an approximation for yearly schedule
+                interest: balance - periodStartBalance - (periodicContribution * n),
                 endBalance: balance,
             });
         }
     }
     
-    const fvInitial = initialInvestment * Math.pow(1 + r * (1 - actualTaxRate), totalPeriods);
-    const interestOfInitial = fvInitial - initialInvestment;
+    const totalContributions = periodicContribution * totalPeriods;
 
     setResult({
         endBalance: balance,
         totalPrincipal: initialInvestment + totalContributions,
         totalContributions,
-        totalInterest,
-        interestOfInitial,
-        interestOfContributions: totalInterest - interestOfInitial,
+        totalInterest: balance - initialInvestment - totalContributions,
         buyingPower: balance / Math.pow(1 + inflationRate / 100, totalYears),
         schedule,
     });
@@ -164,9 +153,9 @@ export default function FutureValueCalculator() {
 
   const barChartData = result?.schedule.map(row => ({
       name: `Year ${row.period}`,
-      Initial: form.getValues('initialInvestment') + result.schedule.slice(0, row.period - 1).reduce((acc, r) => acc + r.deposit, 0),
-      Contributions: result.schedule.slice(0, row.period).reduce((acc, r) => acc + r.deposit, 0) - result.schedule.slice(0, row.period - 1).reduce((acc, r) => acc + r.deposit, 0),
-      Interest: row.interest,
+      'Principal': row.startBalance,
+      'Contributions': row.deposit,
+      'Interest': row.interest,
   })) || [];
 
   return (
@@ -196,8 +185,8 @@ export default function FutureValueCalculator() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                      <Button type="submit" className="w-full"><PiggyBank className="mr-2 h-4 w-4"/>Calculate</Button>
-                      <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
+                      <Button type="submit" className="w-full" aria-label="Calculate Compound Interest"><PiggyBank className="mr-2 h-4 w-4"/>Calculate</Button>
+                      <Button onClick={() => form.reset()} type="button" variant="outline" className="w-full sm:w-auto" aria-label="Reset Form"><RefreshCcw className="mr-2 h-4 w-4"/> Reset</Button>
                   </div>
               </form>
               </Form>
@@ -232,7 +221,7 @@ export default function FutureValueCalculator() {
              <div className="mt-8">
                 <h3 className="text-lg font-bold text-center mb-4">Accumulation Schedule</h3>
                 <div className="h-[300px] w-full mb-4">
-                    <ResponsiveContainer><BarChart data={barChartData}><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Contributions" stackId="a" fill="hsl(var(--chart-2))" radius={[0, 0, 0, 0]} /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
+                    <ResponsiveContainer><BarChart data={barChartData}><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" /><Bar dataKey="Contributions" stackId="a" fill="hsl(var(--chart-2))" /><Bar dataKey="Principal" stackId="a" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
                 </div>
                 <div className="h-[300px] overflow-y-auto border rounded-md">
                 <Table><TableHeader className="sticky top-0 bg-secondary"><TableRow><TableHead>Year</TableHead><TableHead>Deposit</TableHead><TableHead>Interest</TableHead><TableHead>Ending balance</TableHead></TableRow></TableHeader>
