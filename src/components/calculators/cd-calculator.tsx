@@ -117,19 +117,24 @@ export default function CdCalculator() {
 
     for (let i = 1; i <= totalPeriods; i++) {
         const interestForPeriod = balance * r;
-        cumulativeInterestThisYear += interestForPeriod;
-        
         balance += interestForPeriod;
         totalInterest += interestForPeriod;
 
+        // Apply tax based on compounding period. A more accurate approach.
+        const taxOnPeriodInterest = interestForPeriod * actualTaxRate;
+        balance -= taxOnPeriodInterest;
+        totalTax += taxOnPeriodInterest;
+
+        // For schedule table, aggregate by year
+        cumulativeInterestThisYear += interestForPeriod;
+
         if (i % n === 0 || i === totalPeriods) {
-            const taxForYear = cumulativeInterestThisYear * actualTaxRate;
-            balance -= taxForYear;
-            totalTax += taxForYear;
+            const taxForYear = schedule.reduce((acc, curr) => acc + curr.tax, 0);
+            const currentYearTax = totalTax - taxForYear;
              schedule.push({
                 period: `Year ${Math.ceil(i/n)}`,
                 interest: cumulativeInterestThisYear,
-                tax: taxForYear,
+                tax: currentYearTax,
                 endBalance: balance,
             });
             cumulativeInterestThisYear = 0;

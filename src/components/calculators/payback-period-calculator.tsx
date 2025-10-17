@@ -43,6 +43,43 @@ interface Result {
   schedule: ScheduleRow[];
 }
 
+const calculatePayback = (initialInvestment: number, cashFlows: number[], discountRate: number) => {
+    let cumulativeCF = -initialInvestment;
+    let cumulativeDCF = -initialInvestment;
+    let paybackPeriod = "Never";
+    let discountedPaybackPeriod = "Never";
+    const schedule: ScheduleRow[] = [];
+
+    for (let i = 0; i < cashFlows.length; i++) {
+        const year = i + 1;
+        const cf = cashFlows[i];
+        if (isNaN(cf)) continue;
+
+        const dcf = cf / Math.pow(1 + discountRate / 100, year);
+
+        const prevCumulativeCF = cumulativeCF;
+        cumulativeCF += cf;
+
+        const prevCumulativeDCF = cumulativeDCF;
+        cumulativeDCF += dcf;
+
+        if (paybackPeriod === "Never" && prevCumulativeCF < 0 && cumulativeCF >= 0) {
+            if (cf > 0) {
+                paybackPeriod = `${(year - 1 + (-prevCumulativeCF / cf)).toFixed(2)} years`;
+            }
+        }
+        if (discountedPaybackPeriod === "Never" && prevCumulativeDCF < 0 && cumulativeDCF >= 0) {
+            if (dcf > 0) {
+                discountedPaybackPeriod = `${(year - 1 + (-prevCumulativeDCF / dcf)).toFixed(2)} years`;
+            }
+        }
+
+        schedule.push({ year, cashFlow: cf, discountedCashFlow: dcf, cumulativeCashFlow: cumulativeCF, cumulativeDiscountedCashFlow: cumulativeDCF });
+    }
+    
+    return { paybackPeriod, discountedPaybackPeriod, schedule };
+};
+
 // --- Fixed Cash Flow Calculator ---
 const fixedSchema = z.object({
   initialInvestment: z.coerce.number().min(1, "Investment is required."),
@@ -59,37 +96,6 @@ function FixedPaybackCalculator() {
         resolver: zodResolver(fixedSchema),
         defaultValues: { initialInvestment: 100000, cashFlow: 30000, increase: 5, numYears: 5, discountRate: 10 },
     });
-
-    const calculatePayback = (initialInvestment: number, cashFlows: number[], discountRate: number) => {
-        let cumulativeCF = -initialInvestment;
-        let cumulativeDCF = -initialInvestment;
-        let paybackPeriod = "Never";
-        let discountedPaybackPeriod = "Never";
-        const schedule: ScheduleRow[] = [];
-
-        for (let i = 0; i < cashFlows.length; i++) {
-            const year = i + 1;
-            const cf = cashFlows[i];
-            const dcf = cf / Math.pow(1 + discountRate / 100, year);
-
-            const prevCumulativeCF = cumulativeCF;
-            cumulativeCF += cf;
-
-            const prevCumulativeDCF = cumulativeDCF;
-            cumulativeDCF += dcf;
-
-            if (prevCumulativeCF < 0 && cumulativeCF >= 0 && paybackPeriod === "Never") {
-                paybackPeriod = `${year - 1 + (-prevCumulativeCF / cf)} years`;
-            }
-            if (prevCumulativeDCF < 0 && cumulativeDCF >= 0 && discountedPaybackPeriod === "Never") {
-                discountedPaybackPeriod = `${year - 1 + (-prevCumulativeDCF / dcf)} years`;
-            }
-
-            schedule.push({ year, cashFlow: cf, discountedCashFlow: dcf, cumulativeCashFlow: cumulativeCF, cumulativeDiscountedCashFlow: cumulativeDCF });
-        }
-        
-        return { paybackPeriod, discountedPaybackPeriod, schedule };
-    };
 
     function onSubmit(values: FixedFormData) {
         const { initialInvestment, cashFlow, increase = 0, numYears, discountRate } = values;
@@ -140,8 +146,7 @@ function IrregularPaybackCalculator() {
 
     function onSubmit(values: IrregularFormData) {
         const cashFlows = values.cashFlows.map(cf => cf.value);
-        const { paybackPeriod, discountedPaybackPeriod, schedule } = (new FixedPaybackCalculator()).calculatePayback(values.initialInvestment, cashFlows, values.discountRate);
-        setResult({ paybackPeriod, discountedPaybackPeriod, schedule });
+        setResult(calculatePayback(values.initialInvestment, cashFlows, values.discountRate));
     }
 
     return (

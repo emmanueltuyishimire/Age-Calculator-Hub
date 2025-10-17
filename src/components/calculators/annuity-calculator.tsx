@@ -97,18 +97,18 @@ export default function AnnuityCalculator() {
       const yearStartBalance = balance;
       
       let interest = 0;
-      let balanceBeforeInterest = yearStartBalance;
+      let balanceWithAdditions = yearStartBalance;
 
       if (addAtBeginning) {
-        balanceBeforeInterest += yearlyAddition;
+        balanceWithAdditions += yearlyAddition;
       }
       
-      interest = balanceBeforeInterest * r;
+      interest = balanceWithAdditions * r;
 
       if (addAtBeginning) {
-        balance = balanceBeforeInterest + interest;
+        balance = balanceWithAdditions + interest;
       } else {
-        balance = balanceBeforeInterest + interest + yearlyAddition;
+        balance = balanceWithAdditions + interest + yearlyAddition;
       }
       
       totalAdditions += yearlyAddition;
@@ -199,7 +199,7 @@ export default function AnnuityCalculator() {
                             <YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} />
                             <Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/>
                             <Legend />
-                            <Bar dataKey="Return/Interest" stackId="a" fill="hsl(var(--chart-3))" name="Return/Interest" radius={[0, 0, 4, 4]} />
+                            <Bar dataKey="Return/Interest" stackId="a" fill="hsl(var(--chart-3))" name="Return/Interest" />
                             <Bar dataKey="Additions" stackId="a" fill="hsl(var(--chart-2))" name="Additions" />
                             <Bar dataKey="Start Principal" stackId="a" fill="hsl(var(--chart-1))" name="Start Principal" radius={[4, 4, 0, 0]} />
                         </BarChart>
