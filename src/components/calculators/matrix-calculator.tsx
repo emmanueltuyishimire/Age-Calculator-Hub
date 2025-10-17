@@ -163,11 +163,14 @@ const MatrixDisplay = ({ matrix, title, onCopyToA, onCopyToB }: { matrix: string
     </Card>
 );
 
-const ScalarDisplay = ({ scalar, title }: { scalar: number | string, title: string }) => {
-    let displayValue = scalar;
-    if (typeof scalar === 'number') {
-        displayValue = scalar.toLocaleString(undefined, {maximumFractionDigits: 5});
+const ScalarDisplay = ({ scalar, title }: { scalar: any, title: string }) => {
+    let displayValue;
+    try {
+        displayValue = mathFormat(scalar, { fraction: 'ratio', precision: 5 });
+    } catch {
+        displayValue = "Error";
     }
+
     return (
         <Card>
             <CardHeader><CardTitle className="text-center">{title}</CardTitle></CardHeader>
@@ -384,3 +387,5 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
         </Card>
     );
 };
+
+    
