@@ -3,6 +3,7 @@ import AnnuityCalculator from '@/components/calculators/annuity-calculator';
 import { type Metadata } from 'next';
 import RelatedCalculators from '@/components/layout/related-calculators';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Annuity Calculator – Estimate Investment Growth',
@@ -46,7 +47,7 @@ export default function AnnuityCalculatorPage() {
                         <div>
                             <h4 className="font-semibold text-foreground">Pros</h4>
                             <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                                <li>For deferred annuities, similar to 401(k)s or traditional IRAs, there are tax benefits associated with building capital by deferring the payment of taxes.</li>
+                                <li>For deferred annuities, similar to <Link href="/401k-calculator" className="text-primary hover:underline">401(k)s</Link> or traditional <Link href="/ira-calculator" className="text-primary hover:underline">IRAs</Link>, there are tax benefits associated with building capital by deferring the payment of taxes.</li>
                                 <li>Unlike other retirement plans, there is no limit to the amount that can be invested in an annuity.</li>
                                 <li>Certain annuities can provide guaranteed, predictable income with minimum risk, which can make them attractive to highly conservative investors.</li>
                                 <li>Annuities can be used as a regulated stream of income, which can make it easier for a person to manage their assets.</li>

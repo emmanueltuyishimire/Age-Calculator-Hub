@@ -102,7 +102,7 @@ export default function FutureValueCalculatorPage() {
                     </CardHeader>
                     <CardContent className="space-y-4 text-muted-foreground">
                          <p>FV (along with PV, I/Y, N, and PMT) is an important element in the time value of money, which forms the backbone of finance. There can be no such things as mortgages, auto loans, or credit cards without FV.</p>
-                         <p>To learn more about or do calculations on present value instead, feel free to pop on over to our Present Value Calculator (coming soon). For a brief, educational introduction to finance and the time value of money, please visit our <Link href="/finance-calculator" className="text-primary hover:underline">Finance Calculator</Link>.</p>
+                         <p>To learn more about or do calculations on present value instead, feel free to pop on over to our <Link href="/finance-calculator" className="text-primary hover:underline">Finance Calculator</Link>, which can solve for any TVM variable.</p>
                     </CardContent>
                 </Card>
 
