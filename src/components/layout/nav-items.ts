@@ -58,6 +58,7 @@ import {
   Shuffle,
   Flame,
   Binary,
+  Atom,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -613,6 +614,13 @@ export const navItems: NavItem[] = [
     label: 'VAT Calculator',
     category: 'Math',
     description: 'Easily add or remove Value Added Tax (VAT) from a price.'
+  },
+  {
+    href: '/half-life-calculator',
+    icon: Atom,
+    label: 'Half-Life Calculator',
+    category: 'Math',
+    description: 'Solve for half-life, initial quantity, remaining quantity, or time.'
   },
 
   // Other Calculators
