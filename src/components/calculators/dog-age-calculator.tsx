@@ -116,7 +116,7 @@ export default function DogAgeCalculator() {
     const humanAge = calculateDogAge(values.dogAgeYears, values.dogAgeMonths, values.dogSize as DogSize);
     const { lifeStage, tip } = getLifeStageAndTip(humanAge);
     setResult({ humanAge, lifeStage, tip });
-  }, []);
+  }, [form]);
 
   const handleReset = useCallback(() => {
       form.reset({ dogAgeYears: 0, dogAgeMonths: 0, dogSize: 'medium' });
@@ -192,7 +192,7 @@ export default function DogAgeCalculator() {
                  <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                     <RefreshCcw className="mr-2 h-4 w-4" /> Reset
                 </Button>
-                <ShareButton title="Dog Age Calculator" text="Find out your dog's age in human years with this cool calculator!" />
+                <ShareButton title="Dog Age Calculator" text="Find out your dog's age in human years with this cool calculator!" url="/dog-age"/>
               </div>
             </form>
           </Form>

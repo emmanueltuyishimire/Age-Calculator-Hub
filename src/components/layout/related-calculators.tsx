@@ -1,8 +1,9 @@
+
 "use client";
 
 import React from 'react';
 import Link from 'next/link';
-import { categorizedNavItems } from '@/components/layout/nav-items';
+import { categorizedNavItems, type NavItem } from '@/components/layout/nav-items';
 import { Card, CardHeader, CardTitle, CardDescription } from '../ui/card';
 import { usePathname } from 'next/navigation';
 
@@ -18,9 +19,14 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
   if (!category) return null;
 
   // Filter out the current page
-  let relatedItems = category.items.filter(item => 
+  let relatedItems: NavItem[] = category.items.filter(item => 
     item.href !== currentHref && item.href !== pathname
   );
+  
+  // Shuffle and take the first 3
+  if (relatedItems.length > 3) {
+    relatedItems = relatedItems.sort(() => 0.5 - Math.random()).slice(0, 3);
+  }
   
   if (relatedItems.length === 0) return null;
 
@@ -28,7 +34,7 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
     <section className="mt-16 animate-fade-in" aria-labelledby="related-calculators-heading">
       <h2 id="related-calculators-heading" className="text-2xl md:text-3xl font-bold mb-6 text-center">Related Calculators</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {relatedItems.slice(0, 3).map((item) => (
+        {relatedItems.map((item) => (
           <Link href={item.href} key={item.href} className="block hover:no-underline group">
             <Card className="h-full hover:shadow-lg transition-shadow duration-200 ease-in-out group-hover:border-primary/50">
               <CardHeader>

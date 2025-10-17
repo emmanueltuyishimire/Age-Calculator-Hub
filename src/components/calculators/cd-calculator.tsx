@@ -43,7 +43,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 
 const formSchema = z.object({
   initialDeposit: z.coerce.number().min(1, "Deposit must be positive."),

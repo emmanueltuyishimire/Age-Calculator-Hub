@@ -132,7 +132,7 @@ export default function AutoLeaseCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Auto" currentHref="/auto-lease-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/auto-lease-calculator" />
       </div>
     </div>
   );

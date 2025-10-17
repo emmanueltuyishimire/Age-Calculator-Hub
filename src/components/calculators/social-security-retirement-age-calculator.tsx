@@ -108,7 +108,7 @@ export default function SocialSecurityRetirementAgeCalculator() {
                     aria-label="Year of Birth"
                 />
                 <Button onClick={handleCalculate} className="w-full sm:w-auto">Calculate</Button>
-                 <ShareButton title="Social Security Retirement Calculator" text="Find out your full retirement age for Social Security!" url="/social-security-retirement-age-calculator" />
+                 <ShareButton title="Social Security Retirement Calculator" text="Find out your full retirement age for Social Security!" url="/retirement" />
             </div>
         </div>
 

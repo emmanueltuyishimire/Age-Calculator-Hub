@@ -33,7 +33,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";
 
 const formSchema = z.object({
   initialDeposit: z.coerce.number().min(0, "Must be non-negative."),
@@ -52,6 +52,7 @@ type FormData = z.infer<typeof formSchema>;
 
 interface ScheduleRow {
     year: number;
+    startBalance: number;
     deposit: number;
     interest: number;
     endBalance: number;
@@ -89,7 +90,7 @@ export default function SavingsCalculator() {
     const { initialDeposit, annualContribution = 0, annualIncrease = 0, monthlyContribution = 0, monthlyIncrease = 0, interestRate, compounding, yearsToSave, taxRate = 0, inflationRate = 0 } = values;
     
     const n = getCompoundingPeriods(compounding);
-    const r = interestRate / 100;
+    const r = interestRate / 100 / n;
     const actualTaxRate = taxRate / 100;
     
     let balance = initialDeposit;
@@ -99,22 +100,32 @@ export default function SavingsCalculator() {
     const schedule: ScheduleRow[] = [];
 
     for (let year = 1; year <= yearsToSave; year++) {
-        const yearlyDeposit = currentAnnualContrib + (currentMonthlyContrib * 12);
-        
-        let interestForYear = balance * r;
-        const taxOnInterest = interestForYear * actualTaxRate;
-        const netInterest = interestForYear - taxOnInterest;
-        
-        balance += netInterest + yearlyDeposit;
-        
-        totalContributions += yearlyDeposit;
+        let yearlyDeposit = 0;
+        let yearlyInterest = 0;
+        const yearStartBalance = balance;
+
+        for (let period = 1; period <= n; period++) {
+            const periodicContribution = (currentAnnualContrib / n) + (currentMonthlyContrib * 12 / n); // Spread annual contrib over periods
+            balance += periodicContribution;
+            yearlyDeposit += periodicContribution;
+            
+            const interestForPeriod = balance * r;
+            const taxOnInterest = interestForPeriod * actualTaxRate;
+            const netInterest = interestForPeriod - taxOnInterest;
+            
+            balance += netInterest;
+            yearlyInterest += netInterest;
+        }
         
         schedule.push({
             year: year,
+            startBalance: yearStartBalance,
             deposit: yearlyDeposit,
-            interest: netInterest,
+            interest: yearlyInterest,
             endBalance: balance,
         });
+        
+        totalContributions += yearlyDeposit;
 
         currentAnnualContrib *= (1 + (annualIncrease / 100));
         currentMonthlyContrib *= (1 + (monthlyIncrease / 100));
@@ -138,8 +149,9 @@ export default function SavingsCalculator() {
   
   const barChartData = result?.schedule.map(row => ({
       name: `Year ${row.year}`,
-      'Principal': form.getValues('initialDeposit') + result.schedule.slice(0, row.year).reduce((acc, r) => acc + r.deposit, 0) - row.deposit,
-      'Interest': result.schedule.slice(0, row.year).reduce((acc, r) => acc + r.interest, 0),
+      'Principal': row.startBalance,
+      'Interest': row.interest,
+      'Contributions': row.deposit,
   })) || [];
 
   return (
@@ -203,7 +215,7 @@ export default function SavingsCalculator() {
              <div className="mt-8">
                 <h3 className="text-lg font-bold text-center mb-4">Accumulation Schedule</h3>
                 <div className="h-[300px] w-full mb-4">
-                    <ResponsiveContainer><BarChart data={barChartData} stackOffset="sign"><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" radius={[0, 0, 4, 4]} /><Bar dataKey="Principal" stackId="a" fill="hsl(var(--chart-1))" name="Principal" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
+                    <ResponsiveContainer><BarChart data={barChartData} stackOffset="sign"><CartesianGrid strokeDasharray="3 3" /><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" radius={[0, 0, 4, 4]} /><Bar dataKey="Contributions" stackId="a" fill="hsl(var(--chart-2))" /><Bar dataKey="Principal" stackId="a" fill="hsl(var(--chart-1))" name="Principal" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
                 </div>
                 <div className="h-[300px] overflow-y-auto border rounded-md">
                 <Table><TableHeader className="sticky top-0 bg-secondary"><TableRow><TableHead>Year</TableHead><TableHead className="text-right">Deposit</TableHead><TableHead className="text-right">Interest</TableHead><TableHead className="text-right">Ending balance</TableHead></TableRow></TableHeader>

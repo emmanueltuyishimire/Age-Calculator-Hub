@@ -13,10 +13,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { Label } from '../ui/label';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, RefreshCcw } from "lucide-react"
+import { AlertCircle, CalendarIcon, RefreshCcw } from "lucide-react"
 import ShareButton from '../share-button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Input } from '../ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { cn } from '@/lib/utils';
+import { Calendar } from '../ui/calendar';
 
 interface Age {
   years: number;
@@ -33,50 +34,24 @@ interface Age {
   totalSeconds: number;
 }
 
-const months = Array.from({ length: 12 }, (_, i) => ({ value: (i + 1).toString(), label: format(new Date(0, i), 'MMMM') }));
-const currentYear = new Date().getFullYear();
-const years = Array.from({ length: 125 }, (_, i) => currentYear - i);
-const futureYears = Array.from({ length: 101 }, (_, i) => currentYear + i);
-
 export default function ChronologicalAgeCalculatorForm() {
-  const [dobDay, setDobDay] = useState('');
-  const [dobMonth, setDobMonth] = useState('');
-  const [dobYear, setDobYear] = useState('');
-
-  const [ageAtDay, setAgeAtDay] = useState(new Date().getDate().toString());
-  const [ageAtMonth, setAgeAtMonth] = useState((new Date().getMonth() + 1).toString());
-  const [ageAtYear, setAgeAtYear] = useState(new Date().getFullYear().toString());
-
+  const [dob, setDob] = useState<Date | undefined>();
+  const [ageAt, setAgeAt] = useState<Date | undefined>(new Date());
   const [age, setAge] = useState<Age | undefined>();
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getDob = useCallback((): Date | null => {
-    if (dobYear && dobMonth && dobDay) {
-        const date = new Date(parseInt(dobYear), parseInt(dobMonth) - 1, parseInt(dobDay));
-        if (isValid(date)) return date;
-    }
-    return null;
-  }, [dobDay, dobMonth, dobYear]);
-
-  const getAgeAt = useCallback((): Date | null => {
-    if (ageAtYear && ageAtMonth && ageAtDay) {
-        const date = new Date(parseInt(ageAtYear), parseInt(ageAtMonth) - 1, parseInt(ageAtDay));
-        if (isValid(date)) return date;
-    }
-    return null;
-  }, [ageAtDay, ageAtMonth, ageAtYear]);
-
   useEffect(() => {
     try {
         const savedDob = localStorage.getItem('ageCalculatorDob');
+        const savedAgeAt = localStorage.getItem('ageCalculatorAgeAt');
         if (savedDob) {
             const parsedDob = new Date(JSON.parse(savedDob));
-            if(isValid(parsedDob)) {
-                setDobDay(parsedDob.getDate().toString());
-                setDobMonth((parsedDob.getMonth() + 1).toString());
-                setDobYear(parsedDob.getFullYear().toString());
-            }
+            if(isValid(parsedDob)) setDob(parsedDob);
+        }
+        if (savedAgeAt) {
+            const parsedAgeAt = new Date(JSON.parse(savedAgeAt));
+            if(isValid(parsedAgeAt)) setAgeAt(parsedAgeAt);
         }
     } catch(e) {
         // ignore
@@ -84,8 +59,8 @@ export default function ChronologicalAgeCalculatorForm() {
   }, []);
 
   const calculateAge = useCallback(() => {
-    const dobDate = getDob();
-    const ageAtDateVal = getAgeAt();
+    const dobDate = dob;
+    const ageAtDateVal = ageAt;
 
     if (!dobDate || !ageAtDateVal) {
       return;
@@ -134,35 +109,34 @@ export default function ChronologicalAgeCalculatorForm() {
       totalMinutes,
       totalSeconds,
     });
-  }, [getDob, getAgeAt, isCalculating]);
+  }, [dob, ageAt, isCalculating]);
 
   const handleCalculate = () => {
-    const dobDate = getDob();
+    const dobDate = dob;
     if (!dobDate) {
         setError("Please enter a valid date of birth.");
         return;
     }
-    const ageAtDate = getAgeAt();
+    const ageAtDate = ageAt;
     if (!ageAtDate) {
         setError("Please enter a valid 'Age at' date.");
         return;
     }
 
-    localStorage.setItem('ageCalculatorDob', JSON.stringify(dobDate));
+    localStorage.setItem('ageCalculatorDob', JSON.stringify(dob));
+    localStorage.setItem('ageCalculatorAgeAt', JSON.stringify(ageAt));
     setIsCalculating(true);
     calculateAge();
   };
   
   const handleReset = () => {
-      setDobDay(''); setDobMonth(''); setDobYear('');
-      const today = new Date();
-      setAgeAtDay(today.getDate().toString());
-      setAgeAtMonth((today.getMonth() + 1).toString());
-      setAgeAtYear(today.getFullYear().toString());
+      setDob(undefined);
+      setAgeAt(new Date());
       setAge(undefined);
       setIsCalculating(false);
       setError(null);
       localStorage.removeItem('ageCalculatorDob');
+      localStorage.removeItem('ageCalculatorAgeAt');
   }
 
   useEffect(() => {
@@ -178,7 +152,7 @@ export default function ChronologicalAgeCalculatorForm() {
   useEffect(() => {
     setIsCalculating(false);
     setAge(undefined);
-  }, [dobDay, dobMonth, dobYear, ageAtDay, ageAtMonth, ageAtYear]);
+  }, [dob, ageAt])
 
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg animate-fade-in">
@@ -197,33 +171,65 @@ export default function ChronologicalAgeCalculatorForm() {
             </Alert>
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Date of Birth</Label>
-            <div className="flex gap-2">
-                <Select value={dobMonth} onValueChange={setDobMonth}>
-                    <SelectTrigger aria-label="Birth Month"><SelectValue placeholder="Month" /></SelectTrigger>
-                    <SelectContent>{months.map(m => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}</SelectContent>
-                </Select>
-                <Input type="number" placeholder="Day" value={dobDay} onChange={e => setDobDay(e.target.value)} aria-label="Birth Day" />
-                <Select value={dobYear} onValueChange={setDobYear}>
-                    <SelectTrigger aria-label="Birth Year"><SelectValue placeholder="Year" /></SelectTrigger>
-                    <SelectContent>{years.map(y => <SelectItem key={y} value={y.toString()}>{y}</SelectItem>)}</SelectContent>
-                </Select>
-            </div>
+          <div className='space-y-2'>
+            <Label htmlFor="dob-picker">Date of Birth</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="dob-picker"
+                  variant={"outline"}
+                  aria-label="Pick a date of birth"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !dob && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dob ? format(dob, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={1900}
+                  toYear={new Date().getFullYear()}
+                  selected={dob}
+                  onSelect={setDob}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
-           <div className="space-y-2">
-            <Label>Age at the Date of</Label>
-            <div className="flex gap-2">
-                <Select value={ageAtMonth} onValueChange={setAgeAtMonth}>
-                    <SelectTrigger aria-label="End date month"><SelectValue placeholder="Month" /></SelectTrigger>
-                    <SelectContent>{months.map(m => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}</SelectContent>
-                </Select>
-                <Input type="number" placeholder="Day" value={ageAtDay} onChange={e => setAgeAtDay(e.target.value)} aria-label="End date day"/>
-                <Select value={ageAtYear} onValueChange={setAgeAtYear}>
-                    <SelectTrigger aria-label="End date year"><SelectValue placeholder="Year" /></SelectTrigger>
-                    <SelectContent>{futureYears.map(y => <SelectItem key={y} value={y.toString()}>{y}</SelectItem>)}</SelectContent>
-                </Select>
-            </div>
+          <div className='space-y-2'>
+            <Label htmlFor="age-at-picker">Age at the Date of</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="age-at-picker"
+                  variant={"outline"}
+                  aria-label="Pick an end date for age calculation"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !ageAt && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {ageAt ? format(ageAt, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  captionLayout="dropdown-buttons"
+                  fromYear={1900}
+                  toYear={new Date().getFullYear() + 100}
+                  selected={ageAt}
+                  onSelect={setAgeAt}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 

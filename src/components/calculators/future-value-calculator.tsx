@@ -33,7 +33,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";
 
 const formSchema = z.object({
   initialInvestment: z.coerce.number().min(0),
@@ -52,6 +52,7 @@ type FormData = z.infer<typeof formSchema>;
 
 interface ScheduleRow {
     period: number;
+    startBalance: number;
     deposit: number;
     interest: number;
     endBalance: number;
@@ -105,8 +106,8 @@ export default function FutureValueCalculator() {
     const isBeginning = contributionAt === 'beginning';
 
     for (let i = 1; i <= totalPeriods; i++) {
+        let periodStartBalance = balance;
         let interestForPeriod = 0;
-        const yearStartBalance = (i === 1) ? initialInvestment : schedule[schedule.length - 1].endBalance;
 
         if (isBeginning) {
             balance += periodicContribution;
@@ -125,12 +126,13 @@ export default function FutureValueCalculator() {
         totalContributions += periodicContribution;
         
         if (i % n === 0 || i === totalPeriods) {
-            const lastYearEndBalance = schedule.length > 0 ? schedule[schedule.length - 1].endBalance : initialInvestment;
+            const periodNum = Math.ceil(i/n);
             const depositThisYear = periodicContribution * n;
             schedule.push({
-                period: Math.ceil(i/n),
+                period: periodNum,
+                startBalance: periodNum > 1 ? schedule[periodNum-2].endBalance : initialInvestment,
                 deposit: depositThisYear,
-                interest: balance - lastYearEndBalance - depositThisYear,
+                interest: balance - (periodNum > 1 ? schedule[periodNum-2].endBalance : initialInvestment) - depositThisYear,
                 endBalance: balance,
             });
         }
@@ -154,7 +156,7 @@ export default function FutureValueCalculator() {
 
   const barChartData = result?.schedule.map(row => ({
       name: `Year ${row.period}`,
-      Principal: (row.period === 1 ? form.getValues('initialInvestment') : result.schedule[row.period - 2].endBalance),
+      Principal: row.startBalance,
       Contributions: row.deposit,
       Interest: row.interest,
   })) || [];
@@ -222,7 +224,7 @@ export default function FutureValueCalculator() {
              <div className="mt-8">
                 <h3 className="text-lg font-bold text-center mb-4">Accumulation Schedule</h3>
                 <div className="h-[300px] w-full mb-4">
-                    <ResponsiveContainer><BarChart data={barChartData} stackOffset="sign"><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" /><Bar dataKey="Contributions" stackId="a" fill="hsl(var(--chart-2))" /><Bar dataKey="Principal" stackId="a" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
+                    <ResponsiveContainer><BarChart data={barChartData} stackOffset="sign"><CartesianGrid strokeDasharray="3 3" /><XAxis dataKey="name" tick={{ fontSize: 12 }}/><YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} /><Tooltip formatter={(value: number) => `${currencySymbol}${value.toLocaleString(undefined, {maximumFractionDigits: 0})}`} contentStyle={{ background: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}/><Legend /><Bar dataKey="Interest" stackId="a" fill="hsl(var(--chart-3))" radius={[0, 0, 0, 0]} /><Bar dataKey="Contributions" stackId="a" fill="hsl(var(--chart-2))" /><Bar dataKey="Principal" stackId="a" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
                 </div>
                 <div className="h-[300px] overflow-y-auto border rounded-md">
                 <Table><TableHeader className="sticky top-0 bg-secondary"><TableRow><TableHead>Year</TableHead><TableHead>Deposit</TableHead><TableHead>Interest</TableHead><TableHead>Ending balance</TableHead></TableRow></TableHeader>

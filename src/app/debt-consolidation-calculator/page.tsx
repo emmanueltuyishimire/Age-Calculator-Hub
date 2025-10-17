@@ -81,7 +81,7 @@ export default function DebtConsolidationCalculatorPage() {
                     <CardContent>
                         <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                             <li><Link href="/articles/debt-snowball-vs-avalanche" className="text-primary hover:underline">Debt Snowball vs. Avalanche: Which Method is Best?</Link></li>
-                            <li><Link href="/credit-card-payoff-calculator" className="text-primary hover:underline">Credit Card Payoff Calculator</Link></li>
+                            <li><Link href="/credit-card-calculator" className="text-primary hover:underline">Credit Card Payoff Calculator</Link></li>
                         </ul>
                     </CardContent>
                 </Card>
@@ -115,7 +115,7 @@ export default function DebtConsolidationCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Financial Calculators" currentHref="/debt-consolidation-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/debt-consolidation-calculator" />
       </div>
     </div>
   );

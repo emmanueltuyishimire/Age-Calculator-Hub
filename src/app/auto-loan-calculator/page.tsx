@@ -178,7 +178,7 @@ export default function AutoLoanCalculatorPage() {
                 </div>
             </section>
         </main>
-        <RelatedCalculators currentCategory="Auto" currentHref="/auto-loan-calculator" />
+        <RelatedCalculators currentCategory="Financial" currentHref="/auto-loan-calculator" />
       </div>
     </div>
   );

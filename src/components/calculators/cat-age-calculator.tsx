@@ -87,7 +87,7 @@ export default function CatAgeCalculator() {
     const humanAge = calculateCatAge(values.catAgeYears, values.catAgeMonths);
     const { lifeStage, tip } = getLifeStageAndTip(humanAge);
     setResult({ humanAge, lifeStage, tip });
-  }, []);
+  }, [form]);
 
   const handleReset = useCallback(() => {
       form.reset({ catAgeYears: 0, catAgeMonths: 0});
@@ -138,7 +138,7 @@ export default function CatAgeCalculator() {
                     <Button onClick={handleReset} variant="outline" className="w-full md:w-auto" aria-label="Reset">
                     <RefreshCcw className="mr-2 h-4 w-4" /> Reset
                 </Button>
-                <ShareButton title="Cat Age Calculator" text="Find out how old your cat is in human years!" />
+                <ShareButton title="Cat Age Calculator" text="Find out how old your cat is in human years!" url="/cat-age-in-human-years"/>
             </div>
 
         </form>
