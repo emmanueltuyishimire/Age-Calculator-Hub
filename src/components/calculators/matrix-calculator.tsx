@@ -200,18 +200,16 @@ export default function MatrixCalculator() {
     
     return (
         <div className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <MatrixCard title="Matrix A" 
                     rows={rowsA} cols={colsA} 
                     setMatrix={setMatrixA} matrix={matrixA}
                     handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, setMatrixA, rowsA, setRowsA, colsA, setColsA, delta)}
-                    handleColResize={(type: 'row' | 'col', delta: number) => handleResize(type, setMatrixA, rowsA, setRowsA, colsA, setColsA, delta)}
                     performOp={performOperation} prefix="A" scalar={scalarA} setScalar={setScalarA} power={powerA} setPower={setPowerA} />
                 <MatrixCard title="Matrix B" 
                     rows={rowsB} cols={colsB} 
                     setMatrix={setMatrixB} matrix={matrixB}
                     handleResize={(type: 'row' | 'col', delta: number) => handleResize(type, setMatrixB, rowsB, setRowsB, colsB, setColsB, delta)}
-                    handleColResize={(type: 'row' | 'col', delta: number) => handleResize(type, setMatrixB, rowsB, setRowsB, colsB, setColsB, delta)}
                     performOp={performOperation} prefix="B" scalar={scalarB} setScalar={setScalarB} power={powerB} setPower={setPowerB} />
             </div>
             
@@ -238,7 +236,7 @@ export default function MatrixCalculator() {
     );
 }
 
-const MatrixCard = ({ title, rows, cols, handleResize, handleColResize, matrix, setMatrix, performOp, prefix, scalar, setScalar, power, setPower }: any) => (
+const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, performOp, prefix, scalar, setScalar, power, setPower }: any) => (
      <Card>
         <CardHeader>
             <CardTitle>{title}</CardTitle>
@@ -251,9 +249,9 @@ const MatrixCard = ({ title, rows, cols, handleResize, handleColResize, matrix, 
                 </div>
                  <div className="flex items-center gap-1">
                     <Label>Cols:</Label>
-                    <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleColResize('col', -1)}><Minus className="h-4 w-4" /></Button>
+                    <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleResize('col', -1)}><Minus className="h-4 w-4" /></Button>
                     <Input type="number" readOnly value={cols} className="w-12 h-8 text-center" />
-                    <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleColResize('col', 1)}><Plus className="h-4 w-4" /></Button>
+                    <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleResize('col', 1)}><Plus className="h-4 w-4" /></Button>
                 </div>
             </div>
         </CardHeader>
