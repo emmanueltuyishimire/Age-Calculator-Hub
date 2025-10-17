@@ -100,7 +100,6 @@ export default function FutureValueCalculator() {
     const periodicContribution = (annualContribution / n) + (monthlyContribution * (12/n));
 
     let balance = initialInvestment;
-    let totalContributions = 0;
     const schedule: ScheduleRow[] = [];
 
     const isBeginning = contributionAt === 'beginning';
@@ -122,8 +121,6 @@ export default function FutureValueCalculator() {
             balance += periodicContribution;
         }
         
-        totalContributions += periodicContribution;
-        
         if (i % n === 0 || i === totalPeriods) {
             const periodNum = Math.ceil(i/n);
             schedule.push({
@@ -136,6 +133,8 @@ export default function FutureValueCalculator() {
         }
     }
     
+    const totalContributions = periodicContribution * totalPeriods;
+
     setResult({
         endBalance: balance,
         totalPrincipal: initialInvestment + totalContributions,
@@ -154,9 +153,9 @@ export default function FutureValueCalculator() {
 
   const barChartData = result?.schedule.map(row => ({
       name: `Year ${row.period}`,
-      Principal: row.startBalance,
-      Contributions: row.deposit,
-      Interest: row.interest,
+      'Principal': row.startBalance,
+      'Contributions': row.deposit,
+      'Interest': row.interest,
   })) || [];
 
   return (

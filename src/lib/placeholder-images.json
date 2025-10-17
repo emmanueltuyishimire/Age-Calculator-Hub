@@ -1,16 +1,16 @@
 {
   "placeholderImages": [
     {
-      "id": "scientific_calculator",
-      "description": "A dynamic image of a scientific calculator, perhaps with numbers and graphs in the background.",
-      "imageUrl": "https://picsum.photos/seed/calc1/400/500",
-      "imageHint": "calculator technology"
-    },
-    {
       "id": "scientific_calculator_hero",
       "description": "A static image of a scientific calculator for the homepage hero section.",
       "imageUrl": "https://picsum.photos/seed/calc-hero/400/112",
       "imageHint": "calculator tech"
+    },
+    {
+      "id": "calculator_display",
+      "description": "An image for the simple calculator display area.",
+      "imageUrl": "https://picsum.photos/seed/calc-display/400/500",
+      "imageHint": "calculator display"
     }
   ]
 }
