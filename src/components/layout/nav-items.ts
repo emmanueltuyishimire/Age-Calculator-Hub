@@ -687,14 +687,7 @@ export const navItems: NavItem[] = [
     icon: Grid,
     label: 'Matrix Calculator',
     category: 'Math',
-    description: 'Perform addition, subtraction, and multiplication on matrices.'
-  },
-  {
-    href: '/rref-calculator',
-    icon: Grid,
-    label: 'RREF Calculator',
-    category: 'Math',
-    description: 'Calculate the Reduced Row Echelon Form of a matrix.'
+    description: 'Perform arithmetic, RREF, and other operations on matrices.'
   },
 
   // Other Calculators
