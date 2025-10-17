@@ -2,32 +2,69 @@
 "use client";
 
 import React, { useState } from 'react';
-import { create, all, type Matrix } from 'mathjs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import { AlertCircle, Trash, RefreshCcw, Plus, Minus } from 'lucide-react';
+import { AlertCircle, Trash, Plus, Minus } from 'lucide-react';
+import { format as mathFormat, fraction } from 'mathjs';
 
-const math = create(all, { number: 'Fraction' });
-
-// Helper to convert 2D array to Matrix
-const toMatrix = (data: number[][]): Matrix => math.matrix(data);
-
-// Helper to convert Matrix to formatted 2D array of strings
-const fromMatrix = (matrix: any): string[][] => {
-    if (matrix && typeof matrix.toArray === 'function') {
-        const arrayData = matrix.toArray();
-        return arrayData.map((row: any[]) => row.map(cell => math.format(cell, { fraction: 'ratio', precision: 4 })));
-    }
+// --- RREF Algorithm provided by user ---
+function rref(matrix: number[][]): number[][] {
+  if (!matrix || matrix.length === 0) {
     return [];
-};
+  }
+  let mat = matrix.map(row => [...row]); // Create a copy to avoid modifying the original state directly
+  let rowCount = mat.length;
+  let colCount = mat[0].length;
+  let lead = 0;
 
+  for (let r = 0; r < rowCount; r++) {
+    if (lead >= colCount) {
+        return mat;
+    }
+
+    let i = r;
+    while (mat[i][lead] === 0) {
+      i++;
+      if (i === rowCount) {
+        i = r;
+        lead++;
+        if (lead === colCount) {
+            return mat;
+        }
+      }
+    }
+
+    [mat[i], mat[r]] = [mat[r], mat[i]];
+
+    let val = mat[r][lead];
+    for (let j = 0; j < colCount; j++) {
+      mat[r][j] /= val;
+    }
+
+    for (let j = 0; j < rowCount; j++) {
+      if (j !== r) {
+        let val2 = mat[j][lead];
+        for (let k = 0; k < colCount; k++) {
+          mat[j][k] -= val2 * mat[r][k];
+        }
+      }
+    }
+
+    lead++;
+  }
+
+  return mat;
+}
+
+
+// --- Helper Components ---
 const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m: number[][]) => void }) => {
     const handleCellChange = (rowIndex: number, colIndex: number, value: string) => {
         const newValue = parseFloat(value);
-        const newMatrix = matrix.map((row, rIdx) =>
+        const newMatrix = matrix.map((row, rIdx) => 
             row.map((cell, cIdx) => {
                 if (rIdx === rowIndex && cIdx === colIndex) {
                     return isNaN(newValue) ? 0 : newValue;
@@ -37,7 +74,7 @@ const MatrixInput = ({ matrix, setMatrix }: { matrix: number[][], setMatrix: (m:
         );
         setMatrix(newMatrix);
     };
-
+    
     return (
         <div className="space-y-1 overflow-x-auto">
             {matrix.map((row, rIdx) => (
@@ -80,12 +117,17 @@ const createMatrix = (rows: number, cols: number): number[][] => {
     return Array.from({ length: rows }, () => Array.from({ length: cols }, () => 0));
 };
 
+// --- Main Component ---
 export default function RrefCalculator() {
     const MAX_DIM = 8;
     const MIN_DIM = 1;
     const [rows, setRows] = useState(3);
     const [cols, setCols] = useState(4);
-    const [matrix, setMatrix] = useState<number[][]>(createMatrix(3, 4));
+    const [matrix, setMatrix] = useState<number[][]>([
+        [1, 2, -1, -4],
+        [2, 3, -1, -11],
+        [-2, 0, -3, 22]
+    ]);
     const [resultMatrix, setResultMatrix] = useState<string[][] | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -110,10 +152,19 @@ export default function RrefCalculator() {
         setError(null);
         setResultMatrix(null);
         try {
-            const mat = toMatrix(matrix);
-            // Corrected function call
-            const res = math.rref(mat); 
-            setResultMatrix(fromMatrix(res));
+            const res = rref(matrix);
+            const formattedResult = res.map(row => 
+                row.map(cell => {
+                    try {
+                        // Attempt to convert to fraction for cleaner display
+                        return mathFormat(fraction(cell), { fraction: 'ratio' });
+                    } catch {
+                        // Fallback for numbers that can't be nicely fractioned
+                        return mathFormat(cell, { notation: 'fixed', precision: 4 });
+                    }
+                })
+            );
+            setResultMatrix(formattedResult);
         } catch (e: any) {
             setError(e.message || "An error occurred during RREF calculation.");
         }
