@@ -31,6 +31,7 @@ interface SearchableItem {
   href: string;
   type: 'calculator' | 'article';
   icon: React.ElementType;
+  description?: string;
 }
 
 export function SearchBar() {
@@ -40,10 +41,11 @@ export function SearchBar() {
 
   const searchableItems: SearchableItem[] = React.useMemo(() => {
     const calculatorItems = navItems
-      .filter(item => item.href.startsWith('/') && !['/articles', '/about', '/contact', '/privacy', '/terms', '/disclaimer', '/faq'].includes(item.href) && !item.href.endsWith('-calculators'))
+      .filter(item => item.href.startsWith('/') && !['/', '/articles', '/about', '/contact', '/privacy', '/terms', '/disclaimer'].includes(item.href) && !item.href.endsWith('-calculators'))
       .map(item => ({
         title: item.label,
         href: item.href,
+        description: item.description,
         type: 'calculator' as const,
         icon: item.icon,
       }));
@@ -51,6 +53,7 @@ export function SearchBar() {
     const articleItems = articles.map(article => ({
       title: article.title,
       href: `/articles/${article.slug}`,
+      description: article.description,
       type: 'article' as const,
       icon: File,
     }));
@@ -60,7 +63,7 @@ export function SearchBar() {
   const fuse = React.useMemo(() => new Fuse(searchableItems, {
     keys: ['title', 'description'],
     includeScore: true,
-    threshold: 0.4,
+    threshold: 0.3,
   }), [searchableItems]);
 
   const results = React.useMemo(() => {

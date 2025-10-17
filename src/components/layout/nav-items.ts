@@ -542,6 +542,13 @@ export const navItems: NavItem[] = [
     category: 'Math',
     description: 'An online scientific calculator with advanced functions.'
   },
+   {
+    href: '/scientific-notation-calculator',
+    icon: Atom,
+    label: 'Scientific Notation Calculator',
+    category: 'Math',
+    description: 'Perform arithmetic and conversions with scientific notation.'
+  },
   {
     href: '/fraction-calculator',
     icon: Divide,
