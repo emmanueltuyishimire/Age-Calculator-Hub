@@ -61,7 +61,8 @@ import {
   Atom,
   FunctionSquare,
   Sigma,
-  Radical
+  Radical,
+  Grid,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -681,7 +682,13 @@ export const navItems: NavItem[] = [
     category: 'Math',
     description: 'Round numbers using various methods like half up, ceiling, or to the nearest fraction.'
   },
-
+  {
+    href: '/matrix-calculator',
+    icon: Grid,
+    label: 'Matrix Calculator',
+    category: 'Math',
+    description: 'Perform addition, subtraction, multiplication, and other matrix operations.'
+  },
 
   // Other Calculators
    {
