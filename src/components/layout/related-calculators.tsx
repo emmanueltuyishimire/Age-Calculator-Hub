@@ -23,10 +23,6 @@ function RelatedCalculators({ currentCategory, currentHref }: RelatedCalculators
     item.href !== currentHref && item.href !== pathname
   );
   
-  if (relatedItems.length > 3) {
-    relatedItems = relatedItems.sort(() => 0.5 - Math.random());
-  }
-
   if (relatedItems.length === 0) return null;
 
   return (
