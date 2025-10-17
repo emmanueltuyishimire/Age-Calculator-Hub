@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Trash2 } from 'lucide-react';
 import { evaluate, format as mathFormat } from 'mathjs';
-import { format as formatDate } from 'date-fns';
 
 // --- Helper Functions ---
 const factorial = (n: number): number => {
@@ -33,15 +32,7 @@ const ScientificCalculator = () => {
     const [expression, setExpression] = useState('');
     const [isError, setIsError] = useState(false);
     const [isResult, setIsResult] = useState(false);
-    const [dateTime, setDateTime] = useState(new Date());
     const [history, setHistory] = useState<string[]>([]);
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setDateTime(new Date());
-        }, 1000);
-        return () => clearInterval(timer);
-    }, []);
 
     const ariaLabels: { [key: string]: string } = {
         'AC': 'All Clear',
@@ -119,7 +110,7 @@ const ScientificCalculator = () => {
               throw new Error('Invalid expression');
             }
             const resultString = mathFormat(result, { precision: 10 });
-            setHistory(prev => [`${expression} = ${resultString}`, ...prev].slice(0, 3));
+            setHistory(prev => [`${expression} = ${resultString}`, ...prev].slice(0, 5));
             setAns(result);
             setDisplay(resultString);
             setExpression(resultString);
@@ -317,7 +308,7 @@ const ScientificCalculator = () => {
                 'Backspace': 'Delete', 'Escape': 'AC', 'c': 'AC',
                 '^': 'xy', '%': '%',
                 's': 'sin', 'p': 'π', 'e': 'e', 'l': 'log',
-                'r': '√x',
+                'r': () => handleButtonClick('√x'),
             };
 
             const action = keyMappings[event.key];
@@ -365,9 +356,9 @@ const ScientificCalculator = () => {
   const buttons = [
     '(', ')', 'MC', 'M+', 'M-', 'MR', 'AC',
     '2nd', 'x2', 'xy', 'sin', 'cos', 'tan', '÷',
-    'y√x', '10x', '7', '8', '9', '×', 'log',
-    '√x', 'n!', '4', '5', '6', '−', 'ln',
-    'Deg', 'Rad', '1', '2', '3', '+', '±',
+    'y√x', '10x', '7', '8', '9', '×',
+    '√x', 'n!', '4', '5', '6', '−',
+    'Deg', 'Rad', '1', '2', '3', '+',
     'RND', 'Ans', '0', '.', 'Delete', '='
   ];
 
@@ -390,29 +381,17 @@ const ScientificCalculator = () => {
 
   return (
     <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-md sm:max-w-lg">
-      <div className="bg-black/20 rounded px-2 py-1 mb-2 text-right">
-        <p className="text-emerald-300 font-mono text-xs">
-          {formatDate(dateTime, 'MMM dd, yyyy HH:mm:ss')}
-        </p>
-      </div>
-      <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[112px] flex flex-col justify-end">
-        <div className="h-1/3 text-emerald-300/50 text-right pr-4 text-xs font-mono truncate">
-          {history[1] || ''}
+      <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[112px] flex flex-col justify-end text-right font-mono">
+        <div className="flex-grow overflow-y-auto flex flex-col justify-end items-end pr-2">
+            {history.map((line, index) => (
+                <div key={index} className="text-emerald-300/50 text-xs opacity-75 truncate">
+                    {line}
+                </div>
+            ))}
         </div>
-        <div className="h-1/3 text-emerald-300/70 text-right pr-4 text-xs font-mono truncate">
-          {history[0] || ''}
+        <div className="text-2xl text-emerald-300 tracking-wider pr-2 truncate">
+            {display}
         </div>
-        <div className="h-1/3 text-emerald-300/30 text-right pr-4 text-xs font-mono truncate">
-           <span className="mr-4">M={memory}</span><span>Ans={ans}</span>
-        </div>
-        <Input
-            type="text"
-            value={display}
-            readOnly
-            className="w-full h-1/3 text-2xl text-right bg-transparent pr-4 text-emerald-300 border-transparent font-mono tracking-wider focus-visible:ring-0 focus-visible:ring-offset-0"
-            aria-label="Calculator display"
-            aria-live="polite"
-        />
       </div>
        <div className="grid grid-cols-7 gap-1.5">
           {buttons.map(btn => (
@@ -435,3 +414,5 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
+
+    
