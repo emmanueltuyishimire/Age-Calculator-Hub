@@ -328,20 +328,20 @@ const ScientificCalculatorDisplay = () => {
   const getVariant = (btnValue: string): "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined => {
     if (['+', '−', '×', '÷', '='].includes(btnValue)) return 'default';
     if (btnValue === 'AC') return 'destructive';
+    if (['MC', 'MR', 'M+', 'M-', 'Ans'].includes(btnValue)) return 'outline';
+    if (['sin', 'cos', 'tan', 'sin-1', 'cos-1', 'tan-1', 'ln', 'log', 'xy', '√x', 'y√x', 'n!', '1/x'].includes(btnValue)) return "ghost";
     return 'secondary';
   }
   
   const buttons = [
-    'sin', 'cos', 'tan', 'DegRad', 
-    'sin-1', 'cos-1', 'tan-1', 'π', 'e', 
-    'xy', 'x3', 'x2', 'ex', '10x', 
-    'y√x', '³√x', '√x', 'ln', 'log', 
-    '(', ')', '1/x', '%', 'n!', 
-    '7', '8', '9', '+', 'Back', 
-    '4', '5', '6', '−', 'Ans', 
-    '1', '2', '3', '×', 'M+', 
-    '0', '.', 'EXP', '÷', 'M-', 
-    '±', 'RND', 'AC', '=', 'MR',
+    '(', ')', 'MC', 'M+', 'M-',
+    'sin', 'cos', 'tan', 'Back', 'AC',
+    'x2', 'x3', 'xy', '√x', 'y√x',
+    '7', '8', '9', '÷', 'n!',
+    '4', '5', '6', '×', '1/x',
+    '1', '2', '3', '−', 'log',
+    '0', '.', '±', '+', 'ln',
+    'Ans', 'RND', 'DegRad', '=', 'π',
   ];
 
   const getButtonLabel = (key: string) => {
@@ -377,7 +377,7 @@ const ScientificCalculatorDisplay = () => {
                   key={btn}
                   variant={getVariant(btn)}
                   className={cn("h-10 text-xs p-1 shadow-md hover:shadow-sm active:shadow-inner active:translate-y-px relative", {
-                    'col-span-2': btn === '=',
+                    'col-span-2': ['=', '0'].includes(btn),
                   })}
                   onClick={() => handleButtonClick(btn)}
                   aria-label={ariaLabels[btn] || btn}
@@ -392,3 +392,5 @@ const ScientificCalculatorDisplay = () => {
 };
 
 export default ScientificCalculatorDisplay;
+
+    
