@@ -549,6 +549,13 @@ export const navItems: NavItem[] = [
     category: 'Math',
     description: 'A versatile tool for all types of percentage calculations.'
   },
+  {
+    href: '/percent-error-calculator',
+    icon: Percent,
+    label: 'Percent Error Calculator',
+    category: 'Math',
+    description: 'Calculate the percentage error between an observed and true value.'
+  },
    {
     href: '/random-number-generator',
     icon: Shuffle,
