@@ -276,7 +276,7 @@ export default function MatrixCalculator() {
                 case 'rrefA': res = rref(matrixA); title = "RREF(A) ="; break;
                 
                 case 'transposeB': res = math.transpose(matB); title = "Transpose(B) ="; break;
-                case 'powerB': res = math.pow(matB, parseInt(powerA)); title = `B^${powerA} =`; break; // Re-using powerA for B as well
+                case 'powerB': res = math.pow(matB, parseInt(powerA)); title = `B^${powerA} =`; // Re-using powerA for B as well
                 case 'detB': setResultScalar(math.det(matB)); setResultTitle("det(B) ="); return;
                 case 'invB': res = math.inv(matB); title = "inv(B) ="; break;
                 case 'scalarB': res = math.multiply(matB, parseFloat(scalarA)); title = `${scalarA} × B =`; break;
@@ -318,7 +318,7 @@ export default function MatrixCalculator() {
     
     return (
         <div className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4">
                 <MatrixCard title="Matrix A" 
                     rows={rowsA} cols={colsA} 
                     setMatrix={setMatrixA} matrix={matrixA}
@@ -380,7 +380,7 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
             </CardHeader>
             <CardContent className="space-y-4">
                 <MatrixInput matrix={matrix} setMatrix={setMatrix} />
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'zero'))}>Clear</Button>
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'one'))}>All 1</Button>
                     <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'random'))}>Random</Button>
