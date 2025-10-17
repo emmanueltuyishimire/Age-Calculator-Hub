@@ -56,7 +56,7 @@ const ScientificCalculator = () => {
         'x3': 'Cube',
         'xy': 'Power',
         'y√x': 'nth root',
-        '√x': 'Square root',
+        '√x': 'Square root function',
         '³√x': 'Cube root',
         '1/x': 'Reciprocal',
         'n!': 'Factorial',
@@ -125,7 +125,7 @@ const ScientificCalculator = () => {
         
         const isOperator = ['+', '−', '×', '÷', '^'].includes(value);
 
-        if (isResult && !isOperator && value !== '=' && value !== '±') {
+        if (isResult && !isOperator && value !== '=' && value !== '±' && value !== '%') {
              setIsResult(false);
              if(!['1/x', 'x2', 'x3', 'ex', '10x', 'n!'].includes(value)){
                  setExpression('');
@@ -173,31 +173,7 @@ const ScientificCalculator = () => {
             case 'tan': setExpression(prev => prev + 'tan('); break;
             case 'log': setExpression(prev => prev + 'log('); break;
             case 'ln': setExpression(prev => prev + 'ln('); break;
-            case '√x':
-                setExpression(prev => {
-                    try {
-                        const num = evaluate(prev);
-                        const result = Math.sqrt(num);
-                        if (isNaN(result)) throw new Error("Invalid sqrt");
-                        return result.toString();
-                    } catch {
-                        // If evaluating the whole expression fails, try just the last number
-                        const [lastNumStr, lastNumIndex] = getLastNumber(prev);
-                        if (lastNumStr) {
-                            try {
-                                const num = evaluate(lastNumStr);
-                                const result = Math.sqrt(num);
-                                if (isNaN(result)) throw new Error("Invalid sqrt");
-                                const baseExpr = prev.substring(0, lastNumIndex);
-                                return baseExpr + result.toString();
-                            } catch {
-                                return prev; // Do nothing if last part is invalid
-                            }
-                        }
-                        return prev;
-                    }
-                });
-                break;
+            case '√x': setExpression(prev => prev + 'sqrt('); break;
             case '³√x': setExpression(prev => prev + 'cbrt('); break;
             case 'sin-1': setExpression(prev => prev + 'asin('); break;
             case 'cos-1': setExpression(prev => prev + 'acos('); break;
@@ -263,9 +239,11 @@ const ScientificCalculator = () => {
             case '%':
                  setExpression(prev => {
                     const [lastNum, lastNumIndex] = getLastNumber(prev);
-                    if (lastNum) {
+                    if (lastNum && lastNumIndex > 0) {
                         const base = prev.substring(0, lastNumIndex);
                         return `${base}(${lastNum}/100)`;
+                    } else if(lastNum) {
+                        return `(${lastNum}/100)`
                     }
                     return prev;
                 });
@@ -316,7 +294,7 @@ const ScientificCalculator = () => {
             if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
                 return;
             }
-            if ((event.metaKey || event.ctrlKey) && ['c', 'v', 'a', 'r', 'l'].includes(event.key.toLowerCase())) {
+            if ((event.metaKey || event.ctrlKey) && ['c', 'v', 'a', 'l'].includes(event.key.toLowerCase())) {
               return;
             }
             event.preventDefault();
@@ -328,6 +306,17 @@ const ScientificCalculator = () => {
                 'Backspace': 'Back', 'Escape': 'AC', 'c': 'AC',
                 '^': 'xy', '%': '%',
                 's': 'sin', 'p': 'π', 'e': 'e', 'l': 'log',
+                'r': () => {
+                    setExpression(prev => {
+                        try {
+                            const num = evaluate(prev);
+                            const result = Math.sqrt(num);
+                            if (isNaN(result)) throw new Error("Invalid sqrt");
+                            return result.toString();
+                        } catch { return prev; }
+                    });
+                    setTimeout(calculate, 0);
+                }
             };
 
             const action = keyMappings[event.key];
