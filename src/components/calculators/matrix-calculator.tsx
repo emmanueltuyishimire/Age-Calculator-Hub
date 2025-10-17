@@ -11,53 +11,66 @@ import { create, all, type Matrix, fraction, format as mathFormat } from 'mathjs
 
 const math = create(all, { number: 'Fraction' });
 
-// --- RREF Algorithm ---
+// --- RREF Algorithm based on user's logic ---
 function rref(matrix: (number | string)[][]): number[][] {
-  let mat = matrix.map(row => row.map(cell => {
-      try {
-        const evaluated = math.evaluate(cell.toString());
-        return typeof evaluated === 'object' && 're' in evaluated ? (evaluated as any).re : Number(evaluated);
-      } catch {
-        return 0;
+  let A = matrix.map(row => row.map(cell => {
+    try {
+      const evaluated = math.evaluate(cell.toString());
+      // Handle potential complex numbers from evaluation if needed, though rref is for real numbers
+      if (typeof evaluated === 'object' && 're' in evaluated) {
+        return (evaluated as any).im === 0 ? (evaluated as any).re : NaN;
       }
+      return Number(evaluated);
+    } catch {
+      return NaN;
+    }
   }));
-  if (!mat || mat.length === 0) {
-    return [];
+
+  if (A.some(row => row.some(isNaN))) {
+      throw new Error("Invalid number format in matrix.");
   }
-  let rowCount = mat.length;
-  let colCount = mat[0].length;
+  
+  if (!A || A.length === 0) return [];
+
+  const rows = A.length;
+  const cols = A[0].length;
   let lead = 0;
 
-  for (let r = 0; r < rowCount; r++) {
-    if (lead >= colCount) return mat;
+  for (let r = 0; r < rows; r++) {
+      if (lead >= cols) break;
 
-    let i = r;
-    while (mat[i][lead] === 0) {
-      i++;
-      if (i === rowCount) {
-        i = r;
-        lead++;
-        if (lead === colCount) return mat;
+      let i = r;
+      while (A[i][lead] === 0) {
+          i++;
+          if (i === rows) {
+              i = r;
+              lead++;
+              if (cols === lead) return A;
+          }
       }
-    }
 
-    [mat[i], mat[r]] = [mat[r], mat[i]];
+      [A[i], A[r]] = [A[r], A[i]]; // Swap rows
 
-    let val = mat[r][lead];
-    if (val !== 0) {
-        mat[r] = mat[r].map(x => x / val);
-    }
-    
-    for (let j = 0; j < rowCount; j++) {
-      if (j !== r) {
-        let val2 = mat[j][lead];
-        mat[j] = mat[j].map((x, k) => x - val2 * mat[r][k]);
+      const pivotVal = A[r][lead];
+      if (pivotVal !== 0) {
+          for (let j = 0; j < cols; j++) {
+              A[r][j] /= pivotVal;
+          }
       }
-    }
-    lead++;
+      
+      for (let i = 0; i < rows; i++) {
+          if (i !== r) {
+              const factor = A[i][lead];
+              for (let j = 0; j < cols; j++) {
+                  A[i][j] -= factor * A[r][j];
+              }
+          }
+      }
+      lead++;
   }
-  return mat;
+  return A;
 }
+
 
 // Helper to convert 2D array to Matrix
 const toMatrix = (data: (number|string)[][]): Matrix => math.matrix(data.map(row => row.map(cell => {
@@ -79,18 +92,21 @@ const fromMatrix = (matrix: any): string[][] => {
   
   return arrayData.map((row: any[]) => row.map(cell => {
       try {
-        if (cell && typeof cell === 'object' && cell.re !== undefined) {
+        // Handle complex numbers from mathjs
+        if (cell && typeof cell === 'object' && cell.re !== undefined && cell.im !== undefined) {
              const realPart = Math.abs(cell.re) < 1e-10 ? 0 : cell.re;
              const imagPart = Math.abs(cell.im) < 1e-10 ? 0 : cell.im;
-            if(imagPart === 0) return mathFormat(realPart, { notation: 'fixed', precision: 4 }).replace(/\.?0+$/, "");
+            if(imagPart === 0) return mathFormat(realPart, { notation: 'fixed', precision: 4 }).replace(/\.?0+$/, "") || "0";
             return `${mathFormat(realPart, { notation: 'fixed', precision: 2 })} ${imagPart > 0 ? '+' : '-'} ${mathFormat(Math.abs(imagPart), {notation: 'fixed', precision: 2})}i`;
         }
         
+        // Attempt to format as a fraction
         const f = fraction(cell);
         if (f.d !== 1 && Math.abs(f.n) < 10000 && f.d < 10000) {
             return mathFormat(f, { fraction: 'ratio' });
         }
         
+        // Format as a number
         const num = Number(mathFormat(cell));
         if (Math.abs(num) < 1e-10) return "0";
         return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
@@ -166,7 +182,12 @@ const MatrixDisplay = ({ matrix, title, onCopyToA, onCopyToB }: { matrix: string
 const ScalarDisplay = ({ scalar, title }: { scalar: any, title: string }) => {
     let displayValue;
     try {
-        displayValue = mathFormat(scalar, { fraction: 'ratio', precision: 5 });
+        // mathjs can return a Fraction object for determinants
+        if (typeof scalar === 'object' && scalar.n !== undefined && scalar.d !== undefined) {
+             displayValue = mathFormat(scalar, { fraction: 'ratio' });
+        } else {
+            displayValue = mathFormat(scalar, { precision: 5 });
+        }
     } catch {
         displayValue = "Error";
     }
@@ -206,7 +227,7 @@ export default function MatrixCalculator() {
     
     const [resultMatrix, setResultMatrix] = useState<string[][] | null>(null);
     const [resultTitle, setResultTitle] = useState("");
-    const [resultScalar, setResultScalar] = useState<number | string | null>(null);
+    const [resultScalar, setResultScalar] = useState<number | string | Object | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const handleResize = (
@@ -256,7 +277,7 @@ export default function MatrixCalculator() {
                 case 'rrefA': res = rref(matrixA); title = "RREF(A) ="; break;
                 
                 case 'transposeB': res = math.transpose(matB); title = "Transpose(B) ="; break;
-                case 'powerB': res = math.pow(matB, parseInt(powerA)); title = `B^${powerA} =`; break;
+                case 'powerB': res = math.pow(matB, parseInt(powerA)); title = `B^${powerA} =`; break; // Using powerA for B as well
                 case 'detB': setResultScalar(math.det(matB)); setResultTitle("det(B) ="); return;
                 case 'invB': res = math.inv(matB); title = "inv(B) ="; break;
                 case 'scalarB': res = math.multiply(matB, parseFloat(scalarA)); title = `${scalarA} × B =`; break;
@@ -312,8 +333,8 @@ export default function MatrixCalculator() {
                     setMatrix={setMatrixB} matrix={matrixB}
                     handleResize={(type: 'row' | 'col', delta: number) => handleResize(setMatrixB, rowsB, setRowsB, colsB, setColsB, type, delta)}
                     performOp={performOperation} prefix="B" 
-                    powerValue={powerA} setPowerValue={setPowerA}
-                    scalarValue={scalarA} setScalarValue={setScalarA}
+                    powerValue={powerA} setPowerValue={setPowerA} // Re-using powerA for B for simplicity
+                    scalarValue={scalarA} setScalarValue={setScalarA} // Re-using scalarA for B
                 />
             </div>
             
@@ -387,5 +408,3 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
         </Card>
     );
 };
-
-    
