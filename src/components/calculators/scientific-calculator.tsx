@@ -23,7 +23,7 @@ const basicButtonsConfig = [
     { label: '7', value: '7', style: "col-span-1" }, { label: '8', value: '8', style: "col-span-1" }, { label: '9', value: '9', style: "col-span-1" }, { label: '÷', value: '÷', style: "col-span-1" }, { label: 'M-', value: 'M-', style: "col-span-1" },
     { label: '4', value: '4', style: "col-span-1" }, { label: '5', value: '5', style: "col-span-1" }, { label: '6', value: '6', style: "col-span-1" }, { label: '×', value: '×', style: "col-span-1" }, { label: '=', value: '=', style: "row-span-3 h-auto col-start-5" },
     { label: '1', value: '1', style: "col-span-1" }, { label: '2', value: '2', style: "col-span-1" }, { label: '3', value: '3', style: "col-span-1" }, { label: '−', value: '−', style: "col-span-1" },
-    { label: '0', value: '0', style: "col-span-1" }, { label: '.', value: '.', style: "col-span-1" }, { label: '±', value: '±', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" },
+    { label: '0', value: '0', style: "col-span-1" }, { label: '.', value: '.', style: "col-span-1" }, { label: '+', value: '+', style: "col-span-1" }, { label: '±', value: '±', style: "col-span-1" },
 ];
 
 
@@ -54,7 +54,7 @@ const nthRoot = (base: number, root: number) => Math.pow(base, 1 / root);
 // --- Main Component ---
 const ScientificCalculator = () => {
     const [display, setDisplay] = useState('0');
-    const [isDeg, setIsDeg] = useState(true);
+    const [isDeg, setIsDeg] = useState(isDeg);
     const [memory, setMemory] = useState(0);
     const [ans, setAns] = useState(0);
     const [expression, setExpression] = useState('');
@@ -95,11 +95,10 @@ const ScientificCalculator = () => {
                 ln: (x:number) => Math.log(x),
                 nthRoot: nthRoot,
                 factorial: factorial,
-                RND: Math.random()
             };
 
             const result = evaluate(finalExpression, scope);
-            if (typeof result === 'undefined' || result === null) {
+            if (typeof result === 'undefined' || result === null || typeof result === 'function') {
               throw new Error('Invalid expression');
             }
             const resultString = mathFormat(result, { precision: 10 });
@@ -107,6 +106,7 @@ const ScientificCalculator = () => {
             setDisplay(resultString);
             setExpression(resultString);
             setIsResult(true);
+            setIsError(false);
 
         } catch (error) {
             setDisplay('Error');
@@ -116,21 +116,14 @@ const ScientificCalculator = () => {
     };
 
      const handleButtonClick = (value: string) => {
-        if (isError) {
-          if (value === 'AC') {
-            setExpression('');
-            setDisplay('0');
-            setIsError(false);
-          }
-          return;
-        }
+        if (isError && value !== 'AC') return;
         
-        const isOperatorOrSpecial = ['+', '−', '×', '÷', '^', '%', '=', 'M+', 'M-', '±'].includes(value);
+        const isOperatorOrSpecial = ['+', '−', '×', '÷', '^', '%', '=', 'M+', 'M-','±'].includes(value);
 
         if (isResult && !isOperatorOrSpecial) {
             setExpression('');
             setIsResult(false);
-        } else if (value !== '±') { // Don't reset isResult for the toggle sign button
+        } else if (value !== '±') {
             setIsResult(false);
         }
         
@@ -151,7 +144,7 @@ const ScientificCalculator = () => {
         };
 
         switch (value) {
-            case 'AC': setExpression(''); setMemory(0); setAns(0); break;
+            case 'AC': setExpression(''); setDisplay('0'); setIsError(false); setMemory(0); break;
             case 'backspace': setExpression(prev => prev.slice(0, -1)); break;
             case '=': calculate(); break;
             case '+': handleOperator('+'); break;
@@ -166,29 +159,22 @@ const ScientificCalculator = () => {
             case 'sin-1': setExpression(prev => prev + 'asin('); break;
             case 'cos-1': setExpression(prev => prev + 'acos('); break;
             case 'atan-1': setExpression(prev => prev + 'atan('); break;
-            case '1/x': 
-                 setExpression(prev => {
-                    const lastNum = getLastNumber(prev);
-                    if (lastNum) {
-                        return prev.slice(0, -lastNum.length) + `(1/${lastNum})`;
-                    }
-                    return `(1/${prev || '1'})`;
-                });
+            case '1/x':
+                setExpression(prev => `(1/(${prev || '1'}))`);
                 break;
             case 'n!': setExpression(prev => `factorial(${prev || '0'})`); break;
             case 'π': setExpression(prev => prev + 'pi'); break;
             case 'e': setExpression(prev => prev + 'e'); break;
             case 'xy': setExpression(prev => prev + '^'); break;
-            case 'x2': setExpression(prev => `(${prev || '0'})^2`); break;
-            case 'x3': setExpression(prev => `(${prev || '0'})^3`); break;
+            case 'x2': setExpression(prev => `((${prev || '0'})^2)`); break;
+            case 'x3': setExpression(prev => `((${prev || '0'})^3)`); break;
             case 'ex': setExpression(prev => `e^(${prev || '0'})`); break;
             case '10x': setExpression(prev => `10^(${prev || '0'})`); break;
             case 'y√x': setExpression(prev => prev + ' nthRoot('); break;
             case 'Ans': setExpression(prev => prev + ans.toString()); break;
             case 'M+':
                 try { 
-                    const currentValStr = getLastNumber(expression) || display;
-                    const currentValue = evaluate(currentValStr);
+                    const currentValue = evaluate(expression || display);
                     if (typeof currentValue === 'number') {
                         setMemory(mem => mem + currentValue);
                     }
@@ -197,8 +183,7 @@ const ScientificCalculator = () => {
                 break;
             case 'M-':
                 try { 
-                    const currentValStr = getLastNumber(expression) || display;
-                    const currentValue = evaluate(currentValStr);
+                    const currentValue = evaluate(expression || display);
                     if (typeof currentValue === 'number') {
                         setMemory(mem => mem - currentValue);
                     }
@@ -207,31 +192,24 @@ const ScientificCalculator = () => {
                 break;
             case 'MR': setExpression(prev => prev + memory.toString()); break;
             case '±':
-                if (isResult) {
-                    setExpression(prev => {
-                        if (prev.startsWith('-')) {
-                            return prev.substring(1);
-                        } else if (prev !== '0') {
-                            return `-${prev}`;
-                        }
-                        return prev;
-                    });
-                } else {
-                    setExpression(prev => {
-                        const lastNum = getLastNumber(prev);
-                        if (lastNum) {
-                            const isNegative = lastNum.startsWith('(-') && lastNum.endsWith(')');
-                            const newNum = isNegative ? lastNum.slice(2, -1) : `(-${lastNum})`;
-                            return prev.slice(0, -lastNum.length) + newNum;
-                        }
-                        return prev;
-                    });
-                }
+                setExpression(prev => {
+                    const lastNum = getLastNumber(prev);
+                    if (lastNum) {
+                        const isNegative = lastNum.startsWith('(-') && lastNum.endsWith(')');
+                        const newNum = isNegative ? lastNum.slice(2, -1) : `(-${lastNum})`;
+                        return prev.slice(0, -lastNum.length) + newNum;
+                    }
+                    if (prev.startsWith('-')) {
+                        return prev.substring(1);
+                    } else if (prev !== '0') {
+                        return `-${prev}`;
+                    }
+                    return prev;
+                });
                 break;
             case 'Deg': setIsDeg(true); break;
             case 'Rad': setIsDeg(false); break;
             case 'EXP': setExpression(prev => prev + 'e+'); break;
-            case 'RND': setExpression(prev => prev + Math.random().toPrecision(8)); break;
             case '%': setExpression(prev => prev + '/100'); break;
             case '(':
             case ')':
@@ -325,7 +303,7 @@ const ScientificCalculator = () => {
   );
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-sm sm:max-w-[42rem]">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-[calc(100vw-2rem)] sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner">
         <div className="text-right text-emerald-300/80 font-mono text-xs pr-2 h-5">
             {currentTime}
@@ -338,11 +316,11 @@ const ScientificCalculator = () => {
             aria-label="Calculator display"
         />
       </div>
-       <div className="grid grid-cols-1 sm:grid-cols-10 gap-2">
-        <div className="grid grid-cols-5 gap-1.5 col-span-1 sm:col-span-5">
+       <div className="grid grid-cols-1 md:grid-cols-10 gap-2">
+        <div className="grid grid-cols-5 gap-1.5 col-span-1 md:col-span-5">
           {scientificButtonsConfig.map(btn => renderButton(btn))}
         </div>
-         <div className="grid grid-cols-5 grid-rows-4 gap-1.5 col-span-1 sm:col-span-5">
+         <div className="grid grid-cols-5 grid-rows-4 gap-1.5 col-span-1 md:col-span-5">
           {basicButtonsConfig.map(btn => renderButton(btn))}
         </div>
       </div>
@@ -351,3 +329,5 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
+
+    
