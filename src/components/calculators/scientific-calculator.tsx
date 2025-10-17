@@ -309,7 +309,7 @@ const ScientificCalculator = () => {
   );
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-3 w-full mx-auto shadow-2xl max-w-sm sm:max-w-md md:max-w-xl">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 sm:p-3 w-full mx-auto shadow-2xl max-w-sm sm:max-w-md md:max-w-[820px]">
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner">
         <div className="text-right text-emerald-300/80 font-mono text-xs pr-2 h-5">
             {currentTime}
@@ -322,7 +322,7 @@ const ScientificCalculator = () => {
             aria-label="Calculator display"
         />
       </div>
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
         <div className="grid grid-cols-5 gap-1.5 p-1 rounded-lg bg-slate-600/20 dark:bg-black/20">
             {scientificButtonsConfig.map(btn => renderButton(btn))}
         </div>
