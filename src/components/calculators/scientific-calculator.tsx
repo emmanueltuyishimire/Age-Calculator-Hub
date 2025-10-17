@@ -11,19 +11,18 @@ import { evaluate, format as mathFormat } from 'mathjs';
 
 // --- Button Layouts ---
 const scientificButtonsConfig = [
-    { label: 'sin', value: 'sin' }, { label: 'cos', value: 'cos' }, { label: 'tan', value: 'tan' }, { label: 'M+', value: 'M+' }, { label: 'MR', value: 'MR' },
-    { label: <span key="asin">sin<sup>-1</sup></span>, value: 'sin-1' }, { label: <span key="acos">cos<sup>-1</sup></span>, value: 'cos-1' }, { label: <span key="atan">tan<sup>-1</sup></span>, value: 'tan-1' }, { label: 'M-', value: 'M-' }, { label: 'Ans', value: 'Ans' },
-    { label: 'ln', value: 'ln' }, { label: 'log', value: 'log' }, { label: 'n!', value: 'n!' }, { label: <span key="ex">e<sup>x</sup></span>, value: 'ex' }, { label: 'y√x', value: 'y√x' },
-    { label: '(', value: '(' }, { label: ')', value: ')' }, { label: <span key="reciprocal">1/x</span>, value: '1/x' }, { label: <span key="10x">10<sup>x</sup></span>, value: '10x' }, { label: 'e', value: 'e' },
-    { label: 'Deg', value: 'Deg' }, { label: 'Rad', value: 'Rad' }, { label: 'π', value: 'π' }, { label: <span key="powy">x<sup>y</sup></span>, value: 'xy' }, { label: '√x', value: '√x' },
-    { label: <span key="pow2">x<sup>2</sup></span>, value: 'x2' }, { label: '³√x', value: '³√x' }, { label: 'EXP', value: 'EXP' }, { label: '%', value: '%' }, { label: '±', value: '±' },
+    { label: 'Deg', value: 'Deg' }, { label: 'Rad', value: 'Rad' }, { label: 'x!', value: 'n!' }, { label: '(', value: '(' }, { label: ')', value: ')' },
+    { label: <span key="reciprocal">1/x</span>, value: '1/x' }, { label: 'ln', value: 'ln' }, { label: 'log', value: 'log' }, { label: <span key="pow2">x<sup>2</sup></span>, value: 'x2' }, { label: '√x', value: '√x' },
+    { label: <span key="powy">x<sup>y</sup></span>, value: 'xy' }, { label: <span key="ex">e<sup>x</sup></span>, value: 'ex' }, { label: <span key="10x">10<sup>x</sup></span>, value: '10x' }, { label: '³√x', value: '³√x' }, { label: 'y√x', value: 'y√x' },
+    { label: 'π', value: 'π' }, { label: 'e', value: 'e' }, { label: 'EXP', value: 'EXP' }, { label: '%', value: '%' }, { label: '±', value: '±' },
+    { label: 'sin', value: 'sin' }, { label: 'cos', value: 'cos' }, { label: 'tan', value: 'tan' }, { label: 'MR', value: 'MR' }, { label: 'Ans', value: 'Ans' },
+    { label: <span key="asin">sin<sup>-1</sup></span>, value: 'sin-1' }, { label: <span key="acos">cos<sup>-1</sup></span>, value: 'cos-1' }, { label: <span key="atan">tan<sup>-1</sup></span>, value: 'tan-1' }, { label: 'M+', value: 'M+' }, { label: 'M-', value: 'M-' },
 ];
 
 const basicButtonsConfig = [
-    { label: 'AC', value: 'AC' }, { label: <Trash2 key="backspace" className="h-5 w-5 mx-auto"/>, value: 'backspace' }, { label: '÷', value: '÷' },
-    { label: '7', value: '7' }, { label: '8', value: '8' }, { label: '9', value: '9' }, { label: '×', value: '×' },
-    { label: '4', value: '4' }, { label: '5', value: '5' }, { label: '6', value: '6' }, { label: '−', value: '−' },
-    { label: '1', value: '1' }, { label: '2', value: '2' }, { label: '3', value: '3' }, { label: '+', value: '+' },
+    { label: '7', value: '7' }, { label: '8', value: '8' }, { label: '9', value: '9' }, { label: 'AC', value: 'AC' }, { label: <Trash2 key="backspace" className="h-5 w-5 mx-auto"/>, value: 'backspace' },
+    { label: '4', value: '4' }, { label: '5', value: '5' }, { label: '6', value: '6' }, { label: '×', value: '×' }, { label: '÷', value: '÷' },
+    { label: '1', value: '1' }, { label: '2', value: '2' }, { label: '3', value: '3' }, { label: '+', value: '+' }, { label: '−', value: '−' },
     { label: '0', value: '0', style: "col-span-2" }, { label: '.', value: '.' }, { label: '=', value: '=', style: "row-span-2 h-auto" },
 ];
 
@@ -122,7 +121,9 @@ const ScientificCalculator = () => {
 
         if (isResult && !isOperator && value !== '=' && value !== '±') {
              setIsResult(false);
-             setExpression('');
+             if(!['1/x', 'x2', 'ex', '10x', 'n!'].includes(value)){
+                 setExpression('');
+             }
         }
         
         const lastChar = expression.slice(-1);
@@ -340,7 +341,7 @@ const ScientificCalculator = () => {
   );
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-sm">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-xs">
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner">
         <div className="text-right text-emerald-300/80 font-mono text-xs pr-2 h-5">
             {currentTime}
@@ -357,7 +358,7 @@ const ScientificCalculator = () => {
         <div className="grid grid-cols-5 gap-1.5">
           {scientificButtonsConfig.map(btn => renderButton(btn))}
         </div>
-         <div className="grid grid-cols-4 grid-rows-5 gap-1.5">
+         <div className="grid grid-cols-5 grid-rows-4 gap-1.5">
           {basicButtonsConfig.map(btn => renderButton(btn))}
         </div>
       </div>
@@ -366,5 +367,3 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
-
-    
