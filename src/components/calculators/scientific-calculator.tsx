@@ -328,20 +328,17 @@ const ScientificCalculatorDisplay = () => {
   const getVariant = (btnValue: string): "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined => {
     if (['+', '−', '×', '÷', '='].includes(btnValue)) return 'default';
     if (btnValue === 'AC') return 'destructive';
-    if (['MC', 'MR', 'M+', 'M-', 'Ans'].includes(btnValue)) return 'outline';
-    if (['sin', 'cos', 'tan', 'sin-1', 'cos-1', 'tan-1', 'ln', 'log', 'xy', '√x', 'y√x', 'n!', '1/x'].includes(btnValue)) return "ghost";
+    if (['MC', 'MR', 'M+', 'M-'].includes(btnValue)) return 'outline';
+    if (['sin', 'cos', 'tan', 'sin-1', 'cos-1', 'tan-1', 'ln', 'log', 'xy', '√x', 'y√x', 'n!', '1/x', 'ex', '10x', 'x2', 'x3', 'π', 'e'].includes(btnValue)) return "ghost";
     return 'secondary';
   }
   
   const buttons = [
-    '(', ')', 'MC', 'M+', 'M-',
-    'sin', 'cos', 'tan', 'Back', 'AC',
-    'x2', 'x3', 'xy', '√x', 'y√x',
-    '7', '8', '9', '÷', 'n!',
-    '4', '5', '6', '×', '1/x',
-    '1', '2', '3', '−', 'log',
-    '0', '.', '±', '+', 'ln',
-    'Ans', 'RND', 'DegRad', '=', 'π',
+    '(', ')', 'sin', 'cos', 'tan', 'Back', 'AC',
+    'x2', 'x3', '7', '8', '9', '÷', 'n!',
+    'xy', '√x', '4', '5', '6', '×', '1/x',
+    'ln', 'log', '1', '2', '3', '−', 'DegRad',
+    'π', 'e', '0', '.', '±', '+', '=',
   ];
 
   const getButtonLabel = (key: string) => {
@@ -361,7 +358,7 @@ const ScientificCalculatorDisplay = () => {
   }
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-[360px] sm:max-w-sm">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-md sm:max-w-lg">
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner">
         <Input
             type="text"
@@ -371,13 +368,13 @@ const ScientificCalculatorDisplay = () => {
             aria-label="Calculator display"
         />
       </div>
-       <div className="grid grid-cols-5 gap-1.5">
+       <div className="grid grid-cols-7 gap-1.5">
           {buttons.map(btn => (
               <Button
                   key={btn}
                   variant={getVariant(btn)}
                   className={cn("h-10 text-xs p-1 shadow-md hover:shadow-sm active:shadow-inner active:translate-y-px relative", {
-                    'col-span-2': ['=', '0'].includes(btn),
+                    'col-span-2': ['='].includes(btn),
                   })}
                   onClick={() => handleButtonClick(btn)}
                   aria-label={ariaLabels[btn] || btn}
@@ -392,5 +389,3 @@ const ScientificCalculatorDisplay = () => {
 };
 
 export default ScientificCalculatorDisplay;
-
-    
