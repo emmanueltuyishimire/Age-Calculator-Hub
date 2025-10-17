@@ -65,7 +65,7 @@ export function TopNav() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const categories = categorizedNavItems();
-  const mainCategories = categories.filter(cat => cat.href);
+  const mainCategories = categories.filter(cat => cat.href && !['/', '/articles'].includes(cat.href) && !['Company', 'Legal', 'Navigation'].includes(cat.name));
   const navigationLinks = categories.find(c => c.name === 'Navigation')?.items || [];
   
   return (
@@ -76,7 +76,7 @@ export function TopNav() {
           <NavigationMenuList>
              {navigationLinks.map(link => (
                 <NavigationMenuItem key={link.href}>
-                  <Link href={link.href} legacyBehavior passHref>
+                  <Link href={link.href} passHref>
                     <NavigationMenuLink
                       className={cn(navigationMenuTriggerStyle(), {
                         'bg-accent/50': pathname === link.href,
