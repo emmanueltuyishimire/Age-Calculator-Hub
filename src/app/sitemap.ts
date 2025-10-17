@@ -4,6 +4,9 @@ import { navItems } from '@/components/layout/nav-items';
 import { articles } from '@/lib/articles';
 
 const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
+    return 'https://innerpeacejournals.com';
+  }
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
@@ -14,8 +17,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = getBaseUrl();
   const lastModified = new Date();
 
+  // Filter for actual calculator pages, excluding hub/category pages
   const calculatorPages = navItems
-    .filter(item => item.href.startsWith('/') && !item.href.endsWith('-calculators') && !item.category.includes('Navigation') && !item.category.includes('Company') && !item.category.includes('Legal'))
+    .filter(item => item.href && item.href.startsWith('/') && !item.href.endsWith('-calculators') && !['/', '/articles', '/about', '/contact', '/privacy', '/terms', '/disclaimer', '/faq'].includes(item.href))
     .map(item => ({
       url: `${baseUrl}${item.href}`,
       lastModified: lastModified,
@@ -44,6 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Explicitly define hub pages with their priorities
   const hubPages = [
     { url: `${baseUrl}/articles`, priority: 0.9 },
     { url: `${baseUrl}/financial-calculators`, priority: 0.9 },
