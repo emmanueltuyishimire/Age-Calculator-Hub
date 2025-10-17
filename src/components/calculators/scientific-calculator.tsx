@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -32,7 +31,7 @@ const ScientificCalculator = () => {
     const [isError, setIsError] = useState(false);
     const [isResult, setIsResult] = useState(false);
 
-     const ariaLabels: { [key: string]: string } = {
+    const ariaLabels: { [key: string]: string } = {
         'AC': 'All Clear',
         'Back': 'Backspace',
         '±': 'Toggle sign',
@@ -75,7 +74,7 @@ const ScientificCalculator = () => {
         'RND': 'Random Number'
     };
 
-    const calculate = () => {
+    const calculate = React.useCallback(() => {
         if (!expression) return;
         try {
             let finalExpression = expression
@@ -118,7 +117,7 @@ const ScientificCalculator = () => {
             setIsError(true);
             setExpression('');
         }
-    };
+    }, [expression, isDeg]);
 
      const handleButtonClick = (value: string) => {
         if (isError && value !== 'AC') return;
@@ -361,7 +360,7 @@ const ScientificCalculator = () => {
   }
 
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-sm">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-[360px] sm:max-w-sm">
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner">
         <Input
             type="text"
