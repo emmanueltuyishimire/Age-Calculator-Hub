@@ -579,6 +579,13 @@ export const navItems: NavItem[] = [
     description: 'Solve for base, exponent, or result in an exponential equation.'
   },
    {
+    href: '/binary-calculator',
+    icon: Hash,
+    label: 'Binary Calculator',
+    category: 'Math',
+    description: 'Perform arithmetic and conversions with binary numbers.'
+   },
+   {
     href: '/time-calculator',
     icon: Timer,
     label: 'Time Calculator',
