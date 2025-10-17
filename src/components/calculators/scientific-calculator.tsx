@@ -119,7 +119,7 @@ const ScientificCalculator = () => {
               throw new Error('Invalid expression');
             }
             const resultString = mathFormat(result, { precision: 10 });
-            setHistory(prev => [...prev, `${expression} = ${resultString}`].slice(-3)); // Keep last 3
+            setHistory(prev => [`${expression} = ${resultString}`, ...prev].slice(0, 3));
             setAns(result);
             setDisplay(resultString);
             setExpression(resultString);
@@ -138,11 +138,11 @@ const ScientificCalculator = () => {
         
         const isOperator = ['+', '−', '×', '÷', '^'].includes(value);
 
-        if (isResult && !isOperator && value !== '=' && value !== '±' && value !== '%') {
-             if(!['1/x', 'x2', 'x3', 'ex', '10x', 'n!', '√x'].includes(value)){
-                 setExpression('');
-             }
-             setIsResult(false);
+        if (isResult && !isOperator) {
+            setExpression('');
+            setIsResult(false);
+        } else if (isResult && isOperator) {
+            setIsResult(false);
         }
         
         const lastChar = expression.slice(-1);
@@ -186,21 +186,7 @@ const ScientificCalculator = () => {
             case 'tan': setExpression(prev => prev + (isSecond ? 'atan(' : 'tan(')); break;
             case 'log': setExpression(prev => prev + (isSecond ? '10^(' : 'log(')); break;
             case 'ln': setExpression(prev => prev + (isSecond ? 'e^(' : 'ln(')); break;
-            case '√x':
-                setExpression(prev => {
-                    if (isResult) {
-                       return `sqrt(${prev})`;
-                    }
-                    const [lastNum, lastNumIndex] = getLastNumber(prev);
-                    if (lastNum) {
-                        return `${prev.substring(0, lastNumIndex)}sqrt(${lastNum})`;
-                    }
-                    return prev + 'sqrt(';
-                });
-                if(isResult) {
-                    setTimeout(calculate, 0);
-                }
-                break;
+            case '√x': setExpression(prev => prev + 'sqrt('); break;
             case '1/x': 
                 setExpression(prev => `(1/(${prev || '1'}))`);
                 setTimeout(calculate, 0);
@@ -258,7 +244,7 @@ const ScientificCalculator = () => {
                         const precedingChar = base.slice(-1);
                         if(['+', '−'].includes(precedingChar)) {
                             try {
-                                const baseVal = evaluate(base.slice(0, -1));
+                                const baseVal = evaluate(base.slice(0, -1).replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-'));
                                 return `${base}(${lastNum}/100*${baseVal})`;
                             } catch {
                                 return `${base}(${lastNum}/100)`;
@@ -282,10 +268,10 @@ const ScientificCalculator = () => {
                 break;
             case '±':
                 setExpression(prev => {
-                    if (isResult) {
-                       return (-parseFloat(prev)).toString();
-                    }
                     const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (isResult) {
+                       return `(-${prev.replace(/[()]/g, '')})`
+                    }
                     if (lastNum) {
                         const isNegativeInParens = lastNum.startsWith('(-') && lastNum.endsWith(')');
                         const baseExpression = prev.slice(0, lastNumIndex);
@@ -319,7 +305,7 @@ const ScientificCalculator = () => {
             if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
                 return;
             }
-            if ((event.metaKey || event.ctrlKey) && ['c', 'v', 'a', 'l'].includes(event.key.toLowerCase())) {
+            if ((event.metaKey || event.ctrlKey) && ['c', 'v', 'a'].includes(event.key.toLowerCase())) {
               return;
             }
             event.preventDefault();
@@ -411,7 +397,10 @@ const ScientificCalculator = () => {
       </div>
       <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[112px] flex flex-col justify-end">
         <div className="h-1/3 text-emerald-300/50 text-right pr-4 text-xs font-mono truncate">
-          {history.length > 0 ? history[history.length - 1] : ''}
+          {history[1] || ''}
+        </div>
+        <div className="h-1/3 text-emerald-300/70 text-right pr-4 text-xs font-mono truncate">
+          {history[0] || ''}
         </div>
         <div className="h-1/3 text-emerald-300/30 text-right pr-4 text-xs font-mono truncate">
            <span className="mr-4">M={memory}</span><span>Ans={ans}</span>
@@ -446,5 +435,3 @@ const ScientificCalculator = () => {
 };
 
 export default ScientificCalculator;
-
-    
