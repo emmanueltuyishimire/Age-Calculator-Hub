@@ -4,7 +4,6 @@
 import * as React from "react";
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Trash2 } from 'lucide-react';
 import { evaluate, format as mathFormat } from 'mathjs';
@@ -177,7 +176,18 @@ const ScientificCalculator = () => {
             case 'tan': setExpression(prev => prev + (isSecond ? 'atan(' : 'tan(')); break;
             case 'log': setExpression(prev => prev + (isSecond ? '10^(' : 'log(')); break;
             case 'ln': setExpression(prev => prev + (isSecond ? 'exp(' : 'ln(')); break;
-            case '√x': setExpression(prev => prev + 'sqrt('); break;
+            case '√x':
+                setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if(isResult || lastNum === prev) {
+                         return `sqrt(${prev})`;
+                    } else if (lastNum) {
+                         return `${prev.substring(0, lastNumIndex)}sqrt(${lastNum})`;
+                    }
+                    return `sqrt(${prev || '0'})`
+                }); 
+                setTimeout(calculate, 0);
+                break;
             case '1/x': 
                 setExpression(prev => {
                     const [lastNum, lastNumIndex] = getLastNumber(prev);
@@ -206,7 +216,7 @@ const ScientificCalculator = () => {
                     const [lastNum, lastNumIndex] = getLastNumber(prev);
                     if (lastNum) {
                         const base = prev.substring(0, lastNumIndex);
-                        return `${base}(${lastNum})^` + (isSecond ? '3' : '2');
+                        return `${base}(${lastNum})` + (isSecond ? '^3' : '^2');
                     }
                     return prev + (isSecond ? '^3' : '^2');
                 });
@@ -321,10 +331,10 @@ const ScientificCalculator = () => {
 
             const keyMappings: { [key: string]: string | (() => void) } = {
                 ...Object.fromEntries("0123456789.()".split('').map(k => [k, k])),
-                '+': '+', '-': '−', '*': '×', '/': '÷',
+                '+': '+', '-': '−', '*': '×', '/': '÷', '^': 'xy',
                 'Enter': () => calculate(), '=': () => calculate(),
                 'Backspace': 'Delete', 'Escape': 'AC', 'c': 'AC',
-                '^': 'xy', '%': '%',
+                '%': '%',
                 's': 'sin', 'p': 'π', 'e': 'e', 'l': 'log',
                 'r': () => handleButtonClick('√x'),
             };
@@ -371,23 +381,12 @@ const ScientificCalculator = () => {
     return 'secondary';
   }
   
-  const buttons = [
-    '2nd', 'Deg', 'Rad', 'MC', 'MR', 'M+', 'M-',
-    'sin', 'cos', 'tan', 'log', 'ln', '(', ')',
-    'x2', '√x', 'n!', 'π', 'e', '1/x', 'xy',
-    '7', '8', '9', 'AC', 'Delete', 'Ans', '÷',
-    '4', '5', '6', 'RND', '%', '±', '×',
-    '1', '2', '3', 'EXP',  '.', '0', '=', '−',
-    '+'
-  ];
-
   const getButtonLabel = (key: string) => {
     switch (key) {
         case 'sin': return isSecond ? <>{'sin'}<sup>-1</sup></> : 'sin';
         case 'cos': return isSecond ? <>{'cos'}<sup>-1</sup></> : 'cos';
         case 'tan': return isSecond ? <>{'tan'}<sup>-1</sup></> : 'tan';
-        case '10x': return isSecond ? <>{'2'}<sup>x</sup></> : <>{'10'}<sup>x</sup></>;
-        case 'log': return isSecond ? <>{'log'}<sub>y</sub></> : 'log';
+        case 'log': return isSecond ? <>{'10'}<sup>x</sup></> : 'log';
         case 'ln': return isSecond ? <>{'e'}<sup>x</sup></> : 'ln';
         case 'x2': return isSecond ? <>{'x'}<sup>3</sup></> : <>{'x'}<sup>2</sup></>;
         case '√x': return isSecond ? <>{'³√x'}</> : '√x';
@@ -398,32 +397,9 @@ const ScientificCalculator = () => {
     }
   }
 
-  const gridTemplate = [
-    // Row 1
-    { key: '2nd', span: 1 }, { key: 'Deg', span: 1 }, { key: 'Rad', span: 1 },
-    { key: 'MC', span: 1 }, { key: 'MR', span: 1 }, { key: 'M+', span: 1 }, { key: 'M-', span: 1 },
-    // Row 2
-    { key: 'sin', span: 1 }, { key: 'cos', span: 1 }, { key: 'tan', span: 1 },
-    { key: 'log', span: 1 }, { key: 'ln', span: 1 }, { key: '(', span: 1 }, { key: ')', span: 1 },
-    // Row 3
-    { key: 'x2', span: 1 }, { key: '√x', span: 1 }, { key: 'n!', span: 1 },
-    { key: 'π', span: 1 }, { key: 'e', span: 1 }, { key: '1/x', span: 1 }, { key: 'xy', span: 1 },
-     // Row 4
-    { key: '7', span: 1 }, { key: '8', span: 1 }, { key: '9', span: 1 },
-    { key: 'AC', span: 1 }, { key: 'Delete', span: 1 }, { key: 'Ans', span: 1 }, { key: '÷', span: 1 },
-    // Row 5
-    { key: '4', span: 1 }, { key: '5', span: 1 }, { key: '6', span: 1 },
-    { key: 'RND', span: 1 }, { key: '%', span: 1 }, { key: '±', span: 1 }, { key: '×', span: 1 },
-    // Row 6
-    { key: '1', span: 1 }, { key: '2', span: 1 }, { key: '3', span: 1 },
-    { key: 'EXP', span: 1 }, { key: '.', span: 1 }, { key: '0', span: 1 }, { key: '=', span: 1 },
-    // Row 7 - Just the plus
-    { key: '+', span: 1}, { key: '−', span: 1} // Example placement
-  ];
-
   return (
-    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-md sm:max-w-lg">
-      <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[112px] flex flex-col justify-end text-right font-mono">
+    <div className="bg-slate-700 dark:bg-slate-800 border-4 border-slate-600 dark:border-slate-700 rounded-xl p-2 w-full mx-auto shadow-2xl max-w-md">
+      <div className="bg-emerald-100/10 dark:bg-black/20 rounded p-2 mb-2 border-2 border-slate-800 dark:border-black shadow-inner h-[96px] flex flex-col justify-end text-right font-mono">
         <div className="flex-grow overflow-y-auto flex flex-col justify-end items-end pr-2">
             {history.map((line, index) => (
                 <div key={index} className="text-emerald-300/50 text-xs opacity-75 truncate">
@@ -431,42 +407,40 @@ const ScientificCalculator = () => {
                 </div>
             ))}
         </div>
-        <div className="text-2xl text-emerald-300 tracking-wider pr-2 truncate">
+        <div className="text-xl text-emerald-300 tracking-wider pr-2 truncate">
             {display}
         </div>
       </div>
-       <div className="grid grid-cols-7 gap-1.5">
+       <div className="grid grid-cols-7 gap-1">
           {/* Row 1 */}
           {['2nd', 'Deg', 'Rad', 'MC', 'MR', 'M+', 'M-'].map(btn => (
-              <Button key={btn} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+              <Button key={btn} variant={getVariant(btn)} className="h-9 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
           ))}
           {/* Row 2 */}
           {['sin', 'cos', 'tan', 'log', 'ln', '(', ')'].map(btn => (
-              <Button key={btn} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+              <Button key={btn} variant={getVariant(btn)} className="h-9 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
           ))}
            {/* Row 3 */}
           {['x2', '√x', 'n!', 'π', 'e', '1/x', 'xy'].map(btn => (
-              <Button key={btn} variant={getVariant(btn)} className="h-10 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+              <Button key={btn} variant={getVariant(btn)} className="h-9 text-xs p-1" onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
           ))}
           {/* Row 4 */}
-          {['7', '8', '9', 'AC', 'Delete', 'Ans', '÷'].map(btn => (
-              <Button key={btn} variant={getVariant(btn)} className={cn("h-10 text-sm p-1", {'text-base font-bold': /\d/.test(btn)})} onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+          {['AC', 'Delete', 'Ans', '%', '7', '8', '9'].map(btn => (
+              <Button key={btn} variant={getVariant(btn)} className={cn("h-9 text-sm p-1", {'text-base font-bold': /\d/.test(btn)})} onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
           ))}
           {/* Row 5 */}
-          {['4', '5', '6', 'RND', '%', '±', '×'].map(btn => (
-              <Button key={btn} variant={getVariant(btn)} className={cn("h-10 text-sm p-1", {'text-base font-bold': /\d/.test(btn)})} onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
+          {['RND', '±', '÷', '×', '4', '5', '6'].map(btn => (
+              <Button key={btn} variant={getVariant(btn)} className={cn("h-9 text-sm p-1", {'text-base font-bold': /\d/.test(btn)})} onClick={() => handleButtonClick(btn)} aria-label={ariaLabels[btn] || btn}>{getButtonLabel(btn)}</Button>
           ))}
-           {/* Row 6 */}
-          <Button variant={getVariant('1')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('1')}>1</Button>
-          <Button variant={getVariant('2')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('2')}>2</Button>
-          <Button variant={getVariant('3')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('3')}>3</Button>
-          <Button variant={getVariant('0')} className="h-10 text-base font-bold p-1 col-span-2" onClick={() => handleButtonClick('0')}>0</Button>
-          <Button variant={getVariant('.')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('.')}>.</Button>
-          <Button variant={getVariant('+')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('+')}>+</Button>
-          
-          {/* Row 7 */}
-          <Button variant={getVariant('−')} className="h-10 text-base font-bold p-1" onClick={() => handleButtonClick('−')}>−</Button>
-          <Button variant={getVariant('=')} className="h-10 text-base font-bold p-1 col-span-2" onClick={() => handleButtonClick('=')}>=</Button>
+           {/* Row 6 & 7 */}
+          <Button variant={getVariant('1')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('1')}>1</Button>
+          <Button variant={getVariant('2')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('2')}>2</Button>
+          <Button variant={getVariant('3')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('3')}>3</Button>
+          <Button variant={getVariant('−')} className="h-9 text-lg p-1 row-span-2" onClick={() => handleButtonClick('−')}>−</Button>
+          <Button variant={getVariant('0')} className="h-9 text-base font-bold p-1 col-span-2" onClick={() => handleButtonClick('0')}>0</Button>
+          <Button variant={getVariant('.')} className="h-9 text-base font-bold p-1" onClick={() => handleButtonClick('.')}>.</Button>
+          <Button variant={getVariant('+')} className="h-9 text-lg p-1" onClick={() => handleButtonClick('+')}>+</Button>
+          <Button variant={getVariant('=')} className="h-9 text-lg p-1 col-span-2" onClick={() => handleButtonClick('=')}>=</Button>
         </div>
     </div>
   );
