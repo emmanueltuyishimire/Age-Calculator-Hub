@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import { AlertCircle, Trash, RefreshCcw, Power, Shuffle, RotateCcw, Plus, Minus } from 'lucide-react';
+import { AlertCircle, Trash, RefreshCcw, Power, Shuffle, RotateCcw, Plus, Minus, ArrowRightLeft } from 'lucide-react';
 
 const math = create(all, { number: 'Fraction' });
 
@@ -124,7 +124,7 @@ export default function MatrixCalculator() {
     const [powerB, setPowerB] = useState(2);
     
     const [resultMatrix, setResultMatrix] = useState<(string | number)[][] | null>(null);
-    const [resultScalar, setResultScalar] = useState<number | null>(null);
+    const [resultScalar, setResultScalar] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const handleResize = (
@@ -162,7 +162,7 @@ export default function MatrixCalculator() {
             switch(op) {
                 case 'transposeA': res = math.transpose(matA); setResultMatrix(fromMatrix(res as Matrix)); break;
                 case 'powerA': res = math.pow(matA, powerA); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'determinantA': res = math.det(matA); setResultScalar(res as number); break;
+                case 'determinantA': res = math.det(matA); setResultScalar(math.format(res as number, { fraction: 'ratio', precision: 4 })); break;
                 case 'inverseA': res = math.inv(matA); setResultMatrix(fromMatrix(res as Matrix)); break;
                 case 'rrefA': res = math.rref(matA); setResultMatrix(fromMatrix(res as Matrix)); break;
                 case 'eigsA':
@@ -179,7 +179,7 @@ export default function MatrixCalculator() {
                 
                 case 'transposeB': res = math.transpose(matB); setResultMatrix(fromMatrix(res as Matrix)); break;
                 case 'powerB': res = math.pow(matB, powerB); setResultMatrix(fromMatrix(res as Matrix)); break;
-                case 'determinantB': res = math.det(matB); setResultScalar(res as number); break;
+                case 'determinantB': res = math.det(matB); setResultScalar(math.format(res as number, { fraction: 'ratio', precision: 4 })); break;
                 case 'inverseB': res = math.inv(matB); setResultMatrix(fromMatrix(res as Matrix)); break;
                 case 'rrefB': res = math.rref(matB); setResultMatrix(fromMatrix(res as Matrix)); break;
                 case 'eigsB':
@@ -231,8 +231,8 @@ export default function MatrixCalculator() {
                     <Button onClick={() => performOperation('add')}>A + B</Button>
                     <Button onClick={() => performOperation('subtract')}>A – B</Button>
                     <Button onClick={() => performOperation('multiply')}>AB</Button>
-                    <Button onClick={() => performOperation('swap')} variant="secondary">A ↔ B</Button>
-                    <Button onClick={() => { setMatrixA(createMatrix(rowsA, colsA)); setMatrixB(createMatrix(rowsB, colsB)); setResultMatrix(null); setResultScalar(null); setError(null); }} variant="destructive">Clear All</Button>
+                    <Button onClick={() => performOperation('swap')} variant="secondary"><ArrowRightLeft className="h-4 w-4 mr-2"/> A ↔ B</Button>
+                    <Button onClick={() => { setMatrixA(createMatrix(rowsA, colsA)); setMatrixB(createMatrix(rowsB, colsB)); setResultMatrix(null); setResultScalar(null); setError(null); }} variant="destructive"><RefreshCcw className="h-4 w-4 mr-2" />Clear All</Button>
                 </CardContent>
             </Card>
 
@@ -242,7 +242,7 @@ export default function MatrixCalculator() {
             {resultScalar !== null && (
                 <Card>
                     <CardHeader><CardTitle className="text-center">Scalar Result</CardTitle></CardHeader>
-                    <CardContent className="text-center text-2xl font-bold text-primary">{math.format(resultScalar, { fraction: 'ratio', precision: 4 })}</CardContent>
+                    <CardContent className="text-center text-2xl font-bold text-primary">{resultScalar}</CardContent>
                 </Card>
             )}
         </div>
@@ -251,9 +251,9 @@ export default function MatrixCalculator() {
 
 const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, performOp, prefix, scalar, setScalar, power, setPower }: any) => (
      <Card>
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>{title}</CardTitle>
-            <div className="flex gap-4 items-center text-sm pt-2">
+            <div className="flex gap-4 items-center text-sm">
                 <div className="flex items-center gap-1">
                     <Label>Rows:</Label>
                     <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleResize('row', -1)}><Minus className="h-4 w-4" /></Button>
@@ -271,20 +271,20 @@ const MatrixCard = ({ title, rows, cols, handleResize, setMatrix, matrix, perfor
         <CardContent className="space-y-4">
             <MatrixInput matrix={matrix} setMatrix={setMatrix} />
             <div className="flex gap-2 flex-wrap">
-                <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'zero'))}>Clear</Button>
+                <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'zero'))}><Trash className="h-4 w-4 mr-1"/>Clear</Button>
                 <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'one'))}>All 1</Button>
                 <Button variant="outline" size="sm" onClick={() => setMatrix(createMatrix(rows, cols, 'random'))}><Shuffle className="h-4 w-4 mr-1"/>Random</Button>
             </div>
             <div className="flex gap-2 flex-wrap items-center">
                 <Button size="sm" onClick={() => performOp(`transpose${prefix}`)}><RotateCcw className="h-4 w-4 mr-1"/>Transpose</Button>
                 <Button size="sm" onClick={() => performOp(`power${prefix}`)}><Power className="h-4 w-4 mr-1"/>Power of</Button>
-                <Input type="number" value={power} onChange={e => setPower(parseInt(e.target.value))} className="w-16 h-9" />
+                <Input type="number" value={power} onChange={e => setPower(parseInt(e.target.value) || 0)} className="w-16 h-9" />
                  <Button size="sm" onClick={() => performOp(`determinant${prefix}`)}>Determinant</Button>
                 <Button size="sm" onClick={() => performOp(`inverse${prefix}`)}>Inverse</Button>
             </div>
              <div className="flex gap-2 flex-wrap items-center">
                 <Button size="sm" onClick={() => performOp(`scalar${prefix}`)}>× Scalar</Button>
-                <Input type="number" value={scalar} onChange={e => setScalar(parseInt(e.target.value))} className="w-16 h-9" />
+                <Input type="number" value={scalar} onChange={e => setScalar(parseInt(e.target.value) || 0)} className="w-16 h-9" />
                 <Button size="sm" onClick={() => performOp(`rref${prefix}`)}>RREF</Button>
                 <Button size="sm" onClick={() => performOp(`eigs${prefix}`)}>Eigenvalues</Button>
             </div>
