@@ -18,51 +18,100 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Menu } from 'lucide-react';
 import { categorizedNavItems } from './nav-items';
 import Image from 'next/image';
 
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+})
+ListItem.displayName = "ListItem"
+
+
 export function TopNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = React.useState(false);
 
   const categories = categorizedNavItems();
-  const mainCategories = categories.filter(cat => cat.href && !['/', '/articles'].includes(cat.href) && !cat.name.includes('Company') && !cat.name.includes('Legal'));
+  const mainCategories = categories.filter(cat => cat.href);
   const navigationLinks = categories.find(c => c.name === 'Navigation')?.items || [];
-  
-  const navLinkStyle = "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50";
   
   return (
     <>
       {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center gap-1 text-sm" aria-label="Main navigation">
-        {navigationLinks.map(link => (
-           <Link
-            key={link.href}
-            href={link.href}
-            className={cn(navLinkStyle, 'font-semibold', {
-              'bg-accent/50': pathname === link.href,
-            })}
-          >
-            {link.label}
-          </Link>
-        ))}
+        <NavigationMenu>
+          <NavigationMenuList>
+             {navigationLinks.map(link => (
+                <NavigationMenuItem key={link.href}>
+                  <Link href={link.href} legacyBehavior passHref>
+                    <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), {
+                      'bg-accent/50': pathname === link.href,
+                    })}>
+                      {link.label}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
 
-        {mainCategories.map(category => {
-          return (
-            <Link
-              key={category.name}
-              href={category.href}
-              className={cn(navLinkStyle, 'font-semibold', {
-                'bg-accent/50': pathname.startsWith(category.href),
-              })}
-            >
-              {category.name}
-            </Link>
-          );
-        })}
+            {mainCategories.map(category => (
+              <NavigationMenuItem key={category.name}>
+                <NavigationMenuTrigger
+                  className={cn({
+                    'bg-accent/50': pathname.startsWith(category.href),
+                  })}
+                >
+                  <Link href={category.href} className="hover:no-underline">{category.name}</Link>
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    {category.items.map((item) => (
+                      <ListItem
+                        key={item.label}
+                        title={item.label}
+                        href={item.href}
+                      >
+                        {item.description}
+                      </ListItem>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
       </nav>
 
       {/* Mobile Navigation */}
@@ -103,7 +152,7 @@ export function TopNav() {
                   {mainCategories.map((category) => (
                     <AccordionItem value={category.name} key={category.name}>
                        <AccordionTrigger className="text-base font-semibold py-2">
-                            {category.name}
+                            <Link href={category.href} onClick={() => setIsOpen(false)} className="hover:underline">{category.name}</Link>
                        </AccordionTrigger>
                       <AccordionContent>
                         <div className="flex flex-col gap-1 pl-4">
