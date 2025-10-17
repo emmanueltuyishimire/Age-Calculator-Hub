@@ -63,6 +63,7 @@ import {
   Sigma,
   Radical,
   Grid,
+  Sitemap
 } from 'lucide-react';
 
 export type NavItem = {
@@ -776,6 +777,13 @@ export const navItems: NavItem[] = [
     label: 'Disclaimer',
     category: 'Legal',
     description: 'Read our disclaimer.'
+  },
+  {
+    href: '/sitemap-page',
+    icon: Sitemap,
+    label: 'Sitemap',
+    category: 'Legal',
+    description: 'View all pages on the site.'
   },
 ];
 
