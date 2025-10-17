@@ -1,3 +1,4 @@
+
 "use client";
 
 import dynamic from 'next/dynamic';
@@ -63,6 +64,7 @@ export function ClientPage() {
                         <CardContent>
                             <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                                 <li><Link href="/articles/the-power-of-compound-interest" className="text-primary hover:underline">The Power of Compound Interest</Link></li>
+                                <li>Solve for percentages with our <Link href="/percentage-calculator" className="text-primary hover:underline">Percentage Calculator</Link>.</li>
                             </ul>
                         </CardContent>
                     </Card>
