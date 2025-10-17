@@ -42,7 +42,7 @@ function SimpleGenerator() {
 
     function onSubmit(values: SimpleFormData) {
         const { lowerLimit, upperLimit } = values;
-        const randomInt = math.randomInt(lowerLimit, upperLimit + 1);
+        const randomInt = Math.floor(Math.random() * (upperLimit - lowerLimit + 1)) + lowerLimit;
         setResult(randomInt.toString());
     }
 
@@ -164,6 +164,17 @@ function ComprehensiveGenerator() {
 export default function RandomNumberGenerator() {
   return (
     <div className="space-y-8">
+        <Card>
+            <CardHeader>
+                <CardTitle>How to Use the Random Number Generators</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li><strong>Simple Random Integer:</strong> For a quick integer, enter the lower and upper limits and click "Generate."</li>
+                    <li><strong>Comprehensive Generator:</strong> For more control, use this tool to generate multiple numbers, decimals, or numbers with very high precision.</li>
+                </ul>
+            </CardContent>
+        </Card>
         <SimpleGenerator />
         <ComprehensiveGenerator />
     </div>

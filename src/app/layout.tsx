@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/layout/theme-provider';
 import './globals.css';
 import { PT_Sans } from 'next/font/google';
+import { Partytown } from '@builder.io/partytown/react';
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -93,6 +94,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={ptSans.variable}>
       <head>
+        <Partytown debug={false} forward={['dataLayer.push']} />
         <Script 
             id="org-schema" 
             type="application/ld+json"
@@ -102,7 +104,7 @@ export default function RootLayout({
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
           crossOrigin="anonymous"
-          strategy="worker"
+          type="text/partytown"
         ></Script>
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
@@ -117,11 +119,11 @@ export default function RootLayout({
         </ThemeProvider>
          <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-7XVG2YF7MY"
-          strategy="worker"
+          type="text/partytown"
         />
         <Script
           id="gtag-init"
-          strategy="worker"
+          type="text/partytown"
           dangerouslySetInnerHTML={{
             __html: `
             window.dataLayer = window.dataLayer || [];

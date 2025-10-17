@@ -193,7 +193,7 @@ export default function AnnuityCalculator() {
                 <h3 className="text-lg font-bold text-center mb-4">Accumulation Schedule</h3>
                 <div className="h-[300px] w-full mb-4">
                      <ResponsiveContainer>
-                        <BarChart data={barChartData} stackOffset="sign">
+                        <BarChart data={barChartData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" tick={{ fontSize: 12 }}/>
                             <YAxis tickFormatter={(val) => `${currencySymbol}${val/1000}k`} tick={{ fontSize: 12 }} />

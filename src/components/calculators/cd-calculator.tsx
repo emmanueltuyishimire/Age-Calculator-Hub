@@ -51,6 +51,9 @@ const formSchema = z.object({
   depositLengthYears: z.coerce.number().min(0).max(50),
   depositLengthMonths: z.coerce.number().min(0).max(11).optional(),
   taxRate: z.coerce.number().min(0).max(100).optional(),
+}).refine(data => (data.depositLengthYears || 0) + (data.depositLengthMonths || 0) > 0, {
+  message: "Deposit length must be at least one month.",
+  path: ["depositLengthMonths"],
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -173,7 +176,9 @@ export default function CdCalculator() {
                     <FormItem><FormLabel>Deposit Length</FormLabel><div className="flex gap-2">
                         <FormField control={form.control} name="depositLengthYears" render={({ field }) => <FormControl><Input type="number" placeholder="Years" {...field} /></FormControl>} />
                         <FormField control={form.control} name="depositLengthMonths" render={({ field }) => <FormControl><Input type="number" placeholder="Months" {...field} /></FormControl>} />
-                    </div></FormItem>
+                    </div>
+                     <FormMessage>{form.formState.errors.depositLengthMonths?.message}</FormMessage>
+                    </FormItem>
                     <FormField control={form.control} name="taxRate" render={({ field }) => (<FormItem><FormLabel>Marginal Tax Rate (%)</FormLabel><FormControl><Input type="number" step="0.1" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     
                     <div className="flex flex-col sm:flex-row gap-2 pt-2">

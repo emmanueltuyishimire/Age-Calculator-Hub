@@ -227,7 +227,7 @@ function BigNumberFractionCalculator() {
                 case '÷': res = divide(f1, f2) as Fraction; break;
                 default: return;
             }
-            setResult(`${res.n.toString()}/${res.d.toString()}`);
+            setResult(`${res.s * res.n}/${res.d}`);
         } catch {
             setResult('Error');
         }
