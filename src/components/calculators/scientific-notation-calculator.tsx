@@ -23,6 +23,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { create, all, format as mathFormat } from 'mathjs';
+import { Label } from '../ui/label';
 
 const math = create(all, { number: 'BigNumber', precision: 64 });
 
@@ -201,8 +202,8 @@ function ArithmeticCalculator() {
                     <div className="mb-6 p-4 bg-muted rounded-lg space-y-2">
                         <h3 className="text-lg font-semibold">Result</h3>
                         <div className="font-mono text-primary text-lg">
-                            <p><span className="text-muted-foreground">Scientific Notation:</span> {result.operation} {result.scientific.mantissa} × 10<sup>{result.scientific.exponent}</sup></p>
-                            <p><span className="text-muted-foreground">Real Number:</span> {result.operation} {result.real}</p>
+                            <p><span className="text-muted-foreground">Result in Scientific Notation:</span> {result.operation} {result.scientific.mantissa} × 10<sup>{result.scientific.exponent}</sup></p>
+                            <p><span className="text-muted-foreground">Result in Real Number:</span> {result.operation} {result.real}</p>
                         </div>
                     </div>
                 )}
