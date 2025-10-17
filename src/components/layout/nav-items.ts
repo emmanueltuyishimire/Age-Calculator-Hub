@@ -682,13 +682,6 @@ export const navItems: NavItem[] = [
     category: 'Math',
     description: 'Round numbers using various methods like half up, ceiling, or to the nearest fraction.'
   },
-  {
-    href: '/matrix-calculator',
-    icon: Grid,
-    label: 'Matrix Calculator',
-    category: 'Math',
-    description: 'Perform arithmetic, RREF, and other operations on matrices.'
-  },
 
   // Other Calculators
    {
