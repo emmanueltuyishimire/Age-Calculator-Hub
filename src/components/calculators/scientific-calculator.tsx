@@ -138,8 +138,8 @@ const ScientificCalculator = () => {
 
         const getLastNumber = (expr: string): [string, number] => {
              const match = expr.match(/(\(-?[\d.e+-]+\)|[\d.e+-]+|pi|e)$/i);
-             if (match) {
-                 return [match[0], match.index !== undefined ? match.index : -1];
+             if (match && match.index !== undefined) {
+                 return [match[0], match.index];
              }
              return ['', -1];
         };
@@ -161,22 +161,10 @@ const ScientificCalculator = () => {
             case 'cos-1': setExpression(prev => prev + 'acos('); break;
             case 'atan-1': setExpression(prev => prev + 'atan('); break;
             case '1/x':
-                 setExpression(prev => {
-                    const [lastNum, lastNumIndex] = getLastNumber(prev);
-                    if (lastNum) {
-                        return prev.slice(0, lastNumIndex) + `(1/${lastNum})`;
-                    }
-                    return `(1/(${prev || '1'}))`;
-                });
+                 setExpression(prev => `(1/(${prev || '1'}))`);
                 break;
             case 'n!': 
-                setExpression(prev => {
-                    const [lastNum, lastNumIndex] = getLastNumber(prev);
-                    if (lastNum) {
-                        return prev.slice(0, lastNumIndex) + `factorial(${lastNum})`;
-                    }
-                    return `factorial(${prev || '0'})`;
-                });
+                 setExpression(prev => `factorial(${prev || '0'})`);
                 break;
             case 'π': setExpression(prev => prev + 'pi'); break;
             case 'e': setExpression(prev => prev + 'e'); break;
@@ -208,7 +196,15 @@ const ScientificCalculator = () => {
                     return `(10^(${prev || '0'}))`;
                 });
                 break;
-            case 'y√x': handleOperator(' nthRoot('); break; // Note space for parsing
+            case 'y√x':
+                setExpression(prev => {
+                    const [lastNum, lastNumIndex] = getLastNumber(prev);
+                    if (lastNum) {
+                        return prev.slice(0, lastNumIndex) + `nthRoot(${lastNum}, `;
+                    }
+                    return `nthRoot(${prev || '0'}, `;
+                });
+                break;
             case 'Ans': setExpression(prev => prev + ans.toString()); break;
             case 'M+':
                 try { 
@@ -228,7 +224,10 @@ const ScientificCalculator = () => {
             case '±':
                  setExpression(prev => {
                     if (isResult) {
-                        return prev.startsWith('(-') && prev.endsWith(')') ? prev.slice(2, -1) : `(-${prev})`;
+                         const currentVal = parseFloat(prev);
+                        if (!isNaN(currentVal)) {
+                            return (-currentVal).toString();
+                        }
                     }
                     const [lastNum, lastNumIndex] = getLastNumber(prev);
                     if (lastNum) {
