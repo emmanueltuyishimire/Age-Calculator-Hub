@@ -57,6 +57,7 @@ import {
   Divide,
   Shuffle,
   Flame,
+  Binary,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -584,6 +585,13 @@ export const navItems: NavItem[] = [
     label: 'Binary Calculator',
     category: 'Math',
     description: 'Perform arithmetic and conversions with binary numbers.'
+   },
+   {
+    href: '/hex-calculator',
+    icon: Binary,
+    label: 'Hex Calculator',
+    category: 'Math',
+    description: 'Perform arithmetic and conversions with hexadecimal numbers.'
    },
    {
     href: '/time-calculator',
