@@ -29,6 +29,31 @@ export default function RandomNumberGeneratorPage() {
             <section className="mt-12 space-y-8 animate-fade-in prose dark:prose-invert lg:prose-xl max-w-none">
                 <Card>
                     <CardHeader>
+                        <CardTitle>How to Use the Random Number Generators</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div>
+                            <h4 className="font-semibold text-foreground">Simple Random Integer Generator</h4>
+                            <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-2">
+                                <li><strong>Enter Limits:</strong> Input the desired lower and upper limits for your integer range. The upper limit must be greater than the lower limit.</li>
+                                <li><strong>Click "Generate":</strong> A single random integer within your specified range will be displayed.</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-foreground">Comprehensive Generator</h4>
+                             <ol className="list-decimal list-inside space-y-2 text-muted-foreground mt-2">
+                                <li><strong>Enter Limits:</strong> Input the lower and upper limits. This tool supports very large numbers.</li>
+                                <li><strong>Set Quantity:</strong> Specify how many random numbers you want to generate (up to 100).</li>
+                                <li><strong>Choose Type:</strong> Select whether you want 'Integer' or 'Decimal' results.</li>
+                                <li><strong>Set Precision:</strong> For decimals, define the number of significant digits for high precision.</li>
+                                <li><strong>Click "Generate":</strong> A list of your specified random numbers will appear in the results box.</li>
+                            </ol>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
                         <CardTitle>Understanding Random Numbers</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4 text-muted-foreground">
